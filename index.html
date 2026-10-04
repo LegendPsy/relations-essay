@@ -53,6 +53,7 @@ body { background: var(--ink); color: var(--paper); font-family: var(--body); fo
 .backbar .backchip { padding-left: 15px; }
 .backbar .backx { padding-right: 14px; padding-left: 8px; opacity: .6; font-size: 14px; line-height: 1; }
 .bar { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: rgba(255,255,255,.07); }
+.bar-max { position: absolute; top: -3px; width: 2px; height: 9px; margin-left: -1px; background: var(--paper-hi); opacity: .75; border-radius: 1px; pointer-events: none; }
 .bar-fill { position: absolute; left: 0; top: 0; bottom: 0; width: 0; background: var(--accent); }
 .bar i { position: absolute; top: -2px; width: 5px; height: 7px; margin-left: -2px; border-radius: 2px; background: var(--paper); opacity: .55; }
 
@@ -95,7 +96,7 @@ strong { color: var(--paper-hi); font-weight: 600; }
     <button type="button" class="markbtn" id="markbtn">Закладка</button>
     <div class="cap" id="cap" aria-live="polite"></div>
     <span class="rw" id="rw" hidden>⏪ перемотка</span>
-        <div class="bar" id="bar"><div class="bar-fill" id="barfill"></div></div>
+        <div class="bar" id="bar"><div class="bar-fill" id="barfill"></div><div class="bar-max" id="barmax"></div></div>
     <div class="play" id="play">
       <button type="button" id="playbtn" aria-label="Начать путь"><svg viewBox="0 0 24 24"><path d="M5 3l16 9-16 9z"/></svg></button>
       <p>Начать путь</p>
@@ -1522,7 +1523,7 @@ const scrollFor = (i,f) => starts[i] + f*lens[i];
 const worldAt = (i,f) => D[i] + lens[i]*K*distFrac(S[i],f);
 
 /* ============ прогресс-полоска ============ */
-const bar = document.getElementById('bar'), barfill = document.getElementById('barfill');
+const bar = document.getElementById('bar'), barfill = document.getElementById('barfill'), barmax = document.getElementById('barmax');
 function buildBar(){
   bar.querySelectorAll('i').forEach(n=>n.remove());
   const total = starts[N+1];
@@ -1794,7 +1795,10 @@ function frame(now){
   rwEl.hidden = !rewinding;
   if (!(started && window.scrollY < maxS - 600)) backDismissed = false;
   backbar.hidden = !(behind && !backDismissed);
-  barfill.style.width = (100*maxS/starts[N+1]) + '%';
+  const tot = starts[N+1];
+  barfill.style.width = (100*Math.min(1, Math.max(0, window.scrollY)/tot)) + '%';
+  barmax.style.left = (100*Math.min(1, maxS/tot)) + '%';
+  barmax.style.display = (maxS - window.scrollY > 600) ? '' : 'none';
 }
 
 /* ============ интерфейс ============ */
@@ -1821,14 +1825,16 @@ document.getElementById('backx').addEventListener('click', ()=>{ backDismissed =
 const markSheet = document.getElementById('mark');
 document.getElementById('markbtn').addEventListener('click', ()=> { markSheet.hidden = !markSheet.hidden; });
 document.getElementById('mark-close').addEventListener('click', ()=> markSheet.hidden = true);
-document.getElementById('mark-restart').addEventListener('click', ()=>{
+function resetAll(){
   try { localStorage.removeItem(STORE); } catch(e){}
   clearHash();
-  markSheet.hidden = true; maxS = 0; sceneS = 0; camX = 0; started = false; lastY = 0; lastCp = 0; lastItemsKey = ''; pulseT = -1e9; rewindUntil = 0; backDismissed = false; alt = 0;
-  barfill.style.width = '0%';
+  markSheet.hidden = true; document.getElementById('resume').hidden = true;
+  maxS = 0; sceneS = 0; camX = 0; started = false; lastY = 0; lastCp = 0; lastItemsKey = ''; pulseT = -1e9; rewindUntil = 0; backDismissed = false; alt = 0;
+  barfill.style.width = '0%'; barmax.style.display = 'none';
   document.getElementById('play').hidden = false; window.scrollTo({top:0});
   clearTimeout(saveTimer); saveTimer = setTimeout(()=>{ try{ localStorage.removeItem(STORE); }catch(e){} }, 900);
-});
+}
+document.getElementById('mark-restart').addEventListener('click', resetAll);
 
 function clearHash(){ try{ history.replaceState(null, '', location.pathname + location.search); }catch(e){} }
 function restoreTo(cur, max){
@@ -1840,6 +1846,8 @@ function restoreTo(cur, max){
 }
 
 function init(){
+  try { history.scrollRestoration = 'manual'; } catch(e){}
+  window.scrollTo(0, 0);
   measure();
   const hm = /^#r(\d{1,2})$/.exec(location.hash);
   if (hm && +hm[1] <= N){ const n=+hm[1]; restoreTo([n,0.001],[n,0.001]); }
@@ -1847,10 +1855,10 @@ function init(){
     const saved = load();
     if (saved && saved.max && (saved.max[0] > 0 || saved.max[1] > .2)){
       const sheet = document.getElementById('resume');
-      document.getElementById('resume-text').textContent = `Вы остановились на точке ${saved.cur[0]} из ${N}: «${secs[saved.cur[0]].querySelector('h1,h2').textContent}».`;
+      document.getElementById('resume-text').textContent = `Вы остановились на точке ${saved.cur[0]} из ${N}. ${secs[saved.cur[0]].querySelector('h1,h2').textContent}`;
       sheet.hidden = false;
       document.getElementById('resume-go').onclick = ()=>{ sheet.hidden = true; restoreTo(saved.cur, saved.max); };
-      document.getElementById('resume-start').onclick = ()=>{ sheet.hidden = true; try{ localStorage.removeItem(STORE); }catch(e){} clearHash(); };
+      document.getElementById('resume-start').onclick = resetAll;
     }
   }
   window.addEventListener('scroll', onScroll, {passive:true});
