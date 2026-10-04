@@ -1,3 +1,9 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f1215">
 <title>Отношения нельзя завести</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Prata&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&family=JetBrains+Mono:wght@400;500&display=swap">
@@ -14,16 +20,18 @@
   --display: 'Prata', 'Georgia', serif;
   --body: 'Literata', 'Georgia', serif;
   --mono: 'JetBrains Mono', ui-monospace, 'Menlo', monospace;
-  --stage-h: clamp(220px, 38svh, 330px);
+  --stage-h: clamp(170px, 50vw, 260px);
   --col: 460px;
+  --stage-w: 720px;
   color-scheme: dark;
 }
+[hidden] { display: none !important; }
 html { background: var(--ink); }
 body { background: var(--ink); color: var(--paper); font-family: var(--body); font-size: 17px; line-height: 1.62; -webkit-font-smoothing: antialiased; }
 
 .stage {
   position: fixed; top: 0; left: 50%; transform: translateX(-50%);
-  width: min(100%, var(--col)); z-index: 10;
+  width: min(100%, var(--stage-w)); z-index: 10;
   padding-top: env(safe-area-inset-top, 0px);
   background: var(--ink);
 }
@@ -74,6 +82,8 @@ strong { color: var(--paper-hi); font-weight: 600; }
 .sheet .row { display: flex; flex-wrap: wrap; gap: 8px; }
 .toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(24px + env(safe-area-inset-bottom, 0px)); z-index: 30; background: var(--paper-hi); color: var(--ink); font-family: var(--mono); font-size: 12px; padding: 9px 14px; border-radius: 8px; max-width: calc(100% - 32px); text-align: center; }
 </style>
+</head>
+<body>
 
 <div class="stage" id="stage">
   <div class="stage-inner">
@@ -1538,6 +1548,7 @@ function onScroll(){
 function start(withEnter){ if (started) return; started = true; enterT = withEnter ? performance.now() : null; document.getElementById('play').hidden = true; maxS = Math.max(maxS, window.scrollY); }
 
 /* ============ рисование ============ */
+const BASEZOOM = 1.4;
 const groundY = () => H*0.8;
 const GX = () => W*0.36;
 function line(x1,y1,x2,y2){ ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke(); }
@@ -1675,7 +1686,7 @@ function frame(now){
   if (st.sp==='camUp'){ ang = f<.1 ? -Math.PI/2*ease(f/.1) : f<.6 ? -Math.PI/2 : -Math.PI/2*(1-ease(clamp01((f-.6)/.3))); }
   if (st.sp==='zoomOut') zoom = 1 - .6*ease(f);
   if (st.sp==='zoomBack') zoom = .4 + .6*ease(clamp01(f/.25));
-  ctx.translate(gx, gy); ctx.rotate(ang); ctx.scale(zoom, zoom); ctx.translate(-gx, -gy);
+  ctx.translate(gx, gy); ctx.rotate(ang); ctx.scale(zoom*BASEZOOM, zoom*BASEZOOM); ctx.translate(-gx, -gy);
 
   hills(gy - H*.3, H*.06, .15, rgb(colNow[2]), 1.3);
   hills(gy - H*.13, H*.04, .45, rgb(colNow[3]), 4.1);
@@ -1838,3 +1849,5 @@ window.addEventListener('resize', ()=>{ clearTimeout(resizeT); resizeT = setTime
 if (document.fonts && document.fonts.ready) document.fonts.ready.then(()=> { measure(); });
 init();
 </script>
+</body>
+</html>
