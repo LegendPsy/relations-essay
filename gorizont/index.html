@@ -428,7 +428,7 @@ S_ALL[101] = {a:'Банка с красивой этикеткой. Внутри
 S_ALL[102] = {a:'Мимо проезжает другой путник, машет и едет своей дорогой', m:'walk', sp:'passer'};
 S_ALL[103] = {a:'Друг, коллега, прохожий: с другом она обнимается, мимо остальных просто проходит', m:[['walk',.26],['stand',.52],['walk',1]], sp:'people'};
 S_ALL[104] = {a:'Они уже идут вместе. Арка «Пара» — только табличка над той же дорогой. На развилке он уходит своей тропинкой, и табличка рвётся', m:[['walk',.7],['stand',.92],['walk',1]], sp:'arch'};
-S_ALL[105] = {a:'Качели-балансир с малышом: ровно — не значит одинаково', m:[['walk',.2],['stand',.86],['walk',1]], sp:'seesaw'};
+S_ALL[105] = {a:'Качели-балансир с малышом: ровно — не значит одинаково. А когда малыш подпрыгивает, Лену подбрасывает обратно на дорогу', m:[['walk',.2],['stand',1]], sp:'seesaw'};
 S_ALL[106] = {a:'Щит «Настоящая пара»: прорезь не по её росту', m:[['walk',.22],['stand',.8],['walk',1]], sp:'board'};
 S_ALL[1] = Object.assign({}, S_ALL[1], {set: {h: 1, f: 1}});
 // порядок сцен = порядок пунктов текста; кнопка в конце пункта k показывает сцену k+1
@@ -1804,12 +1804,15 @@ function drawWorld(i, f, st, mode, it, camL, camC, now, tq, wind, vel){
     drawPerson(px, py, f >= .76 ? 1 : 1, J2, LOOK.ilya, {}, {t: tq, w: 1, scale: scl, blink: (tq % 4100) < 150}); }
   // 105 · качели-балансир: малыш уже сидит
   x = sx(A.see); if (x > -280 && x < LWv + 280){
-    const on = i === 105 && f >= .3 && f < .84, d = lerp(108, 54, ease(win(f, .44, .68)));
-    let th = on ? Math.max(-.2, Math.min(.2, (2 * d - 108) / 108 * .2)) + (f > .68 ? .035 * Math.sin(tq * .006) : 0) : -.2;
-    if (i === 105 && f >= .84) th = lerp(.035 * Math.sin(tq * .006), -.2, ease(win(f, .84, .92)));
+    const on = i === 105 && f >= .3 && f < .89, d = lerp(108, 54, ease(win(f, .44, .68)));
+    let th = on ? Math.max(-.2, Math.min(.2, (2 * d - 108) / 108 * .2)) + (f > .68 ? .035 * Math.sin(tq * .006) * (1 - win(f, .8, .86)) : 0) : -.2;
+    // малыш подпрыгивает и с размаху плюхается вниз — её конец взлетает
+    const jump = i === 105 ? bump(f, .83, .89) : 0;
+    if (i === 105 && f >= .88) th = lerp(0, -.2, easeOut(win(f, .88, .905)));
     seesaw(x, Y, th);
     const kx = x + 108 * Math.cos(th), ky = Y - 36 - 108 * Math.sin(th);
-    drawPerson(kx + 1.5, ky + 22, -1, makePose('sit', {}), LOOK.kid, {}, {t: tq, scale: .62, blink: (tq % 3700) < 150, noShadow: true});
+    const Jk = makePose('sit', {}); if (jump > 0){ Jk.hf = {x: 6, y: -118}; Jk.hb = {x: -6, y: -116}; }
+    drawPerson(kx + 1.5, ky + 22 - 34 * jump, -1, Jk, LOOK.kid, {}, {t: tq, scale: .62, blink: (tq % 3700) < 150, noShadow: true});
     drawWorld.see = {x, th, d, on}; }
   // птицы клином (38)
   if (i === 38){ const bx = LWv * 1.15 - f * LWv * 1.7, by = OFFY + 50; for (let k = 0; k < 9; k++){ const o = Math.abs(k - 4); bird(bx + o * 16, by + o * 8 * (k < 4 ? -1 : 1) * .0 + o * 9, 1.1, tq * .02 + k * .5); } }
@@ -1831,7 +1834,7 @@ function drawWorld(i, f, st, mode, it, camL, camC, now, tq, wind, vel){
     if (m === 'walkLs' || m === 'walkL') m = 'walk';
     if (i === 29 && f < .4){ o.lookIn = true; }
     if (i === 100 && f > .32 && f < .7) o.tilt = .1;
-    if (i === 105 && f >= .3 && f < .84) m = 'sit';
+    if (i === 105 && f >= .3 && f < .89) m = 'sit';
     if (i === 106 && f >= .3 && f < .74){ const k = win(f, .36, .7) * 3, hop = Math.abs(Math.sin(Math.PI * k)); gy -= 34 * hop * (k > 0 && k < 3 ? 1 : 0); }
     if (i === 101 && f >= .3 && f < .8){ o.hold = {x: 17, y: -76}; carry = 'jar'; o.lookIn = f > .4 && f < .7; }
     if (i === 102){ const rel = lerp(-420, 680, f); if (rel > 30 && rel < 260) o.wave = true; }
@@ -1854,6 +1857,10 @@ function drawWorld(i, f, st, mode, it, camL, camC, now, tq, wind, vel){
     if (i === 104 && f > .73 && f < .9) o.wave = true;
     if (i === 103 && f >= .28 && f < .52){ J.hf = {x: 24, y: -80}; J.hb = {x: 22, y: -82}; J.tilt = .12; }
     if (i === 105 && drawWorld.see && drawWorld.see.on){ const sv = drawWorld.see; gx = sv.x - sv.d * Math.cos(sv.th) + 2.2; gy = Y - 36 + sv.d * Math.sin(sv.th) + 37.4 - 3; }
+    if (i === 105 && f >= .89 && f < .975 && drawWorld.see){ const sv = drawWorld.see, u = win(f, .89, .975), sxs = sv.x - 54 + 2.2, sys = Y - 1.6;
+      gx = lerp(sxs, gxp, u); gy = lerp(sys, Y, u) - 120 * Math.sin(Math.PI * u);
+      J.hf = {x: 12, y: -126}; J.hb = {x: -10, y: -122}; J.fa = {x: 9, y: -10 * Math.sin(Math.PI * u)}; J.fb = {x: -6, y: -4}; J.tilt = -.18 * Math.sin(Math.PI * u); }
+    if (i === 105 && f >= .975){ const u = win(f, .975, 1); J.hip.y += 6 * Math.sin(Math.PI * u); }
     if (pushBike){ J.hb = {x: 24, y: -62}; C.save(); C.translate(gx + 6, Y - 2); C.scale(KG, KG); bikeShape(camL / (17 * KG), 0); if (it.b){ C.translate(31, -71); C.scale(1.3, 1.3); basketShape(0, 0, it.b); } C.restore(); }
     const blink = (tq % 4200) < 160;
     const vehWind = m.startsWith('bike') ? (m === 'bikeFast' ? 1.4 : .8) : m === 'fly' ? 1.6 : m === 'boat' ? .5 : 0;

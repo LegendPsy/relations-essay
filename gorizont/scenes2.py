@@ -45,25 +45,32 @@ R("  // птицы клином (38)", """  // 103 · друг, коллега, 
     drawPerson(px, py, f >= .76 ? 1 : 1, J2, LOOK.ilya, {}, {t: tq, w: 1, scale: scl, blink: (tq % 4100) < 150}); }
   // 105 · качели-балансир: малыш уже сидит
   x = sx(A.see); if (x > -280 && x < LWv + 280){
-    const on = i === 105 && f >= .3 && f < .84, d = lerp(108, 54, ease(win(f, .44, .68)));
-    let th = on ? Math.max(-.2, Math.min(.2, (2 * d - 108) / 108 * .2)) + (f > .68 ? .035 * Math.sin(tq * .006) : 0) : -.2;
-    if (i === 105 && f >= .84) th = lerp(.035 * Math.sin(tq * .006), -.2, ease(win(f, .84, .92)));
+    const on = i === 105 && f >= .3 && f < .89, d = lerp(108, 54, ease(win(f, .44, .68)));
+    let th = on ? Math.max(-.2, Math.min(.2, (2 * d - 108) / 108 * .2)) + (f > .68 ? .035 * Math.sin(tq * .006) * (1 - win(f, .8, .86)) : 0) : -.2;
+    // малыш подпрыгивает и с размаху плюхается вниз — её конец взлетает
+    const jump = i === 105 ? bump(f, .83, .89) : 0;
+    if (i === 105 && f >= .88) th = lerp(0, -.2, easeOut(win(f, .88, .905)));
     seesaw(x, Y, th);
     const kx = x + 108 * Math.cos(th), ky = Y - 36 - 108 * Math.sin(th);
-    drawPerson(kx + 1.5, ky + 22, -1, makePose('sit', {}), LOOK.kid, {}, {t: tq, scale: .62, blink: (tq % 3700) < 150, noShadow: true});
+    const Jk = makePose('sit', {}); if (jump > 0){ Jk.hf = {x: 6, y: -118}; Jk.hb = {x: -6, y: -116}; }
+    drawPerson(kx + 1.5, ky + 22 - 34 * jump, -1, Jk, LOOK.kid, {}, {t: tq, scale: .62, blink: (tq % 3700) < 150, noShadow: true});
     drawWorld.see = {x, th, d, on}; }
   // птицы клином (38)""")
 
 # ---------- девушка ----------
 R("    const gx = gxp; let gy = Y", "    let gx = gxp; let gy = Y")
 R("    if (i === 100 && f > .32 && f < .7) o.tilt = .1;", """    if (i === 100 && f > .32 && f < .7) o.tilt = .1;
-    if (i === 105 && f >= .3 && f < .84) m = 'sit';
+    if (i === 105 && f >= .3 && f < .89) m = 'sit';
     if (i === 106 && f >= .3 && f < .74){ const k = win(f, .36, .7) * 3, hop = Math.abs(Math.sin(Math.PI * k)); gy -= 34 * hop * (k > 0 && k < 3 ? 1 : 0); }""")
 R("    const J = makePose(m, o);\n", """    const J = makePose(m, o);
     if (i === 104 && f > .44 && f < .72) J.hb = {x: -20, y: -52};
     if (i === 104 && f > .73 && f < .9) o.wave = true;
     if (i === 103 && f >= .28 && f < .52){ J.hf = {x: 24, y: -80}; J.hb = {x: 22, y: -82}; J.tilt = .12; }
     if (i === 105 && drawWorld.see && drawWorld.see.on){ const sv = drawWorld.see; gx = sv.x - sv.d * Math.cos(sv.th) + 2.2; gy = Y - 36 + sv.d * Math.sin(sv.th) + 37.4 - 3; }
+    if (i === 105 && f >= .89 && f < .975 && drawWorld.see){ const sv = drawWorld.see, u = win(f, .89, .975), sxs = sv.x - 54 + 2.2, sys = Y - 1.6;
+      gx = lerp(sxs, gxp, u); gy = lerp(sys, Y, u) - 120 * Math.sin(Math.PI * u);
+      J.hf = {x: 12, y: -126}; J.hb = {x: -10, y: -122}; J.fa = {x: 9, y: -10 * Math.sin(Math.PI * u)}; J.fb = {x: -6, y: -4}; J.tilt = -.18 * Math.sin(Math.PI * u); }
+    if (i === 105 && f >= .975){ const u = win(f, .975, 1); J.hip.y += 6 * Math.sin(Math.PI * u); }
 """)
 R("    // щенок рядом с ней\n", """    if (i === 106 && f >= .3 && f < .74) photoBoard(sx(A.board), Y - 2);
     // щенок рядом с ней
