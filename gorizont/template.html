@@ -51,14 +51,16 @@ body { background: var(--ink); color: var(--paper); font-family: var(--body); fo
 #listen-seek::-moz-range-thumb { width: 14px; height: 14px; border-radius: 50%; background: var(--paper-hi); border: 0; }
 .col .now-reading { color: var(--paper-hi); }
 .col p, .col li, .col h2 { transition: color .5s; }
-.col p.now-reading, .col li.now-reading { text-shadow: 0 0 .01px currentColor; }
-.col p.now-reading::before { content: ''; position: absolute; left: -14px; top: .35em; bottom: .35em; width: 3px; border-radius: 2px; background: var(--accent); }
 .col p { position: relative; }
+.col p.now-reading::before { content: ''; position: absolute; left: -14px; top: .35em; bottom: .35em; width: 3px; border-radius: 2px; background: var(--accent); }
+.col .w { border-radius: 3px; transition: background .25s, color .25s; }
+.col .w.said { color: var(--paper-hi); }
+.col .w.w-now { background: rgba(217,163,58,.30); color: var(--paper-hi); box-shadow: 0 0 0 2px rgba(217,163,58,.30); }
 .tap-listen { cursor: pointer; -webkit-tap-highlight-color: transparent; border-radius: 6px; }
-@media (hover: hover){ .col p.tap-listen:hover, .col li.tap-listen:hover { background: rgba(217,163,58,.07); box-shadow: 0 0 0 6px rgba(217,163,58,.07); } }
+@media (hover: hover){ .col .w:hover { background: rgba(217,163,58,.14); } }
 .tap-listen.tapped { animation: tapflash .9s ease-out; }
-@keyframes tapflash { 0% { background: rgba(217,163,58,.28); box-shadow: 0 0 0 6px rgba(217,163,58,.28); } 100% { background: transparent; box-shadow: 0 0 0 6px transparent; } }
-@media (prefers-reduced-motion: reduce){ .tap-listen.tapped { animation: none; } }
+@keyframes tapflash { 0% { background: rgba(217,163,58,.22); } 100% { background: transparent; } }
+@media (prefers-reduced-motion: reduce){ .tap-listen.tapped { animation: none; } .col .w { transition: none; } }
 .stage::after { content: ''; position: absolute; left: 0; right: 0; bottom: -40px; height: 40px; background: linear-gradient(var(--ink), rgba(15,18,21,0)); pointer-events: none; }
 #scene { display: block; width: 100%; height: 100%; touch-action: pan-y; }
 
@@ -322,6 +324,7 @@ const scrollFor = (i,f) => starts[i] + f*lens[i];
 const LPT = 260;             // длина отрезка пути одной точки (в условных единицах), одинаковая для всех
 const LMUL = {103: 1.8, 21: 1.2, 22: 1.5, 25: 1.6, 26: 1.6, 27: 1.2, 35: 1.3, 36: 1.8, 37: 1.6};   // где предметам нужно больше места
 const LP = i => LPT * (LMUL[OLD[i]] || 1);
+let AUDIO_GAP = null;   // в режиме озвучки дорога между событиями длиннее — Лена идёт столько, сколько звучит пункт
 let WS = [], WE = [], GAP = [], TM = [];
 const EXTRA = {12: 150, 36: 140, 47: 360};   // у большой остановки и ресторана левый край далеко от места действия
 // дорога перед событием: идёт, если пункт начинается с движения; длина — чтобы следующее событие не было видно заранее
@@ -332,6 +335,7 @@ function buildWorld(){
     // чем идти к событию: тем же, чем пункт начинается, а если он начинается с остановки — тем, чем закончился прошлый
     TM[i] = SPEED[m0] > 0 ? m0 : (SPEED[mp] > 0 ? mp : null);
     GAP[i] = (i > 0 && TM[i] && OLD[i] !== 26 && s.sp !== 'buffet') ? (view + (EXTRA[OLD[i]] || 0)) / 1.3 : 0;
+    if (AUDIO_GAP) GAP[i] = AUDIO_GAP[i];
     WS[i] = x + GAP[i]; WE[i] = WS[i] + LP(i) * K * distFrac(s, 1); x = WE[i]; });
 }
 const worldAt = (i,f) => WS[i] + LP(i)*K*distFrac(S[i],f);
@@ -425,7 +429,7 @@ function buildGo(){
   document.getElementById('listen-back').addEventListener('click', () => jump(-15)); document.getElementById('listen-fwd').addEventListener('click', () => jump(15));
   const btn = document.getElementById('listen-btn'), ic = btn.querySelector('.li-ic'), seek = document.getElementById('listen-seek'), tm = document.getElementById('listen-time'), sp = document.getElementById('listen-speed');
   const fmt = v => { v = Math.max(0, Math.floor(v || 0)); return Math.floor(v / 60) + ':' + String(v % 60).padStart(2, '0'); };
-  let dragging = false; const speeds = [1, 1.25, 1.5, .85]; let si = 0;
+  let dragging = false; const speeds = [1, 1.25, 1.5, 2, .85]; let si = 0;
   const show = () => { const d = au.duration || 1349; if (!dragging) seek.value = Math.round(1000 * au.currentTime / d); tm.textContent = au.currentTime > 0 ? fmt(au.currentTime) + ' / ' + fmt(d) : fmt(d); seek.style.setProperty('--p', (100 * au.currentTime / d) + '%'); };
   btn.addEventListener('click', () => { if (au.paused) au.play().catch(() => {}); else au.pause(); });
   au.addEventListener('play', () => { ic.textContent = '❚❚'; btn.setAttribute('aria-label', 'Пауза'); });
@@ -435,59 +439,122 @@ function buildGo(){
   seek.addEventListener('change', () => { const d = au.duration || 1349; au.currentTime = seek.value / 1000 * d; dragging = false; if (au.paused) au.play().catch(() => {}); });
   sp.addEventListener('click', () => { si = (si + 1) % speeds.length; au.playbackRate = speeds[si]; sp.textContent = String(speeds[si]).replace('.', ',') + '×'; });
 })();
-/* ---------- озвучка ведёт текст и Лену ---------- */
+/* ---------- озвучка ведёт текст, прокрутку и Лену ---------- */
 const PARA_T = {{TIMINGS}};
+const WORD_T = {{WORDTIMES}};
+let audioMode = false;
 (() => {
   const au = document.getElementById('listen-audio'); if (!au) return;
   const els = [...document.querySelectorAll('#col h1, #col h2, #col p, #col li')].filter(e => !e.closest('.rest'));
   if (els.length !== PARA_T.length){ console.warn('озвучка: абзацев', els.length, 'отметок', PARA_T.length); return; }
+  // каждое слово — отдельный кусочек со своим временем
+  const W_EL = [], W_T = [], W_P = [];
+  els.forEach((e, k) => {
+    const txt = e.textContent, times = WORD_T[k] || [], re = /[^\s\/—–-]+/g; let m, last = 0, n = 0, html = '';
+    const esc = x => x.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+    const toks = []; while ((m = re.exec(txt))){ if (/[0-9A-Za-zА-Яа-яЁё]/.test(m[0])) toks.push(m); }
+    if (toks.length !== times.length) return;
+    toks.forEach((t, j) => { html += esc(txt.slice(last, t.index)) + '<span class="w">' + esc(t[0]) + '</span>'; last = t.index + t[0].length; });
+    e.innerHTML = html + esc(txt.slice(last));
+    [...e.querySelectorAll('.w')].forEach((sp, j) => { W_EL.push(sp); W_T.push(times[j]); W_P.push(k); });
+  });
   const unitOf = els.map(e => +e.closest('.cp').dataset.cp);
-  const firstOfUnit = {}; els.forEach((e, k) => { if (firstOfUnit[unitOf[k]] === undefined) firstOfUnit[unitOf[k]] = k; });
-  const paraAt = t => { let k = 0; while (k + 1 < PARA_T.length && PARA_T[k + 1] <= t + .05) k++; return k; };
-  const readLine = () => document.getElementById('stage').getBoundingClientRect().bottom + 40;
-  const visiblePara = () => { const y = readLine(); let best = 0; els.forEach((e, k) => { if (e.getBoundingClientRect().top <= y) best = k; }); return best; };
-  let cur = -1, everPlayed = false, userScrollT = 0, autoScrolling = false, startedAt = -1;
-  try { const s = JSON.parse(localStorage.getItem('gorizont-1-audio') || 'null'); if (s && s.t > 3) { au.addEventListener('loadedmetadata', () => { if (!everPlayed) au.currentTime = s.t; }, {once: true}); } } catch (e) {}
-  // «играть»: если читатель ушёл по тексту в другое место — начинаем с того абзаца, который он сейчас видит
+  const US = []; els.forEach((e, k) => { if (US[unitOf[k]] === undefined) US[unitOf[k]] = PARA_T[k]; });
+  const SPEECH_END = W_T.length ? W_T[W_T.length - 1] + 1.2 : 1335;
+  const DUR = () => (au.duration && isFinite(au.duration)) ? au.duration : 1349.06;
+  const idxAt = (arr, t) => { let lo = 0, hi = arr.length - 1, r = 0; while (lo <= hi){ const mid = (lo + hi) >> 1; if (arr[mid] <= t + .02){ r = mid; lo = mid + 1; } else hi = mid - 1; } return r; };
+
+  // ---- мультик по времени: у каждой сцены свой отрезок записи; в конце отрезка — событие, до него — дорога ----
+  let SEG = null;
+  const natDur = s => 1 / (BASE_RATE * (PF[OLD[s]] || 1) / (LMUL[OLD[s]] || 1));
+  const WALK_V = 88 / 1.3;
+  function buildSegments(){
+    SEG = []; const ends = [];
+    ends[0] = US[0] + .2;                                         // сцена 0: пока звучит музыка — выходит и видит транспарант
+    for (let u = 0; u < GO_OF.length; u++){ const sc = GO_OF[u]; if (sc == null) continue; ends[sc] = (u + 1 < US.length) ? US[u + 1] : SPEECH_END + 1.5; }
+    let a = 0;
+    for (let s = 0; s <= N; s++){ const b = ends[s] !== undefined ? ends[s] : a + 4; const D = s === 0 ? b - a : Math.min(natDur(s), (b - a) * .85);
+      SEG[s] = {a, b, ev: b - D, D}; a = b; }
+    AUDIO_GAP = SEG.map((g, s) => (s === 0 || !TM[s]) ? 0 : WALK_V * Math.abs(SPEED[TM[s]] || 1) * (g.ev - g.a));
+  }
+  function stateAt(t){
+    let s = 0; while (s < N && t >= SEG[s].b) s++;
+    const g = SEG[s];
+    if (t < g.ev){ return {k: s, f: 0, tr: AUDIO_GAP[s] * (g.ev - t) / Math.max(.01, g.ev - g.a)}; }
+    return {k: s, f: Math.min(1, (t - g.ev) / g.D), tr: 0};
+  }
+  function enterAudio(){
+    if (audioMode) return;
+    audioMode = true; buildSegments(); buildWorld(); buildAnchors();
+    started = true; document.getElementById('play').hidden = true; playing = false; targetK = 0;
+    const st = stateAt(au.currentTime); sceneK = st.k; sceneF = st.f; travel = st.tr; camX = worldAt(sceneK, sceneF) - travel; updateGo();
+  }
+  function leaveAudio(){
+    if (!audioMode) return;
+    audioMode = false; AUDIO_GAP = null; buildWorld(); buildAnchors(); travel = 0; camX = worldAt(sceneK, sceneF);
+  }
+  // кнопки «Дальше в путь»: во время озвучки — перейти к этому месту записи; без озвучки — как раньше
+  const playPointOrig = playPoint;
+  playPoint = function(k){
+    if (audioMode && !au.paused){ const g = SEG[k]; if (g){ au.currentTime = Math.max(g.a, g.ev - 1.5); } return; }
+    leaveAudio(); playPointOrig(k);
+  };
+
+  // ---- слушать с любого места ----
+  const readTop = () => document.getElementById('stage').getBoundingClientRect().bottom;
+  const visiblePara = () => { const y = readTop() + 40; let best = 0; els.forEach((e, k) => { if (e.getBoundingClientRect().top <= y) best = k; }); return best; };
+  const paraAt = t => idxAt(PARA_T, t);
+  let everPlayed = false, userT = -1e9, hinted = false;
+  try { hinted = !!localStorage.getItem('gorizont-1-hint'); } catch (er) {}
+  try { const sv = JSON.parse(localStorage.getItem('gorizont-1-audio') || 'null'); if (sv && sv.t > 3) au.addEventListener('loadedmetadata', () => { if (!everPlayed) au.currentTime = sv.t; }, {once: true}); } catch (e) {}
   document.getElementById('listen-btn').addEventListener('click', () => {
     if (!au.paused) return;
     const v = visiblePara(), here = paraAt(au.currentTime);
     if (Math.abs(v - here) > 1 || (!everPlayed && v > 1)) au.currentTime = PARA_T[v] + .01;
   }, true);
-  window.addEventListener('scroll', () => { if (!autoScrolling) userScrollT = performance.now(); }, {passive: true});
-  // нажали на абзац — озвучка с этого места
+  ['touchstart', 'touchmove', 'wheel', 'keydown', 'mousedown'].forEach(ev => window.addEventListener(ev, e => { if (!e.target.closest || !e.target.closest('.dock, .tap-listen')) userT = performance.now(); }, {passive: true}));
+  // нажали на слово или абзац — звучит с этого места
   els.forEach((e, k) => { e.classList.add('tap-listen'); e.addEventListener('click', ev => {
     if (ev.target.closest('button, a, input')) return;
     const sel = window.getSelection && window.getSelection(); if (sel && String(sel).length > 0) return;
-    au.currentTime = PARA_T[k] + .01; everPlayed = true; userScrollT = performance.now() - 3000;
+    const w = ev.target.closest('.w'), wi = w ? W_EL.indexOf(w) : -1;
+    au.currentTime = (wi >= 0 ? W_T[wi] - .15 : PARA_T[k]) + .01; everPlayed = true; userT = -1e9;
     e.classList.remove('tapped'); void e.offsetWidth; e.classList.add('tapped');
     if (au.paused) au.play().catch(() => {});
     if (!hinted){ hinted = true; try { localStorage.setItem('gorizont-1-hint', '1'); } catch (er) {} }
   }); });
-  let hinted = false; try { hinted = !!localStorage.getItem('gorizont-1-hint'); } catch (er) {}
-  au.addEventListener('play', () => { if (!hinted){ hinted = true; try { localStorage.setItem('gorizont-1-hint', '1'); } catch (er) {} setTimeout(() => toast('Нажмите на любой абзац — озвучка начнётся с него'), 900); } });
-  const follow = k => {
-    if (performance.now() - userScrollT < 5000) return;          // читатель листает сам — не мешаем
-    const r = els[k].getBoundingClientRect(), y = readLine();
-    if (r.top < y - 10 || r.bottom > window.innerHeight - 60){ autoScrolling = true; window.scrollTo({top: window.scrollY + r.top - y - 6, behavior: 'smooth'}); setTimeout(() => autoScrolling = false, 900); }
-  };
-  // мультик идёт сам: закончился пункт в озвучке — Лена делает то, что после него
-  const driveScene = k => {
-    if (au.paused || au.seeking) return;
-    if (!started){ started = true; document.getElementById('play').hidden = true; playPoint(0); }
-    const u = unitOf[k]; let target = -1;
-    for (let q = 0; q < u; q++) if (GO_OF[q] != null) target = Math.max(target, GO_OF[q]);
-    if (target > sceneK || (target === sceneK && sceneF === 0 && !playing)) playPoint(target);
-  };
-  au.addEventListener('play', () => { everPlayed = true; startedAt = au.currentTime; userScrollT = 0; });
-  au.addEventListener('timeupdate', () => {
-    const k = paraAt(au.currentTime);
-    if (k !== cur){ if (cur >= 0) els[cur].classList.remove('now-reading'); els[k].classList.add('now-reading'); cur = k; if (!au.paused) follow(k); }
-    driveScene(k);
-    try { localStorage.setItem('gorizont-1-audio', JSON.stringify({t: au.currentTime})); } catch (e) {}
-  });
-  au.addEventListener('ended', () => { const last = GO_OF[GO_OF.length - 1]; if (last != null && last > sceneK) playPoint(last); try { localStorage.removeItem('gorizont-1-audio'); } catch (e) {} });
-  au.addEventListener('pause', () => { if (cur >= 0 && au.currentTime < 1) els[cur].classList.remove('now-reading'); });
+  au.addEventListener('play', () => { everPlayed = true; userT = -1e9; enterAudio();
+    if (!hinted){ hinted = true; try { localStorage.setItem('gorizont-1-hint', '1'); } catch (er) {} setTimeout(() => toast('Нажмите на любое слово — озвучка начнётся с него'), 900); } });
+  au.addEventListener('seeking', () => { if (audioMode){ const st = stateAt(au.currentTime); if (st.k !== sceneK) camX = worldAt(st.k, st.f) - st.tr; } });
+  au.addEventListener('ended', () => { try { localStorage.removeItem('gorizont-1-audio'); } catch (e) {} });
+
+  // ---- каждый кадр: Лена, подсветка слова и прокрутка следуют за временем записи ----
+  let curW = -1, curP = -1, saveT = 0;
+  function tick(now){
+    requestAnimationFrame(tick);
+    if (!everPlayed) return;
+    const t = au.currentTime;
+    if (audioMode){ const st = stateAt(t); sceneK = st.k; sceneF = st.f; travel = st.tr; lastCp = sceneK; }
+    // слово
+    const wi = W_T.length ? idxAt(W_T, t) : -1;
+    if (wi !== curW && wi >= 0){
+      if (curW >= 0) W_EL[curW].classList.remove('w-now');
+      if (wi > curW && curW >= 0 && wi - curW < 40) for (let q = curW; q < wi; q++) W_EL[q].classList.add('said');
+      else W_EL.forEach((el, q) => el.classList.toggle('said', q < wi));
+      if (t >= W_T[0] - .3) W_EL[wi].classList.add('w-now');
+      curW = wi;
+    }
+    const pk = paraAt(t);
+    if (pk !== curP){ if (curP >= 0) els[curP].classList.remove('now-reading'); els[pk].classList.add('now-reading'); curP = pk; }
+    // прокрутка: читаемое слово держим чуть выше середины видимого текста
+    if (!au.paused && performance.now() - userT > 4000 && wi >= 0){
+      const r = W_EL[wi].getBoundingClientRect(), top = readTop(), target = top + (window.innerHeight - top) * .38;
+      const dy = r.top - target;
+      if (Math.abs(dy) > 2){ const step = Math.abs(dy) > window.innerHeight ? dy : dy * .06; window.scrollTo(0, window.scrollY + step); }
+    }
+    if (now - saveT > 2000){ saveT = now; try { localStorage.setItem('gorizont-1-audio', JSON.stringify({t})); } catch (e) {} }
+  }
+  requestAnimationFrame(tick);
 })();
 function saveSoon(){ clearTimeout(saveTimer); saveTimer = setTimeout(save, 700); }
 
