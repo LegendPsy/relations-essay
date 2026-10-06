@@ -302,25 +302,33 @@ function start(withEnter){ if (started) return; started = true; enterT = null; d
 const PF = {4: .8, 7: .7, 12: .6, 21: .8, 47: .55, 48: .28};   // где сцене нужно больше времени
 const BASE_RATE = 88 / (LPT * K * 1.3);                         // живой лёгкий шаг ≈ 88 единиц в секунду
 const goBtns = [];
+let targetK = 0;   // до какого пункта проигрывать подряд
+function beginPoint(j){ sceneK = j; sceneF = 0; lastCp = j; travel = GAP[j]; playing = true; }
 function playPoint(k){
   if (!started){ started = true; document.getElementById('play').hidden = true; }
-  const contiguous = (sceneK === k - 1 && sceneF >= 1 && !travel) || (sceneK === k && sceneF === 0);
-  sceneK = k; sceneF = 0; lastCp = k;
-  if (contiguous && !(sceneK === k && travel)) travel = GAP[k];
-  if (!contiguous){ travel = 0; camX = worldAt(k, 0); }      // пропущенные пункты не проигрываем: героиня сразу на месте
-  playing = true; updateGo(); saveSoon();
+  const ahead = k > sceneK || (k === sceneK && sceneF === 0 && !playing);
+  if (ahead){
+    // пропущенные пункты не перескакиваем: проигрываем их по очереди до нажатого
+    targetK = k;
+    if (!playing) beginPoint(sceneF >= 1 ? sceneK + 1 : sceneK);
+  } else {
+    // назад или «ещё раз»: сразу на место и заново
+    targetK = k; sceneK = k; sceneF = 0; lastCp = k; travel = 0; camX = worldAt(k, 0); playing = true;
+  }
+  updateGo(); saveSoon();
 }
 const TRAVEL_SPEED = 88 * 1.8 / 1.5 / 1.3;   // по дороге между событиями — чуть быстрее (×1.8)
 function stepScene(dt){
   if (!playing) return;
   const g = gaitAt(sceneK, sceneF), gf = g === 'skip' ? 1.4 : g === 'stroll' ? .5 : 1;
-  if (travel > 0){ travel = Math.max(0, travel - dt * TRAVEL_SPEED * Math.abs(SPEED[TM[sceneK]] || 1) * gf); return; }
-  sceneF += dt * BASE_RATE * (PF[sceneK] || 1) * gf / (LMUL[sceneK] || 1);
-  if (sceneF >= 1){ sceneF = 1; playing = false; updateGo(); saveSoon(); }
+  const catchUp = sceneK < targetK ? 2 : 1;   // пропущенные пункты — вдвое быстрее
+  if (travel > 0){ travel = Math.max(0, travel - dt * TRAVEL_SPEED * Math.abs(SPEED[TM[sceneK]] || 1) * gf * catchUp); return; }
+  sceneF += dt * BASE_RATE * (PF[sceneK] || 1) * gf * catchUp / (LMUL[sceneK] || 1);
+  if (sceneF >= 1){ sceneF = 1; if (sceneK < targetK && sceneK < N){ beginPoint(sceneK + 1); } else playing = false; updateGo(); saveSoon(); }
 }
 function updateGo(){
   goBtns.forEach((b, k) => {
-    const done = sceneK > k || (sceneK === k && sceneF >= 1), now = sceneK === k && playing, next = (sceneK === k - 1 && sceneF >= 1 && !playing) || (k === 0 && !started);
+    const done = sceneK > k || (sceneK === k && sceneF >= 1), now = playing && (sceneK === k || (k === targetK && sceneK < k)), next = (sceneK === k - 1 && sceneF >= 1 && !playing) || (k === 0 && !started);
     b.classList.toggle('is-next', next); b.classList.toggle('is-now', now); b.disabled = now;
     b.querySelector('.go-t').textContent = now ? 'Идёт…' : (sceneK === k && sceneF >= 1) ? 'Ещё раз' : k === 0 ? 'В путь' : 'Дальше в путь';
     b.querySelector('.go-ic').textContent = now ? '●' : (sceneK === k && sceneF >= 1) ? '↻' : '▶';
@@ -1648,7 +1656,7 @@ function resetAll(){
   try { localStorage.removeItem(STORE); } catch(e){}
   clearHash();
   markSheet.hidden = true; document.getElementById('resume').hidden = true;
-  maxS = 0; sceneS = 0; sceneK = 0; sceneF = 0; playing = false; travel = 0; camX = 0; started = false; lastY = 0; lastCp = 0; lastItemsKey = ''; pulseT = -1e9; rewindUntil = 0; backDismissed = false; alt = 0;
+  maxS = 0; sceneS = 0; sceneK = 0; sceneF = 0; playing = false; travel = 0; targetK = 0; camX = 0; started = false; lastY = 0; lastCp = 0; lastItemsKey = ''; pulseT = -1e9; rewindUntil = 0; backDismissed = false; alt = 0;
   barfill.style.width = '0%'; barmax.style.display = 'none';
   document.getElementById('play').hidden = false; window.scrollTo({top:0}); updateGo();
   clearTimeout(saveTimer); saveTimer = setTimeout(()=>{ try{ localStorage.removeItem(STORE); }catch(e){} }, 900);
@@ -1661,7 +1669,7 @@ function restoreTo(cur, max, scene){
   const y = scrollFor(cur[0], cur[1]), m = scrollFor(max[0], max[1]);
   started = true; document.getElementById('play').hidden = true;
   maxS = Math.max(y, m); lastY = y; const c = locate(y);
-  const sc = scene && scene[0] <= N ? scene : [c.i, 0]; sceneK = sc[0]; sceneF = sc[1]; playing = false; travel = 0; camX = worldAt(sceneK, sceneF); lastCp = sceneK; updateGo();
+  const sc = scene && scene[0] <= N ? scene : [c.i, 0]; sceneK = sc[0]; sceneF = sc[1]; playing = false; travel = 0; targetK = sceneK; camX = worldAt(sceneK, sceneF); lastCp = sceneK; updateGo();
   window.scrollTo({top: y});
 }
 
