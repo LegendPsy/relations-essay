@@ -1,7 +1,8 @@
 # Крупные сцены первой части: нити отношения, арка «Пара», качели-балансир, щит «Настоящая пара».
 # Выполняется внутри make_template.py (там определены s и R).
 
-R("const PF = {4: .8, 7: .7,", "const PF = {103: .5, 104: .55, 105: .42, 106: .5, 4: .8, 7: .7,")
+R("const LMUL = {21: 1.2,", "const LMUL = {103: 1.8, 21: 1.2,")
+R("const PF = {4: .8, 7: .7,", "const PF = {103: .9, 104: .55, 105: .42, 106: .5, 4: .8, 7: .7,")
 
 R("function ik(ax, ay, bx, by, l1, l2, bend){", """LOOK.colleague = {kind:'boy', shirt:'#6b7480', trim:'#c9ccd0', pants:'#2f3340', skin:'#ecc9a6', hair:'#3a2a20', cap:'#3a2a20', legs:'#2f3340', boots:'#1f1f24', line:'#2a1f19'};
 LOOK.stranger = {kind:'boy', shirt:'#8a5a2e', trim:'#d9c49a', pants:'#4a3a2e', skin:'#e6c09c', hair:'#2a2420', cap:'#4a4a52', legs:'#4a3a2e', boots:'#2a1f19', line:'#2a1f19'};
@@ -20,19 +21,18 @@ R("  // ---- попутчик и девушка ----", """  // мимоходо�
   // ---- попутчик и девушка ----""")
 
 # ---------- люди и качели (до девушки) ----------
-R("  // птицы клином (38)", """  // 103 · друг, коллега, прохожий — и от неё к каждому своя нить
-  x = sx(A.rib); if (x > -320 && x < LWv + 420){
-    const fr = x + 112, co = x + 300, nod = i === 103 && f > .42 && f < .56 ? .16 : 0;
-    drawPerson(co, Y - 12, -1, makePose('stand', {w: 0, t: tq, tilt: nod}), LOOK.colleague, {}, {t: tq, scale: .93, blink: (tq % 3900) < 150});
-    drawPerson(fr, Y + 4, -1, makePose('stand', {w: 0, t: tq, wave: i === 103 && f > .2 && f < .5}), LOOK.friend, {}, {t: tq, blink: (tq % 4400) < 150});
-    if (i === 103){
-      const sp2 = lerp(x + 520, x - 300, win(f, .04, .96));
-      drawPerson(sp2, Y - 20, -1, makePose('walk', {w: 1, ph: f * 52, t: tq}), LOOK.stranger, {}, {t: tq, w: 1, scale: .86});
-      const fade = 1 - win(f, .86, 1), hx = gxp + 6, hy = Y - 84;
-      ribbon(hx, hy, fr - 4, Y - 80, win(f, .18, .36), 7, '#c0452f', 0, 'друг', fade, -62);
-      ribbon(hx, hy, co - 4, Y - 90, win(f, .36, .54), 3.4, '#d9a33a', 0, 'коллега', fade, -64);
-      ribbon(hx, hy, sp2 - 4, Y - 92, win(f, .54, .7), 1.8, '#5a5a52', 1, 'прохожий', fade, -30);
-    } }
+R("  // птицы клином (38)", """  // 103 · друг, коллега, прохожий: над каждым табличка; с другом она обнимается, остальных просто проходит
+  { const fx = sx(A.rib) + 27, cx2 = sx(A.colW) + 30;
+    if (cx2 > -120 && cx2 < LWv + 160){ drawPerson(cx2, Y - 14, -1, makePose('stand', {w: 0, t: tq}), LOOK.colleague, {}, {t: tq, scale: .92, blink: (tq % 3900) < 150}); nameTag(cx2 - 4, Y - 14 - 152 * .92, 'коллега', '#d9a33a'); }
+    if (fx > -120 && fx < LWv + 160){
+      const hug = i === 103 && f >= .28 && f < .52, Jf = makePose('stand', {w: 0, t: tq, wave: i === 103 && f > .08 && f < .26});
+      if (hug){ Jf.hf = {x: 20, y: -78}; Jf.hb = {x: 18, y: -80}; Jf.tilt = .12; }
+      drawPerson(fx, Y + 2, -1, Jf, LOOK.friend, {}, {t: tq, blink: (tq % 4400) < 150});
+      nameTag(fx - 4, Y + 2 - 152, 'друг', '#c0452f');
+      if (hug){ const hu = win(f, .3, .5); C.save(); C.globalAlpha = Math.sin(Math.PI * hu); const hx = fx - 14, hy = Y - 178 - hu * 26, p = NP(); p.moveTo(hx, hy + 9); p.bezierCurveTo(hx - 15, hy - 3, hx - 8, hy - 15, hx, hy - 7); p.bezierCurveTo(hx + 8, hy - 15, hx + 15, hy - 3, hx, hy + 9); cut(p, '#d94a3a', .6); C.restore(); } }
+    if (i === 103){ const sp2 = lerp(sx(A.strW) + 480, sx(A.strW) - 120, win(f, .6, 1));
+      drawPerson(sp2, Y - 26, -1, makePose('walk', {w: 1, ph: f * 64, t: tq}), LOOK.stranger, {}, {t: tq, w: 1, scale: .84});
+      C.save(); C.globalAlpha = 1 - win(f, .8, .92); nameTag(sp2 - 4, Y - 26 - 152 * .84, 'прохожий', '#6e6a5e'); C.restore(); } }
   // 104 · Илья: догоняет её на дороге, идут вместе; после арки берутся за руки, потом он уходит своей тропинкой
   if (i === 104){ const lv = win(f, .86, 1), catchUp2 = f === 0 && GAP[NI] > 0 ? clamp01(travel / GAP[NI]) : 0;
     const rel = lerp(-48, 150, ease(lv)) - 260 * catchUp2, yy = Y - 5 - 66 * ease(lv), scl = .97 - .45 * ease(lv);
@@ -58,6 +58,7 @@ R("    if (i === 100 && f > .32 && f < .7) o.tilt = .1;", """    if (i === 100 &
     if (i === 106 && f >= .3 && f < .74){ const k = win(f, .36, .7) * 3, hop = Math.abs(Math.sin(Math.PI * k)); gy -= 34 * hop * (k > 0 && k < 3 ? 1 : 0); }""")
 R("    const J = makePose(m, o);\n", """    const J = makePose(m, o);
     if (i === 104 && f > .6 && f < .86) J.hb = {x: -20, y: -52};
+    if (i === 103 && f >= .28 && f < .52){ J.hf = {x: 24, y: -80}; J.hb = {x: 22, y: -82}; J.tilt = .12; }
     if (i === 105 && drawWorld.see && drawWorld.see.on){ const sv = drawWorld.see; gx = sv.x - sv.d * Math.cos(sv.th) + 2.2; gy = Y - 36 + sv.d * Math.sin(sv.th) + 37.4 - 3; }
 """)
 R("    // щенок рядом с ней\n", """    if (i === 106 && f >= .3 && f < .74) photoBoard(sx(A.board), Y - 2);
@@ -77,6 +78,12 @@ R("function lenaBanner(cx, cy, t){", r"""function ribbon(x1, y1, x2, y2, u, w, c
     cut(rrP(q.x - tw / 2 - 9, q.y - 15, tw + 18, 26, 7), '#f7ecd2', .5); C.strokeStyle = col; C.lineWidth = 1.2; C.stroke(rrP(q.x - tw / 2 - 9, q.y - 15, tw + 18, 26, 7));
     C.fillStyle = '#2a1f19'; C.textAlign = 'center'; C.textBaseline = 'alphabetic'; C.fillText(label, q.x, q.y + 4); }
   C.restore();
+}
+function nameTag(x, y, label, col){
+  C.save(); C.font = 'italic 19px Literata, Georgia, serif'; const tw = C.measureText(label).width;
+  cutSeg(x, y + 2, x, y + 16, '#8a6a4a', 1.2);
+  cut(rrP(x - tw / 2 - 10, y - 24, tw + 20, 28, 8), '#f7ecd2', .6); C.strokeStyle = col; C.lineWidth = 1.6; C.stroke(rrP(x - tw / 2 - 10, y - 24, tw + 20, 28, 8));
+  C.fillStyle = '#2a1f19'; C.textAlign = 'center'; C.textBaseline = 'alphabetic'; C.fillText(label, x, y - 4); C.restore();
 }
 function sidePath(x0, y){ const p = polyP([x0 - 24, y - 6, x0 + 24, y - 6, x0 + 270, y - 74, x0 + 236, y - 74]); C.save(); C.globalAlpha = .95; fillP(p, pc('path')); C.restore(); }
 function archShape(x, y, prog, t){
