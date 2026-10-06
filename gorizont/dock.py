@@ -36,6 +36,11 @@ R(".stage::after {", """.col .now-reading { color: var(--paper-hi); }
 .col p.now-reading, .col li.now-reading { text-shadow: 0 0 .01px currentColor; }
 .col p.now-reading::before { content: ''; position: absolute; left: -14px; top: .35em; bottom: .35em; width: 3px; border-radius: 2px; background: var(--accent); }
 .col p { position: relative; }
+.tap-listen { cursor: pointer; -webkit-tap-highlight-color: transparent; border-radius: 6px; }
+@media (hover: hover){ .col p.tap-listen:hover, .col li.tap-listen:hover { background: rgba(217,163,58,.07); box-shadow: 0 0 0 6px rgba(217,163,58,.07); } }
+.tap-listen.tapped { animation: tapflash .9s ease-out; }
+@keyframes tapflash { 0% { background: rgba(217,163,58,.28); box-shadow: 0 0 0 6px rgba(217,163,58,.28); } 100% { background: transparent; box-shadow: 0 0 0 6px transparent; } }
+@media (prefers-reduced-motion: reduce){ .tap-listen.tapped { animation: none; } }
 .stage::after {""")
 R("function saveSoon(){", """/* ---------- озвучка ведёт текст и Лену ---------- */
 const PARA_T = {{TIMINGS}};
@@ -57,6 +62,17 @@ const PARA_T = {{TIMINGS}};
     if (Math.abs(v - here) > 1 || (!everPlayed && v > 1)) au.currentTime = PARA_T[v] + .01;
   }, true);
   window.addEventListener('scroll', () => { if (!autoScrolling) userScrollT = performance.now(); }, {passive: true});
+  // нажали на абзац — озвучка с этого места
+  els.forEach((e, k) => { e.classList.add('tap-listen'); e.addEventListener('click', ev => {
+    if (ev.target.closest('button, a, input')) return;
+    const sel = window.getSelection && window.getSelection(); if (sel && String(sel).length > 0) return;
+    au.currentTime = PARA_T[k] + .01; everPlayed = true; userScrollT = performance.now() - 3000;
+    e.classList.remove('tapped'); void e.offsetWidth; e.classList.add('tapped');
+    if (au.paused) au.play().catch(() => {});
+    if (!hinted){ hinted = true; try { localStorage.setItem('gorizont-1-hint', '1'); } catch (er) {} }
+  }); });
+  let hinted = false; try { hinted = !!localStorage.getItem('gorizont-1-hint'); } catch (er) {}
+  au.addEventListener('play', () => { if (!hinted){ hinted = true; try { localStorage.setItem('gorizont-1-hint', '1'); } catch (er) {} setTimeout(() => toast('Нажмите на любой абзац — озвучка начнётся с него'), 900); } });
   const follow = k => {
     if (performance.now() - userScrollT < 5000) return;          // читатель листает сам — не мешаем
     const r = els[k].getBoundingClientRect(), y = readLine();
