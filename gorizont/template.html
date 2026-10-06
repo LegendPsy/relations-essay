@@ -1626,7 +1626,7 @@ function drawWorld(i, f, st, mode, it, camL, camC, now, tq, wind, vel){
   if (i === 47 && f > .84){ const u = win(f, .84, .98); C.fillStyle = `rgba(255,241,214,${ease(u)})`; C.fillRect(0, 0, LWv, LB); }
 }
 function lenaBanner(cx, cy, t){
-  const w = 400, h = 182, sw = Math.sin(t * .0011) * .012, top = cy - h / 2;
+  const w = 400, h = 194, sw = Math.sin(t * .0011) * .012, top = cy - h / 2;
   C.save(); C.translate(cx, cy); C.rotate(sw); C.translate(-cx, -cy);
   // нитки уходят вверх, за край кадра: транспарант держат воздушные змеи
   for (const sd of [-1, 1]){ C.strokeStyle = 'rgba(80,50,25,.75)'; C.lineWidth = 1.3; C.beginPath(); C.moveTo(cx + sd * (w / 2 - 26), top + 4); C.quadraticCurveTo(cx + sd * (w / 2 + 10), top - 60, cx + sd * (w / 2 - 4), top - 140); C.stroke(); }
@@ -1640,12 +1640,15 @@ function lenaBanner(cx, cy, t){
   C.fillStyle = '#d9a33a'; for (let x = cx - w / 2; x < cx + w / 2; x += 14){ C.beginPath(); C.moveTo(x, top + 12); C.lineTo(x + 7, top + 20); C.lineTo(x + 14, top + 12); C.closePath(); C.fill(); C.beginPath(); C.moveTo(x, top + h - 12); C.lineTo(x + 7, top + h - 20); C.lineTo(x + 14, top + h - 12); C.closePath(); C.fill(); }
   C.restore();
   C.setLineDash([5, 5]); C.strokeStyle = 'rgba(192,69,47,.45)'; C.lineWidth = 1.2; C.strokeRect(cx - w / 2 + 12, top + 26, w - 24, h - 52); C.setLineDash([]);
-  // текст
-  C.textAlign = 'center'; C.textBaseline = 'alphabetic';
-  C.font = '46px Prata, Georgia, serif'; const a1 = 'Это ', a2 = 'Лена'; const w1 = C.measureText(a1).width, w2 = C.measureText(a2).width, x0 = cx - (w1 + w2) / 2;
-  C.textAlign = 'left'; C.fillStyle = '#2a1f19'; C.fillText(a1, x0, top + 76); C.fillStyle = '#b13f2c'; C.fillText(a2, x0 + w1, top + 76);
-  C.textAlign = 'center'; C.fillStyle = '#2a1f19'; C.font = '23px Prata, Georgia, serif'; C.fillText('Ей предстоит долгий путь', cx, top + 108);
-  C.fillStyle = '#5a3a1e'; C.font = 'italic 21px Literata, Georgia, serif'; C.fillText('Хотите узнать, куда она идёт?', cx, top + 136); C.fillText('Дочитайте статью до конца', cx, top + 161);
+  // текст: каждую строку подгоняем по ширине, чтобы она не вылезала за рамку при любом шрифте
+  const inner = w - 76, fit = (txt, size, fam) => { C.font = size + 'px ' + fam; const tw = C.measureText(txt).width; if (tw > inner){ size = size * inner / tw; C.font = size + 'px ' + fam; } return size; };
+  C.textBaseline = 'alphabetic';
+  fit('Это Лена', 44, 'Prata, Georgia, serif'); const a1 = 'Это ', a2 = 'Лена'; const w1 = C.measureText(a1).width, w2 = C.measureText(a2).width, x0 = cx - (w1 + w2) / 2;
+  C.textAlign = 'left'; C.fillStyle = '#2a1f19'; C.fillText(a1, x0, top + 72); C.fillStyle = '#b13f2c'; C.fillText(a2, x0 + w1, top + 72);
+  C.textAlign = 'center'; C.fillStyle = '#2a1f19'; fit('Ей предстоит долгий путь', 22, 'Prata, Georgia, serif'); C.fillText('Ей предстоит долгий путь', cx, top + 104);
+  C.fillStyle = '#5a3a1e'; const l3 = 'Хотите узнать, куда она идёт?', l4 = 'Дочитайте статью до конца';
+  const s3 = Math.min(fit(l3, 19, 'Literata, Georgia, serif'), fit(l4, 19, 'Literata, Georgia, serif'));
+  C.font = 'italic ' + s3 + 'px Literata, Georgia, serif'; C.fillText(l3, cx, top + 132); C.fillText(l4, cx, top + 156);
   // цветочки по углам
   for (const sd of [-1, 1]){ flowerPlant(cx + sd * (w / 2 - 34), top + 66, .7, sd < 0 ? '#d94a3a' : '#efe2c2'); }
   C.restore();
