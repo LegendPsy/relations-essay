@@ -25,8 +25,13 @@ s = s[:b] + """
 S_ALL[100] = {a:'Кафе, где «Цезарь» бывает только одним', m:[['walk',.3],['stand',.72],['walk',1]], sp:'menu'};
 S_ALL[101] = {a:'Банка с красивой этикеткой. Внутри почти пусто', m:[['walk',.28],['stand',.8],['walk',1]], sp:'jar2'};
 S_ALL[102] = {a:'Мимо проезжает другой путник, машет и едет своей дорогой', m:'walk', sp:'passer'};
+S_ALL[103] = {a:'Друг, коллега, прохожий: к каждому от неё тянется своя нить', m:[['walk',.16],['stand',.84],['walk',1]], sp:'ribbons'};
+S_ALL[104] = {a:'Они уже идут вместе. Арка «Пара» — это только табличка над той же дорогой', m:'walk', sp:'arch'};
+S_ALL[105] = {a:'Качели-балансир с малышом: ровно — не значит одинаково', m:[['walk',.2],['stand',.86],['walk',1]], sp:'seesaw'};
+S_ALL[106] = {a:'Щит «Настоящая пара»: прорезь не по её росту', m:[['walk',.22],['stand',.8],['walk',1]], sp:'board'};
+S_ALL[1] = Object.assign({}, S_ALL[1], {set: {h: 1, f: 1}});
 // порядок сцен = порядок пунктов текста; кнопка в конце пункта k показывает сцену k+1
-const PART = [0, 1, 7, 2, 3, 4, 5, 6, 10, 100, 101, 8, 11, 102, 30, 9];
+const PART = [0, 1, 103, 2, 104, 4, 5, 6, 105, 100, 106, 8, 11, 102, 30, 9];
 const OLD = PART, NEWOF = {}; PART.forEach((k, n) => NEWOF[k] = n);
 const S = PART.map(k => Object.assign({}, S_ALL[k]));
 const RK = k => (NEWOF[k] === undefined ? 1e9 : NEWOF[k]);   // место сцены в этой части
@@ -52,7 +57,7 @@ body = s[a:b]
 body = re.sub(r"\bi ([<>]=?) (\d+)", r"RK(i) \1 RK(\2)", body)
 body = body.replace("TOD[i]", "TOD[NI]").replace("S[k].ia", "S_ALL[k].ia")
 s = s[:a] + body + s[b:]
-s = s.replace("buildAnchors(){\n  A = {", "buildAnchors(){\n  A = {\n    menu: WX(100, .3), jar2: WX(101, .28), passer: WX(102, 0),", 1)
+s = s.replace("buildAnchors(){\n  A = {", "buildAnchors(){\n  A = {\n    menu: WX(100, .3), jar2: WX(101, .28), passer: WX(102, 0), rib: WX(103, .16), arch: WX(104, .55) + 10, see: WX(105, .2) + 118, board: WX(106, .22) + 55, hedgeW: WX(2, 0) - 330, jarW: WX(104, 0) - 300,", 1)
 
 # ---------- новые сцены ----------
 R("  // ---- попутчик и девушка ----", """  // 100 · кафе с одним меню
@@ -186,5 +191,6 @@ h2.sub { font-size: 1.24rem; font-style: italic; }
 .listen-btn:focus-visible, .listen-speed:focus-visible, #listen-seek:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .btn.ghost {""")
 
+exec(open(ROOT / "scenes2.py", encoding="utf-8").read())
 (ROOT / "template.html").write_text(s, encoding="utf-8")
 print("template ok")
