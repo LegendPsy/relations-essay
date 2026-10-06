@@ -1431,7 +1431,7 @@ const S = [
   {a:'Кладёт лестницу через ручей и идёт по ней, как по мосту', m:[['stand',.25],['walk',1]]},
   {a:'Ёжики переходят дорогу. Она ждёт', m:[['walk',.2],['stand',.7],['walk',1]], sp:'hedgehogs'},
   {a:'Берёт готовую корзинку с пенька', m:'walk', set:{b:1}, ia:.06, p:{l:'пенёк с корзинкой', w:30, h:16, px:10}},
-  {a:'Пикник. Корзинка пустеет наполовину, помидор остаётся на пледе', m:[['walk',.12],['sit',.8],['walk',1]], set:{b:2}, ia:.75, p:{l:'плед', w:64, h:4, px:30}, rest:1},
+  {a:'Пикник. Корзинка пустеет наполовину, помидор остаётся на пледе', m:[['walk',.12],['sit',1]], set:{b:2}, ia:.75, p:{l:'плед', w:64, h:4, px:30}, rest:1},
   {a:'Находит компас: направление, а не цель', m:'walk', set:{c:1}, ia:.06, p:{l:'компас на камне', w:22, h:12, px:10}},
   {a:'Щенок на обочине. Теперь он идёт рядом с ней', m:[['walk',.08],['stand',.3],['walk',1]], set:{pup:1}, ia:.22, p:{l:'щенок', w:14, h:10, px:22}},
   {a:'Ждёт автобус. Листаете, а он не едет', m:[['walk',.06],['sit',1]], p:{l:'остановка', w:64, h:62, px:16}},
@@ -1458,7 +1458,7 @@ const S = [
   {a:'Ветер уносит цветок. Она отпускает', m:'walk', set:{f:0}, ia:.4, sp:'wind'},
   {a:'Начинается дождь. Она идёт дальше', m:'walk', tod:'rain', sp:'rain'},
   {a:'Развилка под дождём: выбирает путь вперёд', m:[['stand',.6],['walk',1]], sp:'rain', p:{l:'укрытие ↑ · вперёд →', w:44, h:4, px:10}},
-  {a:'Привал под навесом. Дождь стихает', m:[['sit',.55],['walk',1]], rest:1, tod:'overcast', p:{l:'навес', w:56, h:54, px:6}},
+  {a:'Привал под навесом. Дождь стихает', m:'sit', rest:1, tod:'overcast', p:{l:'навес', w:56, h:54, px:6}},
   {a:'Маленький аэродром. Взлетает', m:[['walk',.3],['fly',1]], tod:'day'},
   {a:'Птицы летят привычным клином. Она берёт свой курс', m:'fly', sp:'birds'},
   {a:'Узкий просвет между облаками. Пролетает в него', m:'fly', sp:'clouds'},
@@ -1520,7 +1520,7 @@ function measure(){
   const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
   starts.push(Math.max(maxScroll, starts[starts.length-1] + 1));
   lens = S.map((_,i)=> starts[i+1] - starts[i]);
-  D = [0]; S.forEach((s,i)=> D[i+1] = D[i] + LP(i)*K*distFrac(s,1));
+  buildWorld();
   buildBar();
   sceneResize();
 }
@@ -1529,7 +1529,19 @@ const scrollFor = (i,f) => starts[i] + f*lens[i];
 const LPT = 260;             // длина отрезка пути одной точки (в условных единицах), одинаковая для всех
 const LMUL = {21: 1.2, 22: 1.5, 25: 1.6, 26: 1.6, 27: 1.2, 35: 1.3, 36: 1.8, 37: 1.6};   // где предметам нужно больше места
 const LP = i => LPT * (LMUL[i] || 1);
-const worldAt = (i,f) => D[i] + LP(i)*K*distFrac(S[i],f);
+let WS = [], WE = [], GAP = [], TM = [];
+const EXTRA = {12: 150, 36: 140, 47: 360};   // у большой остановки и ресторана левый край далеко от места действия
+// дорога перед событием: идёт, если пункт начинается с движения; длина — чтобы следующее событие не было видно заранее
+function buildWorld(){
+  const view = (typeof LWv !== 'undefined' && LWv > 0) ? LWv - LWv * .36 + 90 : 500;
+  let x = 0;
+  S.forEach((s, i) => { const m0 = modeAt(s, 0), mp = i > 0 ? modeAt(S[i - 1], 1) : 'stand';
+    // чем идти к событию: тем же, чем пункт начинается, а если он начинается с остановки — тем, чем закончился прошлый
+    TM[i] = SPEED[m0] > 0 ? m0 : (SPEED[mp] > 0 ? mp : null);
+    GAP[i] = (i > 0 && TM[i] && i !== 26 && s.sp !== 'buffet') ? (view + (EXTRA[i] || 0)) / 1.3 : 0;
+    WS[i] = x + GAP[i]; WE[i] = WS[i] + LP(i) * K * distFrac(s, 1); x = WE[i]; });
+}
+const worldAt = (i,f) => WS[i] + LP(i)*K*distFrac(S[i],f);
 
 /* ============ прогресс-полоска ============ */
 const bar = document.getElementById('bar'), barfill = document.getElementById('barfill'), barmax = document.getElementById('barmax');
@@ -1541,7 +1553,7 @@ function buildBar(){
 
 /* ============ состояние чтения ============ */
 let started = false, enterT = null, maxS = 0, sceneS = 0, camX = 0, alt = 0, lastScrollT = performance.now();
-let sceneK = 0, sceneF = 0, playing = false;
+let sceneK = 0, sceneF = 0, playing = false, travel = 0;   // travel — сколько ещё идти до события (0 — уже на месте)
 let backDismissed = false, lastY = 0, rewindUntil = 0, pulseT = -1e9, lastCp = 0, lastItemsKey = '';
 const capEl = document.getElementById('cap'), backchip = document.getElementById('backchip'), backbar = document.getElementById('backbar'), rwEl = document.getElementById('rw');
 
@@ -1569,14 +1581,17 @@ const BASE_RATE = 88 / (LPT * K * 1.3);                         // живой л
 const goBtns = [];
 function playPoint(k){
   if (!started){ started = true; document.getElementById('play').hidden = true; }
-  const contiguous = (sceneK === k - 1 && sceneF >= 1) || (sceneK === k && sceneF === 0);
+  const contiguous = (sceneK === k - 1 && sceneF >= 1 && !travel) || (sceneK === k && sceneF === 0);
   sceneK = k; sceneF = 0; lastCp = k;
-  if (!contiguous) camX = worldAt(k, 0);      // пропущенные пункты не проигрываем: героиня сразу на месте
+  if (contiguous && !(sceneK === k && travel)) travel = GAP[k];
+  if (!contiguous){ travel = 0; camX = worldAt(k, 0); }      // пропущенные пункты не проигрываем: героиня сразу на месте
   playing = true; updateGo(); saveSoon();
 }
+const TRAVEL_SPEED = 88 * 1.8 / 1.5 / 1.3;   // по дороге между событиями — чуть быстрее (×1.8)
 function stepScene(dt){
   if (!playing) return;
   const g = gaitAt(sceneK, sceneF), gf = g === 'skip' ? 1.4 : g === 'stroll' ? .5 : 1;
+  if (travel > 0){ travel = Math.max(0, travel - dt * TRAVEL_SPEED * Math.abs(SPEED[TM[sceneK]] || 1) * gf); return; }
   sceneF += dt * BASE_RATE * (PF[sceneK] || 1) * gf / (LMUL[sceneK] || 1);
   if (sceneF >= 1){ sceneF = 1; playing = false; updateGo(); saveSoon(); }
 }
@@ -2458,10 +2473,10 @@ function buildAnchors(){
     hatPost: WX(1, .06) + 15, flower: WX(3, .06) + 18, ladder: WX(4, 0) + 16, hedge: WX(7, .2) + 90, stump: WX(8, .06) + 16,
     picnic: WX(9, .12), compass: WX(10, .06) + 13, puppy: WX(11, .08) + 30, stop: WX(12, .06), sign: WX(15, .5),
     fork: WX(17, .25) + 40, house: WX(19, .3) + 110, gate: WX(20, .55), fire: WX(21, .12), bikeLeft: WX(22, .55),
-    boatAt: WX(22, .7), riverB: WX(25, .2) + 110, bike13: WX(13, .32), meet: WX(14, .3), cl40: WX(40, .3) + 60, rail: WX(2, .5), tower: WX(23, .5), housesRow: WX(24, 0) + 60, dock: WX(25, .2),
+    boatAt: WX(22, .7), riverB: WX(25, .2) + 110, bike13: WX(13, .32), meet: WX(14, .3), cl40: WX(40, .3) + 60, rail: WX(2, .5), tower: WX(23, .5), housesRow: WX(24, 0) + 260, dock: WX(25, .2),
     bridge: WX(25, .5) + 40, ter0: WX(26, 0) + 10, ter3: WX(26, 1) - 10, cafe: WX(27, .3), bench: WX(31, .3) + 46,
     sign2: WX(35, .6) + 46, shelter: WX(36, 0), plane: WX(37, .3), land: WX(42, .45), post2: WX(44, .5) + 40,
-    village: WX(45, 0), door: WX(47, .5) + 4
+    village: WX(45, 0) + 140, door: WX(47, .5) + 4
   };
   A.ladL = 300; A.streamA = A.ladder + 18; A.streamB = A.ladder + A.ladL - 16;
   A.riverA = A.boatAt - 30;
@@ -2470,7 +2485,7 @@ function buildAnchors(){
 function elevAt(x){ if (x <= A.ter0 || x >= A.ter3) return 0; if (x < A.ter1) return 64 * ease((x - A.ter0) / (A.ter1 - A.ter0)); if (x > A.ter2) return 64 * (1 - ease((x - A.ter2) / (A.ter3 - A.ter2))); return 64; }
 function sceneResize(){
   SC = H / VH; PX = dpr * SC; LWv = W / SC; GX0 = LWv * .36; GXL = GX0 + camShift;
-  tiles = {}; tileOrder = []; buffet = null; buildAnchors();
+  tiles = {}; tileOrder = []; buffet = null; buildWorld(); buildAnchors();
 }
 
 function frame(now){
@@ -2479,11 +2494,11 @@ function frame(now){
   const dt = Math.min(.05, (now - (lastNow || now)) / 1000); lastNow = now;
   stepScene(dt);
   const i = sceneK, f = sceneF, st = S[i];
-  const wxT = worldAt(i, f);
+  const wxT = worldAt(i, f) - travel;
   if (Math.abs(wxT - camX) > 3000) camX = wxT; else camX += (wxT - camX) * Math.min(1, dt * 14);
   const rewinding = false;
   const behind = window.scrollY < maxS - 600;
-  const mode = modeAt(st, f);
+  const mode = travel > 0 && TM[i] ? TM[i] : modeAt(st, f);
   const it = (st.ia && f < st.ia && i > 0) ? IT[i - 1] : IT[i];
   const itemsKey = JSON.stringify(it);
   if (started && !rewinding && (i > lastCp || (itemsKey !== lastItemsKey && i >= lastCp))) pulseT = now;
@@ -2620,7 +2635,7 @@ function drawWorld(i, f, st, mode, it, camL, camC, now, tq, wind, vel){
   const gaps = [[A.streamA, A.streamB], [A.riverA, A.riverB]].sort((a, b) => a[0] - b[0]);
   let cur = wx0; for (const [a, b] of gaps){ if (a > cur) pathSeg(cur, Math.min(a, wx1)); cur = Math.max(cur, b); } if (cur < wx1) pathSeg(cur, wx1);
   // асфальтовая дорога у остановки
-  { const ra = A.stop - 430, rb = A.bike13 + 260; if (rb > wx0 && ra < wx1){ cut(polyP([ra - 24, 354, ra + 14, 330, rb - 14, 330, rb + 24, 354]), '#6f6e68', .7); fillP(rectP(ra + 14, 329, rb - ra - 28, 2.4), '#8f8e86');
+  { const ra = A.stop - 250, rb = A.bike13 + 260; if (rb > wx0 && ra < wx1){ cut(polyP([ra - 24, 354, ra + 14, 330, rb - 14, 330, rb + 24, 354]), '#6f6e68', .7); fillP(rectP(ra + 14, 329, rb - ra - 28, 2.4), '#8f8e86');
       for (let x = Math.ceil((ra + 30) / 52) * 52; x < rb - 30; x += 52) fillP(polyP([x, 341, x + 26, 341, x + 27, 343.4, x - 1, 343.4]), '#efe2c2'); } }
   // взлётная полоса (37)
   if (i >= 36 && i <= 38){ for (let x = Math.floor(wx0 / 40) * 40; x < wx1; x += 40){ if (x > A.plane - 60 && x < A.plane + 900) fillP(rectP(x, 340, 18, 2.4), '#efe2c2'); } }
@@ -2650,13 +2665,13 @@ function drawWorld(i, f, st, mode, it, camL, camC, now, tq, wind, vel){
   x = sx(A.ladder); if (inView(x) || (i >= 4 && i <= 6)){ let a = Math.PI / 2; if (i === 6) a = Math.PI / 2 * (1 - ease(clamp01(f / .22))); if (i > 6) a = 0; if (i <= 6 || i > 6) ladderShape(x, a === 0 ? Y - 6 : Y - 2, a, A.ladL);
     if (i >= 3 && i <= 5){ for (let k = 0; k < 4; k++) paperCloudW(x - 60 + k * 44, Y - A.ladL - 6 + (k % 2) * 16, .9 + (k % 2) * .3, pc('cloud')); } }
   // 7 · ёжики
-  if (i === 7 || (i === 6 && f > .9) || (i === 8 && f < .1)){ x = sx(A.hedge); const u = i === 7 ? win(f, .2, .75) : i === 6 ? 0 : 1;
+  if (i === 7 || (i === 8 && f < .1)){ x = sx(A.hedge); const u = i === 7 ? win(f, .2, .75) : i === 6 ? 0 : 1;
     for (let k = 0; k < 3; k++){ const v = clamp01(u * 1.15 - k * .08); const yy = lerp(Y + 26, Y - 14, v), s = lerp(1.9, 1.1, v); if (v < 1) hedgehog(x + k * 30 - v * 10, yy, s * (k ? .72 : 1), tq * .02 + k); } }
   // 8 · пенёк с корзинкой
   x = sx(A.stump); if (inView(x)){ stump(x, Y - 4); if (i < 8 || (i === 8 && f < .06)){ basketShape(x, Y - 40, 1); fillP(polyP([x - 10, Y - 31, x + 10, Y - 31, x + 12, Y - 27, x - 12, Y - 27]), '#c0452f'); } }
   // 9 · пикник
   x = sx(A.picnic); if (inView(x)){ plaid(x - 40, x + 70, Y - 6);
-    if (i === 9 && f >= .12 && f < .8){ basketShape(x + 40, Y - 22, f < .75 ? 1 : 2); }
+    if (i === 9 && f >= .12){ basketShape(x + 40, Y - 22, f < .75 ? 1 : 2); }
     if (i > 9 || (i === 9 && f >= .75)) tomato(x + 60, Y + 6, 1.1);
     if (i === 9 && f > .3 && f < .7){ const hop = Math.abs(Math.sin(tq * .006)) * 4; C.save(); C.translate(x + 90 - win(f, .3, .5) * 16, Y + 4 - hop); cut(ellP(0, -4, 5, 3.4), '#8a5a2e'); cut(circP(4, -7, 2.6), '#8a5a2e'); cut(polyP([6, -7.5, 9, -7, 6, -6]), '#d9a33a'); dot(4.6, -7.6, .6, '#2a1f19'); cut(polyP([-4, -5, -9, -7, -8, -3]), '#6e4420'); C.restore(); } }
   // 10 · компас на камне
@@ -2738,7 +2753,7 @@ function drawWorld(i, f, st, mode, it, camL, camC, now, tq, wind, vel){
     let m = mode, o = {w, ph: camL * TAU / (WALKS[gait].D * KG), t: tq, gait};
     let carry = it.b ? 'basket' : null;
     if (m === 'sit' && (i === 9 || i === 21)) m = 'sitLow';
-    if (i === 9 && f >= .12 && f < .8) carry = null;
+    if (i === 9 && f >= .12) carry = null;
     if (i === 42 && f >= .45){ m = 'sit'; gy -= 9; }
     if (m === 'walkLs' || m === 'walkL') m = 'walk';
     if (i === 29 && f < .4){ o.lookIn = true; }
@@ -2910,7 +2925,7 @@ function resetAll(){
   try { localStorage.removeItem(STORE); } catch(e){}
   clearHash();
   markSheet.hidden = true; document.getElementById('resume').hidden = true;
-  maxS = 0; sceneS = 0; sceneK = 0; sceneF = 0; playing = false; camX = 0; started = false; lastY = 0; lastCp = 0; lastItemsKey = ''; pulseT = -1e9; rewindUntil = 0; backDismissed = false; alt = 0;
+  maxS = 0; sceneS = 0; sceneK = 0; sceneF = 0; playing = false; travel = 0; camX = 0; started = false; lastY = 0; lastCp = 0; lastItemsKey = ''; pulseT = -1e9; rewindUntil = 0; backDismissed = false; alt = 0;
   barfill.style.width = '0%'; barmax.style.display = 'none';
   document.getElementById('play').hidden = false; window.scrollTo({top:0}); updateGo();
   clearTimeout(saveTimer); saveTimer = setTimeout(()=>{ try{ localStorage.removeItem(STORE); }catch(e){} }, 900);
@@ -2923,7 +2938,7 @@ function restoreTo(cur, max, scene){
   const y = scrollFor(cur[0], cur[1]), m = scrollFor(max[0], max[1]);
   started = true; document.getElementById('play').hidden = true;
   maxS = Math.max(y, m); lastY = y; const c = locate(y);
-  const sc = scene && scene[0] <= N ? scene : [c.i, 0]; sceneK = sc[0]; sceneF = sc[1]; playing = false; camX = worldAt(sceneK, sceneF); lastCp = sceneK; updateGo();
+  const sc = scene && scene[0] <= N ? scene : [c.i, 0]; sceneK = sc[0]; sceneF = sc[1]; playing = false; travel = 0; camX = worldAt(sceneK, sceneF); lastCp = sceneK; updateGo();
   window.scrollTo({top: y});
 }
 
