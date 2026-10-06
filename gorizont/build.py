@@ -63,7 +63,7 @@ def main():
     units = parse((ROOT / "part1.md").read_text(encoding="utf-8"))
     assert len(units) == 15, f"Ожидалось 15 пунктов текста, получилось {len(units)}"
     tpl = (ROOT / "template.html").read_text(encoding="utf-8")
-    (ROOT / "index.html").write_text(tpl.replace("{{ARTICLE}}", render(units, len(units))), encoding="utf-8")
+    (ROOT / "index.html").write_text(tpl.replace("{{ARTICLE}}", render(units, len(units))).replace("{{TIMINGS}}", (ROOT / "timings.json").read_text()), encoding="utf-8")
     print("OK:", len(units), "пунктов + привал")
 
 

@@ -49,6 +49,11 @@ body { background: var(--ink); color: var(--paper); font-family: var(--body); fo
 #listen-seek::-moz-range-track { height: 4px; border-radius: 2px; background: linear-gradient(90deg, var(--accent) var(--p), var(--rule) var(--p)); }
 #listen-seek::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; border-radius: 50%; background: var(--paper-hi); margin-top: -5px; border: 0; }
 #listen-seek::-moz-range-thumb { width: 14px; height: 14px; border-radius: 50%; background: var(--paper-hi); border: 0; }
+.col .now-reading { color: var(--paper-hi); }
+.col p, .col li, .col h2 { transition: color .5s; }
+.col p.now-reading, .col li.now-reading { text-shadow: 0 0 .01px currentColor; }
+.col p.now-reading::before { content: ''; position: absolute; left: -14px; top: .35em; bottom: .35em; width: 3px; border-radius: 2px; background: var(--accent); }
+.col p { position: relative; }
 .stage::after { content: ''; position: absolute; left: 0; right: 0; bottom: -40px; height: 40px; background: linear-gradient(var(--ink), rgba(15,18,21,0)); pointer-events: none; }
 #scene { display: block; width: 100%; height: 100%; touch-action: pan-y; }
 
@@ -609,6 +614,49 @@ function buildGo(){
   seek.addEventListener('input', () => { dragging = true; const d = au.duration || 1349; tm.textContent = fmt(seek.value / 1000 * d) + ' / ' + fmt(d); seek.style.setProperty('--p', (seek.value / 10) + '%'); });
   seek.addEventListener('change', () => { const d = au.duration || 1349; au.currentTime = seek.value / 1000 * d; dragging = false; if (au.paused) au.play().catch(() => {}); });
   sp.addEventListener('click', () => { si = (si + 1) % speeds.length; au.playbackRate = speeds[si]; sp.textContent = String(speeds[si]).replace('.', ',') + '×'; });
+})();
+/* ---------- озвучка ведёт текст и Лену ---------- */
+const PARA_T = [7.0, 8.8, 13.41, 15.6, 33.18, 35.6, 37.32, 40.9, 42.61, 51.88, 54.17, 59.77, 64.1, 66.97, 74.33, 78.82, 82.81, 87.38, 92.18, 95.34, 101.85, 103.88, 106.97, 108.4, 110.12, 114.28, 122.37, 124.41, 126.28, 128.27, 129.67, 132.45, 136.6, 145.91, 150.52, 153.4, 156.24, 161.24, 167.29, 170.94, 178.08, 193.32, 200.39, 204.12, 207.11, 208.7, 209.99, 213.5, 216.68, 221.4, 226.1, 232.04, 235.42, 247.45, 255.3, 263.33, 271.84, 273.76, 275.51, 277.1, 279.47, 283.82, 286.72, 300.89, 313.64, 318.76, 322.03, 339.06, 344.72, 346.19, 348.48, 350.34, 352.92, 355.5, 358.62, 360.13, 382.66, 397.68, 406.62, 408.63, 410.73, 412.18, 414.22, 419.41, 422.0, 434.97, 440.18, 445.48, 461.6, 463.36, 465.24, 467.18, 469.32, 475.8, 483.28, 490.48, 492.11, 493.36, 494.58, 495.7, 497.87, 499.39, 508.86, 513.29, 537.47, 552.66, 573.34, 583.02, 585.12, 590.12, 591.54, 592.82, 594.5, 596.2, 597.77, 599.62, 602.78, 604.2, 606.05, 608.9, 612.35, 614.89, 618.71, 633.81, 646.84, 653.98, 656.13, 658.64, 661.07, 663.56, 666.08, 670.78, 679.51, 684.66, 687.28, 690.54, 694.59, 699.47, 711.54, 723.4, 736.76, 739.38, 743.74, 770.46, 783.02, 797.82, 800.24, 802.2, 804.06, 805.72, 807.84, 809.78, 822.03, 826.89, 844.42, 864.36, 867.09, 869.58, 872.7, 889.8, 891.7, 892.52, 896.22, 896.97, 899.06, 901.79, 904.32, 909.08, 918.6, 925.74, 929.53, 932.61, 934.26, 934.96, 936.58, 937.48, 938.29, 939.5, 941.73, 950.53, 957.18, 970.11, 980.59, 983.94, 993.02, 1000.66, 1018.7, 1033.98, 1042.15, 1046.13, 1052.95, 1055.99, 1058.36, 1059.75, 1060.77, 1066.01, 1068.64, 1072.73, 1075.6, 1077.04, 1080.7, 1083.56, 1084.71, 1085.9, 1086.97, 1088.14, 1089.24, 1094.02, 1096.53, 1105.63, 1112.08, 1115.18, 1139.36, 1148.29, 1151.4, 1159.31, 1168.59, 1171.77, 1174.64, 1178.41, 1181.53, 1183.96, 1187.35, 1192.74, 1196.7, 1207.89, 1217.52, 1219.92, 1222.55, 1224.7, 1227.21, 1231.51, 1237.86, 1241.01, 1255.03, 1267.74, 1271.43, 1287.97, 1297.43, 1314.4, 1315.62, 1317.36, 1319.37, 1321.78, 1323.55, 1325.04, 1331.63];
+(() => {
+  const au = document.getElementById('listen-audio'); if (!au) return;
+  const els = [...document.querySelectorAll('#col h1, #col h2, #col p, #col li')].filter(e => !e.closest('.rest'));
+  if (els.length !== PARA_T.length){ console.warn('озвучка: абзацев', els.length, 'отметок', PARA_T.length); return; }
+  const unitOf = els.map(e => +e.closest('.cp').dataset.cp);
+  const firstOfUnit = {}; els.forEach((e, k) => { if (firstOfUnit[unitOf[k]] === undefined) firstOfUnit[unitOf[k]] = k; });
+  const paraAt = t => { let k = 0; while (k + 1 < PARA_T.length && PARA_T[k + 1] <= t + .05) k++; return k; };
+  const readLine = () => document.getElementById('stage').getBoundingClientRect().bottom + 40;
+  const visiblePara = () => { const y = readLine(); let best = 0; els.forEach((e, k) => { if (e.getBoundingClientRect().top <= y) best = k; }); return best; };
+  let cur = -1, everPlayed = false, userScrollT = 0, autoScrolling = false, startedAt = -1;
+  try { const s = JSON.parse(localStorage.getItem('gorizont-1-audio') || 'null'); if (s && s.t > 3) { au.addEventListener('loadedmetadata', () => { if (!everPlayed) au.currentTime = s.t; }, {once: true}); } } catch (e) {}
+  // «играть»: если читатель ушёл по тексту в другое место — начинаем с того абзаца, который он сейчас видит
+  document.getElementById('listen-btn').addEventListener('click', () => {
+    if (!au.paused) return;
+    const v = visiblePara(), here = paraAt(au.currentTime);
+    if (Math.abs(v - here) > 1 || (!everPlayed && v > 1)) au.currentTime = PARA_T[v] + .01;
+  }, true);
+  window.addEventListener('scroll', () => { if (!autoScrolling) userScrollT = performance.now(); }, {passive: true});
+  const follow = k => {
+    if (performance.now() - userScrollT < 5000) return;          // читатель листает сам — не мешаем
+    const r = els[k].getBoundingClientRect(), y = readLine();
+    if (r.top < y - 10 || r.bottom > window.innerHeight - 60){ autoScrolling = true; window.scrollTo({top: window.scrollY + r.top - y - 6, behavior: 'smooth'}); setTimeout(() => autoScrolling = false, 900); }
+  };
+  // мультик идёт сам: закончился пункт в озвучке — Лена делает то, что после него
+  const driveScene = k => {
+    if (au.paused || au.seeking) return;
+    if (!started){ started = true; document.getElementById('play').hidden = true; playPoint(0); }
+    const u = unitOf[k]; let target = -1;
+    for (let q = 0; q < u; q++) if (GO_OF[q] != null) target = Math.max(target, GO_OF[q]);
+    if (target > sceneK || (target === sceneK && sceneF === 0 && !playing)) playPoint(target);
+  };
+  au.addEventListener('play', () => { everPlayed = true; startedAt = au.currentTime; userScrollT = 0; });
+  au.addEventListener('timeupdate', () => {
+    const k = paraAt(au.currentTime);
+    if (k !== cur){ if (cur >= 0) els[cur].classList.remove('now-reading'); els[k].classList.add('now-reading'); cur = k; if (!au.paused) follow(k); }
+    driveScene(k);
+    try { localStorage.setItem('gorizont-1-audio', JSON.stringify({t: au.currentTime})); } catch (e) {}
+  });
+  au.addEventListener('ended', () => { const last = GO_OF[GO_OF.length - 1]; if (last != null && last > sceneK) playPoint(last); try { localStorage.removeItem('gorizont-1-audio'); } catch (e) {} });
+  au.addEventListener('pause', () => { if (cur >= 0 && au.currentTime < 1) els[cur].classList.remove('now-reading'); });
 })();
 function saveSoon(){ clearTimeout(saveTimer); saveTimer = setTimeout(save, 700); }
 
