@@ -2671,7 +2671,7 @@ function drawWorld(i, f, st, mode, it, camL, camC, now, tq, wind, vel){
   // 3 · цветок
   x = sx(A.flower); if (inView(x) && (i < 3 || (i === 3 && f < .06))) flowerPlant(x, Y - 2, 1.05, '#d94a3a', Math.sin(tq * .004) * .08 + wind * .06);
   // 4–7 · лестница
-  x = sx(A.ladder); if (inView(x) || (i >= 4 && i <= 6)){ let a = Math.PI / 2; if (i === 6) a = Math.PI / 2 * (1 - ease(clamp01(f / .22))); if (i > 6) a = 0; if (i <= 6 || i > 6) ladderShape(x, a === 0 ? Y - 6 : Y - 2, a, A.ladL);
+  x = sx(A.ladder); if (inView(x) || (i >= 4 && i <= 6)){ let a = Math.PI / 2; if (i === 6) a = Math.PI / 2 * (1 - ease(clamp01(f / .22))); if (i > 6) a = 0; if (i <= 6 || i > 6) ladderShape(x, a === 0 ? Y - 6 : Y - 2, a, A.ladL + 2600 * Math.pow(Math.sin(a), 8));   // стоя — уходит за край кадра без конца; положенная — ровно через ручей
     if (i >= 3 && i <= 5){ for (let k = 0; k < 4; k++) paperCloudW(x - 60 + k * 44, Y - A.ladL - 6 + (k % 2) * 16, .9 + (k % 2) * .3, pc('cloud')); } }
   // 7 · ёжики
   if (i === 7 || (i === 8 && f < .1)){ x = sx(A.hedge); const u = i === 7 ? win(f, .2, .75) : i === 6 ? 0 : 1;
