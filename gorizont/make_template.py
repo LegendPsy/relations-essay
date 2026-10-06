@@ -193,5 +193,6 @@ h2.sub { font-size: 1.24rem; font-style: italic; }
 
 exec(open(ROOT / "scenes2.py", encoding="utf-8").read())
 exec(open(ROOT / "dock.py", encoding="utf-8").read())
+exec(open(ROOT / "flag.py", encoding="utf-8").read())
 (ROOT / "template.html").write_text(s, encoding="utf-8")
 print("template ok")
