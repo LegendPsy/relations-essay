@@ -2,7 +2,7 @@
 # Выполняется внутри make_template.py (там определены s и R).
 
 R("const LMUL = {21: 1.2,", "const LMUL = {103: 1.8, 21: 1.2,")
-R("const PF = {4: .8, 7: .7,", "const PF = {103: .9, 104: .55, 105: .42, 106: .5, 4: .8, 7: .7,")
+R("const PF = {4: .8, 7: .7,", "const PF = {103: .9, 104: .4, 105: .42, 106: .5, 4: .8, 7: .7,")
 
 R("function ik(ax, ay, bx, by, l1, l2, bend){", """LOOK.colleague = {kind:'boy', shirt:'#6b7480', trim:'#c9ccd0', pants:'#2f3340', skin:'#ecc9a6', hair:'#3a2a20', cap:'#3a2a20', legs:'#2f3340', boots:'#1f1f24', line:'#2a1f19'};
 LOOK.stranger = {kind:'boy', shirt:'#8a5a2e', trim:'#d9c49a', pants:'#4a3a2e', skin:'#e6c09c', hair:'#2a2420', cap:'#4a4a52', legs:'#4a3a2e', boots:'#2a1f19', line:'#2a1f19'};
@@ -15,7 +15,8 @@ R("  // ---- попутчик и девушка ----", """  // мимоходо�
   x = sx(A.hedgeW); if (inView(x)){ for (let k = 0; k < 3; k++) hedgehog(x + k * 28 + Math.sin(tq * .0006 + k) * 6, Y - 16 + k * 3, k ? .85 : 1.1, tq * .012 + k); }
   x = sx(A.jarW); if (inView(x)){ stump(x, Y - 6); jarShape(x, Y - 25, .95); }
   // 104 · арка «Пара» над той же дорогой и боковая тропинка
-  x = sx(A.arch); if (x > -300 && x < LWv + 420){ sidePath(x + 150, Y); archShape(x, Y - 2, i === 104 ? f : (RK(i) > RK(104) ? 1 : 0), tq); }
+  { const fx0 = sx(A.forkW); if (fx0 > -320 && fx0 < LWv + 120) sidePath(fx0, Y); }
+  x = sx(A.arch); if (x > -300 && x < LWv + 420) archShape(x, Y - 2, i === 104 ? f : (RK(i) > RK(104) ? 1 : 0), tq);
   // 106 · щит «Настоящая пара» (когда она за щитом, щит рисуется поверх неё)
   x = sx(A.board); if (x > -220 && x < LWv + 220 && !(i === 106 && f >= .3 && f < .74)) photoBoard(x, Y - 2);
   // ---- попутчик и девушка ----""")
@@ -33,13 +34,15 @@ R("  // птицы клином (38)", """  // 103 · друг, коллега, 
     if (i === 103){ const sp2 = lerp(sx(A.strW) + 480, sx(A.strW) - 120, win(f, .6, 1));
       drawPerson(sp2, Y - 26, -1, makePose('walk', {w: 1, ph: f * 64, t: tq}), LOOK.stranger, {}, {t: tq, w: 1, scale: .84});
       C.save(); C.globalAlpha = 1 - win(f, .8, .92); nameTag(sp2 - 4, Y - 26 - 152 * .84, 'прохожий', '#6e6a5e'); C.restore(); } }
-  // 104 · Илья: догоняет её на дороге, идут вместе; после арки берутся за руки, потом он уходит своей тропинкой
-  if (i === 104){ const lv = win(f, .86, 1), catchUp2 = f === 0 && GAP[NI] > 0 ? clamp01(travel / GAP[NI]) : 0;
-    const rel = lerp(-48, 150, ease(lv)) - 260 * catchUp2, yy = Y - 5 - 66 * ease(lv), scl = .97 - .45 * ease(lv);
-    const J2 = makePose('walk', {w: Math.max(w, catchUp2 > 0 ? 1 : 0, lv > 0 ? 1 : 0), ph: (drawWorld.gph || 0) * (catchUp2 > 0 ? 1.4 : 1) + Math.PI * .9, t: tq});
-    if (f > .6 && f < .86) J2.hf = {x: 25, y: -54};
-    if (lv > .05 && lv < .45) J2.hf = {x: 15 + 2 * Math.sin(tq * .02), y: -127};
-    drawPerson(gxp + rel, yy, 1, J2, LOOK.ilya, {}, {t: tq, w: 1, scale: scl, blink: (tq % 4100) < 150}); }
+  // 104 · Илья: догоняет её, идут вместе, держась за руки; на развилке машут друг другу, и он уходит своей тропинкой на холм
+  if (i === 104){ const catchUp2 = f === 0 && GAP[NI] > 0 ? clamp01(travel / GAP[NI]) : 0, sp = clamp01((f - .76) / .24) * .78;
+    let px = gxp - 48 - 260 * catchUp2, py = Y - 5, scl = .97, walking = Math.max(w, catchUp2 > 0 ? 1 : 0), ph = (drawWorld.gph || 0) * (catchUp2 > 0 ? 1.4 : 1) + Math.PI * .9;
+    if (f >= .76){ const q = sidePt(sx(A.forkW), Y, sp); px = q.x; py = q.y - 4; scl = .97 * (1 - .5 * sp); walking = 1; ph = sp * 260 * TAU / (56 * KG) + Math.PI * .9; }
+    const J2 = makePose('walk', {w: walking, ph, t: tq});
+    if (f > .44 && f < .72) J2.hf = {x: 25, y: -54};
+    if (f > .72 && f < .8) J2.hf = {x: 15 + 2 * Math.sin(tq * .02), y: -127};
+    if (f > .84 && f < .92){ J2.hb = {x: -12, y: -122}; }
+    drawPerson(px, py, f >= .76 ? 1 : 1, J2, LOOK.ilya, {}, {t: tq, w: 1, scale: scl, blink: (tq % 4100) < 150}); }
   // 105 · качели-балансир: малыш уже сидит
   x = sx(A.see); if (x > -280 && x < LWv + 280){
     const on = i === 105 && f >= .3 && f < .84, d = lerp(108, 54, ease(win(f, .44, .68)));
@@ -57,7 +60,8 @@ R("    if (i === 100 && f > .32 && f < .7) o.tilt = .1;", """    if (i === 100 &
     if (i === 105 && f >= .3 && f < .84) m = 'sit';
     if (i === 106 && f >= .3 && f < .74){ const k = win(f, .36, .7) * 3, hop = Math.abs(Math.sin(Math.PI * k)); gy -= 34 * hop * (k > 0 && k < 3 ? 1 : 0); }""")
 R("    const J = makePose(m, o);\n", """    const J = makePose(m, o);
-    if (i === 104 && f > .6 && f < .86) J.hb = {x: -20, y: -52};
+    if (i === 104 && f > .44 && f < .72) J.hb = {x: -20, y: -52};
+    if (i === 104 && f > .73 && f < .9) o.wave = true;
     if (i === 103 && f >= .28 && f < .52){ J.hf = {x: 24, y: -80}; J.hb = {x: 22, y: -82}; J.tilt = .12; }
     if (i === 105 && drawWorld.see && drawWorld.see.on){ const sv = drawWorld.see; gx = sv.x - sv.d * Math.cos(sv.th) + 2.2; gy = Y - 36 + sv.d * Math.sin(sv.th) + 37.4 - 3; }
 """)
@@ -85,7 +89,16 @@ function nameTag(x, y, label, col){
   cut(rrP(x - tw / 2 - 10, y - 24, tw + 20, 28, 8), '#f7ecd2', .6); C.strokeStyle = col; C.lineWidth = 1.6; C.stroke(rrP(x - tw / 2 - 10, y - 24, tw + 20, 28, 8));
   C.fillStyle = '#2a1f19'; C.textAlign = 'center'; C.textBaseline = 'alphabetic'; C.fillText(label, x, y - 4); C.restore();
 }
-function sidePath(x0, y){ const p = polyP([x0 - 24, y - 6, x0 + 24, y - 6, x0 + 270, y - 74, x0 + 236, y - 74]); C.save(); C.globalAlpha = .95; fillP(p, pc('path')); C.restore(); }
+function sidePt(x0, y, t){ const P0 = [x0, y - 1], P1 = [x0 + 170, y - 2], P2 = [x0 + 270, y - 64], u = 1 - t; return {x: u * u * P0[0] + 2 * u * t * P1[0] + t * t * P2[0], y: u * u * P0[1] + 2 * u * t * P1[1] + t * t * P2[1]}; }
+function sidePath(x0, y){
+  // тропинка сворачивает с дороги, сужается и поднимается на холм, к домику Ильи
+  const L = [], Rr = []; for (let k = 0; k <= 30; k++){ const t = k / 30, q = sidePt(x0, y, t), w2 = 22 * (1 - t) + 3.5 * t; L.push([q.x, q.y - w2 * .45]); Rr.push([q.x, q.y + w2 * .45]); }
+  const p = NP(); p.moveTo(L[0][0] - 22, L[0][1]); L.forEach(q => p.lineTo(q[0], q[1])); Rr.reverse().forEach(q => p.lineTo(q[0], q[1])); p.lineTo(Rr[Rr.length - 1][0] - 26, Rr[Rr.length - 1][1]); p.closePath(); fillP(p, pc('path'));
+  const e = sidePt(x0, y, 1); C.save(); C.translate(e.x + 12, e.y + 2); C.scale(.62, .62); rowHouse(0, 0, '#c99a6a', '#4f6b3a'); C.restore();
+  folkTree(e.x - 26, e.y + 2, 34, 77, 1, pc('tree0'), pc('tree1'));
+  // указатель на развилке
+  cutSeg(x0 + 30, y - 6, x0 + 30, y - 46, '#7a5534', 2.4); C.save(); C.translate(x0 + 30, y - 42); C.rotate(-.32); cut(polyP([0, -5, 30, -5, 36, 0, 30, 5, 0, 5]), '#c9b08a', .6); C.restore();
+}
 function archShape(x, y, prog, t){
   const R0 = 84, H0 = 170;
   for (const sd of [-1, 1]) cut(rrP(x + sd * R0 - 6, y - H0, 12, H0, 3), '#8a5a2e');
@@ -95,17 +108,28 @@ function archShape(x, y, prog, t){
     cut(ellP(fx, fy, 6, 4, a), '#5f8f3e', .4); dot(fx + Math.cos(a) * 2, fy + Math.sin(a) * 2, 3.4, k % 3 === 0 ? '#efe2c2' : k % 3 === 1 ? '#d94a3a' : '#e9a6b8'); }
   for (const sd of [-1, 1]) for (let k = 0; k < 6; k++){ const fy = y - H0 + 18 + k * 26; cut(ellP(x + sd * R0, fy, 5, 3.4, .6 * sd), '#5f8f3e', .4); dot(x + sd * (R0 + 4), fy - 4, 3, k % 2 ? '#d94a3a' : '#efe2c2'); }
   // табличка «Пара» появляется в тот момент, когда они проходят под аркой
-  const u = win(prog, .48, .58); if (u > 0){
-    const sc = u < 1 ? .4 + .6 * easeOut(u) + Math.sin(u * Math.PI) * .12 : 1, sy = y - H0 - R0 + 22;
+  const u = win(prog, .32, .42); if (u > 0){
+    const sc = u < 1 ? .4 + .6 * easeOut(u) + Math.sin(u * Math.PI) * .12 : 1, sy = y - H0 - R0 + 22, tear = win(prog, .82, .9);
+    const sign = () => { cut(rrP(-64, 0, 128, 44, 8), '#f7ecd2'); C.strokeStyle = '#c0452f'; C.lineWidth = 2; C.stroke(rrP(-58, 5, 116, 34, 6));
+      C.fillStyle = '#b13f2c'; C.font = '26px Prata, Georgia, serif'; C.textAlign = 'center'; C.textBaseline = 'alphabetic'; C.fillText('Пара', 0, 31);
+      for (const sd of [-1, 1]){ const hx = sd * 46, hy = 20; const p = NP(); p.moveTo(hx, hy + 5); p.bezierCurveTo(hx - 9, hy - 2, hx - 5, hy - 9, hx, hy - 4); p.bezierCurveTo(hx + 5, hy - 9, hx + 9, hy - 2, hx, hy + 5); fillP(p, '#d94a3a'); } };
+    const zig = [[0, -2], [5, 6], [-4, 13], [4, 21], [-5, 29], [3, 37], [-2, 46]];
     C.save(); C.translate(x, sy); C.scale(sc, sc);
-    seg(-34, -18, -24, 2, '#6e4420', 1.2); seg(34, -18, 24, 2, '#6e4420', 1.2);
-    cut(rrP(-64, 0, 128, 44, 8), '#f7ecd2'); C.strokeStyle = '#c0452f'; C.lineWidth = 2; C.stroke(rrP(-58, 5, 116, 34, 6));
-    C.fillStyle = '#b13f2c'; C.font = '26px Prata, Georgia, serif'; C.textAlign = 'center'; C.textBaseline = 'alphabetic'; C.fillText('Пара', 0, 31);
-    for (const sd of [-1, 1]){ const hx = sd * 46, hy = 20; const p = NP(); p.moveTo(hx, hy + 5); p.bezierCurveTo(hx - 9, hy - 2, hx - 5, hy - 9, hx, hy - 4); p.bezierCurveTo(hx + 5, hy - 9, hx + 9, hy - 2, hx, hy + 5); fillP(p, '#d94a3a'); }
+    if (tear <= 0){ seg(-34, -18, -24, 2, '#6e4420', 1.2); seg(34, -18, 24, 2, '#6e4420', 1.2); sign(); }
+    else {
+      // рвётся посередине: каждая половинка повисает на своей верёвочке
+      const ang = easeOut(tear) * .95 + (tear >= 1 ? Math.sin(t * .003) * .03 : Math.sin(tear * 18) * .06 * (1 - tear));
+      for (const sd of [-1, 1]){
+        seg(sd * 34, -18, sd * 24, 2, '#6e4420', 1.2);
+        C.save(); C.translate(sd * 24, 2); C.rotate(-sd * ang); C.translate(-sd * 24, -2);
+        const cl = NP(); cl.moveTo(sd * 80, -4); zig.forEach(([zx, zy]) => cl.lineTo(zx + sd * 1.5 * tear, zy)); cl.lineTo(sd * 80, 50); cl.closePath();
+        C.save(); C.clip(cl); sign(); C.restore(); C.restore();
+      }
+    }
     C.restore();
   }
   // конфетти
-  const cu = win(prog, .5, .9); if (cu > 0 && cu < 1){ const cols = ['#c0452f', '#d9a33a', '#3f6e73', '#efe2c2', '#e9a6b8'];
+  const cu = win(prog, .38, .78); if (cu > 0 && cu < 1){ const cols = ['#c0452f', '#d9a33a', '#3f6e73', '#efe2c2', '#e9a6b8'];
     for (let k = 0; k < 34; k++){ const a = -Math.PI / 2 + (hash(k) - .5) * 2.4, v = 90 + hash(k + 7) * 120, tt = cu * 2.2;
       const px = x + Math.cos(a) * v * tt * .6, py = y - H0 - R0 + 30 + Math.sin(a) * v * tt * .6 + 60 * tt * tt;
       C.save(); C.globalAlpha = 1 - cu; C.translate(px, py); C.rotate(tt * 6 + k); fillP(rectP(-3, -1.6, 6, 3.2), cols[k % 5]); C.restore(); } }

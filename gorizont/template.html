@@ -242,7 +242,7 @@ S_ALL[100] = {a:'Кафе, где «Цезарь» бывает только о�
 S_ALL[101] = {a:'Банка с красивой этикеткой. Внутри почти пусто', m:[['walk',.28],['stand',.8],['walk',1]], sp:'jar2'};
 S_ALL[102] = {a:'Мимо проезжает другой путник, машет и едет своей дорогой', m:'walk', sp:'passer'};
 S_ALL[103] = {a:'Друг, коллега, прохожий: с другом она обнимается, мимо остальных просто проходит', m:[['walk',.26],['stand',.52],['walk',1]], sp:'people'};
-S_ALL[104] = {a:'Они уже идут вместе. Арка «Пара» — это только табличка над той же дорогой', m:'walk', sp:'arch'};
+S_ALL[104] = {a:'Они уже идут вместе. Арка «Пара» — только табличка над той же дорогой. На развилке он уходит своей тропинкой, и табличка рвётся', m:[['walk',.7],['stand',.92],['walk',1]], sp:'arch'};
 S_ALL[105] = {a:'Качели-балансир с малышом: ровно — не значит одинаково', m:[['walk',.2],['stand',.86],['walk',1]], sp:'seesaw'};
 S_ALL[106] = {a:'Щит «Настоящая пара»: прорезь не по её росту', m:[['walk',.22],['stand',.8],['walk',1]], sp:'board'};
 S_ALL[1] = Object.assign({}, S_ALL[1], {set: {h: 1, f: 1}});
@@ -357,7 +357,7 @@ function onScroll(){
 function start(withEnter){ if (started) return; started = true; enterT = null; document.getElementById('play').hidden = true; maxS = Math.max(maxS, window.scrollY);
   if (withEnter) playPoint(0); }
 /* ============ кнопки «в путь»: героиня идёт, только когда читатель сам попросит ============ */
-const PF = {103: .9, 104: .55, 105: .42, 106: .5, 4: .8, 7: .7, 12: .6, 21: .8, 47: .55, 48: .28};   // где сцене нужно больше времени
+const PF = {103: .9, 104: .4, 105: .42, 106: .5, 4: .8, 7: .7, 12: .6, 21: .8, 47: .55, 48: .28};   // где сцене нужно больше времени
 const BASE_RATE = 88 / (LPT * K * 1.3);                         // живой лёгкий шаг ≈ 88 единиц в секунду
 const goBtns = [];
 let targetK = 0, boostNow = 1;   // boostNow — во сколько раз сейчас ускорен пейзаж   // до какого пункта проигрывать подряд
@@ -1302,7 +1302,7 @@ let A = {}, prevCamL = 0, walkW = 0, lastNow = 0, altS = 0, flowerFly = null, la
 function WX(k, f){ return NEWOF[k] === undefined ? 1e9 : worldAt(NEWOF[k], f) * WSC; }
 function buildAnchors(){
   A = {
-    menu: WX(100, .3), jar2: WX(101, .28), passer: WX(102, 0), rib: WX(103, .26), colW: WX(103, .76), strW: WX(103, .92), arch: WX(104, .55) + 10, see: WX(105, .2) + 118, board: WX(106, .22) + 55, hedgeW: WX(2, 0) - 330, jarW: WX(104, 0) - 300,
+    menu: WX(100, .3), jar2: WX(101, .28), passer: WX(102, 0), rib: WX(103, .26), colW: WX(103, .76), strW: WX(103, .92), arch: WX(104, .34) + 10, forkW: WX(104, .7) - 52, see: WX(105, .2) + 118, board: WX(106, .22) + 55, hedgeW: WX(2, 0) - 330, jarW: WX(104, 0) - 300,
     hatPost: WX(1, .06) + 15, flower: WX(3, .06) + 18, ladder: WX(4, 0) + 16, hedge: WX(7, .2) + 90, stump: WX(8, .06) + 16,
     picnic: WX(9, .12), compass: WX(10, .06) + 13, puppy: WX(11, .08) + 30, stop: WX(12, .06), sign: WX(15, .5),
     fork: WX(17, .25) + 40, house: WX(19, .3) + 110, gate: WX(20, .55), fire: WX(21, .12), bikeLeft: WX(22, .55),
@@ -1568,7 +1568,8 @@ function drawWorld(i, f, st, mode, it, camL, camC, now, tq, wind, vel){
   x = sx(A.hedgeW); if (inView(x)){ for (let k = 0; k < 3; k++) hedgehog(x + k * 28 + Math.sin(tq * .0006 + k) * 6, Y - 16 + k * 3, k ? .85 : 1.1, tq * .012 + k); }
   x = sx(A.jarW); if (inView(x)){ stump(x, Y - 6); jarShape(x, Y - 25, .95); }
   // 104 · арка «Пара» над той же дорогой и боковая тропинка
-  x = sx(A.arch); if (x > -300 && x < LWv + 420){ sidePath(x + 150, Y); archShape(x, Y - 2, i === 104 ? f : (RK(i) > RK(104) ? 1 : 0), tq); }
+  { const fx0 = sx(A.forkW); if (fx0 > -320 && fx0 < LWv + 120) sidePath(fx0, Y); }
+  x = sx(A.arch); if (x > -300 && x < LWv + 420) archShape(x, Y - 2, i === 104 ? f : (RK(i) > RK(104) ? 1 : 0), tq);
   // 106 · щит «Настоящая пара» (когда она за щитом, щит рисуется поверх неё)
   x = sx(A.board); if (x > -220 && x < LWv + 220 && !(i === 106 && f >= .3 && f < .74)) photoBoard(x, Y - 2);
   // ---- попутчик и девушка ----
@@ -1607,13 +1608,15 @@ function drawWorld(i, f, st, mode, it, camL, camC, now, tq, wind, vel){
     if (i === 103){ const sp2 = lerp(sx(A.strW) + 480, sx(A.strW) - 120, win(f, .6, 1));
       drawPerson(sp2, Y - 26, -1, makePose('walk', {w: 1, ph: f * 64, t: tq}), LOOK.stranger, {}, {t: tq, w: 1, scale: .84});
       C.save(); C.globalAlpha = 1 - win(f, .8, .92); nameTag(sp2 - 4, Y - 26 - 152 * .84, 'прохожий', '#6e6a5e'); C.restore(); } }
-  // 104 · Илья: догоняет её на дороге, идут вместе; после арки берутся за руки, потом он уходит своей тропинкой
-  if (i === 104){ const lv = win(f, .86, 1), catchUp2 = f === 0 && GAP[NI] > 0 ? clamp01(travel / GAP[NI]) : 0;
-    const rel = lerp(-48, 150, ease(lv)) - 260 * catchUp2, yy = Y - 5 - 66 * ease(lv), scl = .97 - .45 * ease(lv);
-    const J2 = makePose('walk', {w: Math.max(w, catchUp2 > 0 ? 1 : 0, lv > 0 ? 1 : 0), ph: (drawWorld.gph || 0) * (catchUp2 > 0 ? 1.4 : 1) + Math.PI * .9, t: tq});
-    if (f > .6 && f < .86) J2.hf = {x: 25, y: -54};
-    if (lv > .05 && lv < .45) J2.hf = {x: 15 + 2 * Math.sin(tq * .02), y: -127};
-    drawPerson(gxp + rel, yy, 1, J2, LOOK.ilya, {}, {t: tq, w: 1, scale: scl, blink: (tq % 4100) < 150}); }
+  // 104 · Илья: догоняет её, идут вместе, держась за руки; на развилке машут друг другу, и он уходит своей тропинкой на холм
+  if (i === 104){ const catchUp2 = f === 0 && GAP[NI] > 0 ? clamp01(travel / GAP[NI]) : 0, sp = clamp01((f - .76) / .24) * .78;
+    let px = gxp - 48 - 260 * catchUp2, py = Y - 5, scl = .97, walking = Math.max(w, catchUp2 > 0 ? 1 : 0), ph = (drawWorld.gph || 0) * (catchUp2 > 0 ? 1.4 : 1) + Math.PI * .9;
+    if (f >= .76){ const q = sidePt(sx(A.forkW), Y, sp); px = q.x; py = q.y - 4; scl = .97 * (1 - .5 * sp); walking = 1; ph = sp * 260 * TAU / (56 * KG) + Math.PI * .9; }
+    const J2 = makePose('walk', {w: walking, ph, t: tq});
+    if (f > .44 && f < .72) J2.hf = {x: 25, y: -54};
+    if (f > .72 && f < .8) J2.hf = {x: 15 + 2 * Math.sin(tq * .02), y: -127};
+    if (f > .84 && f < .92){ J2.hb = {x: -12, y: -122}; }
+    drawPerson(px, py, f >= .76 ? 1 : 1, J2, LOOK.ilya, {}, {t: tq, w: 1, scale: scl, blink: (tq % 4100) < 150}); }
   // 105 · качели-балансир: малыш уже сидит
   x = sx(A.see); if (x > -280 && x < LWv + 280){
     const on = i === 105 && f >= .3 && f < .84, d = lerp(108, 54, ease(win(f, .44, .68)));
@@ -1662,7 +1665,8 @@ function drawWorld(i, f, st, mode, it, camL, camC, now, tq, wind, vel){
     const wheel = bikeQ;
     if (m === 'boat') o.ph = tq * .006;
     const J = makePose(m, o);
-    if (i === 104 && f > .6 && f < .86) J.hb = {x: -20, y: -52};
+    if (i === 104 && f > .44 && f < .72) J.hb = {x: -20, y: -52};
+    if (i === 104 && f > .73 && f < .9) o.wave = true;
     if (i === 103 && f >= .28 && f < .52){ J.hf = {x: 24, y: -80}; J.hb = {x: 22, y: -82}; J.tilt = .12; }
     if (i === 105 && drawWorld.see && drawWorld.see.on){ const sv = drawWorld.see; gx = sv.x - sv.d * Math.cos(sv.th) + 2.2; gy = Y - 36 + sv.d * Math.sin(sv.th) + 37.4 - 3; }
     if (pushBike){ J.hb = {x: 24, y: -62}; C.save(); C.translate(gx + 6, Y - 2); C.scale(KG, KG); bikeShape(camL / (17 * KG), 0); if (it.b){ C.translate(31, -71); C.scale(1.3, 1.3); basketShape(0, 0, it.b); } C.restore(); }
@@ -1735,7 +1739,16 @@ function nameTag(x, y, label, col){
   cut(rrP(x - tw / 2 - 10, y - 24, tw + 20, 28, 8), '#f7ecd2', .6); C.strokeStyle = col; C.lineWidth = 1.6; C.stroke(rrP(x - tw / 2 - 10, y - 24, tw + 20, 28, 8));
   C.fillStyle = '#2a1f19'; C.textAlign = 'center'; C.textBaseline = 'alphabetic'; C.fillText(label, x, y - 4); C.restore();
 }
-function sidePath(x0, y){ const p = polyP([x0 - 24, y - 6, x0 + 24, y - 6, x0 + 270, y - 74, x0 + 236, y - 74]); C.save(); C.globalAlpha = .95; fillP(p, pc('path')); C.restore(); }
+function sidePt(x0, y, t){ const P0 = [x0, y - 1], P1 = [x0 + 170, y - 2], P2 = [x0 + 270, y - 64], u = 1 - t; return {x: u * u * P0[0] + 2 * u * t * P1[0] + t * t * P2[0], y: u * u * P0[1] + 2 * u * t * P1[1] + t * t * P2[1]}; }
+function sidePath(x0, y){
+  // тропинка сворачивает с дороги, сужается и поднимается на холм, к домику Ильи
+  const L = [], Rr = []; for (let k = 0; k <= 30; k++){ const t = k / 30, q = sidePt(x0, y, t), w2 = 22 * (1 - t) + 3.5 * t; L.push([q.x, q.y - w2 * .45]); Rr.push([q.x, q.y + w2 * .45]); }
+  const p = NP(); p.moveTo(L[0][0] - 22, L[0][1]); L.forEach(q => p.lineTo(q[0], q[1])); Rr.reverse().forEach(q => p.lineTo(q[0], q[1])); p.lineTo(Rr[Rr.length - 1][0] - 26, Rr[Rr.length - 1][1]); p.closePath(); fillP(p, pc('path'));
+  const e = sidePt(x0, y, 1); C.save(); C.translate(e.x + 12, e.y + 2); C.scale(.62, .62); rowHouse(0, 0, '#c99a6a', '#4f6b3a'); C.restore();
+  folkTree(e.x - 26, e.y + 2, 34, 77, 1, pc('tree0'), pc('tree1'));
+  // указатель на развилке
+  cutSeg(x0 + 30, y - 6, x0 + 30, y - 46, '#7a5534', 2.4); C.save(); C.translate(x0 + 30, y - 42); C.rotate(-.32); cut(polyP([0, -5, 30, -5, 36, 0, 30, 5, 0, 5]), '#c9b08a', .6); C.restore();
+}
 function archShape(x, y, prog, t){
   const R0 = 84, H0 = 170;
   for (const sd of [-1, 1]) cut(rrP(x + sd * R0 - 6, y - H0, 12, H0, 3), '#8a5a2e');
@@ -1745,17 +1758,28 @@ function archShape(x, y, prog, t){
     cut(ellP(fx, fy, 6, 4, a), '#5f8f3e', .4); dot(fx + Math.cos(a) * 2, fy + Math.sin(a) * 2, 3.4, k % 3 === 0 ? '#efe2c2' : k % 3 === 1 ? '#d94a3a' : '#e9a6b8'); }
   for (const sd of [-1, 1]) for (let k = 0; k < 6; k++){ const fy = y - H0 + 18 + k * 26; cut(ellP(x + sd * R0, fy, 5, 3.4, .6 * sd), '#5f8f3e', .4); dot(x + sd * (R0 + 4), fy - 4, 3, k % 2 ? '#d94a3a' : '#efe2c2'); }
   // табличка «Пара» появляется в тот момент, когда они проходят под аркой
-  const u = win(prog, .48, .58); if (u > 0){
-    const sc = u < 1 ? .4 + .6 * easeOut(u) + Math.sin(u * Math.PI) * .12 : 1, sy = y - H0 - R0 + 22;
+  const u = win(prog, .32, .42); if (u > 0){
+    const sc = u < 1 ? .4 + .6 * easeOut(u) + Math.sin(u * Math.PI) * .12 : 1, sy = y - H0 - R0 + 22, tear = win(prog, .82, .9);
+    const sign = () => { cut(rrP(-64, 0, 128, 44, 8), '#f7ecd2'); C.strokeStyle = '#c0452f'; C.lineWidth = 2; C.stroke(rrP(-58, 5, 116, 34, 6));
+      C.fillStyle = '#b13f2c'; C.font = '26px Prata, Georgia, serif'; C.textAlign = 'center'; C.textBaseline = 'alphabetic'; C.fillText('Пара', 0, 31);
+      for (const sd of [-1, 1]){ const hx = sd * 46, hy = 20; const p = NP(); p.moveTo(hx, hy + 5); p.bezierCurveTo(hx - 9, hy - 2, hx - 5, hy - 9, hx, hy - 4); p.bezierCurveTo(hx + 5, hy - 9, hx + 9, hy - 2, hx, hy + 5); fillP(p, '#d94a3a'); } };
+    const zig = [[0, -2], [5, 6], [-4, 13], [4, 21], [-5, 29], [3, 37], [-2, 46]];
     C.save(); C.translate(x, sy); C.scale(sc, sc);
-    seg(-34, -18, -24, 2, '#6e4420', 1.2); seg(34, -18, 24, 2, '#6e4420', 1.2);
-    cut(rrP(-64, 0, 128, 44, 8), '#f7ecd2'); C.strokeStyle = '#c0452f'; C.lineWidth = 2; C.stroke(rrP(-58, 5, 116, 34, 6));
-    C.fillStyle = '#b13f2c'; C.font = '26px Prata, Georgia, serif'; C.textAlign = 'center'; C.textBaseline = 'alphabetic'; C.fillText('Пара', 0, 31);
-    for (const sd of [-1, 1]){ const hx = sd * 46, hy = 20; const p = NP(); p.moveTo(hx, hy + 5); p.bezierCurveTo(hx - 9, hy - 2, hx - 5, hy - 9, hx, hy - 4); p.bezierCurveTo(hx + 5, hy - 9, hx + 9, hy - 2, hx, hy + 5); fillP(p, '#d94a3a'); }
+    if (tear <= 0){ seg(-34, -18, -24, 2, '#6e4420', 1.2); seg(34, -18, 24, 2, '#6e4420', 1.2); sign(); }
+    else {
+      // рвётся посередине: каждая половинка повисает на своей верёвочке
+      const ang = easeOut(tear) * .95 + (tear >= 1 ? Math.sin(t * .003) * .03 : Math.sin(tear * 18) * .06 * (1 - tear));
+      for (const sd of [-1, 1]){
+        seg(sd * 34, -18, sd * 24, 2, '#6e4420', 1.2);
+        C.save(); C.translate(sd * 24, 2); C.rotate(-sd * ang); C.translate(-sd * 24, -2);
+        const cl = NP(); cl.moveTo(sd * 80, -4); zig.forEach(([zx, zy]) => cl.lineTo(zx + sd * 1.5 * tear, zy)); cl.lineTo(sd * 80, 50); cl.closePath();
+        C.save(); C.clip(cl); sign(); C.restore(); C.restore();
+      }
+    }
     C.restore();
   }
   // конфетти
-  const cu = win(prog, .5, .9); if (cu > 0 && cu < 1){ const cols = ['#c0452f', '#d9a33a', '#3f6e73', '#efe2c2', '#e9a6b8'];
+  const cu = win(prog, .38, .78); if (cu > 0 && cu < 1){ const cols = ['#c0452f', '#d9a33a', '#3f6e73', '#efe2c2', '#e9a6b8'];
     for (let k = 0; k < 34; k++){ const a = -Math.PI / 2 + (hash(k) - .5) * 2.4, v = 90 + hash(k + 7) * 120, tt = cu * 2.2;
       const px = x + Math.cos(a) * v * tt * .6, py = y - H0 - R0 + 30 + Math.sin(a) * v * tt * .6 + 60 * tt * tt;
       C.save(); C.globalAlpha = 1 - cu; C.translate(px, py); C.rotate(tt * 6 + k); fillP(rectP(-3, -1.6, 6, 3.2), cols[k % 5]); C.restore(); } }
