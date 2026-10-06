@@ -46,13 +46,7 @@ def render(units, total):
     for k, u in enumerate(units):
         body = "\n".join(u["blocks"])
         if u["kind"] == "h1":
-            head = (f'<h1 id="essay-title">{inline(u["title"])}</h1>\n'
-                    '<div class="listen" id="listen">'
-                    '<button type="button" class="listen-btn" id="listen-btn" aria-label="Слушать статью"><span class="li-ic" aria-hidden="true">▶</span></button>'
-                    '<div class="listen-main"><div class="listen-top"><span class="listen-title">Слушать статью</span><span class="listen-time" id="listen-time">22:29</span></div>'
-                    '<input type="range" id="listen-seek" min="0" max="1000" value="0" step="1" aria-label="Место в записи">'
-                    '</div><button type="button" class="listen-speed" id="listen-speed" aria-label="Скорость">1×</button>'
-                    '<audio id="listen-audio" preload="none" src="audio/gorizont-chast-1.mp3"></audio></div>')
+            head = f'<h1 id="essay-title">{inline(u["title"])}</h1>'
         else:
             head = f'<h2 class="{"sub" if u["kind"] == "h3" else ""}">{inline(u["title"])}</h2>'
         out.append(f'<section class="cp" id="r{k}" data-cp="{k}">\n{head}\n{body}\n</section>')
