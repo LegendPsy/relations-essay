@@ -432,7 +432,9 @@ S_ALL[105] = {a:'Качели-балансир с малышом: ровно —
 S_ALL[106] = {a:'Щит «Настоящая пара»: прорезь не по её росту', m:[['walk',.22],['stand',.8],['walk',1]], sp:'board'};
 S_ALL[1] = Object.assign({}, S_ALL[1], {set: {h: 1, f: 1}});
 // порядок сцен = порядок пунктов текста; кнопка в конце пункта k показывает сцену k+1
-const PART = [0, 1, 103, 2, 104, 4, 5, 6, 105, 100, 106, 8, 11, 102, 30, 9];
+const PART = [0, 1, 103, 2, 104, 4, 5, 6, 105, 100, 106, 8, 11, 102, 9];
+// какая сцена у кнопки в конце каждого пункта текста (null — без кнопки: «Всегда можно заказать просто Цезарь»)
+const GO_OF = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, null, 14];
 const OLD = PART, NEWOF = {}; PART.forEach((k, n) => NEWOF[k] = n);
 const S = PART.map(k => Object.assign({}, S_ALL[k]));
 const RK = k => (NEWOF[k] === undefined ? 1e9 : NEWOF[k]);   // место сцены в этой части
@@ -582,12 +584,12 @@ function updateGo(){
 function buildGo(){
   // кнопка стоит в конце пункта и показывает то, что вы только что прочитали
   secs.forEach((sec, k) => {
-    if (k >= N) return;
+    const sc = GO_OF[k]; if (sc == null) return;
     const b = document.createElement('button');
     b.type = 'button'; b.className = 'go'; b.innerHTML = '<span class="go-ic">▶</span><span class="go-t">Дальше в путь</span>';
     b.setAttribute('aria-label', 'Показать, как Лена идёт дальше');
-    b.addEventListener('click', () => playPoint(k + 1));
-    const wrap = document.createElement('div'); wrap.className = 'go-wrap'; wrap.appendChild(b); sec.appendChild(wrap); goBtns[k + 1] = b;
+    b.addEventListener('click', () => playPoint(sc));
+    const wrap = document.createElement('div'); wrap.className = 'go-wrap'; wrap.appendChild(b); sec.appendChild(wrap); goBtns[sc] = b;
   });
   updateGo();
 }
