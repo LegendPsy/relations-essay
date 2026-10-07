@@ -55,6 +55,7 @@ def render(units, total):
                '<p class="rest-label">Привал · конец первой части</p>'
                '<p>Лена расстелила плед и собрала себе обед из того, что выбрала сама. Здесь можно остановиться: она подождёт, а место сохранится само. Когда вернётесь, путь продолжится отсюда.</p>'
                f'<button type="button" class="btn ghost js-copy" data-cp="{len(units)}">Скопировать ссылку на это место</button>'
+               '<a class="btn ghost" href="./">Все части статьи</a>'
                '</aside>\n</section>')
     return "\n\n".join(out)
 
@@ -63,7 +64,7 @@ def main():
     units = parse((ROOT / "part1.md").read_text(encoding="utf-8"))
     assert len(units) == 15, f"Ожидалось 15 пунктов текста, получилось {len(units)}"
     tpl = (ROOT / "template.html").read_text(encoding="utf-8")
-    (ROOT / "index.html").write_text(tpl.replace("{{ARTICLE}}", render(units, len(units))).replace("{{TIMINGS}}", (ROOT / "timings.json").read_text()).replace("{{WORDTIMES}}", (ROOT / "wordtimes.json").read_text()), encoding="utf-8")
+    (ROOT / "chast-1.html").write_text(tpl.replace("{{ARTICLE}}", render(units, len(units))).replace("{{TIMINGS}}", (ROOT / "timings.json").read_text()).replace("{{WORDTIMES}}", (ROOT / "wordtimes.json").read_text()), encoding="utf-8")
     print("OK:", len(units), "пунктов + привал")
 
 

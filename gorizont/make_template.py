@@ -12,7 +12,9 @@ def R(a, b, cnt=1):
 
 # ---------- шапка и адреса ----------
 R("<title>Отношения нельзя завести</title>", "<title>Горизонт отношений</title>")
-R("const PUBLIC_URL = 'https://legendpsy.github.io/relations-essay/';", "const PUBLIC_URL = 'https://legendpsy.github.io/relations-essay/gorizont/';")
+R("const PUBLIC_URL = 'https://legendpsy.github.io/relations-essay/';", "const PUBLIC_URL = 'https://legendpsy.github.io/relations-essay/gorizont/chast-1.html';")
+R('''    <button type="button" class="btn ghost" id="mark-close">Закрыть</button>''', '''    <a class="btn ghost" href="./">Все части статьи</a>
+    <button type="button" class="btn ghost" id="mark-close">Закрыть</button>''')
 R("const STORE = 'relations-essay-v1';", "const STORE = 'gorizont-1-v1';")
 R('aria-label="Путешествие девушки: меняется по мере чтения"', 'aria-label="Путешествие Лены: она идёт дальше, когда вы нажимаете «Дальше в путь»"')
 
@@ -198,5 +200,6 @@ exec(open(ROOT / "dock.py", encoding="utf-8").read())
 exec(open(ROOT / "flag.py", encoding="utf-8").read())
 exec(open(ROOT / "cloud.py", encoding="utf-8").read())
 exec(open(ROOT / "sync.py", encoding="utf-8").read())
+R(".btn.ghost {", "a.btn { text-decoration: none; display: inline-block; }\n.btn.ghost {")
 (ROOT / "template.html").write_text(s, encoding="utf-8")
 print("template ok")
