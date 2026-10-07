@@ -150,7 +150,7 @@ a.btn { text-decoration: none; display: inline-block; }
         <div class="bar" id="bar"><div class="bar-fill" id="barfill"></div><div class="bar-max" id="barmax"></div></div>
     <div class="play" id="play">
       <button type="button" id="playbtn" aria-label="Начать путь"><svg viewBox="0 0 24 24"><path d="M5 3l16 9-16 9z"/></svg></button>
-      <p>Начать путь</p>
+      <p>Начать путь · со звуком</p>
     </div>
   </div>
   <div class="dock" id="listen">
@@ -710,6 +710,12 @@ let audioMode = false;
     if (au.paused) au.play().catch(() => {});
     if (!hinted){ hinted = true; try { localStorage.setItem('gorizont-1-hint', '1'); } catch (er) {} }
   }); });
+  // большая кнопка «Начать путь» на сцене включает и мультик, и голос
+  document.getElementById('playbtn').addEventListener('click', ev => {
+    ev.stopImmediatePropagation();
+    if (au.currentTime > 1340) au.currentTime = 0;
+    au.play().catch(() => start(true));
+  }, true);
   au.addEventListener('play', () => { everPlayed = true; userT = -1e9; enterAudio();
     if (!hinted){ hinted = true; try { localStorage.setItem('gorizont-1-hint', '1'); } catch (er) {} setTimeout(() => toast('Нажмите на любое слово — озвучка начнётся с него'), 900); } });
   au.addEventListener('seeking', () => { if (audioMode){ const st = stateAt(au.currentTime); if (st.k !== sceneK) camX = worldAt(st.k, st.f) - st.tr; } });

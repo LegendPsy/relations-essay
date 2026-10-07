@@ -1,4 +1,5 @@
 # ---------- озвучка ⇄ текст ⇄ мультик: всё идёт синхронно по времени записи ----------
+R("      <p>Начать путь</p>", "      <p>Начать путь · со звуком</p>")
 R("const speeds = [1, 1.25, 1.5, .85];", "const speeds = [1, 1.25, 1.5, 2, .85];")
 R("let WS = [], WE = [], GAP = [], TM = [];", "let AUDIO_GAP = null;   // в режиме озвучки дорога между событиями длиннее — Лена идёт столько, сколько звучит пункт\nlet WS = [], WE = [], GAP = [], TM = [];")
 R("    WS[i] = x + GAP[i];", "    if (AUDIO_GAP) GAP[i] = AUDIO_GAP[i];\n    WS[i] = x + GAP[i];")
@@ -99,6 +100,12 @@ let audioMode = false;
     if (au.paused) au.play().catch(() => {});
     if (!hinted){ hinted = true; try { localStorage.setItem('gorizont-1-hint', '1'); } catch (er) {} }
   }); });
+  // большая кнопка «Начать путь» на сцене включает и мультик, и голос
+  document.getElementById('playbtn').addEventListener('click', ev => {
+    ev.stopImmediatePropagation();
+    if (au.currentTime > 1340) au.currentTime = 0;
+    au.play().catch(() => start(true));
+  }, true);
   au.addEventListener('play', () => { everPlayed = true; userT = -1e9; enterAudio();
     if (!hinted){ hinted = true; try { localStorage.setItem('gorizont-1-hint', '1'); } catch (er) {} setTimeout(() => toast('Нажмите на любое слово — озвучка начнётся с него'), 900); } });
   au.addEventListener('seeking', () => { if (audioMode){ const st = stateAt(au.currentTime); if (st.k !== sceneK) camX = worldAt(st.k, st.f) - st.tr; } });
