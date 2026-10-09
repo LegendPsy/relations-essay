@@ -53,7 +53,7 @@ a.part .m { color: var(--ink); }
 .part.off .d { color: var(--muted); }
 .part.all { border-style: dashed; }
 .resume { display: none; margin-top: 10px; font-family: var(--mono); font-size: 12px; color: var(--gold); text-decoration: none; }
-.resume.show { display: inline-block; }
+.resume.show { display: block; }
 footer { color: var(--muted); font-size: 13.5px; border-top: 1px solid var(--rule); padding-top: 14px; }
 </style>
 </head>
@@ -83,21 +83,29 @@ footer { color: var(--muted); font-size: 13.5px; border-top: 1px solid var(--rul
         <span class="d">Отношения как глагол, лестница отношений, шведский стол</span>
         <span class="m">22 мин<small>22:29</small></span>
       </a></li>
-      <li><div class="part off" aria-disabled="true"><span class="n">2</span><span class="t">Часть вторая</span><span class="d">Готовится</span><span class="m">скоро</span></div></li>
+      <li><a class="part" href="chast-2.html">
+        <span class="n">2</span><span class="t">Часть вторая</span>
+        <span class="d">Одиночество и ценности, контекст, ярлыки, расставание и дистанция</span>
+        <span class="m">14 мин<small>14:25</small></span>
+      </a></li>
       <li><div class="part off" aria-disabled="true"><span class="n">3</span><span class="t">Часть третья</span><span class="d">Готовится</span><span class="m">скоро</span></div></li>
       <li><div class="part off" aria-disabled="true"><span class="n">4</span><span class="t">Часть четвёртая</span><span class="d">Готовится</span><span class="m">скоро</span></div></li>
       <li><div class="part off all" aria-disabled="true"><span class="n">∞</span><span class="t">Вся статья целиком</span><span class="d">Откроется, когда будут готовы все части</span><span class="m">скоро</span></div></li>
     </ul>
     <a class="resume" id="resume" href="chast-1.html">Продолжить первую часть</a>
+    <a class="resume" id="resume2" href="chast-2.html">Продолжить вторую часть</a>
   </section>
 
   <footer>Время чтения равно длине авторской озвучки. Место, где вы остановились, сохраняется само.</footer>
 </main>
 <script>
-try {
-  const s = JSON.parse(localStorage.getItem('gorizont-1-audio') || 'null');
-  if (s && s.t > 20 && s.t < 1340){ const r = document.getElementById('resume'), v = Math.floor(s.t); r.textContent = 'Продолжить первую часть с ' + Math.floor(v / 60) + ':' + String(v % 60).padStart(2, '0') + ' →'; r.classList.add('show'); }
-} catch (e) {}
+// где вы остановились в каждой части (по месту в записи)
+[['gorizont-1-audio', 'resume', 'первую', 1340], ['gorizont-2-audio', 'resume2', 'вторую', 858]].forEach(([key, id, name, end]) => {
+  try {
+    const s = JSON.parse(localStorage.getItem(key) || 'null');
+    if (s && s.t > 20 && s.t < end){ const r = document.getElementById(id), v = Math.floor(s.t); r.textContent = 'Продолжить ' + name + ' часть с ' + Math.floor(v / 60) + ':' + String(v % 60).padStart(2, '0') + ' →'; r.classList.add('show'); }
+  } catch (e) {}
+});
 </script>
 </body>
 </html>
