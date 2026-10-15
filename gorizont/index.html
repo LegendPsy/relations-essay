@@ -51,10 +51,13 @@ a.part .m { color: var(--ink); }
 .part.off { opacity: .5; }
 .part.off .n { color: var(--muted); }
 .part.off .d { color: var(--muted); }
-a.part.whole { background: var(--accent); border-color: var(--accent); padding: 18px 16px; }
-a.part.whole .n { color: var(--ink); font-size: 2.2rem; }
+/* вся статья: тот же бежевый, но с золотистой градиентной рамкой и мягким тёплым свечением */
+a.part.whole { padding: 18px 16px; border: 2px solid transparent;
+  background: linear-gradient(var(--paper-hi), var(--paper-hi)) padding-box, linear-gradient(135deg, #f0d08a, var(--gold) 35%, var(--accent) 65%, #f0d08a) border-box;
+  box-shadow: 0 0 0 4px rgba(217,163,58,.12), 0 12px 30px -6px rgba(217,163,58,.35); }
+a.part.whole .n { font-size: 2.2rem; }
 a.part.whole .t { font-size: 1.3rem; }
-a.part.whole .d { color: rgba(15,18,21,.78); }
+.or { margin: 22px 0 10px; }
 
 .resume { display: none; margin-top: 10px; font-family: var(--mono); font-size: 12px; color: var(--gold); text-decoration: none; }
 .resume.show { display: block; }
@@ -71,18 +74,6 @@ footer { color: var(--muted); font-size: 13.5px; border-top: 1px solid var(--rul
     <p class="lede">О том, что отношения нельзя завести или окончательно потерять. Отношения — это то, как один человек относится к другому.</p>
   </section>
 
-
-  <section>
-    <ul class="parts">
-      <li><a class="part whole" href="celikom.html">
-        <span class="n">∞</span><span class="t">Вся статья целиком</span>
-        <span class="d">Все четыре части и «Вместо вывода» одним путём, без остановок между частями</span>
-        <span class="m">66 мин<small>65:43</small></span>
-      </a></li>
-    </ul>
-    <a class="resume" id="resume0" href="celikom.html">Продолжить статью</a>
-  </section>
-
   <section class="voice" aria-label="Об озвучке">
     <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21h2v-2.08A7 7 0 0 0 19 12h-2z"/></svg></span>
     <div>
@@ -92,7 +83,16 @@ footer { color: var(--muted); font-size: 13.5px; border-top: 1px solid var(--rul
   </section>
 
   <section>
-    <h2>Или по частям</h2>
+    <h2>Что прочитать</h2>
+    <ul class="parts">
+      <li><a class="part whole" href="celikom.html">
+        <span class="n">∞</span><span class="t">Вся статья целиком</span>
+        <span class="d">Все четыре части и «Вместо вывода» одним путём, без остановок между частями</span>
+        <span class="m">66 мин<small>65:43</small></span>
+      </a></li>
+    </ul>
+    <a class="resume" id="resume0" href="celikom.html">Продолжить статью</a>
+    <h2 class="or">Или по частям</h2>
     <ul class="parts">
       <li><a class="part" href="chast-1.html">
         <span class="n">1</span><span class="t">Часть первая</span>
