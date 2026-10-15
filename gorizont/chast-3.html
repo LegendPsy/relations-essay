@@ -381,9 +381,10 @@ S_ALL[106] = {a:'Щит «Настоящая пара»: прорезь не п�
 S_ALL[1] = Object.assign({}, S_ALL[1], {set: {h: 1, f: 1}});
 // новые сцены третьей части
 S_ALL[120] = {a:'На берегу витрина: «лучшие» золотые туфли и простые резиновые сапоги. Для реки подходят сапоги', m:'boat', sp:'shoes'};
+S_ALL[122] = {a:'Скамейка «Супруги»: двое садятся посвободнее, табличка та же. Потом табличка меняется на «Бывшие супруги», а тепло между ними остаётся', m:[['walk',.18],['stand',.86],['walk',1]], sp:'couple'};
 S_ALL[121] = {a:'Старое радио на пеньке: Лена крутит по одной ручке — тише, громче, другая волна', m:[['walk',.24],['stand',.82],['walk',1]], sp:'radio'};
 // третья часть: утро у костра (21), река и лодка (22), витрина с обувью (120), башня-лестница (23), одинаковые домики (24),
-// перекрытый мост (25) и тропа поверху (26), ветер уносит цветок (33), кафе (27), банка (28), корзинка (29), радио (121),
+// перекрытый мост (25) и тропа поверху (26), скамейка «Супруги» (122), кафе (27), банка (28), корзинка (29), радио (121),
 // ручка корзинки рвётся (31), луг как в начале (32), дождь (34), привал под навесом (36)
 S_ALL[21] = Object.assign({}, S_ALL[21], {a:'Утро. Костёр догорел: Лена встаёт, берёт велосипед и едет дальше', m:[['sit',.3],['stand',.42],['walk',.55],['bike',1]], rest:0, tod:'morning', set:{h:1, f:1, b:2, pup:0}, ia:.01});
 S_ALL[25] = Object.assign({}, S_ALL[25], {a:'Причаливает. Мост перекрыт: сверяется с компасом, и тропа поведёт её поверху в ту же сторону', m:[['boat',.2],['stand',.3],['walk',.42],['stand',1]]});
@@ -393,7 +394,7 @@ S_ALL[28] = Object.assign({}, S_ALL[28], {a:'Банка с красивой эт
 S_ALL[29] = Object.assign({}, S_ALL[29], {a:'Заглядывает в корзинку: из чего она состоит сейчас?'});
 S_ALL[31] = Object.assign({}, S_ALL[31], {a:'Ручка корзинки рвётся. Чинить уже нечего: Лена оставляет корзинку на скамейке'});
 S_ALL[32] = Object.assign({}, S_ALL[32], {a:'Луг, как в самом начале. Но она уже не та, что в начале: шляпка с ней, и весь пройденный путь тоже'});
-const PART = [21, 22, 120, 23, 24, 25, 26, 33, 27, 28, 29, 121, 31, 32, 34, 36];
+const PART = [21, 22, 120, 23, 24, 25, 26, 122, 27, 28, 29, 121, 31, 32, 34, 36];
 // кнопка в конце пункта k показывает сцену GO_OF[k]; 25 (мост) проигрывается по дороге к тропе поверху,
 // луг и дождь — по дороге к навесу
 const GO_OF = [1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 15];
@@ -1583,7 +1584,7 @@ let A = {}, prevCamL = 0, walkW = 0, lastNow = 0, altS = 0, flowerFly = null, la
 function WX(k, f){ return NEWOF[k] === undefined ? 1e9 : worldAt(NEWOF[k], f) * WSC; }
 function buildAnchors(){
   A = {
-    qsign: WX(111, .2) + 96, tend: WX(110, .22), shoes: WX(120, .5) + 40, radio: WX(121, .24) + 52,
+    qsign: WX(111, .2) + 96, tend: WX(110, .22), shoes: WX(120, .5) + 40, radio: WX(121, .24) + 52, couple: WX(122, .18) + 150,
     menu: WX(100, .3), jar2: WX(101, .28), passer: WX(102, 0), rib: WX(103, .26), colW: WX(103, .76), strW: WX(103, .92), arch: WX(104, .34) + 10, forkW: WX(104, .7) - 52, see: WX(105, .2) + 118, board: WX(106, .22) + 55, hedgeW: WX(2, 0) - 330, jarW: WX(104, 0) - 300,
     hatPost: WX(1, .06) + 15, flower: WX(3, .06) + 18, ladder: WX(4, 0) + 16, hedge: WX(7, .2) + 90, stump: WX(8, .06) + 16,
     picnic: WX(9, .12), compass: WX(10, .06) + 13, puppy: WX(11, .08) + 30, stop: WX(12, .06), sign: WX(15, .5),
@@ -1860,6 +1861,8 @@ function drawWorld(i, f, st, mode, it, camL, camC, now, tq, wind, vel){
   { const bx = sx(A.tend) + 96; if (bx > -200 && bx < LWv + 200 && RK(i) >= RK(110)){ const ff = i === 110 ? f : 1; crumbBirds(bx, Y, ff, tq); } }
   // 120 · витрина с обувью на берегу
   x = sx(A.shoes); if (x > -300 && x < LWv + 300) shoeStand(x, Y, i === 120 ? f : (RK(i) > RK(120) ? 1 : 0), tq);
+  // 122 · скамейка «Супруги»
+  x = sx(A.couple); if (x > -260 && x < LWv + 260) coupleBench(x, Y, i === 122 ? f : (RK(i) > RK(122) ? 1 : 0), tq);
   // 121 · радио на пеньке
   x = sx(A.radio); if (x > -200 && x < LWv + 200) radioShape(x, Y, i === 121 ? f : (RK(i) > RK(121) ? 1 : 0), tq);
   // ---- попутчик и девушка ----
@@ -2195,6 +2198,27 @@ function shoeStand(x, y, u, t){
   // ярлычок «для реки» у сапог: появляется, когда она проплывает мимо
   const v = easeOut(win(u, .35, .55)); if (v > 0){ C.save(); C.globalAlpha = v; nameTag(x + 132, y - 92 - 6 * v, 'для реки', '#4f6b3a'); C.restore(); }
   C.save(); C.globalAlpha = .25; for (const px of [x - 84, x + 84]) seg(px, y + 26, px + Math.sin(t * .004) * 2, y + 46, '#2a1f19', 4); C.restore();
+}
+function coupleBench(x, y, u, t){
+  // длинная скамейка с табличкой. Сначала двое сидят вплотную, потом садятся свободнее — табличка та же.
+  // Потом табличка переворачивается на «Бывшие супруги», а они так же улыбаются друг другу.
+  const apart = ease(win(u, .22, .42)), flip = win(u, .56, .68);
+  const pp = NP(); for (const sx0 of [-70, 70]){ cutSeg(x + sx0, y - 30, x + sx0, y, '#2a1f19', 2.6); }
+  cut(rectP(x - 84, y - 36, 168, 6), '#8a5a2e'); cut(rectP(x - 84, y - 58, 168, 5), '#8a5a2e'); cut(rectP(x - 84, y - 48, 168, 5), '#8a5a2e');
+  const d = lerp(16, 52, apart), J1 = makePose('sit', {}), J2 = makePose('sit', {});
+  if (apart < .5){ J1.hf = {x: 22, y: -62}; J2.hf = {x: 22, y: -62}; }      // держатся за руки, пока сидят вплотную
+  drawPerson(x - d, y - 1, 1, J1, LOOK.ilya, {}, {t, scale: .86, blink: (t % 4100) < 150, noShadow: true});
+  drawPerson(x + d, y - 1, -1, J2, LOOK.friend, {}, {t, scale: .86, blink: (t % 3700) < 150, noShadow: true});
+  // сердечко между ними: и когда сели свободнее, и когда сменилась табличка
+  for (const [a, b] of [[.44, .56], [.7, .84]]){ const hu = win(u, a, b); if (hu <= 0 || hu >= 1) continue;
+    C.save(); C.globalAlpha = Math.sin(Math.PI * hu); const hx = x, hy = y - 150 - hu * 26, p = NP(); p.moveTo(hx, hy + 9); p.bezierCurveTo(hx - 15, hy - 3, hx - 8, hy - 15, hx, hy - 7); p.bezierCurveTo(hx + 8, hy - 15, hx + 15, hy - 3, hx, hy + 9); cut(p, '#d94a3a', .6); C.restore(); }
+  // табличка на столбике над скамейкой; переворачивается вокруг вертикальной оси
+  cutSeg(x + 96, y, x + 96, y - 92, '#6e4420', 3);
+  const sc = Math.abs(Math.cos(Math.PI * flip)), label = flip < .5 ? 'Супруги' : 'Бывшие супруги';
+  C.save(); C.translate(x + 96, y - 112); C.scale(Math.max(.04, sc), 1);
+  C.font = '19px Prata, Georgia, serif'; const tw = C.measureText(label).width + 30;
+  cut(rrP(-tw / 2, -18, tw, 34, 7), '#f7ecd2', .6); C.strokeStyle = '#b13f2c'; C.lineWidth = 1.8; C.strokeRect(-tw / 2 + 5, -13, tw - 10, 24);
+  C.textAlign = 'center'; C.fillStyle = '#2a1f19'; C.fillText(label, 0, 6); C.restore();
 }
 function radioShape(x, y, u, t){
   // пенёк и старое радио на нём; когда Лена крутит ручки, стрелка бежит по шкале, а из динамика летят ноты
