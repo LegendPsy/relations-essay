@@ -2035,7 +2035,7 @@ function buildAnchors(){
     menu: WX(100, .3), jar2: WX(101, .28), passer: WX(102, 0), rib: WX(103, .26), colW: WX(103, .76), strW: WX(103, .92), arch: WX(104, .34) + 10, forkW: WX(104, .7) - 52, see: WX(105, .2) + 118, board: WX(106, .22) + 55, hedgeW: WX(2, 0) - 330, jarW: WX(104, 0) - 300,
     hatPost: WX(1, .06) + 15, flower: WX(3, .06) + 18, ladder: WX(4, 0) + 16, hedge: WX(7, .2) + 90, stump: WX(8, .06) + 16,
     picnic: WX(9, .12), compass: WX(10, .06) + 13, puppy: WX(11, .08) + 30, stop: WX(12, .06), sign: WX(15, .5),
-    fork: WX(17, .25) + 40, house: WX(19, .3) + 110, gate: WX(20, .55), fire: WX(21, .12), bikeLeft: WX(22, .55),
+    fork: WX(17, .25) + 40, farEnd: WX(18, 1) + 590, house: WX(19, .3) + 110, gate: WX(20, .55), fire: WX(21, .12), bikeLeft: WX(22, .55),
     boatAt: WX(22, .7), riverB: WX(25, .2) + 110, bike13: WX(13, .32), meet: WX(14, .3), cl40: WX(40, .3) + 60, rail: WX(2, .5), tower: WX(23, .5), housesRow: WX(24, 0) + 260, dock: WX(25, .2),
     bridge: WX(25, .5) + 40, ter0: WX(26, 0) + 10, ter3: WX(26, 1) - 10, cafe: WX(27, .3), bench: WX(31, .3) + 46,
     sign2: WX(35, .6) + 46, shelter: WX(36, 0), plane: WX(37, .3), land: WX(42, .45), post2: WX(44, .5) + 40,
@@ -2181,8 +2181,8 @@ function drawWorld(i, f, st, mode, it, camL, camC, now, tq, wind, vel){
   if (RK(i) >= RK(21) && RK(i) <= RK(26)){ const fy = 300 + camY * .6;
     const tx = sxp(A.tower, .7); if (tx > -60 && tx < LWv + 60) tower(tx, fy, tq);
     for (let k = 0; k < 12; k++){ const hx = sxp(A.housesRow + k * 74, .7); if (hx > -40 && hx < LWv + 40) rowHouse(hx, fy, '#c99a6a', '#3f6e73'); } }
-  // дальняя дорога попутчика (17–18)
-  if (RK(i) >= RK(16) && RK(i) <= RK(19)){ const ry = 290 + camY * .6; C.save(); C.globalAlpha = i === 16 ? win(f, .6, 1) : i === 19 ? 1 - win(f, 0, .4) : 1; fillP(rectP(0, ry - 3, LWv, 6), pc('path')); C.restore(); }
+  // дальняя дорога попутчика (17–19): начинается от развилки, идёт параллельно по полю и уходит в холмы
+  if (RK(i) >= RK(16) && RK(i) <= RK(20)){ const jx = sx(A.fork + FORK_DX), ex = sx(A.farEnd); if (jx < LWv + 20 && ex > -200){ C.save(); C.translate(0, camY); farRoad(jx, ex, FAR_Y); C.restore(); } }
   // деревня (45–46)
   if (RK(i) >= RK(44) && RK(i) <= RK(47)){ const vy = 318 + camY * .85;
     for (let k = 0; k < 16; k++){ const hx = sxp(A.village + k * 92, .85); if (hx < -70 || hx > LWv + 70) continue;
@@ -2261,7 +2261,7 @@ function drawWorld(i, f, st, mode, it, camL, camC, now, tq, wind, vel){
   // 15 · выцветший указатель
   x = sx(A.sign) + 40; if (x > -340 && x < LWv + 340) fadedArch(x, Y - 4, i === 15 ? f : (RK(i) > RK(15) ? 1 : 0), tq);
   // 17 · развилка
-  x = sx(A.fork); if (inView(x)){ const p = polyP([x - 20, Y - 6, x + 26, Y - 6, x + 150, Y - 50 + camY * 0, x + 120, Y - 50]); fillP(p, pc('path')); }
+  x = sx(A.fork); if (x > -FORK_DX - 40 && x < LWv + 40) forkBranch(x);
   // 19 · дом щенка
   x = sx(A.house); if (x > -220 && x < LWv + 220){ C.save(); C.translate(x, Y - 6); C.scale(1.75, 1.75); cottage(0, 0, tq); C.restore(); C.save(); C.translate(x - 70, Y - 4); C.scale(1.4, 1.4); dogLying(0, 0); C.restore();
     if (RK(i) > RK(19) || (i === 19 && f >= .48)){ const u = i === 19 ? win(f, .48, .62) : 1; const pxp = lerp(gxp + 34, x + 34, u), pyp = lerp(Y - 76, Y - 4, u) - Math.sin(u * Math.PI) * 26; puppySit(pxp, pyp, tq * .025); } }
@@ -2337,8 +2337,13 @@ function drawWorld(i, f, st, mode, it, camL, camC, now, tq, wind, vel){
   if (RK(i) >= RK(13) && RK(i) <= RK(16)){ const d = camL - A.meet;
     if (d < -60){ const bx = sx(A.meet); if (bx < LWv + 160){ bikeParked(bx, Y - 4, .03); drawPerson(bx - 34, Y - 4, -1, makePose('stand', {w: 0, wave: d > -330 && d < -80, t: tq}), LOOK.boy, {}, {t: tq, blink: (tq % 3600) < 150}); } }
     else { const sm = smooth(clamp01((d + 60) / 280)); const rel = lerp(-d, -96, sm); drawPerson(gxp + rel, Y - 4, 1, makePose('bike', {ph: bikeQ * .45 + 1.3}), LOOK.boy, {}, {wheel: bikeQ + .7, t: tq, wind: wind + .6, scale: .95}); } }
-  if (comp === 'leave'){ const u = ease(win(f, .25, .85)); drawPerson(gxp - 96 + u * 190, Y - 4 - u * 44, 1, makePose('bike', {ph: bikeQ * .45 + 1.3}), LOOK.boy, {}, {wheel: bikeQ, t: tq, scale: .95 - u * .45}); }
-  if (comp === 'far'){ const wv = f > .15 && f < .4; drawPerson(gxp + 40 + f * 40, 290 - camY * .4, 1, makePose(wv ? 'bikeStop' : 'bike', {ph: bikeQ * .45, wave: wv, t: tq}), LOOK.boy, {}, {wheel: bikeQ, t: tq, scale: .5}); }
+  // на развилке он обгоняет её, сворачивает на боковую дорогу и по ней выезжает на дальнюю
+  const wheelOf = d => Math.round(d / (17 * KG * .75) / (TAU / 12)) * (TAU / 12);
+  if (comp === 'leave'){ const d = camL - 96 + ease(win(f, .1, .9)) * (A.fork + FORK_LEN + 40 - (WX(17, 1) - 96)), s = d - A.fork, x0 = sx(A.fork);
+    let px, py, k; if (s <= 0){ px = x0 + s; py = Y - 4; k = 0; } else if (s <= FORK_LEN){ const q = forkAt(x0, s); px = q.x; py = q.y; k = s / FORK_LEN; } else { px = x0 + FORK_DX + s - FORK_LEN; py = FAR_Y; k = 1; }
+    const wq = wheelOf(d); drawPerson(px, py, 1, makePose(f < .9 ? 'bike' : 'bikeStop', {ph: wq * .45 + 1.3, t: tq}), LOOK.boy, {}, {wheel: wq, t: tq, scale: .95 - k * .4}); }
+  if (comp === 'far'){ const wv = f > .15 && f < .4, dd = ease(win(f, .4, 1)) * 680, wq = wheelOf(A.fork + FORK_LEN + 40 + dd);
+    drawPerson(sx(A.fork + FORK_DX + 40 + dd), FAR_Y - camY * .4, 1, makePose(f > .4 ? 'bike' : 'bikeStop', {ph: wq * .45 + 1.3, wave: wv, t: tq}), LOOK.boy, {}, {wheel: wq, t: tq, scale: .55}); }
   // второй самолёт выныривает из облака
   if (comp === 'plane2' || comp === 'plane2Away'){ const u = comp === 'plane2Away' ? ease(win(f, .2, .8)) : 0; const rock = comp === 'plane2Away' && f < .3 ? Math.sin(tq * .012) * .14 : Math.sin(tq * .002) * .03;
     const rel = comp === 'plane2' ? lerp(sx(A.cl40) - gxp, 120, smooth(win(f, .1, .45))) : 120;
@@ -2537,6 +2542,27 @@ function nameTag(x, y, label, col){
   C.fillStyle = '#2a1f19'; C.textAlign = 'center'; C.textBaseline = 'alphabetic'; C.fillText(label, x, y - 4); C.restore();
 }
 function sidePt(x0, y, t){ const P0 = [x0, y - 1], P1 = [x0 + 170, y - 2], P2 = [x0 + 270, y - 64], u = 1 - t; return {x: u * u * P0[0] + 2 * u * t * P1[0] + t * t * P2[0], y: u * u * P0[1] + 2 * u * t * P1[1] + t * t * P2[1]}; }
+const FORK_DX = 170, FAR_Y = 300;
+function forkPt(x0, t){ const u = 1 - t, a = u * u * u, b = 3 * u * u * t, c = 3 * u * t * t, d = t * t * t;
+  return {x: a * x0 + b * (x0 + 80) + c * (x0 + 95) + d * (x0 + FORK_DX), y: a * 336 + b * 336 + c * FAR_Y + d * FAR_Y}; }
+const FORK_S = (() => { const r = [0]; let q = forkPt(0, 0); for (let k = 1; k <= 48; k++){ const n = forkPt(0, k / 48); r.push(r[k - 1] + Math.hypot(n.x - q.x, n.y - q.y)); q = n; } return r; })(), FORK_LEN = FORK_S[48];
+function forkAt(x0, s){ let k = 1; while (k < 48 && FORK_S[k] < s) k++; const t = (k - 1 + clamp01((s - FORK_S[k - 1]) / (FORK_S[k] - FORK_S[k - 1]))) / 48; return forkPt(x0, t); }
+function forkBranch(x0){
+  // боковая дорога: сходит с большой дороги, плавно поднимается по полю и становится дальней дорогой
+  const L = [], R = []; for (let k = 0; k <= 30; k++){ const t = k / 30, q = forkPt(x0, t), w2 = 12 * (1 - t) + 3.5 * t; L.push([q.x, q.y - w2]); R.push([q.x, q.y + w2]); }
+  const p = NP(); p.moveTo(L[0][0] - 26, L[0][1]); L.forEach(q => p.lineTo(q[0], q[1])); for (let k = R.length - 1; k >= 0; k--) p.lineTo(R[k][0], R[k][1]); p.lineTo(R[0][0] - 30, R[0][1]); p.closePath(); fillP(p, pc('path'));
+  const e = NP(); R.forEach((q, k) => k ? e.lineTo(q[0], q[1] - .6) : e.moveTo(q[0] + 14, q[1] - .6)); C.strokeStyle = mixH(pc('path'), pc('mid'), .55); C.lineWidth = 1.3; C.stroke(e);
+}
+function farRoad(jx, ex, y){
+  // дальняя дорога в поле: полотно, тёмная нижняя кромка, светлая колея и изгородь вдоль дальней обочины
+  const x1 = Math.min(ex, LWv + 40), x0 = Math.max(jx - 2, -40); const edge = mixH(pc('path'), pc('mid'), .55);
+  if (x1 > x0){ fillP(rectP(x0, y - 3.5, x1 - x0, 7), pc('path')); fillP(rectP(x0, y + 2.3, x1 - x0, 1.2), edge); fillP(rectP(Math.max(x0, jx + 30), y - .4, x1 - Math.max(x0, jx + 30), .9), mixH(pc('path'), '#fff8e8', .35)); }
+  for (let k = Math.max(0, Math.floor((-60 - jx) / 58)); ; k++){ const px = jx + 26 + k * 58; if (px > Math.min(ex - 10, LWv + 30)) break;
+    seg(px, y - 4.5, px, y - 14, '#6b4a2c', 2.2); const nx = px + 58; if (nx < ex - 10) seg(px, y - 11, nx, y - 11, '#7a5534', 1.2); }
+  // в конце дорога поворачивает и уходит в холмы
+  if (ex < LWv + 40) for (let k = 0; k < 16; k++){ const t0 = k / 16, t1 = (k + 1) / 16, P = t => { const u = 1 - t; return [u * u * ex + 2 * u * t * (ex + 90) + t * t * (ex + 170), u * u * y + 2 * u * t * y + t * t * (y - 20)]; };
+    const a = P(t0), b = P(t1), w0 = 3.5 - 2.4 * t0, w1 = 3.5 - 2.4 * t1; C.save(); C.globalAlpha = 1 - t0 * t0; fillP(polyP([a[0] - .5, a[1] - w0, b[0] + .5, b[1] - w1, b[0] + .5, b[1] + w1, a[0] - .5, a[1] + w0]), pc('path')); C.restore(); }
+}
 function sidePath(x0, y){
   // тропинка сворачивает с дороги, сужается и поднимается на холм, к домику Ильи
   const L = [], Rr = []; for (let k = 0; k <= 30; k++){ const t = k / 30, q = sidePt(x0, y, t), w2 = 22 * (1 - t) + 3.5 * t; L.push([q.x, q.y - w2 * .45]); Rr.push([q.x, q.y + w2 * .45]); }
