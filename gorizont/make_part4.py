@@ -40,7 +40,7 @@ body = (ROOT / "src" / "part4.html").read_text(encoding="utf-8")
 n_units = body.count('<section class="cp"')
 end = (f'\n<section class="cp cp-end" id="r{n_units}" data-cp="{n_units}">\n'
        '<aside class="rest rest-part"><p class="rest-label">Привал · конец четвёртой части</p>'
-       '<p>Утро. Лена сидит в поле рядом со своим первым кирпичом и смотрит, как поднимается солнце. '
+       '<p>Утро. Лена идёт дальше с рюкзаком за спиной, а в рюкзаке её первый кирпич. '
        'Здесь можно остановиться: она подождёт, а место сохранится само. Когда вернётесь, путь продолжится отсюда.</p>'
        f'<button type="button" class="btn ghost js-copy" data-cp="{n_units}">Скопировать ссылку на это место</button>'
        '<a class="btn ghost" href="./">Все части статьи</a></aside>\n</section>\n')
@@ -64,7 +64,7 @@ S_ALL[121] = {a:'', m:'walk', sp:'radio'};
 S_ALL[130] = {a:'Ветра тянут в разные стороны. Она сверяется с компасом и держит свой курс', m:'fly', sp:'gusts'};
 S_ALL[133] = {a:'Рядом с самолётом летит маленькая птица. Лена протягивает ей крошки, и птица подлетает. Отвернулась — птица отстаёт. Протянула снова — вернулась', m:'fly', sp:'birdie'};
 S_ALL[131] = {a:'Она запускает бумажный самолётик «Привет, как ты?». Он летит рядом, потом опускается к горам и долетает до адресата', m:'fly', sp:'note'};
-S_ALL[132] = {a:'Поле за деревней. Лена кладёт один кирпич, и на миг проступает весь будущий дом. Она садится рядом: привал', m:[['walk',.3],['stand',.72],['sit',1]], rest:1, tod:'morning', sp:'brick'};
+S_ALL[132] = {a:'Лавочка, на ней рюкзак, рядом лежит один кирпич. Лена садится, и от кирпича вырастает контур будущего дома: Лена из будущего заходит в его дверь. Лена кладёт кирпич в рюкзак и идёт дальше', m:[['walk',.25],['sit',.78],['stand',.9],['walk',1]], rest:1, tod:'morning', sp:'brick'};
 // четвёртая часть: выходит из-под навеса (36), взлёт (37), ветра и компас (130), пунктир выборов (133),
 // птицы клином (38), бумажный самолётик (131), просвет в облаках (39), второй самолёт (40, 41), посадка (42),
 // звёзды и созвездие (43), деревня зажигает окна (44, 45), рассвет (46), первый кирпич (132)
@@ -85,12 +85,11 @@ const GO_OF = [1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 14];
 """ + s[b:]
 
 # ---------- мир: якоря и новые предметы ----------
-R("couple: WX(122, .18) + 150,", "couple: WX(122, .18) + 150, brick: WX(132, .3) + 44,")
+R("couple: WX(122, .18) + 150,", "couple: WX(122, .18) + 150, brick: WX(132, .25),")
 R("  // ---- попутчик и девушка ----", """  // 132 · первый кирпич и контур будущего дома
   x = sx(A.brick); if (x > -260 && x < LWv + 260) brickHouse(x, Y, i === 132 ? f : (RK(i) > RK(132) ? 1 : 0), tq);
   // ---- попутчик и девушка ----""")
 # Лена сидит прямо на траве у кирпича
-R("if (m === 'sit' && (i === 9 || i === 21)) m = 'sitLow';", "if (m === 'sit' && (i === 9 || i === 21 || i === 132)) m = 'sitLow';")
 # облачная стена (39) показывается заранее уже с бумажного самолётика, который теперь летит перед ней
 R("if (i === 39 || (i === 38 && f > .6) || (i === 40 && f < .3)){ const xa", "if (i === 39 || (i === 131 && f > .6) || (i === 40 && f < .3)){ const xa")
 # созвездие: звёзды запоминаем, на 43 соединяем пять соседних в «Ковш», потом название гаснет
@@ -118,13 +117,14 @@ R("  // девушка\n  if (true){", """  { const gy0 = Y - altS, gx0 = GXL + 
       // дымный след петли: кольцо остаётся в небе и тает
       if (f > .42){ const sv = 1 - win(f, .74, 1), drift = ease(win(f, .7, 1)) * 160; C.save(); C.globalAlpha = .75 * sv; C.strokeStyle = '#fbf6ea'; C.lineWidth = 9; C.lineCap = 'round';
         C.beginPath(); const py = gy0 - 40 * KG + dip; for (let q = 0; q <= w; q += .02){ const a = TAU * q; const x = gx0 - 70 + R0 * Math.sin(a) * .55 - drift - q * 30, y = py - R0 * (1 - Math.cos(a)) + 26; q ? C.lineTo(x, y) : C.moveTo(x, y); } C.stroke(); C.restore(); } }
+    if (i === 132 && f >= .86) backpack(gx0 - 12 * KG, gy0 - 64 * KG, KG);
     // 133: птица рядом, пока Лена к ней тянется; на дороге к птичьему клину (38) она улетает вверх
     { const gap = GAP[RK(38)] || 0, road = i === 38 && f === 0 && gap > 0 ? travel / gap : -1;
       if (i === 133) birdFriend(gx0, gy0, f, -1, tq); else if (road >= 0 && road < .7) birdFriend(gx0, gy0, 1, road, tq); }
     if (i === 131 || (i === 39 && f < .25)) paperNote(gx0, gy0, i === 131 ? f : 1, tq); }
   // девушка
   if (true){""")
-R("    if (i === 121 && f > .28 && f < .78){", "    if (i === 131 && f > .1 && f < .2) o.reach = {x: 40, y: -96};\n    if (i === 133 && ((f > .14 && f < .36) || (f > .55 && f < .74))) o.reach = {x: 40, y: -86};\n    if (i === 121 && f > .28 && f < .78){")
+R("    if (i === 121 && f > .28 && f < .78){", "    if (i === 131 && f > .1 && f < .2) o.reach = {x: 40, y: -96};\n    if (i === 132 && f > .79 && f < .84) o.reach = {x: 46, y: -40};\n    if (i === 132 && f >= .84 && f < .88) o.reach = {x: -16, y: -100};\n    if (i === 133 && ((f > .14 && f < .36) || (f > .55 && f < .74))) o.reach = {x: 40, y: -86};\n    if (i === 121 && f > .28 && f < .78){")
 R("  if (i === 38){ const bx = LWv * 1.15 - f * LWv * 1.7, by = OFFY + 50;", "  if (i === 38) stormWedge(GXL + (camL - camC), Y - altS, f, tq);\n  if (false){ const bx = 0, by = 0;")
 R("function shoeStand(x, y, u, t){", r"""function stormWedge(gx, gy, f, t){
   // 38 · «мы всегда так летали»: Лена летит внутри птичьего клина, привычный курс клина ведёт вниз, в грозовую тучу.
@@ -239,20 +239,46 @@ function fallingStar(u){
   g.addColorStop(0, 'rgba(255,246,214,1)'); g.addColorStop(1, 'rgba(255,246,214,0)'); C.strokeStyle = g; C.lineWidth = 3; C.lineCap = 'round';
   C.beginPath(); C.moveTo(x, y); C.lineTo(x + 120, y - 20); C.stroke(); cut(star5(x, y, 6, 0), '#fff6d6', .4); C.restore();
 }
+function backpack(x, y, s){
+  // рюкзак: мешок с клапаном и лямкой
+  C.save(); C.translate(x, y); C.scale(s, s);
+  cut(rrP(-13, -30, 26, 30, 8), '#6a7b4a', .6); cut(rrP(-13, -30, 26, 12, 6), '#566540', .5); dot(0, -19, 2.2, '#d9a33a');
+  C.strokeStyle = '#3d4a2c'; C.lineWidth = 2.4; C.beginPath(); C.arc(0, -30, 7, Math.PI, TAU); C.stroke(); C.restore();
+}
 function brickHouse(x, y, u, t){
-  // на пустом поле лежит один кирпич; на миг над ним проступает пунктирный контур будущего дома с тёплыми окнами
-  const drop = easeOut(win(u, .32, .4)); if (drop <= 0) return;
-  const hx = x + 96, hw = 116;               // дом стоит правее, кирпич — в его левом нижнем углу
-  const g = easeOut(win(u, .44, .6)) * (1 - .55 * win(u, .8, .95));
-  if (g > 0){ C.save(); C.globalAlpha = g * .9; C.strokeStyle = '#f3e3b4'; C.lineWidth = 3; C.setLineDash([10, 8]);
-    C.beginPath(); C.moveTo(hx - hw, y); C.lineTo(hx - hw, y - 160); C.lineTo(hx, y - 252); C.lineTo(hx + hw, y - 160); C.lineTo(hx + hw, y);
-    C.moveTo(hx + 50, y - 200); C.lineTo(hx + 50, y - 238); C.lineTo(hx + 78, y - 238); C.lineTo(hx + 78, y - 182); C.stroke();
-    C.strokeRect(hx - 24, y - 92, 48, 90); C.setLineDash([]);
-    const glow = .55 + .2 * Math.sin(t * .003);
-    for (const wx of [-90, 50]){ C.fillStyle = `rgba(243,201,110,${glow * .6})`; C.fillRect(hx + wx, y - 130, 40, 36); C.strokeRect(hx + wx, y - 130, 40, 36); }
-    C.restore(); }
-  C.save(); C.translate(x, y - 26 * (1 - drop)); C.globalAlpha = drop;
-  cut(rectP(-22, -16, 44, 16), '#b5543a', .7); seg(-22, -8, 22, -8, 'rgba(255,220,190,.4)', 1.4); seg(-3, -16, -3, -8, 'rgba(255,220,190,.4)', 1.4); seg(10, -8, 10, 0, 'rgba(255,220,190,.4)', 1.4); C.restore();
+  // лавочка, на ней рюкзак, рядом в траве один кирпич. Лена садится — и от кирпича вырастает пунктирный контур дома;
+  // будущая Лена подходит к двери и заходит в него. Потом Лена кладёт кирпич в рюкзак и идёт дальше
+  // лавочка
+  for (const sx0 of [-46, 46]) cutSeg(x + sx0, y - 30, x + sx0, y, '#2a1f19', 2.6);
+  cut(rectP(x - 58, y - 36, 116, 6), '#8a5a2e'); cut(rectP(x - 58, y - 58, 116, 5), '#8a5a2e'); cut(rectP(x - 58, y - 48, 116, 5), '#8a5a2e');
+  if (u < .86) backpack(x - 34, y - 36, 1);
+  const bx = x + 86, took = u >= .84;
+  if (!took){ C.save(); C.translate(bx, y);
+    cut(rectP(-22, -16, 44, 16), '#b5543a', .7); seg(-22, -8, 22, -8, 'rgba(255,220,190,.4)', 1.4); seg(-3, -16, -3, -8, 'rgba(255,220,190,.4)', 1.4); seg(10, -8, 10, 0, 'rgba(255,220,190,.4)', 1.4); C.restore(); }
+  // контур дома вырастает от кирпича: стены, крыша, труба, дверь, окна
+  const hw = 98, hx = bx - 22 + hw, grow = win(u, .33, .55), keep = 1 - win(u, .86, 1);
+  if (grow > 0 && keep > 0){
+    const L = [[hx - hw, y], [hx - hw, y - 118], [hx, y - 190], [hx + hw, y - 118], [hx + hw, y]];
+    const seglen = L.slice(1).map((p, k) => Math.hypot(p[0] - L[k][0], p[1] - L[k][1])), tot = seglen.reduce((a, b) => a + b, 0);
+    let left = tot * ease(grow);
+    C.save(); C.globalAlpha = .9 * keep; C.strokeStyle = '#fff4d2'; C.lineWidth = 4; C.setLineDash([10, 8]); C.beginPath(); C.moveTo(L[0][0], L[0][1]);
+    for (let k = 1; k < L.length && left > 0; k++){ const q = Math.min(1, left / seglen[k - 1]); C.lineTo(lerp(L[k - 1][0], L[k][0], q), lerp(L[k - 1][1], L[k][1], q)); left -= seglen[k - 1]; }
+    C.stroke();
+    const det = win(u, .5, .58);
+    if (det > 0){ C.globalAlpha = .9 * keep * det;
+      C.beginPath(); C.moveTo(hx + 42, y - 157); C.lineTo(hx + 42, y - 184); C.lineTo(hx + 64, y - 184); C.lineTo(hx + 64, y - 140); C.stroke();
+      C.strokeRect(hx - 22, y - 80, 44, 78); C.setLineDash([]);
+      const glow = .55 + .2 * Math.sin(t * .003), door = win(u, .66, .74) * (1 - win(u, .8, .9));
+      for (const wx of [-78, 42]){ C.fillStyle = `rgba(243,201,110,${glow * .6})`; C.fillRect(hx + wx, y - 102, 36, 32); C.strokeRect(hx + wx, y - 102, 36, 32); }
+      if (door > 0){ C.globalAlpha = keep * door; fillP(rectP(hx - 20, y - 78, 40, 76), 'rgba(255,236,180,.85)'); } }
+    C.restore();
+    // будущая Лена: светлый полупрозрачный силуэт выходит от лавочки, идёт к двери и исчезает в ней
+    const gw = win(u, .54, .72), gin = win(u, .72, .8);
+    if (gw > 0 && gin < 1){ const gxx = lerp(x + 10, hx - 4, ease(gw)), sc = 1 - .12 * gin;
+      C.save(); C.globalAlpha = .55 * Math.min(1, gw * 5) * (1 - gin);
+      fillP(ellP(gxx, y - 78, 46, 92), 'rgba(255,240,200,.35)');
+      drawPerson(gxx, y - 4 - 6 * gin, 1, makePose(gin > 0 ? 'stand' : 'walk', {w: gin > 0 ? 0 : 1, ph: u * 160, t, gait: 'light'}), LOOK.girl, {h: 1, f: 1}, {t, scale: sc, noShadow: true});
+      C.restore(); } }
 }
 function shoeStand(x, y, u, t){""")
 
