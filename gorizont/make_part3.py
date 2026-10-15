@@ -87,6 +87,9 @@ R("  // ---- попутчик и девушка ----", """  // 120 · витри
 # у утреннего костра велосипед стоит, пока она на него не сядет; светлячков утром нет
 R("if (i === 21 && f >= .12) bikeParked(x - 58, Y - 4, -.12);", "if (i === 21 && f < .55) bikeParked(x - 58, Y - 4, -.12);")
 R("if (night > .3 || i === 21){", "if (night > .3){")
+# после радио Лена напевает его мелодию: с конца сцены 121 и до середины следующего пункта
+R("    } else drawPerson(gx, gy + (m === 'boat' ? 10 : 0) + bob, face, J, LOOK.girl, it, opts);",
+  "    } else drawPerson(gx, gy + (m === 'boat' ? 10 : 0) + bob, face, J, LOOK.girl, it, opts);\n    { const hum = i === 121 ? win(f, .72, .82) : (i === 31 && f === 0 && GAP[NI] > 0 ? Math.max(0, Math.min(1, (travel / GAP[NI] - .4) / .15)) : 0); if (hum > 0) humNotes(gx, gy - 150 * KG, tq, hum); }")
 # Лена: смотрит на витрину, крутит ручки радио
 R("    if (i === 111 && f > .24 && f < .74) o.lookUp = true;", """    if (i === 111 && f > .24 && f < .74) o.lookUp = true;
     if (i === 121 && f > .28 && f < .78){ carry = null; o.hold = {x: 30, y: -58 + 3 * Math.sin(tq * .01)}; o.tilt = .14; }""")
@@ -137,6 +140,11 @@ function coupleBench(x, y, u, t){
   cut(rrP(-tw / 2, -18, tw, 34, 7), '#f7ecd2', .6); C.strokeStyle = '#b13f2c'; C.lineWidth = 1.8; C.strokeRect(-tw / 2 + 5, -13, tw - 10, 24);
   C.textAlign = 'center'; C.fillStyle = '#2a1f19'; C.fillText(label, 0, 6); C.restore();
 }
+function humNotes(x, y, t, a){
+  // Лена напевает мелодию с радио: ноты поднимаются у её головы и тают
+  for (let k = 0; k < 3; k++){ const ph = ((t * .0005 + k / 3) % 1), nx = x + 10 + ph * 26 + Math.sin(ph * 8 + k * 2) * 5, ny = y - ph * 46;
+    C.save(); C.globalAlpha = a * Math.sin(Math.PI * ph); dot(nx, ny, 2.6, '#2a1f19'); seg(nx + 2.2, ny, nx + 2.2, ny - 10, '#2a1f19', 1.1); if (k % 2) seg(nx + 2.2, ny - 10, nx + 6, ny - 8, '#2a1f19', 1.1); C.restore(); }
+}
 function radioShape(x, y, u, t){
   // пенёк и старое радио на нём; когда Лена крутит ручки, стрелка бежит по шкале, а из динамика летят ноты
   cut(polyP([x - 22, y + 2, x - 18, y - 30, x + 18, y - 30, x + 22, y + 2]), '#7a5534'); cut(ellP(x, y - 30, 18, 5), '#b98b5a'); C.strokeStyle = 'rgba(90,58,30,.6)'; C.lineWidth = .8; C.beginPath(); C.ellipse(x, y - 30, 10, 2.6, 0, 0, TAU); C.stroke();
@@ -149,9 +157,9 @@ function radioShape(x, y, u, t){
   for (const [k, ky] of [[0, by + 22], [1, by + 32]]){ const kx = bx + 44.5; dot(kx, ky, 4.4, '#2a1f19'); const ang = turn * (k ? -5 : 7) + k; seg(kx, ky, kx + 3.4 * Math.cos(ang), ky + 3.4 * Math.sin(ang), '#efe2c2', 1.1); }
   cutSeg(bx + 10, by, bx + 2, by - 22, '#2a1f19', 1.2); dot(bx + 2, by - 22, 1.6, '#d9a33a');
   // ноты: сначала шипение, потом чистая волна
-  if (u > .28 && u < 1){ const clean = win(u, .55, .7);
+  if (u > .28){ const clean = win(u, .55, .7);
     for (let k = 0; k < 4; k++){ const ph = ((t * .0006 + k * .25) % 1), nx = bx + 20 - ph * 30 + Math.sin(ph * 9 + k) * 6, ny = by - 6 - ph * 60;
-      C.save(); C.globalAlpha = (1 - ph) * (u < .98 ? 1 : 0);
+      C.save(); C.globalAlpha = 1 - ph;
       if (clean > .5){ dot(nx, ny, 3, '#2a1f19'); seg(nx + 2.6, ny, nx + 2.6, ny - 12, '#2a1f19', 1.2); seg(nx + 2.6, ny - 12, nx + 7, ny - 9, '#2a1f19', 1.2); }
       else { C.strokeStyle = 'rgba(42,31,25,.7)'; C.lineWidth = 1.1; C.beginPath(); for (let q = 0; q < 6; q++) C.lineTo(nx + q * 2.4, ny + (q % 2 ? -3 : 3)); C.stroke(); }
       C.restore(); } }
