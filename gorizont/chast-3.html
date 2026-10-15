@@ -1882,10 +1882,10 @@ function drawWorld(i, f, st, mode, it, camL, camC, now, tq, wind, vel){
   // 27–28 · кафе
   x = sx(A.cafe); if (x > -560 && x < LWv + 260){ C.save(); C.translate(x + 300, Y - 4); C.scale(2.1, 2.1); cafeShape(0, 0, tq); C.restore();
     // уличный столик как во французском кафе: между Леной и подругой, на нём чайник, чашки, банка и цветок
-    chair(x + 6, Y - 2, -1); chair(x + 128, Y - 2, 1); bistroTable(x + 64, Y - 2);
-    const TT = Y - 51; vaseFlower(x + 72, TT); cupShape(x + 49, TT); cupShape(x + 90, TT); if (!(i === 28 && f > .25 && f < .75)) jarShape(x + 64, TT + 1, .8);
-    if (RK(i) < RK(27) || (i === 27 && f < .32) || RK(i) > RK(27) || (i === 27 && f >= .62)) teapotShape(x + 36, TT, .8);
-    drawPerson(x + 124, Y - 2, -1, makePose('sit', {}), LOOK.friend, {}, {t: tq, wind: wind * .3, blink: (tq % 3000) < 160}); }
+    chair(x + 6, Y - 2, -1); chair(x + 172, Y - 2, 1); C.save(); C.translate(x + 88, Y - 2); C.scale(1.45, 1.45); bistroTable(0, 0); C.restore();
+    const TT = Y - 74; vaseFlower(x + 98, TT); cupShape(x + 58, TT); cupShape(x + 124, TT); if (!(i === 28 && f > .25 && f < .75)) jarShape(x + 84, TT + 1, .9);
+    if (RK(i) < RK(27) || (i === 27 && f < .32) || RK(i) > RK(27) || (i === 27 && f >= .62)) teapotShape(x + 42, TT, .9);
+    drawPerson(x + 168, Y - 2, -1, makePose('sit', {}), LOOK.friend, {}, {t: tq, wind: wind * .3, blink: (tq % 3000) < 160}); }
   // 31 · скамейка
   x = sx(A.bench); if (inView(x)){ benchShape(x, Y - 4); if (RK(i) > RK(31) || (i === 31 && f >= .5)) basketShape(x + 8, Y - 55, 2, true); }
   // 35 · развилка под дождём
@@ -2015,7 +2015,7 @@ function drawWorld(i, f, st, mode, it, camL, camC, now, tq, wind, vel){
     if (st.sp === 'adjust' && f > .3 && f < .52) o.adjust = true;
     if (st.sp === 'wave' && f > .15 && f < .4) o.wave = true;
     if (i === 28 && f > .25 && f < .75){ o.hold = {x: 18, y: -74}; carry = 'jar'; }
-    if (i === 27 && f > .35 && f < .62){ o.hold = {x: 34, y: -64}; carry = 'teapot'; o.pour = win(f, .38, .5) * (1 - win(f, .56, .62)); }
+    if (i === 27 && f > .35 && f < .62){ o.hold = {x: 40, y: -86}; carry = 'teapot'; o.pour = win(f, .38, .5) * (1 - win(f, .56, .62)); }
     if (pushBike){ carry = null; o.hold = {x: 26, y: -61}; }
     if (carry === 'basket') o.basket = true;
     // тянется к предмету
