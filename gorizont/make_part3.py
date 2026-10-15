@@ -61,7 +61,7 @@ S_ALL[121] = {a:'Старое радио на пеньке: Лена крути�
 // перекрытый мост (25) и тропа поверху (26), ветер уносит цветок (33), кафе (27), банка (28), корзинка (29), радио (121),
 // ручка корзинки рвётся (31), луг как в начале (32), дождь (34), привал под навесом (36)
 S_ALL[21] = Object.assign({}, S_ALL[21], {a:'Утро. Костёр догорел: Лена встаёт, берёт велосипед и едет дальше', m:[['sit',.3],['stand',.42],['walk',.55],['bike',1]], rest:0, tod:'morning', set:{h:1, f:1, b:2, pup:0}, ia:.01});
-S_ALL[25] = Object.assign({}, S_ALL[25], {a:'Причаливает. Мост перекрыт: сверяется с компасом и ищет другую дорогу в ту же сторону'});
+S_ALL[25] = Object.assign({}, S_ALL[25], {a:'Причаливает. Мост перекрыт: сверяется с компасом, и тропа поведёт её поверху в ту же сторону', m:[['boat',.2],['stand',.3],['walk',.42],['stand',1]]});
 S_ALL[26] = Object.assign({}, S_ALL[26], {a:'Тропа уходит вверх, и она снова идёт вправо: поверху, над перекрытым мостом. Направление то же'});
 S_ALL[33] = Object.assign({}, S_ALL[33], {a:'Ветер уносит цветок со шляпки. Шляпка всё та же, а на ней уже по-другому'});
 S_ALL[28] = Object.assign({}, S_ALL[28], {a:'Банка с красивой этикеткой. Внутри почти пусто', rest:0});
@@ -75,9 +75,9 @@ const GO_OF = [1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 15];
 """ + s[b:]
 
 # ---------- мир: якоря и новые предметы ----------
-R("    qsign: WX(111, .2) + 96, tend: WX(110, .22),", "    qsign: WX(111, .2) + 96, tend: WX(110, .22), shoes: WX(120, .5), radio: WX(121, .24) + 52,")
+R("    qsign: WX(111, .2) + 96, tend: WX(110, .22),", "    qsign: WX(111, .2) + 96, tend: WX(110, .22), shoes: WX(120, .5) + 40, radio: WX(121, .24) + 52,")
 R("  // ---- попутчик и девушка ----", """  // 120 · витрина с обувью на берегу
-  x = sx(A.shoes); if (x > -240 && x < LWv + 240) shoeStand(x, Y, i === 120 ? f : (RK(i) > RK(120) ? 1 : 0), tq);
+  x = sx(A.shoes); if (x > -300 && x < LWv + 300) shoeStand(x, Y, i === 120 ? f : (RK(i) > RK(120) ? 1 : 0), tq);
   // 121 · радио на пеньке
   x = sx(A.radio); if (x > -200 && x < LWv + 200) radioShape(x, Y, i === 121 ? f : (RK(i) > RK(121) ? 1 : 0), tq);
   // ---- попутчик и девушка ----""")
@@ -88,25 +88,30 @@ R("if (night > .3 || i === 21){", "if (night > .3){")
 R("    if (i === 111 && f > .24 && f < .74) o.lookUp = true;", """    if (i === 111 && f > .24 && f < .74) o.lookUp = true;
     if (i === 121 && f > .28 && f < .78){ carry = null; o.hold = {x: 30, y: -58 + 3 * Math.sin(tq * .01)}; o.tilt = .14; }""")
 R("function qualitySign(x, y, u, t){", r"""function shoeStand(x, y, u, t){
-  // мосток-витрина у берега: на верхней полке «лучшие» золотые туфли, ниже простые резиновые сапоги
-  for (const px of [x - 46, x + 46]) cutSeg(px, y + 26, px, y - 112, '#6e4420', 4);
-  cut(rrP(x - 62, y - 122, 124, 12, 3), '#8a5a2e'); cut(rrP(x - 58, y - 52, 116, 10, 3), '#8a5a2e');
-  // табличка
-  C.save(); C.translate(x, y - 150); C.rotate(Math.sin(t * .0013) * .02);
-  cutSeg(-30, 0, -30, 26, '#6e4420', 1.6); cutSeg(30, 0, 30, 26, '#6e4420', 1.6);
-  cut(rrP(-52, -16, 104, 26, 5), '#f7ecd2'); C.strokeStyle = '#c0452f'; C.lineWidth = 1.4; C.strokeRect(-48, -12, 96, 18);
-  C.textAlign = 'center'; C.fillStyle = '#2a1f19'; C.font = 'italic 12.5px Literata, Georgia, serif'; C.fillText('Лучшие туфли', 0, 1.5);
+  // мосток-витрина у берега: наверху крупно «лучшие» золотые туфли, ниже простые резиновые сапоги
+  for (const px of [x - 84, x + 84]) cutSeg(px, y + 26, px, y - 140, '#6e4420', 6);
+  cut(rrP(x - 104, y - 132, 208, 16, 4), '#8a5a2e'); cut(rrP(x - 96, y - 52, 192, 14, 4), '#8a5a2e');
+  // вывеска
+  C.save(); C.translate(x, y - 222); C.rotate(Math.sin(t * .0013) * .02);
+  cutSeg(-84, 8, -84, 92, '#6e4420', 3); cutSeg(84, 8, 84, 92, '#6e4420', 3);
+  cut(rrP(-104, -28, 208, 46, 8), '#f7ecd2'); C.strokeStyle = '#c0452f'; C.lineWidth = 2.2; C.strokeRect(-97, -21, 194, 32);
+  C.textAlign = 'center'; C.fillStyle = '#2a1f19'; C.font = '23px Prata, Georgia, serif'; C.fillText('Лучшие туфли', 0, 3);
   C.restore();
-  // золотые туфли на бархатной подушке, с блеском
-  cut(rrP(x - 34, y - 136, 68, 14, 6), '#7a2a3a');
-  for (const dx of [-14, 12]){ const sx0 = x + dx; cut(polyP([sx0 - 13, y - 134, sx0 + 8, y - 134, sx0 + 13, y - 146, sx0 + 5, y - 144, sx0 - 4, y - 138]), '#d9a33a', .6); cutSeg(sx0 + 9, y - 134, sx0 + 10, y - 127, '#b8862a', 1.6); }
-  const sp = .5 + .5 * Math.sin(t * .006); C.save(); C.globalAlpha = sp; C.fillStyle = '#fff6d6'; for (const [dx, dy] of [[-22, -150], [18, -152], [2, -146]]){ const p = NP(); p.moveTo(x + dx, y + dy - 4); p.lineTo(x + dx + 1.2, y + dy - 1.2); p.lineTo(x + dx + 4, y + dy); p.lineTo(x + dx + 1.2, y + dy + 1.2); p.lineTo(x + dx, y + dy + 4); p.lineTo(x + dx - 1.2, y + dy + 1.2); p.lineTo(x + dx - 4, y + dy); p.lineTo(x + dx - 1.2, y + dy - 1.2); p.closePath(); C.fill(p); } C.restore();
+  // бархатная подушка и пара золотых туфель на шпильке
+  cut(rrP(x - 92, y - 150, 184, 22, 11), '#7a2a3a'); fillP(rrP(x - 86, y - 148, 172, 6, 3), 'rgba(255,255,255,.12)');
+  for (const [dx, sc] of [[-40, 1], [36, 1]]){ C.save(); C.translate(x + dx, y - 148); C.scale(sc * 1.2, 1.2);
+    cutSeg(-25, -28, -23, 0, '#9a6e1e', 3.2);
+    const p = NP(); p.moveTo(-27, -32); p.lineTo(-24, -34); p.quadraticCurveTo(-12, -22, 2, -17); p.lineTo(20, -15); p.quadraticCurveTo(31, -12, 30, -4); p.quadraticCurveTo(28, 0, 20, 0); p.lineTo(2, 0); p.quadraticCurveTo(-14, -6, -22, -24); p.closePath();
+    cut(p, '#e2b33f', .8); fillP(ellP(-12, -24, 9, 3.4, .5), '#7a4e12'); seg(4, -12, 24, -10, 'rgba(255,246,214,.7)', 1.4);
+    C.restore(); }
+  const sp = .5 + .5 * Math.sin(t * .006); C.save(); C.globalAlpha = sp; C.fillStyle = '#fff6d6';
+  for (const [dx, dy, r] of [[-70, -186, 7], [62, -182, 6], [4, -168, 5]]){ const cx = x + dx, cy = y + dy, p = NP(); p.moveTo(cx, cy - r); p.lineTo(cx + r * .3, cy - r * .3); p.lineTo(cx + r, cy); p.lineTo(cx + r * .3, cy + r * .3); p.lineTo(cx, cy + r); p.lineTo(cx - r * .3, cy + r * .3); p.lineTo(cx - r, cy); p.lineTo(cx - r * .3, cy - r * .3); p.closePath(); C.fill(p); } C.restore();
   // резиновые сапоги
-  for (const dx of [-18, 10]){ const bx = x + dx; cut(polyP([bx - 7, y - 98, bx + 6, y - 98, bx + 6, y - 66, bx + 16, y - 62, bx + 16, y - 54, bx - 7, y - 54]), '#3f6e73', .6); fillP(rectP(bx - 7, y - 98, 13, 4), '#2f5559'); }
-  // маленький ярлычок «для реки»: появляется, когда она проплывает мимо
-  const v = easeOut(win(u, .35, .55)); if (v > 0){ C.save(); C.globalAlpha = v; nameTag(x - 4, y - 106 - 6 * v, 'для реки', '#4f6b3a'); C.restore(); }
-  // отражение столбиков в воде
-  C.save(); C.globalAlpha = .25; for (const px of [x - 46, x + 46]) seg(px, y + 26, px + Math.sin(t * .004) * 2, y + 44, '#2a1f19', 3); C.restore();
+  for (const dx of [-30, 12]){ const bx = x + dx; C.save(); C.translate(bx, y - 52); C.scale(1.25, 1.25);
+    cut(polyP([-8, -40, 7, -40, 7, -10, 19, -6, 19, 0, -8, 0]), '#3f6e73', .6); fillP(rectP(-8, -40, 15, 5), '#2f5559'); C.restore(); }
+  // ярлычок «для реки» у сапог: появляется, когда она проплывает мимо
+  const v = easeOut(win(u, .35, .55)); if (v > 0){ C.save(); C.globalAlpha = v; nameTag(x + 132, y - 92 - 6 * v, 'для реки', '#4f6b3a'); C.restore(); }
+  C.save(); C.globalAlpha = .25; for (const px of [x - 84, x + 84]) seg(px, y + 26, px + Math.sin(t * .004) * 2, y + 46, '#2a1f19', 4); C.restore();
 }
 function radioShape(x, y, u, t){
   // пенёк и старое радио на нём; когда Лена крутит ручки, стрелка бежит по шкале, а из динамика летят ноты
