@@ -63,7 +63,7 @@ S_ALL[121] = {a:'', m:'walk', sp:'radio'};
 // новые сцены четвёртой части
 S_ALL[130] = {a:'Ветра тянут в разные стороны. Она сверяется с компасом и держит свой курс', m:'fly', sp:'gusts'};
 S_ALL[133] = {a:'Рядом с самолётом летит маленькая птица. Лена протягивает ей крошки, и птица подлетает. Отвернулась — птица отстаёт. Протянула снова — вернулась', m:'fly', sp:'birdie'};
-S_ALL[131] = {a:'Она отпускает бумажный самолётик с запиской «Привет, как ты?»', m:'fly', sp:'note'};
+S_ALL[131] = {a:'Она запускает бумажный самолётик «Привет, как ты?». Он летит рядом, потом опускается к горам и долетает до адресата', m:'fly', sp:'note'};
 S_ALL[132] = {a:'Поле за деревней. Лена кладёт один кирпич, и на миг проступает весь будущий дом. Она садится рядом: привал', m:[['walk',.3],['stand',.72],['sit',1]], rest:1, tod:'morning', sp:'brick'};
 // четвёртая часть: выходит из-под навеса (36), взлёт (37), ветра и компас (130), пунктир выборов (133),
 // птицы клином (38), бумажный самолётик (131), просвет в облаках (39), второй самолёт (40, 41), посадка (42),
@@ -121,7 +121,7 @@ R("  // девушка\n  if (true){", """  { const gy0 = Y - altS, gx0 = GXL + 
     if (i === 131 || (i === 39 && f < .25)) paperNote(gx0, gy0, i === 131 ? f : 1, tq); }
   // девушка
   if (true){""")
-R("    if (i === 121 && f > .28 && f < .78){", "    if (i === 133 && ((f > .14 && f < .36) || (f > .55 && f < .74))) o.reach = {x: 40, y: -86};\n    if (i === 121 && f > .28 && f < .78){")
+R("    if (i === 121 && f > .28 && f < .78){", "    if (i === 131 && f > .1 && f < .2) o.reach = {x: 40, y: -96};\n    if (i === 133 && ((f > .14 && f < .36) || (f > .55 && f < .74))) o.reach = {x: 40, y: -86};\n    if (i === 121 && f > .28 && f < .78){")
 R("  if (i === 38){ const bx = LWv * 1.15 - f * LWv * 1.7, by = OFFY + 50;", "  if (i === 38) stormWedge(GXL + (camL - camC), Y - altS, f, tq);\n  if (false){ const bx = 0, by = 0;")
 R("function shoeStand(x, y, u, t){", r"""function stormWedge(gx, gy, f, t){
   // 38 · «мы всегда так летали»: Лена летит внутри птичьего клина, привычный курс клина ведёт вниз, в грозовую тучу.
@@ -186,12 +186,26 @@ function birdFriend(gx, gy, f, road, t){
   C.restore();
 }
 function paperNote(gx, gy, u, t){
-  // бумажный самолётик с запиской улетает вперёд, покачиваясь
-  const w = win(u, .25, .98); if (w <= 0) return;
-  const px = gx + 40 + ease(w) * LWv * .62, py = gy - 70 * KG - Math.sin(Math.PI * w) * 46 + w * 30 + Math.sin(t * .006) * 4;
-  C.save(); C.translate(px, py); C.rotate(-.08 + Math.sin(t * .005) * .08);
-  cut(polyP([22, 0, -14, -9, -6, 0]), '#fbf3df', .6); cut(polyP([22, 0, -6, 0, -12, 8]), '#e6dcc2', .6); C.restore();
-  const v = clamp01(w * 6) * (1 - win(w, .82, 1)); if (v > 0){ C.save(); C.globalAlpha = v; nameTag(px - 4, py - 22, 'Привет, как ты?', '#c0452f'); C.restore(); }
+  // бумажный самолётик «Привет, как ты?»: Лена запускает его, он какое-то время летит рядом с ней,
+  // потом отстаёт влево, уменьшается и опускается к горам; когда долетел до адресата, вспыхивают звёздочки
+  const launch = win(u, .12, .22); if (launch <= 0) return;
+  const hx = gx + 46, hy = gy - 92 * KG;
+  const sideX = gx + 150 + Math.sin(t * .0021) * 36, sideY = gy - 96 * KG + Math.cos(t * .0017) * 18;   // кружит рядом
+  const tx = gx - 120, ty = gy + 96;                                                                       // горы внизу слева
+  const go = ease(win(u, .55, .88));
+  let px = lerp(hx, sideX, easeOut(launch)), py = lerp(hy, sideY, easeOut(launch)) - Math.sin(Math.PI * launch) * 24;
+  const gox = ease(win(u, .62, .88)), goy = ease(win(u, .55, .74)); px = lerp(px, tx, gox); py = lerp(py, ty, goy);
+  const sc = lerp(1.4, .45, go), arrive = win(u, .88, 1);
+  if (arrive <= 0){ const dir = go > 0 && go < 1 ? Math.PI + .35 : 0;
+    C.save(); C.translate(px, py); C.rotate(dir - .08 + Math.sin(t * .005) * .1); C.scale(sc, sc);
+    cut(polyP([22, 0, -14, -9, -6, 0]), '#fbf3df', .6); cut(polyP([22, 0, -6, 0, -12, 8]), '#e6dcc2', .6); C.restore();
+    const v = clamp01(launch * 3) * (1 - win(u, .5, .6)); if (v > 0){ C.save(); C.globalAlpha = v; nameTag(px - 4, py - 26, 'Привет, как ты?', '#c0452f'); C.restore(); } }
+  else {
+    // долетел: вспышка и разлетающиеся звёздочки
+    C.save(); C.globalAlpha = 1 - arrive;
+    fillP(circP(tx, ty, 10 + arrive * 40), 'rgba(255,240,190,.6)'); C.strokeStyle = '#ffe39a'; C.lineWidth = 3; C.beginPath(); C.arc(tx, ty, 14 + arrive * 70, 0, TAU); C.stroke();
+    for (let k = 0; k < 9; k++){ const a = k / 9 * TAU + .3, r = 12 + arrive * 80; cut(star5(tx + Math.cos(a) * r, ty + Math.sin(a) * r * .8, 9 * (1 - arrive * .4), k), '#f2b632', .8); }
+    C.restore(); }
 }
 function constellation(P, f, t){
   // пять соседних звёзд соединяются линиями, появляется название «Ковш»; потом название и линии гаснут, а звёзды светят дальше
