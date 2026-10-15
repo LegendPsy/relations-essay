@@ -2,7 +2,7 @@
 Каждая правка применяется один раз: если она уже есть, страница не меняется.
 Запускать последним шагом, после любых сборщиков: python3 fix_all.py
 """
-import pathlib
+import pathlib, re
 ROOT = pathlib.Path(__file__).parent
 PAGES = ["chast-1.html", "chast-2.html", "chast-3.html", "chast-4.html", "vyvody.html", "celikom.html"]
 
@@ -186,5 +186,9 @@ for p in PAGES:
         assert n == 1, (p, n, old[:80])
         s = s.replace(old, new)
         done.append(old[:40].strip())
+    # 15. В отдельных частях в рамке в конце нет кнопки «Скопировать ссылку на это место» (она нужна только во всей статье)
+    if p != "celikom.html":
+        s, n = re.subn(r'<button type="button" class="btn ghost js-copy" data-cp="\d+">Скопировать ссылку на это место</button>(?=<a class="btn ghost" href="\./">Все части статьи</a></aside>)', '', s)
+        if n: done.append("копирование ссылки в конце")
     f.write_text(s, encoding="utf-8")
     print(p, len(done), "правок")
