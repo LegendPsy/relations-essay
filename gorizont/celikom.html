@@ -3105,10 +3105,7 @@ function drawTableScene(i, f, now, tq, it){
   for (const px of [cx - 44, cx + 44]){ cut(ellP(px, fy - 68, 20, 5), '#fbf6ea', .5); fillP(ellP(px, fy - 70, 11, 3.2), px < cx ? '#9fb36a' : '#d9a33a'); }
   cut(rectP(cx - 3, fy - 92, 6, 24), '#efe2c2'); const fl = 1 + .15 * Math.sin(tq * .02); C.save(); C.globalCompositeOperation = 'lighter'; fillP(circP(cx, fy - 98, 16 * fl), 'rgba(255,200,110,.25)'); C.restore(); cut(ellP(cx, fy - 98, 3.2, 6 * fl), '#f2b632', .3);
   if (i === 140){
-    const names = ['друг', 'партнёр', 'знакомый', 'муж', 'любовник', 'приятель'];
-    const k = Math.floor(win(f, .08, .74) * names.length), loc = (win(f, .08, .74) * names.length) % 1;
-    if (f > .08 && f < .74){ const a = Math.min(1, loc * 6, (1 - loc) * 6); C.save(); C.globalAlpha = a; nameTag(cx, fy - 126, names[Math.min(k, names.length - 1)], '#5b6f8a'); C.restore(); }
-    // название гаснет совсем: над ними только тёплый свет и сердечко
+    // над ними без всяких названий: только тёплый свет и сердечко
     const h = win(f, .8, .96); if (h > 0 && h < 1){ C.save(); C.globalAlpha = Math.sin(Math.PI * h); const hx = cx, hy = fy - 118 - h * 20, p = NP(); p.moveTo(hx, hy + 11); p.bezierCurveTo(hx - 18, hy - 4, hx - 10, hy - 18, hx, hy - 9); p.bezierCurveTo(hx + 10, hy - 18, hx + 18, hy - 4, hx, hy + 11); cut(p, '#d94a3a', .6); C.restore(); }
   }
   C.restore();
