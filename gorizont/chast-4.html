@@ -391,7 +391,7 @@ S_ALL[122] = {a:'', m:'walk', sp:'couple'};
 S_ALL[121] = {a:'', m:'walk', sp:'radio'};
 // новые сцены четвёртой части
 S_ALL[130] = {a:'Ветра тянут в разные стороны. Она сверяется с компасом и держит свой курс', m:'fly', sp:'gusts'};
-S_ALL[133] = {a:'За самолётом тянется пунктир из точек выбора: в каждой она заново решает, как лететь', m:'fly', sp:'trail'};
+S_ALL[133] = {a:'Рядом с самолётом летит маленькая птица. Лена протягивает ей крошки, и птица подлетает. Отвернулась — птица отстаёт. Протянула снова — вернулась', m:'fly', sp:'birdie'};
 S_ALL[131] = {a:'Она отпускает бумажный самолётик с запиской «Привет, как ты?»', m:'fly', sp:'note'};
 S_ALL[132] = {a:'Поле за деревней. Лена кладёт один кирпич, и на миг проступает весь будущий дом. Она садится рядом: привал', m:[['walk',.3],['stand',.72],['sit',1]], rest:1, tod:'morning', sp:'brick'};
 // четвёртая часть: выходит из-под навеса (36), взлёт (37), ветра и компас (130), пунктир выборов (133),
@@ -1955,7 +1955,9 @@ function drawWorld(i, f, st, mode, it, camL, camC, now, tq, wind, vel){
       const gu = i === 130 ? f : i === 37 && f > .85 ? 0 : -1;
       if (i === 130) drawWorld.bank = h;
       if (gu >= 0 || cv > 0) gustsAndCompass(gx0, gy0 - h * 60, gu, cv, h, tq); }
-    if (i === 133 || (i === 130 && f > .7) || (i === 38 && f < .35)) choiceTrail(gx0, gy0, i === 133 ? f : 1, i === 133 ? 1 : 1 - win(f, 0, .35), tq, sx);
+    // 133: птица рядом, пока Лена к ней тянется; на дороге к птичьему клину (38) она улетает вверх
+    { const gap = GAP[RK(38)] || 0, road = i === 38 && f === 0 && gap > 0 ? travel / gap : -1;
+      if (i === 133) birdFriend(gx0, gy0, f, -1, tq); else if (road >= 0 && road < .7) birdFriend(gx0, gy0, 1, road, tq); }
     if (i === 131 || (i === 39 && f < .25)) paperNote(gx0, gy0, i === 131 ? f : 1, tq); }
   // девушка
   if (true){
@@ -1972,6 +1974,7 @@ function drawWorld(i, f, st, mode, it, camL, camC, now, tq, wind, vel){
     if (i === 29 && f < .4){ o.lookIn = true; }
     if (i === 100 && f > .32 && f < .7) o.tilt = .1;
     if (i === 111 && f > .24 && f < .74) o.lookUp = true;
+    if (i === 133 && ((f > .14 && f < .36) || (f > .55 && f < .74))) o.reach = {x: 40, y: -86};
     if (i === 121 && f > .28 && f < .78){ carry = null; o.hold = {x: 30, y: -58 + 3 * Math.sin(tq * .01)}; o.tilt = .14; }
     if (i === 105 && f >= .3 && f < .89) m = 'sit';
     if (i === 106 && f >= .3 && f < .74){ const k = win(f, .36, .7) * 3, hop = Math.abs(Math.sin(Math.PI * k)); gy -= 34 * hop * (k > 0 && k < 3 ? 1 : 0); }
@@ -2220,19 +2223,28 @@ function gustsAndCompass(gx, gy, u, v, h, t){
   cut(polyP([r * .82, 0, 0, -7 * v, -r * .2, 0, 0, 7 * v]), '#c0452f', .5); cut(polyP([-r * .72, 0, 0, -5.5 * v, r * .1, 0, 0, 5.5 * v]), '#5b6870', .5);
   dot(0, 0, 4.5 * v, '#9a6e1e'); C.restore();
 }
-function choiceTrail(gx, gy, u, a, t, sx){
-  // на пути самолёта точки выбора: из каждой две пунктирные ветки. Когда она пролетает точку,
-  // выбранная ветка становится яркой, а несостоявшаяся бледнеет
-  const cy = gy - 34 * KG;
-  C.save(); C.globalAlpha = a; C.lineCap = 'round';
-  for (let j = 0; j < 9; j++){ const px = sx(WX(133, .04 + j * .12)); if (px < -160 || px > LWv + 40) continue;
-    const up = hash(j + 5) < .5, passed = px < gx - 30, near = clamp01(1 - Math.abs(px - gx) / 260);
-    for (const s of [-1, 1]){ const chosen = (s < 0) === up;
-      C.setLineDash([9, 9]); C.lineWidth = 3.4;
-      C.strokeStyle = passed ? (chosen ? 'rgba(243,214,140,1)' : 'rgba(239,226,194,.2)') : `rgba(246,238,216,${.7 + .3 * near})`;
-      C.beginPath(); C.moveTo(px, cy); C.quadraticCurveTo(px + 60, cy + s * 8, px + 120, cy + s * 46); C.stroke(); }
-    C.setLineDash([]);
-    const pulse = 1 + .18 * near * Math.sin(t * .012); cut(circP(px, cy, 9 * pulse), passed ? '#e3b866' : '#f3e3b4', .6); dot(px, cy, 3.2, '#7a4e12'); }
+function birdFriend(gx, gy, f, road, t){
+  // близость птицы зависит от того, что Лена делает сейчас: протянула крошки — подлетела, отвернулась — отстала
+  const c = road >= 0 ? 1 : ease(win(f, .2, .34)), back = road >= 0 ? 0 : ease(win(f, .4, .54)) - ease(win(f, .6, .72));
+  const enter = road >= 0 ? 1 : easeOut(win(f, 0, .14)), away = road >= 0 ? ease(win(road, .3, .65)) : 0;
+  const nearX = gx + 70, nearY = gy - 108 * KG, farX = gx + 280, farY = gy - 92 * KG, backX = gx - 190, backY = gy - 140 * KG;
+  let bx = lerp(lerp(farX, nearX, c), backX, back), by = lerp(lerp(farY, nearY, c), backY, back) + Math.sin(t * .006) * 6;
+  bx = lerp(LWv + 60, bx, enter); bx += away * 260; by -= away * 220;
+  // крошки летят из её руки к птице
+  for (const [a0, a1] of [[.16, .3], [.56, .7]]){ if (road >= 0) break; const w = win(f, a0, a1); if (w <= 0 || w >= 1) continue;
+    for (let k = 0; k < 4; k++){ const q = clamp01(w * 1.4 - k * .12); if (q <= 0 || q >= 1) continue;
+      const hx = gx + 46, hy = gy - 92 * KG; dot(lerp(hx, bx, q), lerp(hy, by + 6, q) - Math.sin(Math.PI * q) * 30, 2.6, '#e8c77a'); } }
+  // сердечко, когда она снова рядом
+  for (const [a0, a1] of [[.32, .44], [.7, .82]]){ if (road >= 0) break; const hu = win(f, a0, a1); if (hu <= 0 || hu >= 1) continue;
+    C.save(); C.globalAlpha = Math.sin(Math.PI * hu); const hx = (bx + gx + 46) / 2, hy = by - 26 - hu * 24, p = NP(); p.moveTo(hx, hy + 9); p.bezierCurveTo(hx - 15, hy - 3, hx - 8, hy - 15, hx, hy - 7); p.bezierCurveTo(hx + 8, hy - 15, hx + 15, hy - 3, hx, hy + 9); cut(p, '#d94a3a', .6); C.restore(); }
+  // сама птица: смотрит на Лену, когда рядом, и вперёд, когда отстала или улетает
+  const close = c * (1 - back), face = close > .6 && away < .2 ? -1 : 1, flap = Math.sin(t * (close > .6 ? .03 : .045));
+  C.save(); C.translate(bx, by); C.scale(face * 1.8, 1.8);
+  cut(polyP([-9, -1, -17, -6, -16, 2]), '#7a3a2a', .5);                              // хвост
+  cut(ellP(0, 0, 11, 7.5), '#9c4a34', .6); cut(ellP(3, 2.5, 6.5, 4.5), '#e98a5a');       // тело и грудка
+  cut(circP(8, -6, 5.5), '#9c4a34', .6); dot(10, -7, 1.3, '#1d1612');                    // голова и глаз
+  cut(polyP([13, -6.5, 18, -5, 13, -3.5]), '#e3b866', .4);                                // клюв
+  C.save(); C.translate(-1, -3); C.rotate(-.5 + flap * .7); cut(polyP([0, 0, -13, -9, -4, 1]), '#7a3a2a', .5); C.restore();   // крыло
   C.restore();
 }
 function paperNote(gx, gy, u, t){
