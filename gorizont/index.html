@@ -93,19 +93,24 @@ footer { color: var(--muted); font-size: 13.5px; border-top: 1px solid var(--rul
         <span class="d">Подходящее вместо лучшего, гибкость, ярлыки, регуляторы и смысл потери</span>
         <span class="m">12 мин<small>11:51</small></span>
       </a></li>
-      <li><div class="part off" aria-disabled="true"><span class="n">4</span><span class="t">Часть четвёртая</span><span class="d">Готовится</span><span class="m">скоро</span></div></li>
+      <li><a class="part" href="chast-4.html">
+        <span class="n">4</span><span class="t">Часть четвёртая</span>
+        <span class="d">Чувства и действия, ответственность и свобода, встреча двух выборов, первый кирпич</span>
+        <span class="m">16 мин<small>15:45</small></span>
+      </a></li>
       <li><div class="part off all" aria-disabled="true"><span class="n">∞</span><span class="t">Вся статья целиком</span><span class="d">Откроется, когда будут готовы все части</span><span class="m">скоро</span></div></li>
     </ul>
     <a class="resume" id="resume" href="chast-1.html">Продолжить первую часть</a>
     <a class="resume" id="resume2" href="chast-2.html">Продолжить вторую часть</a>
     <a class="resume" id="resume3" href="chast-3.html">Продолжить третью часть</a>
+    <a class="resume" id="resume4" href="chast-4.html">Продолжить четвёртую часть</a>
   </section>
 
   <footer>Время чтения равно длине авторской озвучки. Место, где вы остановились, сохраняется само.</footer>
 </main>
 <script>
 // где вы остановились в каждой части (по месту в записи)
-[['gorizont-1-audio', 'resume', 'первую', 1340], ['gorizont-2-audio', 'resume2', 'вторую', 858], ['gorizont-3-audio', 'resume3', 'третью', 704]].forEach(([key, id, name, end]) => {
+[['gorizont-1-audio', 'resume', 'первую', 1340], ['gorizont-2-audio', 'resume2', 'вторую', 858], ['gorizont-3-audio', 'resume3', 'третью', 704], ['gorizont-4-audio', 'resume4', 'четвёртую', 938]].forEach(([key, id, name, end]) => {
   try {
     const s = JSON.parse(localStorage.getItem(key) || 'null');
     if (s && s.t > 20 && s.t < end){ const r = document.getElementById(id), v = Math.floor(s.t); r.textContent = 'Продолжить ' + name + ' часть с ' + Math.floor(v / 60) + ':' + String(v % 60).padStart(2, '0') + ' →'; r.classList.add('show'); }

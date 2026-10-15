@@ -41,6 +41,7 @@ end = (f'\n<section class="cp cp-end" id="r{n_units}" data-cp="{n_units}">\n'
        '<aside class="rest rest-part"><p class="rest-label">Привал · конец третьей части</p>'
        '<p>Дождь стихает. Лена сидит под навесом и слушает, как с крыши падают последние капли. '
        'Здесь можно остановиться: она подождёт, а место сохранится само. Когда вернётесь, путь продолжится отсюда.</p>'
+       '<a class="btn" href="chast-4.html">Дальше: часть четвёртая →</a>'
        f'<button type="button" class="btn ghost js-copy" data-cp="{n_units}">Скопировать ссылку на это место</button>'
        '<a class="btn ghost" href="./">Все части статьи</a></aside>\n</section>\n')
 s = s[:a] + "\n" + body + end + s[b:]
