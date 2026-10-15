@@ -40,7 +40,7 @@ n_units = body.count('<section class="cp"')
 end = (f'\n<section class="cp cp-end" id="r{n_units}" data-cp="{n_units}">\n'
        '<aside class="rest rest-part"><p class="rest-label">Конец статьи</p>'
        '<p>Спасибо за время, проведённое здесь со мной, и за проявленный интерес. '
-       'Желаю уютно провести время наедине с собой. До будущих встреч.</p>'
+       'До будущих встреч.</p>'
        f'<button type="button" class="btn ghost js-copy" data-cp="{n_units}">Скопировать ссылку на это место</button>'
        '<a class="btn ghost" href="./">Все части статьи</a></aside>\n</section>\n')
 s = s[:a] + "\n" + body + end + s[b:]
