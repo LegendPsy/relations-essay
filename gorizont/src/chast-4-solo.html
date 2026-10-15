@@ -561,13 +561,15 @@ function updateGo(){
   });
 }
 function buildGo(){
+  let lastGo = null;
   // кнопка стоит в конце пункта и показывает то, что вы только что прочитали
   secs.forEach((sec, k) => {
     const sc = GO_OF[k]; if (sc == null) return;
     const b = document.createElement('button');
     b.type = 'button'; b.className = 'go'; b.innerHTML = '<span class="go-ic">▶</span><span class="go-t">Дальше в путь</span>';
     b.setAttribute('aria-label', 'Показать, как Лена идёт дальше');
-    b.addEventListener('click', () => playPoint(sc));
+    if (sec.querySelector('.remark.qs') && lastGo){ lastGo.dataset.to = sc; return; }
+    b.dataset.to = sc; b.addEventListener('click', () => playPoint(+b.dataset.to)); lastGo = b;
     const wrap = document.createElement('div'); wrap.className = 'go-wrap'; wrap.appendChild(b); sec.appendChild(wrap); goBtns[sc] = b;
   });
   updateGo();
@@ -595,7 +597,7 @@ const WORD_T = [[7.92,7.92,9.45,9.45],[9.45,9.45,9.45,9.54,9.81,9.93,10.08,10.2,
 let audioMode = false;
 (() => {
   const au = document.getElementById('listen-audio'); if (!au) return;
-  const els = [...document.querySelectorAll('#col h1, #col h2, #col p, #col li')].filter(e => !e.closest('.rest, .remark'));
+  const els = [...document.querySelectorAll('#col h1, #col h2, #col p, #col li')].filter(e => !e.closest('.rest, .remark, [data-quiet]'));
   if (els.length !== PARA_T.length){ console.warn('озвучка: абзацев', els.length, 'отметок', PARA_T.length); return; }
   // каждое слово — отдельный кусочек со своим временем
   const W_EL = [], W_T = [], W_P = [];
@@ -715,7 +717,7 @@ let audioMode = false;
     if (!au.paused && performance.now() - userT > 4000 && wi >= 0){
       const r = W_EL[wi].getBoundingClientRect(), top = readTop(), target = top + (window.innerHeight - top) * .38;
       let dy = r.top - target;
-      if (pk === els.length - 1){ const ce = document.querySelector('.cp-end'); if (ce){ const need = ce.getBoundingClientRect().bottom - (window.innerHeight - 16); dy = Math.max(dy, Math.min(need, r.top - top - 24)); } }
+      if (pk === els.length - 1){ const ce = document.querySelector('.cp-end'); if (ce && els[pk].closest('.cp').nextElementSibling === ce){ const need = ce.getBoundingClientRect().bottom - (window.innerHeight - 16); dy = Math.max(dy, Math.min(need, r.top - top - 24)); } }
       if (Math.abs(dy) > 2){ const step = Math.abs(dy) > window.innerHeight ? dy : dy * .06; window.scrollTo(0, window.scrollY + step); }
     }
     if (now - saveT > 2000){ saveT = now; try { localStorage.setItem('gorizont-4-audio', JSON.stringify({t})); } catch (e) {} }

@@ -232,7 +232,7 @@ a.btn { text-decoration: none; display: inline-block; }
 </section>
 
 <section class="cp" id="r2" data-cp="2">
-<h2 class="">И, наконец, личный вопрос, адресованный именно к вам</h2>
+<h2 class="" data-quiet>И, наконец, личный вопрос, адресованный именно к вам</h2>
 <div class="remark qs you"><p class="remark-label">Вопрос к вам · в озвучке его нет</p>
 <p>Если выбрать одного конкретного человека из своей жизни и на время забыть, как называются ваши отношения:</p>
 <ul><li><strong>Как вы сейчас к нему относитесь?</strong></li><li><strong>Такой способ отношений с ним действительно подходит вам сейчас?</strong></li></ul>
@@ -511,13 +511,15 @@ function updateGo(){
   });
 }
 function buildGo(){
+  let lastGo = null;
   // кнопка стоит в конце пункта и показывает то, что вы только что прочитали
   secs.forEach((sec, k) => {
     const sc = GO_OF[k]; if (sc == null) return;
     const b = document.createElement('button');
     b.type = 'button'; b.className = 'go'; b.innerHTML = '<span class="go-ic">▶</span><span class="go-t">Дальше в путь</span>';
     b.setAttribute('aria-label', 'Показать, как Лена идёт дальше');
-    b.addEventListener('click', () => playPoint(sc));
+    if (sec.querySelector('.remark.qs') && lastGo){ lastGo.dataset.to = sc; return; }
+    b.dataset.to = sc; b.addEventListener('click', () => playPoint(+b.dataset.to)); lastGo = b;
     const wrap = document.createElement('div'); wrap.className = 'go-wrap'; wrap.appendChild(b); sec.appendChild(wrap); goBtns[sc] = b;
   });
   updateGo();
@@ -540,12 +542,12 @@ function buildGo(){
   sp.addEventListener('click', () => { si = (si + 1) % speeds.length; au.playbackRate = speeds[si]; sp.textContent = String(speeds[si]).replace('.', ',') + '×'; });
 })();
 /* ---------- озвучка ведёт текст, прокрутку и Лену ---------- */
-const PARA_T = [6.66, 6.66, 23.43, 34.05, 44.85, 54.39, 66.9, 66.9, 84.42];
-const WORD_T = [[6.66,6.66,6.66,6.66],[6.66,6.87,7.59,8.01,8.58,9.15,9.15,9.84,10.35,11.28,11.76,14.1,14.34,14.7,14.91,15.24,15.66,16.32,16.83,17.28,17.7,18.33,20.19,20.97,21.33,21.45,21.87,22.14],[23.43,24.06,24.27,24.39,24.81,25.2,25.56,26.11,26.88,27.18,28.44,28.62,29.1,29.82,30.75,31.47,31.62,32.22,32.43,32.46],[34.05,34.23,34.35,34.83,35.41,35.41,35.61,36.66,36.75,36.84,37.2,37.92,38.37,38.73,39.15,40.05,40.05,40.05,41.67,42.09,42.93,43.11],[44.85,44.97,45.78,45.78,45.99,46.35,47.25,47.7,48.12,48.69,48.69,49.23,49.8,49.8,50.07,50.22,50.85,51.66,51.9,52.02,52.32,52.65,52.65],[54.39,54.72,54.78,55.62,56.94,57.27,57.45,57.9,57.99,58.29,59.31,59.55,59.88,61.53,61.77,62.22,63.6,63.6,63.96,64.29,64.44,64.83,65.25],[66.9,66.9,66.9,66.9,66.9],[66.9,67.08,67.5,67.62,67.86,68.46,68.67,69.06,70.05,70.29,70.77,71.07,71.34,71.61,72.18,72.27,73.89,75.57,75.72,76.26,77.34,77.76,78.57],[84.42,91.89,91.89,91.89,91.89,91.89,91.89,91.89]];
+const PARA_T = [6.66, 6.66, 23.43, 34.05, 44.85, 54.39, 66.9, 66.9];
+const WORD_T = [[6.66,6.66,6.66,6.66],[6.66,6.87,7.59,8.01,8.58,9.15,9.15,9.84,10.35,11.28,11.76,14.1,14.34,14.7,14.91,15.24,15.66,16.32,16.83,17.28,17.7,18.33,20.19,20.97,21.33,21.45,21.87,22.14],[23.43,24.06,24.27,24.39,24.81,25.2,25.56,26.11,26.88,27.18,28.44,28.62,29.1,29.82,30.75,31.47,31.62,32.22,32.43,32.46],[34.05,34.23,34.35,34.83,35.41,35.41,35.61,36.66,36.75,36.84,37.2,37.92,38.37,38.73,39.15,40.05,40.05,40.05,41.67,42.09,42.93,43.11],[44.85,44.97,45.78,45.78,45.99,46.35,47.25,47.7,48.12,48.69,48.69,49.23,49.8,49.8,50.07,50.22,50.85,51.66,51.9,52.02,52.32,52.65,52.65],[54.39,54.72,54.78,55.62,56.94,57.27,57.45,57.9,57.99,58.29,59.31,59.55,59.88,61.53,61.77,62.22,63.6,63.6,63.96,64.29,64.44,64.83,65.25],[66.9,66.9,66.9,66.9,66.9],[66.9,67.08,67.5,67.62,67.86,68.46,68.67,69.06,70.05,70.29,70.77,71.07,71.34,71.61,72.18,72.27,73.89,75.57,75.72,76.26,77.34,77.76,78.57]];
 let audioMode = false;
 (() => {
   const au = document.getElementById('listen-audio'); if (!au) return;
-  const els = [...document.querySelectorAll('#col h1, #col h2, #col p, #col li')].filter(e => !e.closest('.rest, .remark'));
+  const els = [...document.querySelectorAll('#col h1, #col h2, #col p, #col li')].filter(e => !e.closest('.rest, .remark, [data-quiet]'));
   if (els.length !== PARA_T.length){ console.warn('озвучка: абзацев', els.length, 'отметок', PARA_T.length); return; }
   // каждое слово — отдельный кусочек со своим временем
   const W_EL = [], W_T = [], W_P = [];
@@ -665,7 +667,7 @@ let audioMode = false;
     if (!au.paused && performance.now() - userT > 4000 && wi >= 0){
       const r = W_EL[wi].getBoundingClientRect(), top = readTop(), target = top + (window.innerHeight - top) * .38;
       let dy = r.top - target;
-      if (pk === els.length - 1){ const ce = document.querySelector('.cp-end'); if (ce){ const need = ce.getBoundingClientRect().bottom - (window.innerHeight - 16); dy = Math.max(dy, Math.min(need, r.top - top - 24)); } }
+      if (pk === els.length - 1){ const ce = document.querySelector('.cp-end'); if (ce && els[pk].closest('.cp').nextElementSibling === ce){ const need = ce.getBoundingClientRect().bottom - (window.innerHeight - 16); dy = Math.max(dy, Math.min(need, r.top - top - 24)); } }
       if (Math.abs(dy) > 2){ const step = Math.abs(dy) > window.innerHeight ? dy : dy * .06; window.scrollTo(0, window.scrollY + step); }
     }
     if (now - saveT > 2000){ saveT = now; try { localStorage.setItem('gorizont-5-audio', JSON.stringify({t})); } catch (e) {} }

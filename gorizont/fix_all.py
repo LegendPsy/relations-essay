@@ -2,7 +2,7 @@
 Каждая правка применяется один раз: если она уже есть, страница не меняется.
 Запускать последним шагом, после любых сборщиков: python3 fix_all.py
 """
-import pathlib, re
+import json, pathlib, re
 ROOT = pathlib.Path(__file__).parent
 PAGES = ["chast-1.html", "chast-2.html", "chast-3.html", "chast-4.html", "celikom.html", "src/chast-4-solo.html", "src/vyvody-solo.html"]
 
@@ -187,6 +187,22 @@ FIXES = [
      "<a class=\"btn\" href=\"https://www.b17.ru/article/1027414/?prt=724069\" target=\"_blank\" rel=\"noopener\">Оставить отзыв на B17</a>"),
     (".cp-end { margin-top: 2rem; }",
      ".cp-end { margin-top: 2rem; }\n.rest .b17-ask { margin-top: .4rem; }"),
+    # 19. Голос привязан к тексту только до абзаца «Я намеренно не хочу заканчивать эту идею ответами…».
+    #     Ниже (список вопросов, «И, наконец, личный вопрос…», рамка конца) ничего не подсвечивается,
+    #     не нажимается и не тянет прокрутку. Заголовок помечен data-quiet; его отметки времени убирает шаг 19 ниже.
+    ('<h2 class="">И, наконец, личный вопрос, адресованный именно к вам</h2>',
+     '<h2 class="" data-quiet>И, наконец, личный вопрос, адресованный именно к вам</h2>'),
+    (".filter(e => !e.closest('.rest, .remark'));",
+     ".filter(e => !e.closest('.rest, .remark, [data-quiet]'));"),
+    # в конце записи страница доводит до рамки конца, только если последний озвученный абзац стоит прямо перед ней
+    ("      if (pk === els.length - 1){ const ce = document.querySelector('.cp-end'); if (ce){",
+     "      if (pk === els.length - 1){ const ce = document.querySelector('.cp-end'); if (ce && els[pk].closest('.cp').nextElementSibling === ce){"),
+    # кнопки «Дальше в путь» после списка вопросов нет: столик у окна показывает предыдущая кнопка, сразу после шведского стола
+    ("    b.addEventListener('click', () => playPoint(sc));\n    const wrap = document.createElement('div'); wrap.className = 'go-wrap'; wrap.appendChild(b); sec.appendChild(wrap); goBtns[sc] = b;",
+     "    if (sec.querySelector('.remark.qs') && lastGo){ lastGo.dataset.to = sc; return; }\n"
+     "    b.dataset.to = sc; b.addEventListener('click', () => playPoint(+b.dataset.to)); lastGo = b;\n"
+     "    const wrap = document.createElement('div'); wrap.className = 'go-wrap'; wrap.appendChild(b); sec.appendChild(wrap); goBtns[sc] = b;"),
+    ("function buildGo(){\n", "function buildGo(){\n  let lastGo = null;\n"),
 ]
 
 for p in PAGES:
@@ -206,5 +222,14 @@ for p in PAGES:
     if p not in ("celikom.html", "chast-4.html"):
         s, n = re.subn(r'<button type="button" class="btn ghost js-copy" data-cp="\d+">Скопировать ссылку на это место</button>(?=<a class="btn ghost" href="\./">Все части статьи</a></aside>)', '', s)
         if n: done.append("копирование ссылки в конце")
+    # 19. У заголовка с data-quiet нет своих отметок времени в PARA_T / WORD_T (он не озвучен)
+    if "<h2 class=\"\" data-quiet>" in s and "const PARA_T = [" in s:
+        P = json.loads(re.search(r"const PARA_T = (\[.*?\]);", s).group(1))
+        W = json.loads(re.search(r"const WORD_T = (\[\[.*?\]\]);", s).group(1))
+        if len(W[-1]) == 8 and W[-1][0] == P[-1]:
+            P.pop(); W.pop()
+            s = re.sub(r"const PARA_T = \[.*?\];", lambda m: "const PARA_T = " + json.dumps(P) + ";", s, count=1)
+            s = re.sub(r"const WORD_T = \[\[.*?\]\];", lambda m: "const WORD_T = " + json.dumps(W, separators=(",", ":")) + ";", s, count=1)
+            done.append("отметки времени личного вопроса")
     f.write_text(s, encoding="utf-8")
     print(p, len(done), "правок")
