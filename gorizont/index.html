@@ -51,7 +51,11 @@ a.part .m { color: var(--ink); }
 .part.off { opacity: .5; }
 .part.off .n { color: var(--muted); }
 .part.off .d { color: var(--muted); }
-.part.all { border-style: dashed; }
+a.part.whole { background: var(--accent); border-color: var(--accent); padding: 18px 16px; }
+a.part.whole .n { color: var(--ink); font-size: 2.2rem; }
+a.part.whole .t { font-size: 1.3rem; }
+a.part.whole .d { color: rgba(15,18,21,.78); }
+
 .resume { display: none; margin-top: 10px; font-family: var(--mono); font-size: 12px; color: var(--gold); text-decoration: none; }
 .resume.show { display: block; }
 footer { color: var(--muted); font-size: 13.5px; border-top: 1px solid var(--rule); padding-top: 14px; }
@@ -67,6 +71,18 @@ footer { color: var(--muted); font-size: 13.5px; border-top: 1px solid var(--rul
     <p class="lede">О том, что отношения нельзя завести или окончательно потерять. Отношения — это то, как один человек относится к другому.</p>
   </section>
 
+
+  <section>
+    <ul class="parts">
+      <li><a class="part whole" href="celikom.html">
+        <span class="n">∞</span><span class="t">Вся статья целиком</span>
+        <span class="d">Все четыре части и «Вместо вывода» одним путём, без остановок между частями</span>
+        <span class="m">66 мин<small>65:43</small></span>
+      </a></li>
+    </ul>
+    <a class="resume" id="resume0" href="celikom.html">Продолжить статью</a>
+  </section>
+
   <section class="voice" aria-label="Об озвучке">
     <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21h2v-2.08A7 7 0 0 0 19 12h-2z"/></svg></span>
     <div>
@@ -76,7 +92,7 @@ footer { color: var(--muted); font-size: 13.5px; border-top: 1px solid var(--rul
   </section>
 
   <section>
-    <h2>Что прочитать</h2>
+    <h2>Или по частям</h2>
     <ul class="parts">
       <li><a class="part" href="chast-1.html">
         <span class="n">1</span><span class="t">Часть первая</span>
@@ -101,9 +117,8 @@ footer { color: var(--muted); font-size: 13.5px; border-top: 1px solid var(--rul
       <li><a class="part" href="vyvody.html">
         <span class="n">5</span><span class="t">Вместо вывода</span>
         <span class="d">Способ быть по отношению друг к другу, вопросы для рефлексии и личный вопрос к вам</span>
-        <span class="m">7 мин<small>6:32</small></span>
+        <span class="m">2 мин<small>1:39</small></span>
       </a></li>
-      <li><div class="part off all" aria-disabled="true"><span class="n">∞</span><span class="t">Вся статья целиком</span><span class="d">Откроется, когда будут готовы все части</span><span class="m">скоро</span></div></li>
     </ul>
     <a class="resume" id="resume" href="chast-1.html">Продолжить первую часть</a>
     <a class="resume" id="resume2" href="chast-2.html">Продолжить вторую часть</a>
@@ -116,10 +131,10 @@ footer { color: var(--muted); font-size: 13.5px; border-top: 1px solid var(--rul
 </main>
 <script>
 // где вы остановились в каждой части (по месту в записи)
-[['gorizont-1-audio', 'resume', 'первую', 1340], ['gorizont-2-audio', 'resume2', 'вторую', 858], ['gorizont-3-audio', 'resume3', 'третью', 704], ['gorizont-4-audio', 'resume4', 'четвёртую', 938], ['gorizont-5-audio', 'resume5', 'заключительную', 380]].forEach(([key, id, name, end]) => {
+[['gorizont-1-audio', 'resume', 'первую', 1340], ['gorizont-2-audio', 'resume2', 'вторую', 858], ['gorizont-3-audio', 'resume3', 'третью', 704], ['gorizont-4-audio', 'resume4', 'четвёртую', 938], ['gorizont-5-audio', 'resume5', 'заключительную', 95], ['gorizont-all-audio', 'resume0', 'всю статью', 3938]].forEach(([key, id, name, end]) => {
   try {
     const s = JSON.parse(localStorage.getItem(key) || 'null');
-    if (s && s.t > 20 && s.t < end){ const r = document.getElementById(id), v = Math.floor(s.t); r.textContent = 'Продолжить ' + name + ' часть с ' + Math.floor(v / 60) + ':' + String(v % 60).padStart(2, '0') + ' →'; r.classList.add('show'); }
+    if (s && s.t > 20 && s.t < end){ const r = document.getElementById(id), v = Math.floor(s.t); r.textContent = 'Продолжить ' + name + (id === 'resume0' ? '' : ' часть') + ' с ' + Math.floor(v / 60) + ':' + String(v % 60).padStart(2, '0') + ' →'; r.classList.add('show'); }
   } catch (e) {}
 });
 </script>

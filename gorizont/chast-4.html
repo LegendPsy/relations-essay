@@ -682,7 +682,7 @@ let audioMode = false;
   // большая кнопка «Начать путь» на сцене включает и мультик, и голос
   document.getElementById('playbtn').addEventListener('click', ev => {
     ev.stopImmediatePropagation();
-    if (au.currentTime > 858) au.currentTime = 0;
+    if (au.currentTime > 941) au.currentTime = 0;
     au.play().catch(() => start(true));
   }, true);
   au.addEventListener('play', () => { everPlayed = true; userT = -1e9; enterAudio();

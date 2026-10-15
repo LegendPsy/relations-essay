@@ -179,7 +179,7 @@ a.btn { text-decoration: none; display: inline-block; }
     <button type="button" class="dk-play" id="listen-btn" aria-label="Слушать статью"><span class="li-ic" aria-hidden="true">▶</span></button>
     <button type="button" class="dk-skip" id="listen-fwd" aria-label="Вперёд на 15 секунд">+15</button>
     <input type="range" id="listen-seek" min="0" max="1000" value="0" step="1" aria-label="Место в записи">
-    <span class="dk-time" id="listen-time">6:32</span>
+    <span class="dk-time" id="listen-time">1:39</span>
     <button type="button" class="dk-speed" id="listen-speed" aria-label="Скорость">1×</button>
     <audio id="listen-audio" preload="none" src="audio/gorizont-vyvody.mp3"></audio>
   </div>
@@ -353,15 +353,14 @@ S_ALL[42] = Object.assign({}, S_ALL[42], {a:'Приземляется. Отды�
 S_ALL[43] = Object.assign({}, S_ALL[43], {a:'Вечер. Лена смотрит вверх: звёзды складываются то в Дельфина, то в Лисичку, то в Лиру. Названия гаснут, а звёзды остаются', m:[['walk',.1],['stand',.96],['walk',1]]});
 S_ALL[44] = Object.assign({}, S_ALL[44], {a:'Деревня в сумерках: окна загораются одно за другим'});
 S_ALL[45] = Object.assign({}, S_ALL[45], {a:'Ночь. Светятся окна: рядом всегда кто-то есть'});
-// «Вместо вывода»: рассвет в деревне (46), ресторан (47), шведский стол (48), столик у окна (140), место для вас (141)
+// «Вместо вывода»: рассвет в деревне (46), ресторан (47), шведский стол (48), столик у окна (140) — последняя сцена
 S_ALL[46] = Object.assign({}, S_ALL[46], {a:'Рассвет. Лена с рюкзаком идёт через деревню', m:'walk', tod:'dawn', set:{h:1, f:1, b:0, pup:0}, ia:.01});
 S_ALL[47] = Object.assign({}, S_ALL[47], {rest:0});
-S_ALL[140] = {a:'Столик у окна. Над Леной и её собеседником сменяются названия: друг, партнёр, знакомый… Потом названия гаснут, и остаются просто двое за столом', m:'sit', sp:'table'};
-S_ALL[141] = {a:'Свет приглушается, и на переднем плане появляется тарелка: место за этим столом для вас', m:'sit', rest:1, sp:'table'};
-const PART = [46, 47, 48, 140, 141];
+S_ALL[140] = {a:'Столик у окна. Над Леной и её собеседником сменяются названия: друг, партнёр, знакомый… Потом названия гаснут, и остаются просто двое за столом', m:'sit', rest:1, sp:'table'};
+const PART = [46, 47, 48, 140];
 // кнопка в конце пункта k показывает сцену GO_OF[k]; второй самолёт (40, 41) — после пункта 38,
 // деревня (44, 45) — после 42, рассвет и кирпич — после 43
-const GO_OF = [2, 3, 4];
+const GO_OF = [2, 3, null];
 const OLD = PART, NEWOF = {}; PART.forEach((k, n) => NEWOF[k] = n);
 const S = PART.map(k => Object.assign({}, S_ALL[k]));
 const RK = k => (NEWOF[k] === undefined ? 1e9 : NEWOF[k]);   // место сцены в этой части
@@ -525,18 +524,18 @@ function buildGo(){
 /* ---------- слушать статью ---------- */
 (() => {
   const au = document.getElementById('listen-audio'); if (!au) return;
-  const jump = d => { const dd = au.duration || 392; au.currentTime = Math.max(0, Math.min(dd - .5, au.currentTime + d)); show(); };
+  const jump = d => { const dd = au.duration || 100; au.currentTime = Math.max(0, Math.min(dd - .5, au.currentTime + d)); show(); };
   document.getElementById('listen-back').addEventListener('click', () => jump(-15)); document.getElementById('listen-fwd').addEventListener('click', () => jump(15));
   const btn = document.getElementById('listen-btn'), ic = btn.querySelector('.li-ic'), seek = document.getElementById('listen-seek'), tm = document.getElementById('listen-time'), sp = document.getElementById('listen-speed');
   const fmt = v => { v = Math.max(0, Math.floor(v || 0)); return Math.floor(v / 60) + ':' + String(v % 60).padStart(2, '0'); };
   let dragging = false; const speeds = [1, 1.25, 1.5, 2, .85]; let si = 0;
-  const show = () => { const d = au.duration || 392; if (!dragging) seek.value = Math.round(1000 * au.currentTime / d); tm.textContent = au.currentTime > 0 ? fmt(au.currentTime) + ' / ' + fmt(d) : fmt(d); seek.style.setProperty('--p', (100 * au.currentTime / d) + '%'); };
+  const show = () => { const d = au.duration || 100; if (!dragging) seek.value = Math.round(1000 * au.currentTime / d); tm.textContent = au.currentTime > 0 ? fmt(au.currentTime) + ' / ' + fmt(d) : fmt(d); seek.style.setProperty('--p', (100 * au.currentTime / d) + '%'); };
   btn.addEventListener('click', () => { if (au.paused) au.play().catch(() => {}); else au.pause(); });
   au.addEventListener('play', () => { ic.textContent = '❚❚'; btn.setAttribute('aria-label', 'Пауза'); });
   au.addEventListener('pause', () => { ic.textContent = '▶'; btn.setAttribute('aria-label', 'Слушать статью'); });
   au.addEventListener('timeupdate', show); au.addEventListener('loadedmetadata', show);
-  seek.addEventListener('input', () => { dragging = true; const d = au.duration || 392; tm.textContent = fmt(seek.value / 1000 * d) + ' / ' + fmt(d); seek.style.setProperty('--p', (seek.value / 10) + '%'); });
-  seek.addEventListener('change', () => { const d = au.duration || 392; au.currentTime = seek.value / 1000 * d; dragging = false; if (au.paused) au.play().catch(() => {}); });
+  seek.addEventListener('input', () => { dragging = true; const d = au.duration || 100; tm.textContent = fmt(seek.value / 1000 * d) + ' / ' + fmt(d); seek.style.setProperty('--p', (seek.value / 10) + '%'); });
+  seek.addEventListener('change', () => { const d = au.duration || 100; au.currentTime = seek.value / 1000 * d; dragging = false; if (au.paused) au.play().catch(() => {}); });
   sp.addEventListener('click', () => { si = (si + 1) % speeds.length; au.playbackRate = speeds[si]; sp.textContent = String(speeds[si]).replace('.', ',') + '×'; });
 })();
 /* ---------- озвучка ведёт текст, прокрутку и Лену ---------- */
@@ -568,7 +567,7 @@ let audioMode = false;
   const unitOf = els.map(e => +e.closest('.cp').dataset.cp);
   const US = []; els.forEach((e, k) => { if (US[unitOf[k]] === undefined) US[unitOf[k]] = PARA_T[k]; });
   const SPEECH_END = W_T.length ? W_T[W_T.length - 1] + 1.2 : 858;
-  const DUR = () => (au.duration && isFinite(au.duration)) ? au.duration : 392.448;
+  const DUR = () => (au.duration && isFinite(au.duration)) ? au.duration : 99.864;
   const idxAt = (arr, t) => { let lo = 0, hi = arr.length - 1, r = 0; while (lo <= hi){ const mid = (lo + hi) >> 1; if (arr[mid] <= t + .02){ r = mid; lo = mid + 1; } else hi = mid - 1; } return r; };
 
   // ---- мультик по времени: у каждой сцены свой отрезок записи; в конце отрезка — событие, до него — дорога ----
@@ -633,7 +632,7 @@ let audioMode = false;
   // большая кнопка «Начать путь» на сцене включает и мультик, и голос
   document.getElementById('playbtn').addEventListener('click', ev => {
     ev.stopImmediatePropagation();
-    if (au.currentTime > 858) au.currentTime = 0;
+    if (au.currentTime > 95) au.currentTime = 0;
     au.play().catch(() => start(true));
   }, true);
   au.addEventListener('play', () => { everPlayed = true; userT = -1e9; enterAudio();
@@ -2500,7 +2499,6 @@ function paperCloudW(x, y, s, col){ const p = NP(); p.moveTo(x - 50 * s, y); [[-
 function drawTableScene(i, f, now, tq, it){
   // столик у окна в том же ресторане. 140: над Леной и её собеседником сменяются названия их отношений
   // (друг, партнёр, знакомый…), потом названия гаснут и остаются просто двое за столом.
-  // 141: тишина, а на переднем плане появляется тарелка — место за этим столом для вас
   C.fillStyle = '#7a2a22'; C.fillRect(0, 0, LWv, LB);
   C.fillStyle = 'rgba(239,226,194,.10)';
   for (let yy = OFFY - 40; yy < 400; yy += 46) for (let xx = (yy / 46 % 2) * 30; xx < LWv; xx += 60){ C.beginPath(); C.moveTo(xx, yy - 8); C.quadraticCurveTo(xx + 8, yy, xx, yy + 8); C.quadraticCurveTo(xx - 8, yy, xx, yy - 8); C.fill(); }
@@ -2533,17 +2531,6 @@ function drawTableScene(i, f, now, tq, it){
     const h = win(f, .8, .96); if (h > 0 && h < 1){ C.save(); C.globalAlpha = Math.sin(Math.PI * h); const hx = cx, hy = fy - 118 - h * 20, p = NP(); p.moveTo(hx, hy + 11); p.bezierCurveTo(hx - 18, hy - 4, hx - 10, hy - 18, hx, hy - 9); p.bezierCurveTo(hx + 10, hy - 18, hx + 18, hy - 4, hx, hy + 11); cut(p, '#d94a3a', .6); C.restore(); }
   }
   C.restore();
-  if (i === 141 && f > .08){
-    // место для вас: свет приглушается, на переднем плане появляется тарелка с приборами
-    const u = easeOut(win(f, .08, .4)); const px = LWv * .5, py = LB + 60 - u * 150;
-    C.fillStyle = `rgba(30,12,8,${.38 * u})`; C.fillRect(0, 0, LWv, LB);
-    C.save(); C.translate(px, py); C.scale(5.2, 5.2); cut(ellP(0, 0, 13, 3.8), '#f3ecdc'); C.strokeStyle = '#c0452f'; C.lineWidth = .5; C.beginPath(); C.ellipse(0, 0, 11, 3, 0, 0, TAU); C.stroke(); C.beginPath(); C.ellipse(0, 0, 8, 2.2, 0, 0, TAU); C.stroke();
-    C.fillStyle = '#c0452f'; for (let q = 0; q < 16; q++){ const a = q / 16 * TAU; C.beginPath(); C.arc(Math.cos(a) * 9.6, Math.sin(a) * 2.6, .45, 0, TAU); C.fill(); }
-    C.restore();
-    const fx = px - 92, kx = px + 92, cy = py + 4, mt = '#d8cfbd';
-    cut(rrP(fx - 3, cy - 6, 6, 34, 3), mt); cut(rrP(fx - 7, cy - 14, 14, 9, 3), mt); for (let q = 0; q < 4; q++) cut(rrP(fx - 7 + q * 4, cy - 32, 2.4, 20, 1.2), mt, .5);
-    cut(rrP(kx - 3, cy - 4, 6, 32, 3), mt); const bl = NP(); bl.moveTo(kx - 3, cy - 4); bl.lineTo(kx - 3, cy - 36); bl.quadraticCurveTo(kx + 6, cy - 30, kx + 4, cy - 4); bl.closePath(); cut(bl, '#e8e2d4', .5);
-  }
 }
 function drawBuffetScene(f, now, tq, it, wind){
   if (!buffet) buildBuffet();
@@ -2659,7 +2646,7 @@ function init(){
     const saved = load();
     if (saved && saved.max && (saved.max[0] > 0 || saved.max[1] > .2)){
       const sheet = document.getElementById('resume');
-      const hh = secs[saved.cur[0]] && secs[saved.cur[0]].querySelector('h1,h2'); document.getElementById('resume-text').textContent = `Вы остановились здесь: ${hh ? hh.textContent : 'конец статьиасти'}`;
+      const hh = secs[saved.cur[0]] && secs[saved.cur[0]].querySelector('h1,h2'); document.getElementById('resume-text').textContent = `Вы остановились здесь: ${hh ? hh.textContent : 'конец статьи'}`;
       sheet.hidden = false;
       document.getElementById('resume-go').onclick = ()=>{ sheet.hidden = true; restoreTo(saved.cur, saved.max, saved.scene); };
       document.getElementById('resume-start').onclick = resetAll;

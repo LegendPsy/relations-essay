@@ -32,6 +32,8 @@ R("au.duration || 865", f"au.duration || {round(DUR)}", 4)
 R(": 865.15;", f": {DUR};")
 R("привал в конце второй ч", "привал в конце третьей ч")
 
+s, _n = re.subn(r"if \(au\.currentTime > \d+\) au\.currentTime = 0;", f"if (au.currentTime > {round(max(max(w) for w in times['words'] if w) + 3)}) au.currentTime = 0;", s); assert _n == 1   # «Начать путь» после конца записи — с начала
+
 # ---------- текст ----------
 a = s.index('<main class="col" id="col">') + len('<main class="col" id="col">')
 b = s.index("</main>")

@@ -1,7 +1,6 @@
 function drawTableScene(i, f, now, tq, it){
   // столик у окна в том же ресторане. 140: над Леной и её собеседником сменяются названия их отношений
   // (друг, партнёр, знакомый…), потом названия гаснут и остаются просто двое за столом.
-  // 141: тишина, а на переднем плане появляется тарелка — место за этим столом для вас
   C.fillStyle = '#7a2a22'; C.fillRect(0, 0, LWv, LB);
   C.fillStyle = 'rgba(239,226,194,.10)';
   for (let yy = OFFY - 40; yy < 400; yy += 46) for (let xx = (yy / 46 % 2) * 30; xx < LWv; xx += 60){ C.beginPath(); C.moveTo(xx, yy - 8); C.quadraticCurveTo(xx + 8, yy, xx, yy + 8); C.quadraticCurveTo(xx - 8, yy, xx, yy - 8); C.fill(); }
@@ -34,15 +33,4 @@ function drawTableScene(i, f, now, tq, it){
     const h = win(f, .8, .96); if (h > 0 && h < 1){ C.save(); C.globalAlpha = Math.sin(Math.PI * h); const hx = cx, hy = fy - 118 - h * 20, p = NP(); p.moveTo(hx, hy + 11); p.bezierCurveTo(hx - 18, hy - 4, hx - 10, hy - 18, hx, hy - 9); p.bezierCurveTo(hx + 10, hy - 18, hx + 18, hy - 4, hx, hy + 11); cut(p, '#d94a3a', .6); C.restore(); }
   }
   C.restore();
-  if (i === 141 && f > .08){
-    // место для вас: свет приглушается, на переднем плане появляется тарелка с приборами
-    const u = easeOut(win(f, .08, .4)); const px = LWv * .5, py = LB + 60 - u * 150;
-    C.fillStyle = `rgba(30,12,8,${.38 * u})`; C.fillRect(0, 0, LWv, LB);
-    C.save(); C.translate(px, py); C.scale(5.2, 5.2); cut(ellP(0, 0, 13, 3.8), '#f3ecdc'); C.strokeStyle = '#c0452f'; C.lineWidth = .5; C.beginPath(); C.ellipse(0, 0, 11, 3, 0, 0, TAU); C.stroke(); C.beginPath(); C.ellipse(0, 0, 8, 2.2, 0, 0, TAU); C.stroke();
-    C.fillStyle = '#c0452f'; for (let q = 0; q < 16; q++){ const a = q / 16 * TAU; C.beginPath(); C.arc(Math.cos(a) * 9.6, Math.sin(a) * 2.6, .45, 0, TAU); C.fill(); }
-    C.restore();
-    const fx = px - 92, kx = px + 92, cy = py + 4, mt = '#d8cfbd';
-    cut(rrP(fx - 3, cy - 6, 6, 34, 3), mt); cut(rrP(fx - 7, cy - 14, 14, 9, 3), mt); for (let q = 0; q < 4; q++) cut(rrP(fx - 7 + q * 4, cy - 32, 2.4, 20, 1.2), mt, .5);
-    cut(rrP(kx - 3, cy - 4, 6, 32, 3), mt); const bl = NP(); bl.moveTo(kx - 3, cy - 4); bl.lineTo(kx - 3, cy - 36); bl.quadraticCurveTo(kx + 6, cy - 30, kx + 4, cy - 4); bl.closePath(); cut(bl, '#e8e2d4', .5);
-  }
 }
