@@ -64,7 +64,7 @@ S_ALL[121] = {a:'', m:'walk', sp:'radio'};
 S_ALL[130] = {a:'Ветра тянут в разные стороны. Она сверяется с компасом и держит свой курс', m:'fly', sp:'gusts'};
 S_ALL[133] = {a:'Рядом с самолётом летит маленькая птица. Лена протягивает ей крошки, и птица подлетает. Отвернулась — птица отстаёт. Протянула снова — вернулась', m:'fly', sp:'birdie'};
 S_ALL[131] = {a:'Она запускает бумажный самолётик «Привет, как ты?». Он летит рядом, потом опускается к горам и долетает до адресата', m:'fly', sp:'note'};
-S_ALL[132] = {a:'Лавочка, на ней рюкзак, рядом лежит один кирпич. Лена садится, и от кирпича вырастает контур будущего дома: Лена из будущего заходит в его дверь. Лена кладёт кирпич в рюкзак и идёт дальше', m:[['walk',.25],['sit',.78],['stand',.9],['walk',1]], rest:1, tod:'morning', sp:'brick'};
+S_ALL[132] = {a:'Лавочка, на ней рюкзак, рядом лежит один кирпич. Лена садится, и от кирпича вырастает контур будущего дома: Лена из будущего заходит в его дверь. Лена кладёт кирпич в рюкзак и идёт дальше', m:[['walk',.1],['sit',.86],['stand',.94],['walk',1]], rest:1, tod:'morning', sp:'brick'};
 // четвёртая часть: выходит из-под навеса (36), взлёт (37), ветра и компас (130), пунктир выборов (133),
 // птицы клином (38), бумажный самолётик (131), просвет в облаках (39), второй самолёт (40, 41), посадка (42),
 // звёзды и созвездие (43), деревня зажигает окна (44, 45), рассвет (46), первый кирпич (132)
@@ -85,7 +85,7 @@ const GO_OF = [1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 14];
 """ + s[b:]
 
 # ---------- мир: якоря и новые предметы ----------
-R("couple: WX(122, .18) + 150,", "couple: WX(122, .18) + 150, brick: WX(132, .25),")
+R("couple: WX(122, .18) + 150,", "couple: WX(122, .18) + 150, brick: WX(132, .1),")
 R("  // ---- попутчик и девушка ----", """  // 132 · первый кирпич и контур будущего дома
   x = sx(A.brick); if (x > -260 && x < LWv + 260) brickHouse(x, Y, i === 132 ? f : (RK(i) > RK(132) ? 1 : 0), tq);
   // ---- попутчик и девушка ----""")
@@ -96,7 +96,7 @@ R("if (i === 39 || (i === 38 && f > .6) || (i === 40 && f < .3)){ const xa", "if
 R("cut(star5(x, y, r * tw, k), '#f3e3b4', .5); C.restore(); }\n  }",
   "cut(star5(x, y, r * tw, k), '#f3e3b4', .5); C.restore(); STP[k] = {x, y}; }\n    if (i === 43) constellation(STP, f, tq);\n    if (i === 44 && f === 0 && GAP[RK(44)] > 0) fallingStar(travel / GAP[RK(44)]);\n  }")
 R("const n = st.sp === 'stars' && i === 43 ? Math.floor(f * 26) : 26;", "const n = st.sp === 'stars' && i === 43 ? Math.floor(Math.min(1, f * 8) * 26) : 26;")
-R("36: 1.8, 37: 1.6};", "36: 1.8, 37: 1.6, 43: 2};")
+R("36: 1.8, 37: 1.6};", "36: 1.8, 37: 1.6, 43: 2, 132: 3.5};")
 R("    if (i === 111 && f > .24 && f < .74) o.lookUp = true;", "    if (i === 111 && f > .24 && f < .74) o.lookUp = true;\n    if (i === 43 && f > .1 && f < .96) o.lookUp = true;")
 R("  const starA = night > .3", "  const STP = [];\n  const starA = night > .3")
 # полёт: ветра и компас, пунктир выборов, бумажный самолётик
@@ -117,14 +117,14 @@ R("  // девушка\n  if (true){", """  { const gy0 = Y - altS, gx0 = GXL + 
       // дымный след петли: кольцо остаётся в небе и тает
       if (f > .42){ const sv = 1 - win(f, .74, 1), drift = ease(win(f, .7, 1)) * 160; C.save(); C.globalAlpha = .75 * sv; C.strokeStyle = '#fbf6ea'; C.lineWidth = 9; C.lineCap = 'round';
         C.beginPath(); const py = gy0 - 40 * KG + dip; for (let q = 0; q <= w; q += .02){ const a = TAU * q; const x = gx0 - 70 + R0 * Math.sin(a) * .55 - drift - q * 30, y = py - R0 * (1 - Math.cos(a)) + 26; q ? C.lineTo(x, y) : C.moveTo(x, y); } C.stroke(); C.restore(); } }
-    if (i === 132 && f >= .86) backpack(gx0 - 12 * KG, gy0 - 64 * KG, KG);
+    if (i === 132 && f >= .91) backpack(gx0 - 12 * KG, gy0 - 64 * KG, KG);
     // 133: птица рядом, пока Лена к ней тянется; на дороге к птичьему клину (38) она улетает вверх
     { const gap = GAP[RK(38)] || 0, road = i === 38 && f === 0 && gap > 0 ? travel / gap : -1;
       if (i === 133) birdFriend(gx0, gy0, f, -1, tq); else if (road >= 0 && road < .7) birdFriend(gx0, gy0, 1, road, tq); }
     if (i === 131 || (i === 39 && f < .25)) paperNote(gx0, gy0, i === 131 ? f : 1, tq); }
   // девушка
   if (true){""")
-R("    if (i === 121 && f > .28 && f < .78){", "    if (i === 131 && f > .1 && f < .2) o.reach = {x: 40, y: -96};\n    if (i === 132 && f > .79 && f < .84) o.reach = {x: 46, y: -40};\n    if (i === 132 && f >= .84 && f < .88) o.reach = {x: -16, y: -100};\n    if (i === 133 && ((f > .14 && f < .36) || (f > .55 && f < .74))) o.reach = {x: 40, y: -86};\n    if (i === 121 && f > .28 && f < .78){")
+R("    if (i === 121 && f > .28 && f < .78){", "    if (i === 131 && f > .1 && f < .2) o.reach = {x: 40, y: -96};\n    if (i === 132 && f > .86 && f < .89) o.reach = {x: 46, y: -40};\n    if (i === 132 && f >= .89 && f < .92) o.reach = {x: -16, y: -100};\n    if (i === 133 && ((f > .14 && f < .36) || (f > .55 && f < .74))) o.reach = {x: 40, y: -86};\n    if (i === 121 && f > .28 && f < .78){")
 R("  if (i === 38){ const bx = LWv * 1.15 - f * LWv * 1.7, by = OFFY + 50;", "  if (i === 38) stormWedge(GXL + (camL - camC), Y - altS, f, tq);\n  if (false){ const bx = 0, by = 0;")
 R("function shoeStand(x, y, u, t){", r"""function stormWedge(gx, gy, f, t){
   // 38 · «мы всегда так летали»: Лена летит внутри птичьего клина, привычный курс клина ведёт вниз, в грозовую тучу.
@@ -251,12 +251,12 @@ function brickHouse(x, y, u, t){
   // лавочка
   for (const sx0 of [-46, 46]) cutSeg(x + sx0, y - 30, x + sx0, y, '#2a1f19', 2.6);
   cut(rectP(x - 58, y - 36, 116, 6), '#8a5a2e'); cut(rectP(x - 58, y - 58, 116, 5), '#8a5a2e'); cut(rectP(x - 58, y - 48, 116, 5), '#8a5a2e');
-  if (u < .86) backpack(x - 34, y - 36, 1);
-  const bx = x + 86, took = u >= .84;
+  if (u < .91) backpack(x - 34, y - 36, 1);
+  const bx = x + 86, took = u >= .89;
   if (!took){ C.save(); C.translate(bx, y);
     cut(rectP(-22, -16, 44, 16), '#b5543a', .7); seg(-22, -8, 22, -8, 'rgba(255,220,190,.4)', 1.4); seg(-3, -16, -3, -8, 'rgba(255,220,190,.4)', 1.4); seg(10, -8, 10, 0, 'rgba(255,220,190,.4)', 1.4); C.restore(); }
   // контур дома вырастает от кирпича: стены, крыша, труба, дверь, окна
-  const hw = 98, hx = bx - 22 + hw, grow = win(u, .33, .55), keep = 1 - win(u, .86, 1);
+  const hw = 98, hx = bx - 22 + hw, grow = win(u, .14, .46), keep = 1 - win(u, .92, 1);
   if (grow > 0 && keep > 0){
     const L = [[hx - hw, y], [hx - hw, y - 118], [hx, y - 190], [hx + hw, y - 118], [hx + hw, y]];
     const seglen = L.slice(1).map((p, k) => Math.hypot(p[0] - L[k][0], p[1] - L[k][1])), tot = seglen.reduce((a, b) => a + b, 0);
@@ -264,20 +264,20 @@ function brickHouse(x, y, u, t){
     C.save(); C.globalAlpha = .9 * keep; C.strokeStyle = '#fff4d2'; C.lineWidth = 4; C.setLineDash([10, 8]); C.beginPath(); C.moveTo(L[0][0], L[0][1]);
     for (let k = 1; k < L.length && left > 0; k++){ const q = Math.min(1, left / seglen[k - 1]); C.lineTo(lerp(L[k - 1][0], L[k][0], q), lerp(L[k - 1][1], L[k][1], q)); left -= seglen[k - 1]; }
     C.stroke();
-    const det = win(u, .5, .58);
+    const det = win(u, .44, .52);
     if (det > 0){ C.globalAlpha = .9 * keep * det;
       C.beginPath(); C.moveTo(hx + 42, y - 157); C.lineTo(hx + 42, y - 184); C.lineTo(hx + 64, y - 184); C.lineTo(hx + 64, y - 140); C.stroke();
       C.strokeRect(hx - 22, y - 80, 44, 78); C.setLineDash([]);
-      const glow = .55 + .2 * Math.sin(t * .003), door = win(u, .66, .74) * (1 - win(u, .8, .9));
+      const glow = .55 + .2 * Math.sin(t * .003), door = win(u, .7, .78) * (1 - win(u, .86, .92));
       for (const wx of [-78, 42]){ C.fillStyle = `rgba(243,201,110,${glow * .6})`; C.fillRect(hx + wx, y - 102, 36, 32); C.strokeRect(hx + wx, y - 102, 36, 32); }
       if (door > 0){ C.globalAlpha = keep * door; fillP(rectP(hx - 20, y - 78, 40, 76), 'rgba(255,236,180,.85)'); } }
     C.restore();
     // будущая Лена: светлый полупрозрачный силуэт выходит от лавочки, идёт к двери и исчезает в ней
-    const gw = win(u, .54, .72), gin = win(u, .72, .8);
-    if (gw > 0 && gin < 1){ const gxx = lerp(x + 10, hx - 4, ease(gw)), sc = 1 - .12 * gin;
+    const gw = win(u, .5, .8), gin = win(u, .8, .88);
+    if (gw > 0 && gin < 1){ const gxx = lerp(x + 10, hx - 4, smooth(gw)), sc = 1 - .12 * gin;
       C.save(); C.globalAlpha = .55 * Math.min(1, gw * 5) * (1 - gin);
       fillP(ellP(gxx, y - 78, 46, 92), 'rgba(255,240,200,.35)');
-      drawPerson(gxx, y - 4 - 6 * gin, 1, makePose(gin > 0 ? 'stand' : 'walk', {w: gin > 0 ? 0 : 1, ph: u * 160, t, gait: 'light'}), LOOK.girl, {h: 1, f: 1}, {t, scale: sc, noShadow: true});
+      drawPerson(gxx, y - 4 - 6 * gin, 1, makePose(gin > 0 ? 'stand' : 'walk', {w: gin > 0 ? 0 : 1, ph: u * 420, t, gait: 'stroll'}), LOOK.girl, {h: 1, f: 1}, {t, scale: sc, noShadow: true});
       C.restore(); } }
 }
 function shoeStand(x, y, u, t){""")
