@@ -75,7 +75,7 @@ S_ALL[39] = Object.assign({}, S_ALL[39], {a:'Узкий просвет межд�
 S_ALL[40] = Object.assign({}, S_ALL[40], {a:'Из облака выныривает второй самолёт со своим курсом'});
 S_ALL[41] = Object.assign({}, S_ALL[41], {a:'Покачали друг другу крыльями и разошлись: встреча двух выборов'});
 S_ALL[42] = Object.assign({}, S_ALL[42], {a:'Приземляется. Отдыхает на крыле', rest:0});
-S_ALL[43] = Object.assign({}, S_ALL[43], {a:'Вечер. Звёзды складываются в знакомый Ковш, но название гаснет, а звёзды остаются'});
+S_ALL[43] = Object.assign({}, S_ALL[43], {a:'Вечер. Лена смотрит вверх: звёзды складываются то в Дельфина, то в Лисичку, то в Лиру. Названия гаснут, а звёзды остаются', m:[['walk',.1],['stand',.96],['walk',1]]});
 S_ALL[44] = Object.assign({}, S_ALL[44], {a:'Деревня в сумерках: окна загораются одно за другим'});
 S_ALL[45] = Object.assign({}, S_ALL[45], {a:'Ночь. Светятся окна: рядом всегда кто-то есть'});
 const PART = [36, 37, 130, 133, 38, 131, 39, 40, 41, 42, 43, 44, 45, 46, 132];
@@ -95,11 +95,14 @@ R("if (m === 'sit' && (i === 9 || i === 21)) m = 'sitLow';", "if (m === 'sit' &&
 R("if (i === 39 || (i === 38 && f > .6) || (i === 40 && f < .3)){ const xa", "if (i === 39 || (i === 131 && f > .6) || (i === 40 && f < .3)){ const xa")
 # созвездие: звёзды запоминаем, на 43 соединяем пять соседних в «Ковш», потом название гаснет
 R("cut(star5(x, y, r * tw, k), '#f3e3b4', .5); C.restore(); }\n  }",
-  "cut(star5(x, y, r * tw, k), '#f3e3b4', .5); C.restore(); STP[k] = {x, y}; }\n    if (i === 43) constellation(STP, f, tq);\n  }")
+  "cut(star5(x, y, r * tw, k), '#f3e3b4', .5); C.restore(); STP[k] = {x, y}; }\n    if (i === 43) constellation(STP, f, tq);\n    if (i === 44 && f === 0 && GAP[RK(44)] > 0) fallingStar(travel / GAP[RK(44)]);\n  }")
+R("const n = st.sp === 'stars' && i === 43 ? Math.floor(f * 26) : 26;", "const n = st.sp === 'stars' && i === 43 ? Math.floor(Math.min(1, f * 8) * 26) : 26;")
+R("36: 1.8, 37: 1.6};", "36: 1.8, 37: 1.6, 43: 2};")
+R("    if (i === 111 && f > .24 && f < .74) o.lookUp = true;", "    if (i === 111 && f > .24 && f < .74) o.lookUp = true;\n    if (i === 43 && f > .1 && f < .96) o.lookUp = true;")
 R("  const starA = night > .3", "  const STP = [];\n  const starA = night > .3")
 # полёт: ветра и компас, пунктир выборов, бумажный самолётик
 R("    } else drawPerson(gx, gy + (m === 'boat' ? 10 : 0) + bob, face, J, LOOK.girl, it, opts);",
-  "    } else { const ps = drawWorld.pose; if (ps){ const py = gy - 40 * KG; C.save(); C.translate(gx + ps.dx, py + ps.dy); C.rotate(ps.a); C.translate(-gx, -py); }\n      drawPerson(gx, gy + (m === 'boat' ? 10 : 0) + bob, face, J, LOOK.girl, it, opts); if (ps) C.restore(); }")
+  "    } else { const ps = drawWorld.pose; if (ps){ const py = gy - 40 * KG; C.save(); C.translate(gx + ps.dx, py + ps.dy); C.rotate(ps.a); C.translate(-gx, -py); }\n      drawPerson(gx, gy + (m === 'boat' ? 10 : 0) + bob, face, J, LOOK.girl, it, opts); if (ps) C.restore(); }\n    if (drawWorld.tags){ for (const g of drawWorld.tags){ C.save(); C.globalAlpha = g.a; nameTag(g.x, g.y, g.n, '#5b6f8a'); C.restore(); } drawWorld.tags = null; }")
 R("  // девушка\n  if (true){", """  { const gy0 = Y - altS, gx0 = GXL + (camL - camC);
     // 130: компас появляется, самолёт качнётся вверх-вниз (стрелка следом), потом курс ровный;
     // компас держится и на дороге к следующему пункту до её середины
@@ -208,14 +211,33 @@ function paperNote(gx, gy, u, t){
     C.restore(); }
 }
 function constellation(P, f, t){
-  // пять соседних звёзд соединяются линиями, появляется название «Ковш»; потом название и линии гаснут, а звёзды светят дальше
-  const a = easeOut(win(f, .58, .72)) * (1 - win(f, .86, .97)); if (a <= 0 || P.length < 15) return;
-  const pick = [0], left = P.slice(0, 15).map((p, k) => k).filter(k => k);
-  while (pick.length < 5){ const q = P[pick[pick.length - 1]]; left.sort((m, n) => Math.hypot(P[m].x - q.x, P[m].y - q.y) - Math.hypot(P[n].x - q.x, P[n].y - q.y)); pick.push(left.shift()); }
-  C.save(); C.globalAlpha = a * .7; C.strokeStyle = '#f3e3b4'; C.lineWidth = 2; C.setLineDash([5, 5]); C.beginPath();
-  pick.forEach((k, n) => n ? C.lineTo(P[k].x, P[k].y) : C.moveTo(P[k].x, P[k].y)); C.stroke(); C.setLineDash([]); C.restore();
-  const cx = pick.reduce((s, k) => s + P[k].x, 0) / 5;
-  C.save(); C.globalAlpha = a; nameTag(cx, Math.max(...pick.map(k => P[k].y)) + 30, 'Ковш', '#5b6f8a'); C.restore();
+  // Лена по очереди замечает три не самых известных созвездия: проступают звёзды, их соединяют линии,
+  // появляется название; потом название и линии гаснут, а звёзды светят дальше
+  const CS = [
+    {n: 'Дельфин', x: LWv * .56, y: OFFY + 84, s: 4, p: [[0, 0], [14, -9], [27, -2], [16, 9], [36, 14]], l: [[0, 1], [1, 2], [2, 3], [3, 0], [2, 4]]},
+    {n: 'Лисичка', x: LWv * .46, y: OFFY + 80, s: 4, p: [[0, 6], [18, -4], [34, 6], [52, -2], [64, 8]], l: [[0, 1], [1, 2], [2, 3], [3, 4]]},
+    {n: 'Лира', x: LWv * .62, y: OFFY + 52, s: 3.6, p: [[0, 0], [8, 12], [18, 10], [12, 30], [24, 28]], l: [[0, 1], [0, 2], [1, 2], [1, 3], [2, 4], [3, 4]]}];
+  const wins = [[.12, .4], [.4, .68], [.68, .96]]; drawWorld.tags = [];
+  CS.forEach((c, n) => { const [a0, a1] = wins[n], a = easeOut(win(f, a0, a0 + .08)) * (1 - win(f, a1 - .06, a1)), sa = Math.max(a, n === 0 ? 0 : 0);
+    const pts = c.p.map(([x, y]) => ({x: c.x + x * c.s, y: c.y + y * c.s}));
+    // звёзды созвездия остаются и после того, как линии погасли
+    const st = easeOut(win(f, a0, a0 + .05));
+    C.save(); C.globalAlpha = st; pts.forEach((q, k) => cut(star5(q.x, q.y, 5.5 + (k === 0 ? 2 : 0), k), '#fff1c0', .5)); C.restore();
+    if (a <= 0) return;
+    C.save(); C.globalAlpha = a * .85; C.strokeStyle = '#f3e3b4'; C.lineWidth = 3; C.setLineDash([7, 6]); C.beginPath();
+    for (const [u, v] of c.l){ C.moveTo(pts[u].x, pts[u].y); C.lineTo(pts[v].x, pts[v].y); } C.stroke(); C.setLineDash([]);
+    for (const q of pts){ C.globalAlpha = a * (.35 + .25 * Math.sin(t * .006 + q.x)); fillP(circP(q.x, q.y, 10), '#fff3c4'); }
+    C.restore();
+    const cx = pts.reduce((s, q) => s + q.x, 0) / pts.length, cy = Math.max(...pts.map(q => q.y));
+    drawWorld.tags.push({x: cx, y: cy + 34, n: c.n, a}); });
+}
+function fallingStar(u){
+  // падающая звезда: яркая точка с хвостом пересекает небо и гаснет
+  const w = win(u, .2, .5); if (w <= 0 || w >= 1) return;
+  const x0 = LWv * .85, y0 = OFFY + 30, x = x0 - w * LWv * .55, y = y0 + w * 90;
+  C.save(); C.globalAlpha = Math.sin(Math.PI * w); const g = C.createLinearGradient(x, y, x + 120, y - 20);
+  g.addColorStop(0, 'rgba(255,246,214,1)'); g.addColorStop(1, 'rgba(255,246,214,0)'); C.strokeStyle = g; C.lineWidth = 3; C.lineCap = 'round';
+  C.beginPath(); C.moveTo(x, y); C.lineTo(x + 120, y - 20); C.stroke(); cut(star5(x, y, 6, 0), '#fff6d6', .4); C.restore();
 }
 function brickHouse(x, y, u, t){
   // на пустом поле лежит один кирпич; на миг над ним проступает пунктирный контур будущего дома с тёплыми окнами
