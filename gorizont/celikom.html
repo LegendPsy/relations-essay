@@ -2342,7 +2342,7 @@ function drawWorld(i, f, st, mode, it, camL, camC, now, tq, wind, vel){
     C.save(); C.translate(x, Y - 74); C.rotate(-.5); cut(polyP([0, -6, -30, -6, -38, 0, -30, 6, 0, 6]), '#c9b08a'); cut(polyP([-26, 0, -18, -6, -10, 0]), '#3f6e73'); C.restore();
     cut(polyP([x, Y - 58, x + 34, Y - 58, x + 42, Y - 52, x + 34, Y - 46, x, Y - 46]), '#c9b08a'); seg(x + 10, Y - 52, x + 28, Y - 52, '#3f6e73', 2); cut(polyP([x + 28, Y - 56, x + 34, Y - 52, x + 28, Y - 48]), '#3f6e73'); }
   // 36 · навес
-  x = sx(A.shelter); if (x > -200 && x < LWv + 200) shelterShape(x + 2, Y - 2, i === 35 ? 1 : i === 36 ? 1 - win(f, .4, .75) : 0, tq);
+  x = sx(A.shelter); if (x > -200 && x < LWv + 200) shelterShape(x + 2, Y - 2, i === 35 || (i === 36 && RK(36) > 0) ? 1 : i === 36 || i === 236 ? 1 - win(f, .4, .75) : 0, tq);
   // 37 · аэродром
   x = sx(A.plane); if (inView(x)){ windsock(x - 110, Y - 4, tq, wind); if (RK(i) < RK(37) || (i === 37 && f < .3)){ C.save(); C.translate(x, Y + 2); C.scale(KG, KG); bigPlane(() => { planeBack(); planeFront(0); }); C.restore(); } cut(rectP(x + 300, Y - 48, 70, 44), '#8f9286'); cut(polyP([x + 294, Y - 46, x + 335, Y - 70, x + 376, Y - 46]), '#6e6a5e'); }
   // 42 · посадка: самолёт на поле
@@ -2554,8 +2554,8 @@ function drawWorld(i, f, st, mode, it, camL, camC, now, tq, wind, vel){
     if (h < .06 && night < .6) flowerPlant(fx + 8, fy - 4, 1.4, '#efe2c2', sway * .02); }
 
   // атмосфера
-  const isRain = st.sp === 'rain' || (i === 36 && f < .5) || TOD[NI] === 'rain';
-  if (isRain){ const dens = i === 36 ? 1 - win(f, .3, .5) : 1; C.fillStyle = 'rgba(214,226,232,.85)';
+  const isRain = st.sp === 'rain' || (i === 36 && (RK(36) > 0 || f < .5)) || (i === 236 && f < .5) || TOD[NI] === 'rain';
+  if (isRain){ const dens = (i === 36 && RK(36) === 0) || i === 236 ? 1 - win(f, .3, .5) : 1; C.fillStyle = 'rgba(214,226,232,.85)';
     C.lineCap = 'round';
     drops.forEach((d, k) => { if (k / drops.length > dens) return; d.y += 11 * d.s; d.x -= 2.6 * d.s + (vel / boostNow * .02); if (d.y > LB){ d.y = OFFY - 10; d.x = Math.random() * (LWv + 100); } if (d.x < -20) d.x += LWv + 60;
       C.strokeStyle = `rgba(228,238,242,${.45 + .4 * d.s})`; C.lineWidth = 1.1 + d.s * .6; C.beginPath(); C.moveTo(d.x, d.y); C.lineTo(d.x - 3 * d.s, d.y + 13 * d.s); C.stroke(); });
