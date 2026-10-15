@@ -70,7 +70,7 @@ S_ALL[132] = {a:'Поле за деревней. Лена кладёт один 
 // звёзды и созвездие (43), деревня зажигает окна (44, 45), рассвет (46), первый кирпич (132)
 S_ALL[36] = Object.assign({}, S_ALL[36], {a:'Дождь стихает. Лена выходит из-под навеса и идёт к маленькому аэродрому', m:[['sit',.3],['stand',.42],['walk',1]], rest:0, tod:'overcast', set:{h:1, f:1, b:0, pup:0}, ia:.01});
 S_ALL[37] = Object.assign({}, S_ALL[37], {a:'Маленький аэродром. Чувства какие есть, а штурвал в её руках: взлетает'});
-S_ALL[38] = Object.assign({}, S_ALL[38], {a:'Птицы летят привычным клином: «мы всегда так летали». Она берёт свой курс'});
+S_ALL[38] = Object.assign({}, S_ALL[38], {a:'Лена летит в птичьем клину. Привычный курс ведёт в грозовую тучу: птицы летят туда, как всегда, а она делает мёртвую петлю и уходит к свету своим курсом'});
 S_ALL[39] = Object.assign({}, S_ALL[39], {a:'Узкий просвет между облаками: места мало, но оно есть. Пролетает в него'});
 S_ALL[40] = Object.assign({}, S_ALL[40], {a:'Из облака выныривает второй самолёт со своим курсом'});
 S_ALL[41] = Object.assign({}, S_ALL[41], {a:'Покачали друг другу крыльями и разошлись: встреча двух выборов'});
@@ -99,17 +99,22 @@ R("cut(star5(x, y, r * tw, k), '#f3e3b4', .5); C.restore(); }\n  }",
 R("  const starA = night > .3", "  const STP = [];\n  const starA = night > .3")
 # полёт: ветра и компас, пунктир выборов, бумажный самолётик
 R("    } else drawPerson(gx, gy + (m === 'boat' ? 10 : 0) + bob, face, J, LOOK.girl, it, opts);",
-  "    } else { const bk = drawWorld.bank || 0; if (bk){ const py = gy - 40 * KG; C.save(); C.translate(gx, py - bk * 60); C.rotate(-bk); C.translate(-gx, -py); }\n      drawPerson(gx, gy + (m === 'boat' ? 10 : 0) + bob, face, J, LOOK.girl, it, opts); if (bk) C.restore(); }")
+  "    } else { const ps = drawWorld.pose; if (ps){ const py = gy - 40 * KG; C.save(); C.translate(gx + ps.dx, py + ps.dy); C.rotate(ps.a); C.translate(-gx, -py); }\n      drawPerson(gx, gy + (m === 'boat' ? 10 : 0) + bob, face, J, LOOK.girl, it, opts); if (ps) C.restore(); }")
 R("  // девушка\n  if (true){", """  { const gy0 = Y - altS, gx0 = GXL + (camL - camC);
     // 130: компас появляется, самолёт качнётся вверх-вниз (стрелка следом), потом курс ровный;
     // компас держится и на дороге к следующему пункту до её середины
-    drawWorld.bank = 0;
+    drawWorld.pose = null;
     { const tw = ease(win(f, .2, .72)), h = i === 130 ? .2 * Math.sin(TAU * tw) * (1 - .3 * tw) : 0;
       const gap = GAP[RK(133)] || 0, road = i === 133 && f === 0 && gap > 0 ? travel / gap : -1;
       const cv = i === 130 ? easeOut(win(f, .04, .16)) : road >= 0 ? 1 - clamp01((road - .4) / .15) : 0;
       const gu = i === 130 ? f : i === 37 && f > .85 ? 0 : -1;
-      if (i === 130) drawWorld.bank = h;
+      if (i === 130) drawWorld.pose = {dx: 0, dy: -h * 60, a: -h};
       if (gu >= 0 || cv > 0) gustsAndCompass(gx0, gy0 - h * 60, gu, cv, h, tq); }
+    if (i === 38){ const R0 = 74, w = ease(win(f, .42, .7)), th = TAU * w, dip = 46 * ease(win(f, .14, .42)), up = 64 * ease(win(f, .66, .84)) * (1 - ease(win(f, .86, 1)));
+      drawWorld.pose = {dx: R0 * Math.sin(th) * .55, dy: dip * (1 - w) - R0 * (1 - Math.cos(th)) - up, a: -th + .12 * ease(win(f, .14, .3)) * (1 - w)};
+      // дымный след петли: кольцо остаётся в небе и тает
+      if (f > .42){ const sv = 1 - win(f, .74, 1), drift = ease(win(f, .7, 1)) * 160; C.save(); C.globalAlpha = .75 * sv; C.strokeStyle = '#fbf6ea'; C.lineWidth = 9; C.lineCap = 'round';
+        C.beginPath(); const py = gy0 - 40 * KG + dip; for (let q = 0; q <= w; q += .02){ const a = TAU * q; const x = gx0 - 70 + R0 * Math.sin(a) * .55 - drift - q * 30, y = py - R0 * (1 - Math.cos(a)) + 26; q ? C.lineTo(x, y) : C.moveTo(x, y); } C.stroke(); C.restore(); } }
     // 133: птица рядом, пока Лена к ней тянется; на дороге к птичьему клину (38) она улетает вверх
     { const gap = GAP[RK(38)] || 0, road = i === 38 && f === 0 && gap > 0 ? travel / gap : -1;
       if (i === 133) birdFriend(gx0, gy0, f, -1, tq); else if (road >= 0 && road < .7) birdFriend(gx0, gy0, 1, road, tq); }
@@ -117,7 +122,30 @@ R("  // девушка\n  if (true){", """  { const gy0 = Y - altS, gx0 = GXL + 
   // девушка
   if (true){""")
 R("    if (i === 121 && f > .28 && f < .78){", "    if (i === 133 && ((f > .14 && f < .36) || (f > .55 && f < .74))) o.reach = {x: 40, y: -86};\n    if (i === 121 && f > .28 && f < .78){")
-R("function shoeStand(x, y, u, t){", r"""function gustsAndCompass(gx, gy, u, v, h, t){
+R("  if (i === 38){ const bx = LWv * 1.15 - f * LWv * 1.7, by = OFFY + 50;", "  if (i === 38) stormWedge(GXL + (camL - camC), Y - altS, f, tq);\n  if (false){ const bx = 0, by = 0;")
+R("function shoeStand(x, y, u, t){", r"""function stormWedge(gx, gy, f, t){
+  // 38 · «мы всегда так летали»: Лена летит внутри птичьего клина, привычный курс клина ведёт вниз, в грозовую тучу.
+  // Птицы так и летят туда. Лена делает мёртвую петлю, выходит из строя и поднимается к свету своим курсом.
+  const dip = 46 * ease(win(f, .14, .42)), go = ease(win(f, .44, .86)), enter = easeOut(win(f, 0, .14));
+  // грозовая туча впереди: подплывает, а после петли уходит под неё назад
+  const cx = LWv + 220 - ease(win(f, .06, .44)) * LWv * .5 - ease(win(f, .7, 1)) * LWv * .95, cy = gy + 40;
+  for (const [dx, dy, r] of [[-120, 20, 54], [-60, -14, 70], [10, -30, 82], [86, -8, 68], [150, 22, 50], [30, 34, 70], [-50, 40, 56], [110, 46, 52]])
+    cut(circP(cx + dx, cy + dy, r), '#4b5160', .7);
+  for (const [dx, dy, r] of [[-70, -22, 40], [16, -46, 48], [92, -20, 38]]) fillP(circP(cx + dx, cy + dy, r), 'rgba(120,128,146,.45)');
+  // молнии
+  const fl = Math.floor(t / 420), on = f > .2 && f < .9 && hash(fl) > .55 && (t % 420) < 140;
+  if (on){ const lx = cx - 60 + hash(fl + 7) * 160; C.save(); C.strokeStyle = '#ffe9a0'; C.lineWidth = 3.2; C.lineJoin = 'round';
+    C.beginPath(); C.moveTo(lx, cy + 50); C.lineTo(lx - 12, cy + 84); C.lineTo(lx + 6, cy + 88); C.lineTo(lx - 10, cy + 130); C.stroke();
+    C.globalAlpha = .12; C.fillStyle = '#fff6d0'; C.fillRect(0, 0, LWv, LB); C.restore(); }
+  // клин: ведущая птица впереди самолёта, крылья клина уходят назад над ним и под ним
+  const lead = {x: gx + 150 + go * LWv * .55, y: gy - 60 * KG + dip + go * 70};
+  const fade = 1 - win(f, .76, .88);
+  if (fade > 0){ C.save(); C.globalAlpha = fade;
+    for (let k = -4; k <= 4; k++){ const o = Math.abs(k), bx = lead.x - o * 46 - (1 - enter) * LWv, by = lead.y + Math.sign(k) * o * 26 + (k < 0 ? -10 : 0);
+      bird(bx, by, 2.4, t * .02 + k * .4); }
+    C.restore(); }
+}
+function gustsAndCompass(gx, gy, u, v, h, t){
   // ветра дуют навстречу и вкось; над самолётом компас: пока она поворачивает, стрелка поворачивается вслед, потом стоит на курсе
   if (u >= 0){ const a = Math.sin(Math.PI * clamp01(u * 1.15)) * .9 + .1;
   for (let k = 0; k < 10; k++){ const sp = .35 + hash(k) * .3, L = LWv + 360, ph = ((t * sp + k * 151) % L), wx = LWv + 160 - ph;
