@@ -1,4 +1,4 @@
-"""Собирает gorizont/vyvody.html («Вместо вывода») из готовой четвёртой части (chast-4.html):
+"""Собирает src/vyvody-solo.html («Вместо вывода» отдельно; make_part4_full.py вливает его в chast-4.html) из src/chast-4-solo.html:
 текст (src/vyvody.html), озвучка и разметка слов (src/vyvody-times.json), свой сценарий Лены:
 с рюкзаком через деревню на рассвете к ресторану, шведский стол до неба, столик у окна, где над двумя
 людьми сменяются и гаснут названия их отношений; на этом статья заканчивается.
@@ -6,7 +6,7 @@
 """
 import json, pathlib, re
 ROOT = pathlib.Path(__file__).parent
-s = (ROOT / "chast-4.html").read_text(encoding="utf-8")
+s = (ROOT / "src" / "chast-4-solo.html").read_text(encoding="utf-8")
 
 
 def R(a, b, cnt=1):
@@ -71,5 +71,5 @@ R("  if (f > .88){ const u = easeOut(win(f, .88, .96)); const px = LWv * .64, py
 R("    if (i === 132 && f >= .91) backpack(", "    if (i === 46 || (i === 47 && f < .62)) backpack(gx0 - 12 * KG, gy0 - 64 * KG, KG);\n    if (i === 132 && f >= .91) backpack(")
 R("function drawBuffetScene(f, now, tq, it, wind){", pathlib.Path(ROOT / "src" / "table-scene.js").read_text(encoding="utf-8") + "function drawBuffetScene(f, now, tq, it, wind){")
 
-pathlib.Path(ROOT / "vyvody.html").write_text(s, encoding="utf-8")
+pathlib.Path(ROOT / "src" / "vyvody-solo.html").write_text(s, encoding="utf-8")   # отдельной страницы больше нет: её вливает в часть 4 make_part4_full.py
 print("ok", mmss, n_units)

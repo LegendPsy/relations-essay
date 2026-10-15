@@ -4,7 +4,7 @@
 """
 import pathlib, re
 ROOT = pathlib.Path(__file__).parent
-PAGES = ["chast-1.html", "chast-2.html", "chast-3.html", "chast-4.html", "vyvody.html", "celikom.html"]
+PAGES = ["chast-1.html", "chast-2.html", "chast-3.html", "chast-4.html", "celikom.html", "src/chast-4-solo.html", "src/vyvody-solo.html"]
 
 FIXES = [
     # 1–2. События под голос длятся дольше (в полтора раза) и после них Лена ещё пару секунд остаётся на месте;
@@ -196,7 +196,7 @@ for p in PAGES:
         s = s.replace(old, new)
         done.append(old[:40].strip())
     # 15. В отдельных частях в рамке в конце нет кнопки «Скопировать ссылку на это место» (она нужна только во всей статье)
-    if p != "celikom.html":
+    if p not in ("celikom.html", "chast-4.html"):
         s, n = re.subn(r'<button type="button" class="btn ghost js-copy" data-cp="\d+">Скопировать ссылку на это место</button>(?=<a class="btn ghost" href="\./">Все части статьи</a></aside>)', '', s)
         if n: done.append("копирование ссылки в конце")
     f.write_text(s, encoding="utf-8")

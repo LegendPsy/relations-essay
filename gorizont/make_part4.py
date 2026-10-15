@@ -1,4 +1,4 @@
-"""Собирает gorizont/chast-4.html из готовой третьей части (chast-3.html):
+"""Собирает src/chast-4-solo.html (четвёртая часть без «Вместо вывода», из неё make_part4_full.py делает chast-4.html) из готовой третьей части (chast-3.html):
 текст четвёртой части (src/part4.html), её озвучка и разметка слов (src/part4-times.json),
 свой сценарий Лены: от навеса к аэродрому, полёт (ветра и компас, пунктир выборов, птицы клином,
 бумажный самолётик «Привет, как ты?», просвет в облаках, второй самолёт), посадка, звёзды и созвездие,
@@ -285,5 +285,5 @@ function brickHouse(x, y, u, t){
 }
 function shoeStand(x, y, u, t){""")
 
-pathlib.Path(ROOT / "chast-4.html").write_text(s, encoding="utf-8")
+pathlib.Path(ROOT / "src" / "chast-4-solo.html").write_text(s, encoding="utf-8")   # отдельная часть 4 без «Вместо вывода»; итог собирает make_part4_full.py
 print("ok", mmss, n_units)

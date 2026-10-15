@@ -15,7 +15,7 @@
 """
 import json, pathlib, re, subprocess, sys
 ROOT = pathlib.Path(__file__).parent
-PAGES = ["chast-1.html", "chast-2.html", "chast-3.html", "chast-4.html", "vyvody.html"]
+PAGES = ["chast-1.html", "chast-2.html", "chast-3.html", "src/chast-4-solo.html", "src/vyvody-solo.html"]
 MP3 = ["gorizont-chast-1.mp3", "gorizont-chast-2.mp3", "gorizont-chast-3.mp3", "gorizont-chast-4.mp3", "gorizont-vyvody.mp3"]
 PART_NAMES = ["Часть первая", "Часть вторая", "Часть третья", "Часть четвёртая", "Вместо вывода"]
 RENAME_FIRST = [None, (9, 209), (21, 221), (36, 236), (46, 246)]   # сцена, которой начинается часть → новый номер
@@ -89,7 +89,7 @@ for n, q in enumerate(parts):
     # заголовок части: у первой — название статьи, у остальных — тихий разделитель
     h1 = re.search(r'<h1 id="essay-title">(.*?)</h1>', body).group(0)
     new = (f'<h1 id="essay-title" data-part="{PART_NAMES[0]}">Горизонт отношений</h1>' if n == 0
-           else f'<h1 class="part-h">{PART_NAMES[n]}</h1>')
+           else f'<h1 class="part-h{" sub" if n == len(PAGES) - 1 else ""}">{PART_NAMES[n]}</h1>')   # «Вместо вывода» — не пятая часть, а раздел в конце
     body = body.replace(h1, new, 1)
     # абзацы с озвучкой идут в том же порядке, что и в части; первый из них — заголовок
     P = [mp(n, t) for t in q["P"]]
@@ -126,7 +126,7 @@ end = (f'\n<section class="cp cp-end" id="r{n_units}" data-cp="{n_units}">\n'
        '<a class="btn ghost" href="./">На заглавную</a></aside>\n</section>\n')
 
 # ---------- страница: берём «Вместо вывода» и заменяем всё, что относится к одной части ----------
-s = src["vyvody.html"]
+s = src["src/vyvody-solo.html"]
 
 
 def R(a, b, cnt=1):
@@ -157,7 +157,8 @@ R(".cp-end { margin-top: 2rem; }", """.cp-end { margin-top: 2rem; }
 #essay-title[data-part]::after { content: attr(data-part); display: block; margin-top: .9rem; font-family: var(--mono); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); }
 .col h1.part-h { margin: 1.2rem 0 1.6rem; text-align: center; font-size: 1.5rem; color: var(--head); }
 .col h1.part-h::before { content: '· · ·'; display: block; margin-bottom: 1.1rem; font-size: 1rem; letter-spacing: .5em; color: var(--muted); }
-.col h1.part-h.now-reading, .col h1.part-h .w.said { color: var(--head); }""")
+.col h1.part-h.now-reading, .col h1.part-h .w.said { color: var(--head); }
+.col h1.part-h.sub { font-size: 1.25rem; }""")
 
 s = re.sub(r"const PARA_T = \[.*?\];", lambda m: "const PARA_T = " + json.dumps(PARA_T) + ";", s, count=1)
 s = re.sub(r"const WORD_T = \[\[.*?\]\];", lambda m: "const WORD_T = " + json.dumps(WORD_T, separators=(",", ":")) + ";", s, count=1)
@@ -172,9 +173,9 @@ p2 = region("chast-2.html", "// новые сцены второй части")
 p2 = p2.replace("S_ALL[9] = Object.assign({}, S_ALL[9],", "S_ALL[209] = Object.assign({}, S_ALL[9],")
 p3 = region("chast-3.html", "// новые сцены третьей части")
 p3 = p3.replace("S_ALL[21] = Object.assign({}, S_ALL[21],", "S_ALL[221] = Object.assign({}, S_ALL[21],")
-p4 = region("chast-4.html", "// новые сцены четвёртой части")
+p4 = region("src/chast-4-solo.html", "// новые сцены четвёртой части")
 p4 = p4.replace("S_ALL[36] = Object.assign({}, S_ALL[36],", "S_ALL[236] = Object.assign({}, S_ALL[36],")
-p5 = region("vyvody.html", "// «Вместо вывода»")
+p5 = region("src/vyvody-solo.html", "// «Вместо вывода»")
 p5 = p5.replace("S_ALL[46] = Object.assign({}, S_ALL[46], {a:'Рассвет. Лена с рюкзаком идёт через деревню', m:'walk', tod:'dawn',",
                 "S_ALL[246] = Object.assign({}, S_ALL[46], {a:'Утро. Лена с рюкзаком и кирпичом идёт дальше', m:'walk', tod:'morning',")
 for t, k in ((p2, "S_ALL[209]"), (p3, "S_ALL[221]"), (p4, "S_ALL[236]"), (p5, "S_ALL[246]")):
@@ -190,11 +191,11 @@ s = s[:a] + ("// «Вся статья целиком»: сцены всех ч�
              "// где кончаются сцены на стыке частей: привал — когда стихает голос, подъём — к началу следующей части\n"
              f"const SEG_END = {json.dumps(SEG_END)};\n") + s[b:]
 assert len(set(PART)) == len(PART), "сцены не должны повторяться"
-R("    let a = 0;\n    for (let s = 0; s <= N; s++){", "    for (const [sc, t] of SEG_END) ends[sc] = t;\n    let a = 0;\n    for (let s = 0; s <= N; s++){")
+s, c = re.subn(r"\n    let a = 0;\n(    const EV_SLOW|    for \(let s = 0)", lambda m: "\n    for (const [sc, t] of SEG_END) ends[sc] = t;\n    let a = 0;\n" + m.group(1), s, count=1); assert c == 1
 
 # где сценам на стыке нужно столько же места и времени, сколько в своих частях
-R("36: 1.8, 37: 1.6, 43: 2, 132: 3.5};", "36: 1.8, 37: 1.6, 43: 2, 132: 3.5, 221: 1.2, 236: 1.8};")
-R("12: .6, 21: .8, 47: .55, 48: .28};", "12: .6, 21: .8, 221: .8, 47: .55, 48: .28};")
+s, c = re.subn(r"(const LMUL = \{[^}]*)\};", lambda m: m.group(1) + ", 221: 1.2, 236: 1.8};", s, count=1); assert c == 1
+R("12: .6, 21: .8, 47: .55", "12: .6, 21: .8, 221: .8, 47: .55")
 
 # то, что в частях 2–5 было отключено, потому что они начинались не с начала пути
 R("  const camC = camL;          // в начале камера стоит, а героиня выходит из-за края",

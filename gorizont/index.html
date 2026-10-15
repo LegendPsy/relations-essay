@@ -111,27 +111,21 @@ footer { color: var(--muted); font-size: 13.5px; border-top: 1px solid var(--rul
       </a></li>
       <li><a class="part" href="chast-4.html">
         <span class="n">4</span><span class="t">Часть четвёртая</span>
-        <span class="d">Чувства и действия, ответственность и свобода, встреча двух выборов, первый кирпич</span>
-        <span class="m">16 мин<small>15:45</small></span>
-      </a></li>
-      <li><a class="part" href="vyvody.html">
-        <span class="n">5</span><span class="t">Вместо вывода</span>
-        <span class="d">Способ быть по отношению друг к другу, вопросы для рефлексии и личный вопрос к вам</span>
-        <span class="m">2 мин<small>1:39</small></span>
+        <span class="d">Чувства и действия, ответственность и свобода, встреча двух выборов, первый кирпич. И вместо вывода: вопросы для рефлексии и личный вопрос к вам</span>
+        <span class="m">17 мин<small>17:12</small></span>
       </a></li>
     </ul>
     <a class="resume" id="resume" href="chast-1.html">Продолжить первую часть</a>
     <a class="resume" id="resume2" href="chast-2.html">Продолжить вторую часть</a>
     <a class="resume" id="resume3" href="chast-3.html">Продолжить третью часть</a>
     <a class="resume" id="resume4" href="chast-4.html">Продолжить четвёртую часть</a>
-    <a class="resume" id="resume5" href="vyvody.html">Продолжить «Вместо вывода»</a>
   </section>
 
   <footer>Время чтения равно длине авторской озвучки. Место, где вы остановились, сохраняется само.</footer>
 </main>
 <script>
 // где вы остановились в каждой части (по месту в записи)
-[['gorizont-1-audio', 'resume', 'первую', 1340], ['gorizont-2-audio', 'resume2', 'вторую', 858], ['gorizont-3-audio', 'resume3', 'третью', 704], ['gorizont-4-audio', 'resume4', 'четвёртую', 938], ['gorizont-5-audio', 'resume5', 'заключительную', 95], ['gorizont-all-audio', 'resume0', 'всю статью', 3938]].forEach(([key, id, name, end]) => {
+[['gorizont-1-audio', 'resume', 'первую', 1340], ['gorizont-2-audio', 'resume2', 'вторую', 858], ['gorizont-3-audio', 'resume3', 'третью', 704], ['gorizont-4-audio', 'resume4', 'четвёртую', 1024], ['gorizont-all-audio', 'resume0', 'всю статью', 3938]].forEach(([key, id, name, end]) => {
   try {
     const s = JSON.parse(localStorage.getItem(key) || 'null');
     if (s && s.t > 20 && s.t < end){ const r = document.getElementById(id), v = Math.floor(s.t); r.textContent = 'Продолжить ' + name + (id === 'resume0' ? '' : ' часть') + ' с ' + Math.floor(v / 60) + ':' + String(v % 60).padStart(2, '0') + ' →'; r.classList.add('show'); }
