@@ -2371,7 +2371,7 @@ function brickHouse(x, y, u, t){
     if (gw > 0 && gin < 1){ const gxx = lerp(x + 10, hx - 4, smooth(gw)), sc = 1 - .12 * gin;
       C.save(); C.globalAlpha = .55 * Math.min(1, gw * 5) * (1 - gin);
       fillP(ellP(gxx, y - 78, 46, 92), 'rgba(255,240,200,.35)');
-      drawPerson(gxx, y - 4 - 6 * gin, 1, makePose(gin > 0 ? 'stand' : 'walk', {w: gin > 0 ? 0 : 1, ph: u * 420, t, gait: 'stroll'}), LOOK.girl, {h: 1, f: 1}, {t, scale: sc, noShadow: true});
+      drawPerson(gxx, y - 4 - 6 * gin, 1, makePose(gin > 0 ? 'stand' : 'walk', {w: gin > 0 ? 0 : Math.min(1, gw * 10, (1 - gw) * 10), ph: (gxx - x - 10) / (WALKS.stroll.D * KG) * TAU, t, gait: 'stroll'}), LOOK.girl, {h: 1, f: 1}, {t, scale: sc, noShadow: true});
       C.restore(); } }
 }
 function shoeStand(x, y, u, t){
