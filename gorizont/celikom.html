@@ -807,8 +807,8 @@ S_ALL[121] = {a:'Старое радио на пеньке: Лена крути�
 // перекрытый мост (25) и тропа поверху (26), скамейка «Супруги» (122), кафе (27), банка (28), корзинка (29), радио (121),
 // ручка корзинки рвётся (31), луг как в начале (32), дождь (34), привал под навесом (36)
 S_ALL[221] = Object.assign({}, S_ALL[21], {a:'Утро. Костёр догорел: Лена встаёт, берёт велосипед и едет дальше', m:[['sit',.3],['stand',.42],['walk',.55],['bike',1]], rest:0, tod:'morning', set:{h:1, f:1, b:2, pup:0}, ia:.01});
-S_ALL[25] = Object.assign({}, S_ALL[25], {a:'Причаливает. Мост перекрыт: сверяется с компасом, и тропа поведёт её поверху в ту же сторону', m:[['boat',.2],['stand',.3],['walk',.42],['stand',1]]});
-S_ALL[26] = Object.assign({}, S_ALL[26], {a:'Тропа уходит вверх, и она снова идёт вправо: поверху, над перекрытым мостом. Направление то же'});
+S_ALL[25] = Object.assign({}, S_ALL[25], {a:'Причаливает и сходит на берег', m:[['boat',.2],['stand',.3],['walk',1]]});
+S_ALL[26] = Object.assign({}, S_ALL[26], {a:'Мост перекрыт на ремонт. Сверяется с компасом: тропа уходит вверх, и она идёт поверху, над перекрытым мостом. Направление то же', m:[['walk',.14],['stand',.34],['walk',1]]});
 S_ALL[33] = Object.assign({}, S_ALL[33], {a:'Ветер уносит цветок со шляпки. Шляпка всё та же, а на ней уже по-другому'});
 S_ALL[28] = Object.assign({}, S_ALL[28], {a:'Банка с красивой этикеткой. Внутри почти пусто', rest:0});
 S_ALL[29] = Object.assign({}, S_ALL[29], {a:'Заглядывает в корзинку: из чего она состоит сейчас?'});
@@ -901,7 +901,7 @@ function measure(){
 function locate(s){ let i=0; while (i<N && s >= starts[i+1]) i++; return {i, f: Math.min(1, Math.max(0, (s-starts[i]) / lens[i]))}; }
 const scrollFor = (i,f) => starts[i] + f*lens[i];
 const LPT = 260;             // длина отрезка пути одной точки (в условных единицах), одинаковая для всех
-const LMUL = {103: 1.8, 21: 1.2, 22: 1.5, 25: 1.6, 26: 1.6, 27: 1.2, 35: 1.3, 36: 1.8, 37: 1.6, 43: 2, 132: 3.5, 140: 5, 221: 1.2, 236: 1.8};   // где предметам нужно больше места
+const LMUL = {103: 1.8, 21: 1.2, 22: 1.5, 25: 1.6, 26: 3.9, 27: 1.2, 35: 1.3, 36: 1.8, 37: 1.6, 43: 2, 132: 3.5, 140: 5, 221: 1.2, 236: 1.8};   // где предметам нужно больше места
 const LP = i => LPT * (LMUL[OLD[i]] || 1);
 let AUDIO_GAP = null;   // в режиме озвучки дорога между событиями длиннее — Лена идёт столько, сколько звучит пункт
 let WS = [], WE = [], GAP = [], TM = [];
@@ -2037,15 +2037,55 @@ function buildAnchors(){
     picnic: WX(9, .12), compass: WX(10, .06) + 13, puppy: WX(11, .08) + 30, stop: WX(12, .06), sign: WX(15, .5),
     fork: WX(17, .25) + 40, farEnd: WX(18, 1) + 590, house: WX(19, .3) + 110, gate: WX(20, .55), fire: WX(21, .12), bikeLeft: WX(22, .55),
     boatAt: WX(22, .7), riverB: WX(25, .2) + 110, bike13: WX(13, .32), meet: WX(14, .3), cl40: WX(40, .3) + 60, rail: WX(2, .5), tower: WX(23, .5), housesRow: WX(24, 0) + 260, dock: WX(25, .2),
-    bridge: WX(25, .5) + 40, ter0: WX(26, 0) + 10, ter3: WX(26, 1) - 10, cafe: WX(27, .3), bench: WX(31, .3) + 46,
+    bridge: WX(26, .34) + 235, ter0: WX(26, .34) + 16, ter3: WX(26, .34) + 755, cafe: WX(27, .3), bench: WX(31, .3) + 46,
     sign2: WX(35, .6) + 46, shelter: WX(36, 0), plane: WX(37, .3), land: WX(42, .45), post2: WX(44, .5) + 40,
     village: WX(45, 0) + 140, v44: WX(44, .5) + 120, door: WX(47, .5) + 4
   };
   A.ladL = 300; A.streamA = A.ladder + 18; A.streamB = A.ladder + A.ladL - 16;
   A.riverA = A.boatAt - 30;
-  A.ter1 = A.ter0 + 90; A.ter2 = Math.max(A.ter1 + 40, A.ter3 - 90);
+  A.ter1 = A.ter0 + 175; A.bridge1 = A.bridge + 320; A.gorge0 = A.bridge + 70; A.gorge1 = A.bridge1 - 70; A.ter2 = A.bridge1 + 40; A.bar = A.bridge - 22;
 }
-function elevAt(x){ if (x <= A.ter0 || x >= A.ter3) return 0; if (x < A.ter1) return 64 * ease((x - A.ter0) / (A.ter1 - A.ter0)); if (x > A.ter2) return 64 * (1 - ease((x - A.ter2) / (A.ter3 - A.ter2))); return 64; }
+const DET_H = 88;   // высота тропы поверху
+function elevAt(x){ if (x <= A.ter0 || x >= A.ter3) return 0; if (x < A.ter1) return DET_H * ease((x - A.ter0) / (A.ter1 - A.ter0)); if (x > A.ter2) return DET_H * (1 - ease((x - A.ter2) / (A.ter3 - A.ter2)));
+  if (x > A.gorge0 && x < A.gorge1) return DET_H - 7 * Math.sin(Math.PI * (x - A.gorge0) / (A.gorge1 - A.gorge0)); return DET_H; }
+function detourBack(){
+  // холм с тропой: подъём, ущелье с речкой, подвесной мостик поверху, спуск (мировые координаты)
+  const hc = mixH(pc('mid'), pc('tree0'), .22), rock = mixH(pc('mid'), '#5e4a3a', .5), top = x => 333 - elevAt(Math.max(A.ter0, Math.min(x, A.ter3)));
+  fillP(rectP(A.gorge0 - 4, 330, A.gorge1 - A.gorge0 + 8, 14), pc('water0'));
+  for (let k = 0; k < 6; k++){ const xx = A.gorge0 + 14 + k * (A.gorge1 - A.gorge0 - 28) / 5; fillP(rectP(xx, 334 + (k % 2) * 4, 12, 1.2), pc('water1')); }
+  for (const [a, b, side] of [[A.ter0 - 40, A.gorge0, 1], [A.gorge1, A.ter3 + 40, -1]]){
+    const p = NP(); p.moveTo(a, 344); for (let x = a; x < b; x += 6) p.lineTo(x, Math.min(344, top(x) - 3 + (hash(x) - .5) * 2)); p.lineTo(b, top(b) - 3); p.lineTo(b, 344); p.closePath(); cut(p, hc);
+    const cx = side > 0 ? b : a, r = NP(); r.moveTo(cx, top(cx) - 3); r.lineTo(cx - side * 16, top(cx) + 2); r.lineTo(cx - side * 10, 344); r.lineTo(cx, 344); r.closePath(); fillP(r, rock);
+    const q = NP(); const pa = Math.max(a, A.ter0), pb = Math.min(b, A.ter3); for (let x = pa; x <= pb; x += 6) q.lineTo(x, 337 - elevAt(x)); for (let x = pb; x >= pa; x -= 6) q.lineTo(x, 345 - elevAt(x)); q.closePath(); fillP(q, pc('path')); }
+  // подвесной мостик над ущельем
+  const g0 = A.gorge0 - 8, g1 = A.gorge1 + 8, dk = NP(); for (let x = g0; x <= g1; x += 6) dk.lineTo(x, 338 - elevAt(Math.min(Math.max(x, A.gorge0), A.gorge1))); for (let x = g1; x >= g0; x -= 6) dk.lineTo(x, 343 - elevAt(Math.min(Math.max(x, A.gorge0), A.gorge1))); dk.closePath(); cut(dk, '#8a5a2e');
+  for (let x = g0 + 6; x < g1; x += 9){ const yy = 338 - elevAt(Math.min(Math.max(x, A.gorge0), A.gorge1)); seg(x, yy, x, yy + 5, '#6e4420', .7); }
+  for (const px of [g0, g1]) cutSeg(px, 338 - DET_H, px, 338 - DET_H - 30, '#6e4420', 2.6);
+  C.strokeStyle = '#6e4420'; C.lineWidth = 1.4; C.beginPath(); for (let x = g0; x <= g1; x += 6){ const u = (x - g0) / (g1 - g0); C.lineTo(x, 338 - DET_H - 28 + Math.sin(Math.PI * u) * 18); } C.stroke();
+  for (let x = g0 + 14; x < g1 - 6; x += 14){ const u = (x - g0) / (g1 - g0), yr = 338 - DET_H - 28 + Math.sin(Math.PI * u) * 18; seg(x, yr, x, 338 - elevAt(Math.min(Math.max(x, A.gorge0), A.gorge1)), '#7a5534', .8); }
+  for (const tx of [A.ter1 + 46, A.ter2 - 34, A.ter2 + 60]) folkTree(tx, top(tx) - 1, 44, tx | 0, 1, pc('tree0'), pc('tree1'));
+}
+function detourFront(sx, Y, tq){
+  // река из ущелья течёт под большим мостом к нам; мост с провалом посередине; шлагбаум со знаком и табличкой
+  const b0 = sx(A.bridge), b1 = sx(A.bridge1), m = (b0 + b1) / 2, ink = '#6e4420', wood = '#8a5a2e';
+  const ch = polyP([b0 + 44, 338, b1 - 44, 338, b1 + 6, LB + 4, b0 - 6, LB + 4]); fillP(ch, pc('water0'));
+  seg(b0 + 44, 338, b0 - 6, LB + 4, pc('ground2'), 4); seg(b1 - 44, 338, b1 + 6, LB + 4, pc('ground2'), 4);
+  for (let k = 0; k < 9; k++){ const v = ((tq * .00004 + k / 9) % 1), yy = 342 + v * (LB - 342), hw = (b1 - b0 - 88) / 2 + v * 50, xx = m + Math.sin(k * 2.3) * hw * .6; fillP(rectP(xx - 6 - v * 6, yy, 12 + v * 12, 1.4), pc('water1')); }
+  for (const px of [b0 + 38, m - 76, m + 76, b1 - 38]) cut(rectP(px - 6, Y - 2, 12, 46), ink);
+  const deck = (a, b) => { cut(rectP(a, Y - 10, b - a, 10), wood); for (let x = a + 7; x < b - 2; x += 11) seg(x, Y - 10, x, Y, ink, .8); };
+  deck(b0 - 16, m - 38); deck(m + 38, b1 + 16);
+  cut(polyP([m - 38, Y - 10, m - 30, Y - 8, m - 34, Y - 4, m - 27, Y - 1, m - 38, Y]), wood); cut(polyP([m + 38, Y - 10, m + 31, Y - 7, m + 35, Y - 3, m + 28, Y, m + 38, Y]), wood);
+  for (const [px, a] of [[m - 30, .5], [m + 32, -.4]]){ C.save(); C.translate(px, Y - 4); C.rotate(a + Math.sin(tq * .002) * .05); cut(rectP(-3, 0, 6, 26), wood, .6); C.restore(); }
+  const rail = (a, b) => { for (let x = a; x <= b + 1; x += 28) cutSeg(x, Y - 10, x, Y - 42, ink, 3); cutSeg(a, Y - 42, b, Y - 42, ink, 3); cutSeg(a, Y - 26, b, Y - 26, ink, 2); };
+  rail(b0 - 12, m - 40); rail(m + 40, b1 + 12);
+  cutSeg(m - 40, Y - 42, m - 24, Y - 30, ink, 3); cutSeg(m + 40, Y - 26, m + 26, Y - 14, ink, 2);
+  const bx = sx(A.bar);
+  cut(rectP(bx - 5, Y - 58, 10, 58), '#3a2f28'); cut(rectP(bx - 24, Y - 54, 18, 13), '#3a2f28');
+  C.save(); C.translate(bx, Y - 47); for (let k = 0; k < 9; k++) cut(rectP(k * 15, -5, 15, 10), k % 2 ? '#efe2c2' : '#c0452f', .7); C.restore();
+  cutSeg(bx + 131, Y, bx + 131, Y - 44, '#3a2f28', 3);
+  cut(rrP(bx + 34, Y - 37, 68, 21, 3), '#f0c43a', .7); C.save(); C.fillStyle = '#2a1f19'; C.font = '13px Prata, Georgia, serif'; C.textAlign = 'center'; C.textBaseline = 'alphabetic'; C.fillText('Ремонт', bx + 68, Y - 22); C.restore();
+  cut(circP(bx, Y - 71, 14), '#c0452f'); fillP(rrP(bx - 9, Y - 74, 18, 6, 2), '#efe2c2'); C.strokeStyle = '#efe2c2'; C.lineWidth = 1.6; C.beginPath(); C.arc(bx, Y - 71, 11.5, 0, TAU); C.stroke();
+}
 function sceneResize(){
   SC = H / VH; PX = dpr * SC; LWv = W / SC; GX0 = LWv * .36; GXL = GX0 + camShift;
   tiles = {}; tileOrder = []; buffet = null; buildWorld(); buildAnchors();
@@ -2126,7 +2166,7 @@ function drawWorld(i, f, st, mode, it, camL, camC, now, tq, wind, vel){
   const gxp = GXL + (camL - camC);            // где на экране героиня
   // камера по вертикали
   let climbH = 0;
-  if (i === 4) climbH = f * 250; else if (i === 5) climbH = (1 - clamp01(f / .7)) * 250;
+  if (i === 4) climbH = f * 250; else if (i === 5) climbH = (1 - clamp01(f / .7)) * 250; else if (i === 26) climbH = 40 + elevAt(camL) * .3;
   let altT = 0;
   if (mode === 'fly'){ altT = i === 37 ? 230 * ease(win(f, .3, 1)) : i === 42 ? 230 * (1 - ease(win(f, 0, .45))) : 230; if (st.comp === 'plane2Away') altT = 250; }
   altS += (altT - altS) * .06;
@@ -2220,9 +2260,7 @@ function drawWorld(i, f, st, mode, it, camL, camC, now, tq, wind, vel){
     if (h > .7 && night < .6){ const fy = 356 + hash(k * 5.5) * 34; cut(circP(x, fy, 2.6), h > .85 ? '#efe2c2' : '#c0452f', .4); dot(x, fy, 1, '#efe2c2'); }
     if (h > .45 && h < .5) stone(x, 360 + hash(k) * 20, 7, 5, '#8f9286'); }
   // приподнятая тропа (26)
-  if (RK(i) >= RK(24) && RK(i) <= RK(28)){ const p = NP(); p.moveTo(A.ter0, 340); for (let x = A.ter0; x <= A.ter3; x += 8) p.lineTo(x, 332 - elevAt(x) + (hash(x) - .5) * 2); p.lineTo(A.ter3, 340); p.closePath(); cut(p, pc('mid'));
-    const q = NP(); for (let x = A.ter0; x <= A.ter3; x += 8) q.lineTo(x, 338 - elevAt(x)); for (let x = A.ter3; x >= A.ter0; x -= 8) q.lineTo(x, 346 - elevAt(x)); q.closePath(); fillP(q, pc('path'));
-    for (let x = A.ter1 + 20; x < A.ter2; x += 70) folkTree(x, 334 - 64, 40, x | 0, 1, pc('tree0'), pc('tree1')); }
+  if (A.ter3 + 120 > wx0 && A.ter0 - 120 < wx1) detourBack();
   C.restore(); // мировой сдвиг
 
   // ---- предметы точек (экранные координаты) ----
@@ -2276,7 +2314,7 @@ function drawWorld(i, f, st, mode, it, camL, camC, now, tq, wind, vel){
   x = sx(A.riverA); if (inView(x)) reeds(x - 4, Y - 10, tq, wind); x = sx(A.riverB); if (inView(x)) reeds(x + 6, Y - 10, tq, wind);
   // 25 · причал, мост закрыт
   x = sx(A.dock); if (x > -300 && x < LWv + 300){ if (RK(i) > RK(25) || (i === 25 && f >= .2)){ C.save(); C.translate(x - 14, Y - 2 + Math.sin(tq * .004) * 1.2); C.scale(KG, KG); bigBoat(() => { boatBack(); boatFront(); }); C.restore(); } jetty(x - 80, sx(A.riverB) + 14, Y); }
-  x = sx(A.bridge); if (inView(x)) closedBridge(x, Y - 4);
+  x = sx(A.bridge); if (x > -460 && x < LWv + 220) detourFront(sx, Y, tq);
   // 27–28 · кафе
   x = sx(A.cafe); if (x > -560 && x < LWv + 200){ C.save(); C.translate(x + 300, Y - 4); C.scale(2.1, 2.1); cafeShape(0, 0, tq); C.restore(); chair(x + 6, Y - 2, -1); tableShape(x + 30, Y - 2, 40); chair(x + 64, Y - 2, 1);
     cupShape(x + 40, Y - 34); if (!(i === 28 && f > .25 && f < .75)) jarShape(x + 30, Y - 32, .8);
@@ -2437,7 +2475,7 @@ function drawWorld(i, f, st, mode, it, camL, camC, now, tq, wind, vel){
     if (i === 106 && f >= .3 && f < .74){ const k = win(f, .36, .7) * 3, hop = Math.abs(Math.sin(Math.PI * k)); gy -= 34 * hop * (k > 0 && k < 3 ? 1 : 0); }
     if (i === 101 && f >= .3 && f < .8){ o.hold = {x: 17, y: -76}; carry = 'jar'; o.lookIn = f > .4 && f < .7; }
     if (i === 102){ const rel = lerp(-420, 680, f); if (rel > 30 && rel < 260) o.wave = true; }
-    if (i === 25 && f > .5 && f < .72){ o.compass = true; carry = 'compass'; }
+    if (i === 26 && f > .16 && f < .32){ o.compass = true; carry = 'compass'; }
     if (st.sp === 'adjust' && f > .3 && f < .52) o.adjust = true;
     if (st.sp === 'wave' && f > .15 && f < .4) o.wave = true;
     if (i === 28 && f > .25 && f < .75){ o.hold = {x: 18, y: -74}; carry = 'jar'; }
