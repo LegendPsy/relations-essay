@@ -1341,6 +1341,19 @@ function jarShape(x, y, s){
   C.restore();
 }
 function tableShape(x, y, w){ cut(rectP(x - w / 2, y - 30, w, 4), '#efe2c2'); C.fillStyle = '#c0452f'; for (let k = 0; k < w / 6; k++){ C.beginPath(); C.arc(x - w / 2 + 3 + k * 6, y - 26, 2.4, 0, Math.PI); C.fill(); } cutSeg(x, y - 26, x, y, '#6e4420', 2.6); cutSeg(x - 10, y, x + 10, y, '#6e4420', 2.6); }
+function bistroTable(x, y){
+  // круглый столик на кованой ножке, сверху скатерть в красно-белую клетку
+  const iron = '#3a3530', top = y - 49;
+  cutSeg(x, top + 4, x, y - 8, iron, 3.2);
+  for (const sd of [-1, 1]){ C.save(); C.translate(1.1, 1.7); C.strokeStyle = SHADOW; C.lineWidth = 2.6; C.beginPath(); C.moveTo(x, y - 10); C.quadraticCurveTo(x + sd * 6, y - 1, x + sd * 20, y - 2); C.stroke(); C.restore();
+    C.strokeStyle = iron; C.lineWidth = 2.6; C.lineCap = 'round'; C.beginPath(); C.moveTo(x, y - 10); C.quadraticCurveTo(x + sd * 6, y - 1, x + sd * 20, y - 2); C.stroke();
+    C.lineWidth = 1.6; C.beginPath(); C.arc(x + sd * 9, y - 22, 5, sd > 0 ? Math.PI * .6 : Math.PI * .4, sd > 0 ? Math.PI * 2.2 : -Math.PI * 1.2, sd < 0); C.stroke(); }
+  cut(rectP(x - 12, y - 14, 24, 2.4), iron, .5);
+  const cl = NP(); cl.moveTo(x - 40, top); cl.lineTo(x + 40, top); cl.lineTo(x + 42, top + 15); for (let k = 0; k <= 8; k++){ const hx = x + 42 - k * 10.5; cl.quadraticCurveTo(hx - 5.25, top + 19, hx - 10.5, top + 15); } cl.closePath(); cut(cl, '#f4ead6');
+  C.save(); C.clip(cl); C.fillStyle = 'rgba(192,69,47,.55)'; for (let k = -5; k < 6; k++) C.fillRect(x + k * 8, top - 2, 4, 24); for (let r = 0; r < 4; r++) C.fillRect(x - 44, top + 1 + r * 5, 88, 2.4); C.restore();
+  cut(ellP(x, top, 40, 4.5), '#f7efe0', .5); C.save(); C.clip(ellP(x, top, 40, 4.5)); C.fillStyle = 'rgba(192,69,47,.4)'; for (let k = -5; k < 6; k++) C.fillRect(x + k * 8, top - 5, 4, 10); C.restore();
+}
+function vaseFlower(x, y){ cut(polyP([x - 3.5, y, x - 4.5, y - 9, x - 2, y - 12, x + 2, y - 12, x + 4.5, y - 9, x + 3.5, y]), '#3f6e73', .5); seg(x, y - 12, x + 1, y - 24, '#4f6b3a', 1.2); cut(ellP(x + 4, y - 18, 3, 1.6, -.5), '#5f8f3e', .3); dot(x + 1, y - 26, 3.4, '#d94a3a'); dot(x + 1, y - 26, 1.3, '#f0c43a'); }
 function chair(x, y, dir){ cutSeg(x, y - 30, x, y, '#6e4420', 2); cutSeg(x + dir * 14, y - 30, x + dir * 14, y, '#6e4420', 2); cut(rectP(Math.min(x, x + dir * 16), y - 32, 16, 3), '#8a5a2e'); cutSeg(x - dir * 1, y - 32, x - dir * 3, y - 62, '#6e4420', 2.2); }
 function benchShape(x, y){ cut(rectP(x - 30, y - 30, 60, 5), '#8a5a2e'); cut(rectP(x - 30, y - 48, 60, 4), '#8a5a2e'); cut(rectP(x - 30, y - 40, 60, 4), '#8a5a2e'); for (const s of [-24, 22]){ cutSeg(x + s, y - 25, x + s, y, '#2a1f19', 2.4); cutSeg(x + s, y - 50, x + s, y - 25, '#2a1f19', 2); } }
 function shelterShape(x, y, drip, t){
@@ -1867,11 +1880,12 @@ function drawWorld(i, f, st, mode, it, camL, camC, now, tq, wind, vel){
   x = sx(A.dock); if (x > -300 && x < LWv + 300){ if (RK(i) > RK(25) || (i === 25 && f >= .2)){ C.save(); C.translate(x - 14, Y - 2 + Math.sin(tq * .004) * 1.2); C.scale(KG, KG); bigBoat(() => { boatBack(); boatFront(); }); C.restore(); } jetty(x - 80, sx(A.riverB) + 14, Y); }
   x = sx(A.bridge); if (x > -460 && x < LWv + 220) detourFront(sx, Y, tq);
   // 27–28 · кафе
-  x = sx(A.cafe); if (x > -560 && x < LWv + 200){ C.save(); C.translate(x + 300, Y - 4); C.scale(2.1, 2.1); cafeShape(0, 0, tq); C.restore(); chair(x + 6, Y - 2, -1); tableShape(x + 30, Y - 2, 40); chair(x + 64, Y - 2, 1);
-    cupShape(x + 40, Y - 34); if (!(i === 28 && f > .25 && f < .75)) jarShape(x + 30, Y - 32, .8);
-    if (RK(i) < RK(27) || (i === 27 && f < .32)) teapotShape(x + 20, Y - 33, .8); else if (RK(i) > RK(28) || (i === 28)) teapotShape(x + 20, Y - 33, .8);
-    drawPerson(x + 62, Y - 2, -1, makePose('sit', {}), LOOK.friend, {}, {t: tq, wind: wind * .3, blink: (tq % 3000) < 160});
-    cupShape(x + 22, Y - 34); }
+  x = sx(A.cafe); if (x > -560 && x < LWv + 260){ C.save(); C.translate(x + 300, Y - 4); C.scale(2.1, 2.1); cafeShape(0, 0, tq); C.restore();
+    // уличный столик как во французском кафе: между Леной и подругой, на нём чайник, чашки, банка и цветок
+    chair(x + 6, Y - 2, -1); chair(x + 128, Y - 2, 1); bistroTable(x + 64, Y - 2);
+    const TT = Y - 51; vaseFlower(x + 72, TT); cupShape(x + 49, TT); cupShape(x + 90, TT); if (!(i === 28 && f > .25 && f < .75)) jarShape(x + 64, TT + 1, .8);
+    if (RK(i) < RK(27) || (i === 27 && f < .32) || RK(i) > RK(27) || (i === 27 && f >= .62)) teapotShape(x + 36, TT, .8);
+    drawPerson(x + 124, Y - 2, -1, makePose('sit', {}), LOOK.friend, {}, {t: tq, wind: wind * .3, blink: (tq % 3000) < 160}); }
   // 31 · скамейка
   x = sx(A.bench); if (inView(x)){ benchShape(x, Y - 4); if (RK(i) > RK(31) || (i === 31 && f >= .5)) basketShape(x + 8, Y - 55, 2, true); }
   // 35 · развилка под дождём
@@ -2001,7 +2015,7 @@ function drawWorld(i, f, st, mode, it, camL, camC, now, tq, wind, vel){
     if (st.sp === 'adjust' && f > .3 && f < .52) o.adjust = true;
     if (st.sp === 'wave' && f > .15 && f < .4) o.wave = true;
     if (i === 28 && f > .25 && f < .75){ o.hold = {x: 18, y: -74}; carry = 'jar'; }
-    if (i === 27 && f > .35 && f < .62){ o.hold = {x: 20, y: -62}; carry = 'teapot'; o.pour = win(f, .38, .5) * (1 - win(f, .56, .62)); }
+    if (i === 27 && f > .35 && f < .62){ o.hold = {x: 34, y: -64}; carry = 'teapot'; o.pour = win(f, .38, .5) * (1 - win(f, .56, .62)); }
     if (pushBike){ carry = null; o.hold = {x: 26, y: -61}; }
     if (carry === 'basket') o.basket = true;
     // тянется к предмету
