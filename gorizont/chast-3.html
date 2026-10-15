@@ -616,8 +616,10 @@ let audioMode = false;
     ends[0] = US[0] + .2;                                         // сцена 0: пока звучит музыка — выходит и видит транспарант
     for (let u = 0; u < GO_OF.length; u++){ const sc = GO_OF[u]; if (sc == null) continue; ends[sc] = (u + 1 < US.length) ? US[u + 1] : SPEECH_END + 1.5; }
     let a = 0;
-    for (let s = 0; s <= N; s++){ const b = ends[s] !== undefined ? ends[s] : a + 4; const D = s === 0 ? b - a : Math.min(natDur(s), (b - a) * .85);
-      SEG[s] = {a, b, ev: b - D, D}; a = b; }
+    const EV_SLOW = 1.5, HOLD = 2.5;   // событие в полтора раза спокойнее, потом пауза на месте
+    for (let s = 0; s <= N; s++){ const b = ends[s] !== undefined ? ends[s] : a + natDur(s) * EV_SLOW + HOLD + .6;
+      const D = s === 0 ? b - a : Math.min(natDur(s) * EV_SLOW, (b - a) * .7), hold = s === 0 ? 0 : Math.min(HOLD, Math.max(0, (b - a) * .85 - D));
+      SEG[s] = {a, b, ev: b - D - hold, D}; a = b; }
     AUDIO_GAP = SEG.map((g, s) => (s === 0 || !TM[s]) ? 0 : WALK_V * Math.abs(SPEED[TM[s]] || 1) * (g.ev - g.a));
   }
   function stateAt(t){
@@ -698,7 +700,8 @@ let audioMode = false;
     // прокрутка: читаемое слово держим чуть выше середины видимого текста
     if (!au.paused && performance.now() - userT > 4000 && wi >= 0){
       const r = W_EL[wi].getBoundingClientRect(), top = readTop(), target = top + (window.innerHeight - top) * .38;
-      const dy = r.top - target;
+      let dy = r.top - target;
+      if (pk === els.length - 1){ const ce = document.querySelector('.cp-end'); if (ce){ const need = ce.getBoundingClientRect().bottom - (window.innerHeight - 16); dy = Math.max(dy, Math.min(need, r.top - top - 24)); } }
       if (Math.abs(dy) > 2){ const step = Math.abs(dy) > window.innerHeight ? dy : dy * .06; window.scrollTo(0, window.scrollY + step); }
     }
     if (now - saveT > 2000){ saveT = now; try { localStorage.setItem('gorizont-3-audio', JSON.stringify({t})); } catch (e) {} }
@@ -1085,7 +1088,7 @@ function drawPerson(x, y, face, J, L, it, o){
   // хвост шарфа
   if (L.kind === 'girl'){
     const tail = NP(), top = [], bot = []; const n0 = R(-5, -42);
-    for (let k = 0; k <= 9; k++){ const xx = n0.x - k * (4.6 + wind * 1.2), yy = n0.y + k * (1.6 - wind * .9) + Math.sin(t * .006 - k * .75) * k * (.35 + wind * .5); const wd = 3.2 - k * .22; top.push([xx, yy - wd]); bot.push([xx, yy + wd]); }
+    for (let k = 0; k <= 9; k++){ const xx = o.calm ? n0.x - k * 1.3 + Math.sin(t * .002 - k * .6) * k * .12 : n0.x - k * (4.6 + wind * 1.2), yy = o.calm ? n0.y + k * 3.4 : n0.y + k * (1.6 - wind * .9) + Math.sin(t * .006 - k * .75) * k * (.35 + wind * .5); const wd = 3.2 - k * .22; top.push([xx, yy - wd]); bot.push([xx, yy + wd]); }
     tail.moveTo(top[0][0], top[0][1]); top.forEach(q => tail.lineTo(q[0], q[1])); bot.reverse().forEach(q => tail.lineTo(q[0], q[1])); tail.closePath(); cut(tail, shadeH(L.scarf, .9));
   }
   if (J.lower){
@@ -1584,7 +1587,7 @@ let A = {}, prevCamL = 0, walkW = 0, lastNow = 0, altS = 0, flowerFly = null, la
 function WX(k, f){ return NEWOF[k] === undefined ? 1e9 : worldAt(NEWOF[k], f) * WSC; }
 function buildAnchors(){
   A = {
-    qsign: WX(111, .2) + 96, tend: WX(110, .22), shoes: WX(120, .5) + 40, radio: WX(121, .24) + 52, couple: WX(122, .18) + 150,
+    qsign: WX(111, .2) + 96, tend: WX(110, .22), shoes: WX(120, .5) + 130, radio: WX(121, .24) + 52, couple: WX(122, .18) + 150,
     menu: WX(100, .3), jar2: WX(101, .28), passer: WX(102, 0), rib: WX(103, .26), colW: WX(103, .76), strW: WX(103, .92), arch: WX(104, .34) + 10, forkW: WX(104, .7) - 52, see: WX(105, .2) + 118, board: WX(106, .22) + 55, hedgeW: WX(2, 0) - 330, jarW: WX(104, 0) - 300,
     hatPost: WX(1, .06) + 15, flower: WX(3, .06) + 18, ladder: WX(4, 0) + 16, hedge: WX(7, .2) + 90, stump: WX(8, .06) + 16,
     picnic: WX(9, .12), compass: WX(10, .06) + 13, puppy: WX(11, .08) + 30, stop: WX(12, .06), sign: WX(15, .5),
@@ -1592,7 +1595,7 @@ function buildAnchors(){
     boatAt: WX(22, .7), riverB: WX(25, .2) + 110, bike13: WX(13, .32), meet: WX(14, .3), cl40: WX(40, .3) + 60, rail: WX(2, .5), tower: WX(23, .5), housesRow: WX(24, 0) + 260, dock: WX(25, .2),
     bridge: WX(25, .5) + 40, ter0: WX(26, 0) + 10, ter3: WX(26, 1) - 10, cafe: WX(27, .3), bench: WX(31, .3) + 46,
     sign2: WX(35, .6) + 46, shelter: WX(36, 0), plane: WX(37, .3), land: WX(42, .45), post2: WX(44, .5) + 40,
-    village: WX(45, 0) + 140, door: WX(47, .5) + 4
+    village: WX(45, 0) + 140, v44: WX(44, .5) + 120, door: WX(47, .5) + 4
   };
   A.ladL = 300; A.streamA = A.ladder + 18; A.streamB = A.ladder + A.ladL - 16;
   A.riverA = A.boatAt - 30;
@@ -1625,6 +1628,7 @@ function frame(now){
   const camL = camX * WSC;
   const vel = (camL - prevCamL) / Math.max(dt, .001); prevCamL = camL;
   const oi = OLD[i]; NI = i;
+  if (!frame.mk) frame.mk = document.getElementById('markbtn'); frame.mk.style.visibility = oi === 0 ? 'hidden' : '';
   const shiftT = (oi === 27 || oi === 28) ? -LWv * .16 : oi === 47 ? LWv * .14 : 0;
   camShift += (shiftT - camShift) * Math.min(1, dt * 2.2); GXL = GX0 + camShift;
   const camC = camL;          // в начале камера стоит, а героиня выходит из-за края
@@ -1736,6 +1740,8 @@ function drawWorld(i, f, st, mode, it, camL, camC, now, tq, wind, vel){
     for (let k = 0; k < 16; k++){ const hx = sxp(A.village + k * 92, .85); if (hx < -70 || hx > LWv + 70) continue;
       const litBase = i === 45 ? 1 : i === 44 ? (f > .7 ? 1 : 0) : i === 46 ? (1 - f * 1.6) : 0; const lit = [hash(k) < litBase ? 1 : 0, hash(k + 9) < litBase - .1 ? 1 : 0];
       villageHouse(hx, vy, k, lit, tq); if (k === 5 && i === 45) cat(hx - 6, vy - 60); }
+    if (RK(i) <= RK(45)) for (let k = 0; k < 4; k++){ const hx = sxp(A.v44 + k * 96, .85); if (hx < -70 || hx > LWv + 70) continue;
+      const u = i === 44 ? win(f, .1, .9) * 1.1 : 1; villageHouse(hx, vy, k + 3, [hash(k + 31) < u ? 1 : 0, hash(k + 47) < u - .1 ? 1 : 0], tq); }
     for (let k = 0; k < 8; k++){ const lx = sxp(A.village + 40 + k * 180, .92); if (lx > -30 && lx < LWv + 30) lampPost(lx, 330 + camY * .92, i === 45 || (i === 44 && f > .7) || (i === 46 && f < .3)); } }
 
   // земля
@@ -2384,7 +2390,7 @@ function drawBuffetScene(f, now, tq, it, wind){
   const phw = walkU > 0 && walkU < 1 ? Math.round(f * 260 / (TAU / 12)) * (TAU / 12) : 0;
   const J = makePose('walk', {w: walkU > 0 && walkU < 1 ? .8 : 0, ph: phw, t: tq, plate: true, reach, lookUp: f > .08 && f < .5});
   if (reach) J.hb = {x: 16, y: -60};
-  drawPerson(gx, gy, 1, J, LOOK.girl, it, {wind: .2, t: tq, blink: (tq % 4200) < 160, carry: 'plate', plateItems: plate});
+  drawPerson(gx, gy, 1, J, LOOK.girl, it, {wind: .2, calm: true, t: tq, blink: (tq % 4200) < 160, carry: 'plate', plateItems: plate});
 
   // ваша тарелка — на переднем плане
   if (f > .88){ const u = easeOut(win(f, .88, .96)); const px = LWv * .64, py = LB + 60 - u * 140;
