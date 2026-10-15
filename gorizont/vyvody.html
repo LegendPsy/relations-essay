@@ -179,7 +179,7 @@ a.btn { text-decoration: none; display: inline-block; }
     <button type="button" class="dk-play" id="listen-btn" aria-label="Слушать статью"><span class="li-ic" aria-hidden="true">▶</span></button>
     <button type="button" class="dk-skip" id="listen-fwd" aria-label="Вперёд на 15 секунд">+15</button>
     <input type="range" id="listen-seek" min="0" max="1000" value="0" step="1" aria-label="Место в записи">
-    <span class="dk-time" id="listen-time">1:39</span>
+    <span class="dk-time" id="listen-time">6:32</span>
     <button type="button" class="dk-speed" id="listen-speed" aria-label="Скорость">1×</button>
     <audio id="listen-audio" preload="none" src="audio/gorizont-vyvody.mp3"></audio>
   </div>
@@ -525,18 +525,18 @@ function buildGo(){
 /* ---------- слушать статью ---------- */
 (() => {
   const au = document.getElementById('listen-audio'); if (!au) return;
-  const jump = d => { const dd = au.duration || 100; au.currentTime = Math.max(0, Math.min(dd - .5, au.currentTime + d)); show(); };
+  const jump = d => { const dd = au.duration || 392; au.currentTime = Math.max(0, Math.min(dd - .5, au.currentTime + d)); show(); };
   document.getElementById('listen-back').addEventListener('click', () => jump(-15)); document.getElementById('listen-fwd').addEventListener('click', () => jump(15));
   const btn = document.getElementById('listen-btn'), ic = btn.querySelector('.li-ic'), seek = document.getElementById('listen-seek'), tm = document.getElementById('listen-time'), sp = document.getElementById('listen-speed');
   const fmt = v => { v = Math.max(0, Math.floor(v || 0)); return Math.floor(v / 60) + ':' + String(v % 60).padStart(2, '0'); };
   let dragging = false; const speeds = [1, 1.25, 1.5, 2, .85]; let si = 0;
-  const show = () => { const d = au.duration || 100; if (!dragging) seek.value = Math.round(1000 * au.currentTime / d); tm.textContent = au.currentTime > 0 ? fmt(au.currentTime) + ' / ' + fmt(d) : fmt(d); seek.style.setProperty('--p', (100 * au.currentTime / d) + '%'); };
+  const show = () => { const d = au.duration || 392; if (!dragging) seek.value = Math.round(1000 * au.currentTime / d); tm.textContent = au.currentTime > 0 ? fmt(au.currentTime) + ' / ' + fmt(d) : fmt(d); seek.style.setProperty('--p', (100 * au.currentTime / d) + '%'); };
   btn.addEventListener('click', () => { if (au.paused) au.play().catch(() => {}); else au.pause(); });
   au.addEventListener('play', () => { ic.textContent = '❚❚'; btn.setAttribute('aria-label', 'Пауза'); });
   au.addEventListener('pause', () => { ic.textContent = '▶'; btn.setAttribute('aria-label', 'Слушать статью'); });
   au.addEventListener('timeupdate', show); au.addEventListener('loadedmetadata', show);
-  seek.addEventListener('input', () => { dragging = true; const d = au.duration || 100; tm.textContent = fmt(seek.value / 1000 * d) + ' / ' + fmt(d); seek.style.setProperty('--p', (seek.value / 10) + '%'); });
-  seek.addEventListener('change', () => { const d = au.duration || 100; au.currentTime = seek.value / 1000 * d; dragging = false; if (au.paused) au.play().catch(() => {}); });
+  seek.addEventListener('input', () => { dragging = true; const d = au.duration || 392; tm.textContent = fmt(seek.value / 1000 * d) + ' / ' + fmt(d); seek.style.setProperty('--p', (seek.value / 10) + '%'); });
+  seek.addEventListener('change', () => { const d = au.duration || 392; au.currentTime = seek.value / 1000 * d; dragging = false; if (au.paused) au.play().catch(() => {}); });
   sp.addEventListener('click', () => { si = (si + 1) % speeds.length; au.playbackRate = speeds[si]; sp.textContent = String(speeds[si]).replace('.', ',') + '×'; });
 })();
 /* ---------- озвучка ведёт текст, прокрутку и Лену ---------- */
@@ -568,7 +568,7 @@ let audioMode = false;
   const unitOf = els.map(e => +e.closest('.cp').dataset.cp);
   const US = []; els.forEach((e, k) => { if (US[unitOf[k]] === undefined) US[unitOf[k]] = PARA_T[k]; });
   const SPEECH_END = W_T.length ? W_T[W_T.length - 1] + 1.2 : 858;
-  const DUR = () => (au.duration && isFinite(au.duration)) ? au.duration : 99.864;
+  const DUR = () => (au.duration && isFinite(au.duration)) ? au.duration : 392.448;
   const idxAt = (arr, t) => { let lo = 0, hi = arr.length - 1, r = 0; while (lo <= hi){ const mid = (lo + hi) >> 1; if (arr[mid] <= t + .02){ r = mid; lo = mid + 1; } else hi = mid - 1; } return r; };
 
   // ---- мультик по времени: у каждой сцены свой отрезок записи; в конце отрезка — событие, до него — дорога ----
