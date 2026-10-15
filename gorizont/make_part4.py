@@ -42,7 +42,7 @@ body = (ROOT / "src" / "part4.html").read_text(encoding="utf-8")
 n_units = body.count('<section class="cp"')
 end = (f'\n<section class="cp cp-end" id="r{n_units}" data-cp="{n_units}">\n'
        '<aside class="rest rest-part"><p class="rest-label">Привал · конец четвёртой части</p>'
-       '<p>Утро. Лена идёт дальше с рюкзаком за спиной, а в рюкзаке её первый кирпич. '
+       '<p>Утро. Лена надела рюкзак, а в нём её первый кирпич: с него начнётся её будущий дом. '
        'Здесь можно остановиться: она подождёт, а место сохранится само. Когда вернётесь, путь продолжится отсюда.</p>'
        '<a class="btn" href="vyvody.html">Дальше: вместо вывода →</a>'
        f'<button type="button" class="btn ghost js-copy" data-cp="{n_units}">Скопировать ссылку на это место</button>'

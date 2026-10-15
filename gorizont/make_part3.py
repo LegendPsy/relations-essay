@@ -41,7 +41,7 @@ body = (ROOT / "src" / "part3.html").read_text(encoding="utf-8")
 n_units = body.count('<section class="cp"')
 end = (f'\n<section class="cp cp-end" id="r{n_units}" data-cp="{n_units}">\n'
        '<aside class="rest rest-part"><p class="rest-label">Привал · конец третьей части</p>'
-       '<p>Дождь стихает. Лена сидит под навесом и слушает, как с крыши падают последние капли. '
+       '<p>Идёт дождь. Лена сидит под навесом и слушает, как он стучит по крыше. '
        'Здесь можно остановиться: она подождёт, а место сохранится само. Когда вернётесь, путь продолжится отсюда.</p>'
        '<a class="btn" href="chast-4.html">Дальше: часть четвёртая →</a>'
        f'<button type="button" class="btn ghost js-copy" data-cp="{n_units}">Скопировать ссылку на это место</button>'
