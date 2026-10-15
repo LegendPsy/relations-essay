@@ -98,22 +98,32 @@ R("cut(star5(x, y, r * tw, k), '#f3e3b4', .5); C.restore(); }\n  }",
   "cut(star5(x, y, r * tw, k), '#f3e3b4', .5); C.restore(); STP[k] = {x, y}; }\n    if (i === 43) constellation(STP, f, tq);\n  }")
 R("  const starA = night > .3", "  const STP = [];\n  const starA = night > .3")
 # полёт: ветра и компас, пунктир выборов, бумажный самолётик
+R("    } else drawPerson(gx, gy + (m === 'boat' ? 10 : 0) + bob, face, J, LOOK.girl, it, opts);",
+  "    } else { const bk = drawWorld.bank || 0; if (bk){ const py = gy - 40 * KG; C.save(); C.translate(gx, py - bk * 60); C.rotate(-bk); C.translate(-gx, -py); }\n      drawPerson(gx, gy + (m === 'boat' ? 10 : 0) + bob, face, J, LOOK.girl, it, opts); if (bk) C.restore(); }")
 R("  // девушка\n  if (true){", """  { const gy0 = Y - altS, gx0 = GXL + (camL - camC);
-    if (i === 130 || (i === 37 && f > .85) || (i === 133 && f < .15)) gustsAndCompass(gx0, gy0, i === 130 ? f : i === 37 ? 0 : 1, tq);
+    // 130: компас появляется, самолёт качнётся вверх-вниз (стрелка следом), потом курс ровный;
+    // компас держится и на дороге к следующему пункту до её середины
+    drawWorld.bank = 0;
+    { const tw = ease(win(f, .2, .72)), h = i === 130 ? .2 * Math.sin(TAU * tw) * (1 - .3 * tw) : 0;
+      const gap = GAP[RK(133)] || 0, road = i === 133 && f === 0 && gap > 0 ? travel / gap : -1;
+      const cv = i === 130 ? easeOut(win(f, .04, .16)) : road >= 0 ? 1 - clamp01((road - .4) / .15) : 0;
+      const gu = i === 130 ? f : i === 37 && f > .85 ? 0 : -1;
+      if (i === 130) drawWorld.bank = h;
+      if (gu >= 0 || cv > 0) gustsAndCompass(gx0, gy0 - h * 60, gu, cv, h, tq); }
     if (i === 133 || (i === 130 && f > .7) || (i === 38 && f < .35)) choiceTrail(gx0, gy0, i === 133 ? f : 1, i === 133 ? 1 : 1 - win(f, 0, .35), tq, sx);
     if (i === 131 || (i === 39 && f < .25)) paperNote(gx0, gy0, i === 131 ? f : 1, tq); }
   // девушка
   if (true){""")
-R("function shoeStand(x, y, u, t){", r"""function gustsAndCompass(gx, gy, u, t){
-  // ветра дуют навстречу и вкось, то сверху вниз, то снизу вверх; над самолётом компас, стрелка мечется и успокаивается на «вперёд»
-  const a = Math.sin(Math.PI * clamp01(u * 1.15)) * .9 + .1;
+R("function shoeStand(x, y, u, t){", r"""function gustsAndCompass(gx, gy, u, v, h, t){
+  // ветра дуют навстречу и вкось; над самолётом компас: пока она поворачивает, стрелка поворачивается вслед, потом стоит на курсе
+  if (u >= 0){ const a = Math.sin(Math.PI * clamp01(u * 1.15)) * .9 + .1;
   for (let k = 0; k < 10; k++){ const sp = .35 + hash(k) * .3, L = LWv + 360, ph = ((t * sp + k * 151) % L), wx = LWv + 160 - ph;
     const dy = (k % 3 === 0 ? 1 : k % 3 === 1 ? -1 : 0) * 70, wy = gy - 150 + hash(k + 3) * 190 + dy * (ph / L - .5);
     const p = NP(); p.moveTo(wx, wy); p.quadraticCurveTo(wx + 55, wy - dy * .15 - 9, wx + 115, wy - dy * .25);
-    C.save(); C.globalAlpha = a * .85 * Math.sin(Math.PI * ph / L); C.strokeStyle = '#f6eed8'; C.lineWidth = 3.6; C.lineCap = 'round'; C.stroke(p); C.restore(); }
-  const v = easeOut(win(u, .18, .32)) * (1 - win(u, .9, 1)); if (v <= 0) return;
+    C.save(); C.globalAlpha = a * .85 * Math.sin(Math.PI * ph / L); C.strokeStyle = '#f6eed8'; C.lineWidth = 3.6; C.lineCap = 'round'; C.stroke(p); C.restore(); } }
+  if (v <= 0) return;
   const cx = gx + 200, cy = gy - 112 * KG, r = 40 * v;
-  const settle = 1 - ease(win(u, .3, .72)), ang = Math.sin(t * .011) * 1.3 * settle + Math.sin(t * .027) * .35 * settle;
+  const ang = -h * 2.6 + Math.sin(t * .02) * Math.abs(h) * .5;
   C.save(); C.globalAlpha = v; cut(circP(cx, cy, r + 5), '#9a6e1e'); cut(circP(cx, cy, r), '#f3e8cc');
   C.fillStyle = '#2a1f19'; C.textAlign = 'center'; C.font = `${Math.round(16 * v)}px Prata, Georgia, serif`; C.fillText('С', cx, cy - r + 17 * v); C.fillText('Ю', cx, cy + r - 6 * v);
   C.translate(cx, cy); C.rotate(ang);

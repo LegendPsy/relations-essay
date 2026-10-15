@@ -1946,7 +1946,15 @@ function drawWorld(i, f, st, mode, it, camL, camC, now, tq, wind, vel){
     cloudBank(xa, xb, gy0 - 170, -1, tq); cloudBank(xa + 40, xb - 40, gy0 + 22, 1, tq); }
 
   { const gy0 = Y - altS, gx0 = GXL + (camL - camC);
-    if (i === 130 || (i === 37 && f > .85) || (i === 133 && f < .15)) gustsAndCompass(gx0, gy0, i === 130 ? f : i === 37 ? 0 : 1, tq);
+    // 130: компас появляется, самолёт качнётся вверх-вниз (стрелка следом), потом курс ровный;
+    // компас держится и на дороге к следующему пункту до её середины
+    drawWorld.bank = 0;
+    { const tw = ease(win(f, .2, .72)), h = i === 130 ? .2 * Math.sin(TAU * tw) * (1 - .3 * tw) : 0;
+      const gap = GAP[RK(133)] || 0, road = i === 133 && f === 0 && gap > 0 ? travel / gap : -1;
+      const cv = i === 130 ? easeOut(win(f, .04, .16)) : road >= 0 ? 1 - clamp01((road - .4) / .15) : 0;
+      const gu = i === 130 ? f : i === 37 && f > .85 ? 0 : -1;
+      if (i === 130) drawWorld.bank = h;
+      if (gu >= 0 || cv > 0) gustsAndCompass(gx0, gy0 - h * 60, gu, cv, h, tq); }
     if (i === 133 || (i === 130 && f > .7) || (i === 38 && f < .35)) choiceTrail(gx0, gy0, i === 133 ? f : 1, i === 133 ? 1 : 1 - win(f, 0, .35), tq, sx);
     if (i === 131 || (i === 39 && f < .25)) paperNote(gx0, gy0, i === 131 ? f : 1, tq); }
   // девушка
@@ -2013,7 +2021,8 @@ function drawWorld(i, f, st, mode, it, camL, camC, now, tq, wind, vel){
       drawPerson(xd - 4 * sc, Y - 4 - 12 * u, 1, makePose('walk', {w: 1, ph: f * 70, t: tq}), LOOK.girl, it, Object.assign(opts, {scale: sc, w: 1, noShadow: true}));
       C.restore();
       C.save(); C.globalAlpha = .85 * win(f, .7, .9); fillP(rectP(xd - DOOR_W / 2, Y - 2 - DOOR_H, DOOR_W, DOOR_H), '#fff1d0'); C.restore();
-    } else drawPerson(gx, gy + (m === 'boat' ? 10 : 0) + bob, face, J, LOOK.girl, it, opts);
+    } else { const bk = drawWorld.bank || 0; if (bk){ const py = gy - 40 * KG; C.save(); C.translate(gx, py - bk * 60); C.rotate(-bk); C.translate(-gx, -py); }
+      drawPerson(gx, gy + (m === 'boat' ? 10 : 0) + bob, face, J, LOOK.girl, it, opts); if (bk) C.restore(); }
     { const hum = i === 121 ? win(f, .72, .82) : (i === 31 && f === 0 && GAP[NI] > 0 ? Math.max(0, Math.min(1, (travel / GAP[NI] - .4) / .15)) : 0); if (hum > 0) humNotes(gx, gy - 150 * KG, tq, hum); }
     if (i === 106 && f >= .3 && f < .74) photoBoard(sx(A.board), Y - 2);
     // щенок рядом с ней
@@ -2195,16 +2204,16 @@ function ladderCloud(cx, by, t, squash){
   // клочки облака вокруг
   paperCloudW(cx - 150, by - 46, .55, col); paperCloudW(cx + 160, by - 30, .5, col);
 }
-function gustsAndCompass(gx, gy, u, t){
-  // ветра дуют навстречу и вкось, то сверху вниз, то снизу вверх; над самолётом компас, стрелка мечется и успокаивается на «вперёд»
-  const a = Math.sin(Math.PI * clamp01(u * 1.15)) * .9 + .1;
+function gustsAndCompass(gx, gy, u, v, h, t){
+  // ветра дуют навстречу и вкось; над самолётом компас: пока она поворачивает, стрелка поворачивается вслед, потом стоит на курсе
+  if (u >= 0){ const a = Math.sin(Math.PI * clamp01(u * 1.15)) * .9 + .1;
   for (let k = 0; k < 10; k++){ const sp = .35 + hash(k) * .3, L = LWv + 360, ph = ((t * sp + k * 151) % L), wx = LWv + 160 - ph;
     const dy = (k % 3 === 0 ? 1 : k % 3 === 1 ? -1 : 0) * 70, wy = gy - 150 + hash(k + 3) * 190 + dy * (ph / L - .5);
     const p = NP(); p.moveTo(wx, wy); p.quadraticCurveTo(wx + 55, wy - dy * .15 - 9, wx + 115, wy - dy * .25);
-    C.save(); C.globalAlpha = a * .85 * Math.sin(Math.PI * ph / L); C.strokeStyle = '#f6eed8'; C.lineWidth = 3.6; C.lineCap = 'round'; C.stroke(p); C.restore(); }
-  const v = easeOut(win(u, .18, .32)) * (1 - win(u, .9, 1)); if (v <= 0) return;
+    C.save(); C.globalAlpha = a * .85 * Math.sin(Math.PI * ph / L); C.strokeStyle = '#f6eed8'; C.lineWidth = 3.6; C.lineCap = 'round'; C.stroke(p); C.restore(); } }
+  if (v <= 0) return;
   const cx = gx + 200, cy = gy - 112 * KG, r = 40 * v;
-  const settle = 1 - ease(win(u, .3, .72)), ang = Math.sin(t * .011) * 1.3 * settle + Math.sin(t * .027) * .35 * settle;
+  const ang = -h * 2.6 + Math.sin(t * .02) * Math.abs(h) * .5;
   C.save(); C.globalAlpha = v; cut(circP(cx, cy, r + 5), '#9a6e1e'); cut(circP(cx, cy, r), '#f3e8cc');
   C.fillStyle = '#2a1f19'; C.textAlign = 'center'; C.font = `${Math.round(16 * v)}px Prata, Georgia, serif`; C.fillText('С', cx, cy - r + 17 * v); C.fillText('Ю', cx, cy + r - 6 * v);
   C.translate(cx, cy); C.rotate(ang);
