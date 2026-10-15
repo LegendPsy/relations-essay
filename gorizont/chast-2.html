@@ -513,7 +513,7 @@ function onScroll(){
 function start(withEnter){ if (started) return; started = true; enterT = null; document.getElementById('play').hidden = true; maxS = Math.max(maxS, window.scrollY);
   if (withEnter) playPoint(0); }
 /* ============ кнопки «в путь»: героиня идёт, только когда читатель сам попросит ============ */
-const PF = {110: .5, 111: .5, 103: .9, 104: .4, 105: .42, 106: .5, 4: .8, 7: .7, 12: .6, 21: .8, 47: .55, 48: .28};   // где сцене нужно больше времени
+const PF = {122: .12, 110: .5, 111: .5, 103: .9, 104: .4, 105: .42, 106: .5, 4: .8, 7: .7, 12: .6, 21: .8, 47: .55, 48: .28};   // где сцене нужно больше времени
 const BASE_RATE = 88 / (LPT * K * 1.3);                         // живой лёгкий шаг ≈ 88 единиц в секунду
 const goBtns = [];
 let targetK = 0, boostNow = 1;   // boostNow — во сколько раз сейчас ускорен пейзаж   // до какого пункта проигрывать подряд

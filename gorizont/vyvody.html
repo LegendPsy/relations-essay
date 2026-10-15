@@ -472,7 +472,7 @@ function onScroll(){
 function start(withEnter){ if (started) return; started = true; enterT = null; document.getElementById('play').hidden = true; maxS = Math.max(maxS, window.scrollY);
   if (withEnter) playPoint(0); }
 /* ============ кнопки «в путь»: героиня идёт, только когда читатель сам попросит ============ */
-const PF = {110: .5, 111: .5, 103: .9, 104: .4, 105: .42, 106: .5, 4: .8, 7: .7, 12: .6, 21: .8, 47: .55, 48: .28};   // где сцене нужно больше времени
+const PF = {122: .12, 110: .5, 111: .5, 103: .9, 104: .4, 105: .42, 106: .5, 4: .8, 7: .7, 12: .6, 21: .8, 47: .55, 48: .28};   // где сцене нужно больше времени
 const BASE_RATE = 88 / (LPT * K * 1.3);                         // живой лёгкий шаг ≈ 88 единиц в секунду
 const goBtns = [];
 let targetK = 0, boostNow = 1;   // boostNow — во сколько раз сейчас ускорен пейзаж   // до какого пункта проигрывать подряд
@@ -2424,17 +2424,32 @@ function shoeStand(x, y, u, t){
 }
 function coupleBench(x, y, u, t){
   // длинная скамейка с табличкой. Сначала двое сидят вплотную, потом садятся свободнее — табличка та же.
-  // Потом табличка переворачивается на «Бывшие супруги», а они так же улыбаются друг другу.
-  const apart = ease(win(u, .22, .42)), flip = win(u, .56, .68);
-  const pp = NP(); for (const sx0 of [-70, 70]){ cutSeg(x + sx0, y - 30, x + sx0, y, '#2a1f19', 2.6); }
+  // Потом муж засматривается на Лену, жена даёт ему пощёчину, они отсаживаются на разные концы скамейки,
+  // и только тогда табличка переворачивается на «Бывшие супруги». Под конец они всё же поворачиваются друг к другу.
+  const apart1 = ease(win(u, .2, .4)), slap = win(u, .49, .53), apart2 = ease(win(u, .54, .61)), flip = win(u, .62, .68);
+  for (const sx0 of [-70, 70]){ cutSeg(x + sx0, y - 30, x + sx0, y, '#2a1f19', 2.6); }
   cut(rectP(x - 84, y - 36, 168, 6), '#8a5a2e'); cut(rectP(x - 84, y - 58, 168, 5), '#8a5a2e'); cut(rectP(x - 84, y - 48, 168, 5), '#8a5a2e');
-  const d = lerp(16, 52, apart), J1 = makePose('sit', {}), J2 = makePose('sit', {});
-  if (apart < .5){ J1.hf = {x: 22, y: -62}; J2.hf = {x: 22, y: -62}; }      // держатся за руки, пока сидят вплотную
-  drawPerson(x - d, y - 1, 1, J1, LOOK.ilya, {}, {t, scale: .86, blink: (t % 4100) < 150, noShadow: true});
-  drawPerson(x + d, y - 1, -1, J2, LOOK.friend, {}, {t, scale: .86, blink: (t % 3700) < 150, noShadow: true});
-  // сердечко между ними: и когда сели свободнее, и когда сменилась табличка
-  for (const [a, b] of [[.44, .56], [.7, .84]]){ const hu = win(u, a, b); if (hu <= 0 || hu >= 1) continue;
-    C.save(); C.globalAlpha = Math.sin(Math.PI * hu); const hx = x, hy = y - 150 - hu * 26, p = NP(); p.moveTo(hx, hy + 9); p.bezierCurveTo(hx - 15, hy - 3, hx - 8, hy - 15, hx, hy - 7); p.bezierCurveTo(hx + 8, hy - 15, hx + 15, hy - 3, hx, hy + 9); cut(p, '#d94a3a', .6); C.restore(); }
+  const d = lerp(lerp(16, 34, apart1), 64, apart2), J1 = makePose('sit', {}), J2 = makePose('sit', {});
+  if (apart1 < .5){ J1.hf = {x: 22, y: -62}; J2.hf = {x: 22, y: -62}; }      // держатся за руки, пока сидят вплотную
+  // муж поворачивается и смотрит на Лену; жена это видит
+  const looks = u >= .43 && u < .48, sulk = u >= .54 && u < .7;
+  const dH = looks || sulk ? -1 : 1, dW = sulk ? 1 : -1;
+  if (looks){ J1.tilt = .08; J2.tilt = -.06; }
+  // пощёчина: рука жены быстро взлетает к его щеке, его голова откидывается
+  let hx = x - d, hit = 0;
+  if (slap > 0 && slap < 1){ const s = Math.sin(Math.PI * Math.min(1, slap * 1.6)); J2.hf = {x: lerp(10, (2 * d - 6) / .86, s), y: lerp(-58, -88, s)};
+    hit = bump(slap, .45, .95); hx -= 5 * hit; J1.tilt = -.22 * hit; }
+  drawPerson(hx, y - 1, dH, J1, LOOK.ilya, {}, {t, scale: .86, blink: (t % 4100) < 150 || hit > .3, noShadow: true});
+  drawPerson(x + d, y - 1, dW, J2, LOOK.friend, {}, {t, scale: .86, blink: (t % 3700) < 150, noShadow: true});
+  // он засматривается: маленькое сердечко летит от него к Лене
+  if (looks){ const lu = win(u, .43, .48), lx = hx - 14 - lu * 46, ly = y - 104 - lu * 18, p = NP(); C.save(); C.globalAlpha = Math.sin(Math.PI * lu); p.moveTo(lx, ly + 6); p.bezierCurveTo(lx - 10, ly - 2, lx - 5, ly - 10, lx, ly - 5); p.bezierCurveTo(lx + 5, ly - 10, lx + 10, ly - 2, lx, ly + 6); cut(p, '#e97a8a', .5); C.restore(); }
+  // след пощёчины: вспышка у щеки и румянец, пока они сидят порознь
+  const cx = hx + 7, cy = y - 1 - 78;
+  if (hit > 0){ C.save(); C.globalAlpha = hit; for (let k = 0; k < 7; k++){ const a = -1.2 + k * .42, r0 = 9, r1 = 19 + (k % 2) * 6; seg(cx + 6 + Math.cos(a) * r0, cy + Math.sin(a) * r0, cx + 6 + Math.cos(a) * r1, cy + Math.sin(a) * r1, '#f0c43a', 2.2); } C.restore(); }
+  if (u > .51 && u < .72){ C.save(); C.globalAlpha = .55 * (1 - win(u, .66, .72)); dot(hx + (dH > 0 ? 6 : -6), cy + 4, 4, '#d94a3a'); C.restore(); }
+  // сердечко между ними: когда сели свободнее, и в конце, когда они уже бывшие, но тепло осталось
+  for (const [a, b] of [[.3, .42], [.72, .84]]){ const hu = win(u, a, b); if (hu <= 0 || hu >= 1) continue;
+    C.save(); C.globalAlpha = Math.sin(Math.PI * hu); const hx2 = x, hy = y - 150 - hu * 26, p = NP(); p.moveTo(hx2, hy + 9); p.bezierCurveTo(hx2 - 15, hy - 3, hx2 - 8, hy - 15, hx2, hy - 7); p.bezierCurveTo(hx2 + 8, hy - 15, hx2 + 15, hy - 3, hx2, hy + 9); cut(p, '#d94a3a', .6); C.restore(); }
   // табличка на столбике над скамейкой; переворачивается вокруг вертикальной оси
   cutSeg(x + 96, y, x + 96, y - 92, '#6e4420', 3);
   const sc = Math.abs(Math.cos(Math.PI * flip)), label = flip < .5 ? 'Супруги' : 'Бывшие супруги';
