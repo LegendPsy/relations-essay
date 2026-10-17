@@ -93,6 +93,7 @@ body { background: var(--ink); color: var(--paper); font-family: var(--body); fo
 .backbar button { font: inherit; letter-spacing: inherit; color: inherit; background: none; border: 0; cursor: pointer; padding: 8px 12px; }
 .backbar .backchip { padding-left: 15px; }
 .backbar .backx { padding-right: 14px; padding-left: 8px; opacity: .6; font-size: 14px; line-height: 1; }
+#tofollow .backchip { padding-right: 15px; }
 .bar { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: rgba(255,255,255,.07); }
 .bar-max { position: absolute; top: -3px; width: 2px; height: 9px; margin-left: -1px; background: var(--paper-hi); opacity: .75; border-radius: 1px; pointer-events: none; }
 .bar-fill { position: absolute; left: 0; top: 0; bottom: 0; width: 0; background: var(--accent); }
@@ -184,6 +185,9 @@ a.btn { text-decoration: none; display: inline-block; }
   <div class="backbar" id="backbar" hidden>
     <button type="button" class="backchip" id="backchip">Вернуться к месту чтения ↓</button>
     <button type="button" class="backx" id="backx" aria-label="Скрыть">✕</button>
+  </div>
+  <div class="backbar" id="tofollow" hidden>
+    <button type="button" class="backchip" id="tofollow-btn">Вернуться к озвучке ↓</button>
   </div>
 </div>
 
@@ -673,13 +677,19 @@ let audioMode = false;
     const v = visiblePara(), here = paraAt(au.currentTime);
     if (Math.abs(v - here) > 1 || (!everPlayed && v > 1)) au.currentTime = PARA_T[v] + .01;
   }, true);
-  ['touchstart', 'touchmove', 'wheel', 'keydown', 'mousedown'].forEach(ev => window.addEventListener(ev, e => { if (!e.target.closest || !e.target.closest('.dock, .tap-listen')) userT = performance.now(); }, {passive: true}));
+  // человек сам листает: страница перестаёт ехать за голосом и не тянет текст назад
+  const tf = document.getElementById('tofollow'), tfBtn = document.getElementById('tofollow-btn');
+  let followOff = false, autoY = NaN;
+  const userScroll = () => { userT = performance.now(); if (!au.paused) followOff = true; };
+  ['touchstart', 'touchmove', 'wheel', 'keydown', 'mousedown'].forEach(ev => window.addEventListener(ev, e => { if (!e.target.closest || !e.target.closest('.dock, .backbar')) userScroll(); }, {passive: true}));
+  window.addEventListener('scroll', () => { if (!au.paused && !(Math.abs(window.scrollY - autoY) <= 3)) userScroll(); }, {passive: true});
+  tfBtn.addEventListener('click', () => { followOff = false; userT = -1e9; tf.hidden = true; });
   // нажали на слово или абзац — звучит с этого места
   els.forEach((e, k) => { e.classList.add('tap-listen'); e.addEventListener('click', ev => {
     if (ev.target.closest('button, a, input')) return;
     const sel = window.getSelection && window.getSelection(); if (sel && String(sel).length > 0) return;
     const w = ev.target.closest('.w'), wi = w ? W_EL.indexOf(w) : -1;
-    au.currentTime = (wi >= 0 ? W_T[wi] - .15 : PARA_T[k]) + .01; everPlayed = true; userT = -1e9;
+    au.currentTime = (wi >= 0 ? W_T[wi] - .15 : PARA_T[k]) + .01; everPlayed = true; userT = -1e9; followOff = false;
     e.classList.remove('tapped'); void e.offsetWidth; e.classList.add('tapped');
     if (au.paused) au.play().catch(() => {});
     if (!hinted){ hinted = true; try { localStorage.setItem('gorizont-4-hint', '1'); } catch (er) {} }
@@ -690,7 +700,7 @@ let audioMode = false;
     if (au.currentTime > 941) au.currentTime = 0;
     au.play().catch(() => start(true));
   }, true);
-  au.addEventListener('play', () => { everPlayed = true; userT = -1e9; enterAudio();
+  au.addEventListener('play', () => { everPlayed = true; userT = -1e9; followOff = false; enterAudio();
     if (!hinted){ hinted = true; try { localStorage.setItem('gorizont-4-hint', '1'); } catch (er) {} setTimeout(() => toast('Нажмите на любое слово — озвучка начнётся с него'), 900); } });
   au.addEventListener('seeking', () => { if (audioMode){ const st = stateAt(au.currentTime); if (st.k !== sceneK) camX = worldAt(st.k, st.f) - st.tr; } });
   au.addEventListener('ended', () => { try { localStorage.removeItem('gorizont-4-audio'); } catch (e) {} });
@@ -714,11 +724,16 @@ let audioMode = false;
     const pk = paraAt(t);
     if (pk !== curP){ if (curP >= 0) els[curP].classList.remove('now-reading'); els[pk].classList.add('now-reading'); curP = pk; }
     // прокрутка: читаемое слово держим чуть выше середины видимого текста
-    if (!au.paused && performance.now() - userT > 4000 && wi >= 0){
+    if (followOff && !au.paused && wi >= 0){
+      const r = W_EL[wi].getBoundingClientRect(), top = readTop(), seen = r.top > top + 8 && r.bottom < window.innerHeight - 24;
+      if (seen && performance.now() - userT > 3000) followOff = false;
+      tfBtn.textContent = r.top < top ? 'Вернуться к озвучке ↑' : 'Вернуться к озвучке ↓'; tf.hidden = seen || !followOff;
+    } else if (!tf.hidden) tf.hidden = true;
+    if (!au.paused && !followOff && wi >= 0){
       const r = W_EL[wi].getBoundingClientRect(), top = readTop(), target = top + (window.innerHeight - top) * .38;
       let dy = r.top - target;
       if (pk === els.length - 1){ const ce = document.querySelector('.cp-end'); if (ce && els[pk].closest('.cp').nextElementSibling === ce){ const need = ce.getBoundingClientRect().bottom - (window.innerHeight - 16); dy = Math.max(dy, Math.min(need, r.top - top - 24)); } }
-      if (Math.abs(dy) > 2){ const step = Math.abs(dy) > window.innerHeight ? dy : dy * .06; window.scrollTo(0, window.scrollY + step); }
+      if (Math.abs(dy) > 2){ const step = Math.abs(dy) > window.innerHeight ? dy : dy * .06; window.scrollTo(0, window.scrollY + step); autoY = window.scrollY; }
     }
     if (now - saveT > 2000){ saveT = now; try { localStorage.setItem('gorizont-4-audio', JSON.stringify({t})); } catch (e) {} }
   }
@@ -1737,7 +1752,7 @@ function frame(now){
   // полоска прогресса
   rwEl.hidden = !rewinding;
   if (!(window.scrollY < maxS - 600)) backDismissed = false;
-  backbar.hidden = !(behind && !backDismissed);
+  backbar.hidden = !(behind && !backDismissed) || !document.getElementById('tofollow').hidden;
   const tot = starts[N + 1];
   barfill.style.width = (100 * Math.min(1, Math.max(0, window.scrollY) / tot)) + '%';
   barmax.style.left = (100 * Math.min(1, maxS / tot)) + '%';

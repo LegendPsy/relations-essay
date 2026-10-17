@@ -203,6 +203,38 @@ FIXES = [
      "    b.dataset.to = sc; b.addEventListener('click', () => playPoint(+b.dataset.to)); lastGo = b;\n"
      "    const wrap = document.createElement('div'); wrap.className = 'go-wrap'; wrap.appendChild(b); sec.appendChild(wrap); goBtns[sc] = b;"),
     ("function buildGo(){\n", "function buildGo(){\n  let lastGo = null;\n"),
+    # 20. Во время озвучки текст можно листать пальцем. Как только человек сам листает (в том числе начав жест на слове),
+    #     страница перестаёт ехать за голосом и не тянет текст назад. Следование возвращается само, когда читаемое
+    #     слово снова на экране и человек 3 секунды не трогает страницу, по кнопке «Вернуться к озвучке»,
+    #     по нажатию на слово или при новом запуске.
+    ('    <button type="button" class="backx" id="backx" aria-label="Скрыть">✕</button>\n  </div>',
+     '    <button type="button" class="backx" id="backx" aria-label="Скрыть">✕</button>\n  </div>\n'
+     '  <div class="backbar" id="tofollow" hidden>\n'
+     '    <button type="button" class="backchip" id="tofollow-btn">Вернуться к озвучке ↓</button>\n  </div>'),
+    (".backbar .backx { padding-right: 14px; padding-left: 8px; opacity: .6; font-size: 14px; line-height: 1; }",
+     ".backbar .backx { padding-right: 14px; padding-left: 8px; opacity: .6; font-size: 14px; line-height: 1; }\n"
+     "#tofollow .backchip { padding-right: 15px; }"),
+    ("  ['touchstart', 'touchmove', 'wheel', 'keydown', 'mousedown'].forEach(ev => window.addEventListener(ev, e => { if (!e.target.closest || !e.target.closest('.dock, .tap-listen')) userT = performance.now(); }, {passive: true}));",
+     "  // человек сам листает: страница перестаёт ехать за голосом и не тянет текст назад\n"
+     "  const tf = document.getElementById('tofollow'), tfBtn = document.getElementById('tofollow-btn');\n"
+     "  let followOff = false, autoY = NaN;\n"
+     "  const userScroll = () => { userT = performance.now(); if (!au.paused) followOff = true; };\n"
+     "  ['touchstart', 'touchmove', 'wheel', 'keydown', 'mousedown'].forEach(ev => window.addEventListener(ev, e => { if (!e.target.closest || !e.target.closest('.dock, .backbar')) userScroll(); }, {passive: true}));\n"
+     "  window.addEventListener('scroll', () => { if (!au.paused && !(Math.abs(window.scrollY - autoY) <= 3)) userScroll(); }, {passive: true});\n"
+     "  tfBtn.addEventListener('click', () => { followOff = false; userT = -1e9; tf.hidden = true; });"),
+    ("+ .01; everPlayed = true; userT = -1e9;", "+ .01; everPlayed = true; userT = -1e9; followOff = false;"),
+    ("au.addEventListener('play', () => { everPlayed = true; userT = -1e9; enterAudio();",
+     "au.addEventListener('play', () => { everPlayed = true; userT = -1e9; followOff = false; enterAudio();"),
+    ("    if (!au.paused && performance.now() - userT > 4000 && wi >= 0){",
+     "    if (followOff && !au.paused && wi >= 0){\n"
+     "      const r = W_EL[wi].getBoundingClientRect(), top = readTop(), seen = r.top > top + 8 && r.bottom < window.innerHeight - 24;\n"
+     "      if (seen && performance.now() - userT > 3000) followOff = false;\n"
+     "      tfBtn.textContent = r.top < top ? 'Вернуться к озвучке ↑' : 'Вернуться к озвучке ↓'; tf.hidden = seen || !followOff;\n"
+     "    } else if (!tf.hidden) tf.hidden = true;\n"
+     "    if (!au.paused && !followOff && wi >= 0){"),
+    ("window.scrollTo(0, window.scrollY + step); }", "window.scrollTo(0, window.scrollY + step); autoY = window.scrollY; }"),
+    ("  backbar.hidden = !(behind && !backDismissed);",
+     "  backbar.hidden = !(behind && !backDismissed) || !document.getElementById('tofollow').hidden;"),
 ]
 
 for p in PAGES:
