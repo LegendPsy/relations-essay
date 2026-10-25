@@ -3,28 +3,26 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#a98159">
+<meta name="theme-color" content="#ebe3d5">
 <title>{{TITLE}}</title>
-<meta name="description" content="{{LEDE}} Статья психолога в шести частях: читать, слушать в авторской озвучке и смотреть эпизоды.">
+<meta name="description" content="{{LEDE}} Статья психолога в шести частях: читать и посмотреть мультфильм по ней.">
 <meta property="og:title" content="{{TITLE}}">
 <meta property="og:description" content="{{LEDE}}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Neucha&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&display=swap">
 <style>
-/* Бумажный коллаж: каждый лист — вырезка с неровным краем (её рисует JS), под каждым слоем мягкая тень.
-   Страница — крафт-картон, текст — на кремовых листах, эпизоды — на цветной бумаге. */
+/* Бумажный коллаж, приглушённый: каждый лист — вырезка с неровным краем (её рисует JS), тени лёгкие.
+   Страница — светлый картон, текст — на кремовых листах. Ничего не двигается само, чтобы не отвлекать от чтения. */
 :root {
-  --kraft: #b48a60; --kraft-dk: #8f6843;
-  --paper: #f6efe1; --edge: #fffaf1; --ink: #2b241e; --ink-2: #5a4d40;
+  --kraft: #e4d9c6; --kraft-dk: #b9a78b;
+  --paper: #fbf7ef; --edge: #fffdf8; --ink: #2e2924; --ink-2: #6a5f53; --accent: #b0725c;
   --navy: #2c3b5e; --sky: #3a5584; --teal: #2f6e6c; --deep: #214a4c; --sage: #8fb08a;
   --mustard: #e5b33f; --coral: #de6b4f; --pink: #eba7a0; --cream: #f3e6c8; --grey: #9aa2a8;
-  --c-tag0: #de6b4f; --c-tag1: #2f6e6c; --c-tag2: #2c3b5e;
-  --c-ep0: #2c3b5e; --c-ep1: #de6b4f; --c-ep2: #2f6e6c;
-  --sh: drop-shadow(0 2px 1.5px rgba(40,22,8,.28)) drop-shadow(0 7px 10px rgba(40,22,8,.22));
-  --sh-lo: drop-shadow(0 1px 1px rgba(40,22,8,.3)) drop-shadow(0 3px 4px rgba(40,22,8,.18));
+  --sh: drop-shadow(0 1px 1px rgba(70,50,30,.10)) drop-shadow(0 5px 12px rgba(70,50,30,.07));
+  --sh-lo: drop-shadow(0 1px 1px rgba(70,50,30,.10)) drop-shadow(0 2px 5px rgba(70,50,30,.06));
   --display: 'Unbounded', 'Arial Black', sans-serif; --hand: 'Neucha', 'Comic Sans MS', cursive; --body: 'Literata', Georgia, serif;
   --col: 600px;
-  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .27 0 0 0 0 .18 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .27 0 0 0 0 .18 0 0 0 .22 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   --fibers: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.0125 .09' numOctaves='2' seed='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 -1.6 1.05'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E");
   color-scheme: light;
 }
@@ -32,8 +30,9 @@
 [hidden] { display: none !important; }
 html { background: var(--kraft); overflow-x: clip; }
 body { margin: 0; color: var(--ink); font-family: var(--body); font-size: 18px; line-height: 1.66; -webkit-font-smoothing: antialiased; overflow-x: clip;
-  background-color: var(--kraft); background-image: var(--grain), var(--fibers); background-blend-mode: multiply, soft-light;
-  padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)); }
+  background-color: var(--kraft); background-image: var(--grain); background-blend-mode: multiply;
+  padding-bottom: 56px; }
+body.has-dock { padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)); }
 
 /* ---- вырезка: .cut получает <i class="pp"> с краем и лицом бумаги ---- */
 .cut { position: relative; isolation: isolate; }
@@ -45,7 +44,7 @@ body { margin: 0; color: var(--ink); font-family: var(--body); font-size: 18px; 
 
 /* ---- шапка-коллаж ---- */
 .top { width: min(100% - 24px, 760px); margin: 14px auto 0; }
-.hero { position: relative; aspect-ratio: 16 / 11; max-height: 72vh; width: 100%; overflow: clip; overflow-clip-margin: 18px; }
+.hero { position: relative; aspect-ratio: 16 / 10; max-height: 48vh; width: 100%; overflow: clip; overflow-clip-margin: 18px; filter: saturate(.6); }
 .hero .bg { position: absolute; inset: 0; }
 .piece { position: absolute; will-change: transform; }
 .piece.cut { position: absolute; }
@@ -68,77 +67,41 @@ body { margin: 0; color: var(--ink); font-family: var(--body); font-size: 18px; 
 .p-body { left: 43%; top: 45%; width: 7.8%; height: 14.5%; }
 .p-tag { left: 45%; top: 21%; width: 12%; height: 0; }
 /* название — большой кремовый ярлык поверх шапки */
-.title { position: relative; margin: -9% 10px 0; padding: 22px 22px 24px; z-index: 2; transform: rotate(-1deg); }
-.title h1 { font-family: var(--display); font-weight: 700; font-size: clamp(1.75rem, 6.6vw, 2.9rem); line-height: 1.08; letter-spacing: -.01em; margin: 0 0 .55rem; color: var(--navy); text-wrap: balance; }
+.title { position: relative; margin: -8% 10px 0; padding: 22px 22px 24px; z-index: 2; }
+.title h1 { font-family: var(--display); font-weight: 700; font-size: clamp(1.75rem, 6.6vw, 2.9rem); line-height: 1.08; letter-spacing: -.01em; margin: 0 0 .55rem; color: #39405a; text-wrap: balance; }
 .nw { white-space: nowrap; }
 .title .lede { margin: 0; font-size: 1.04rem; line-height: 1.5; color: var(--ink-2); font-style: italic; }
-.about { width: min(100% - 32px, var(--col)); margin: 26px auto 0; padding: 16px 18px; transform: rotate(.6deg); font-size: 15.5px; line-height: 1.5; }
+.about { width: min(100% - 32px, var(--col)); margin: 26px auto 0; padding: 16px 18px; font-size: 15.5px; line-height: 1.5; color: var(--ink-2); }
+.about a { color: var(--accent); }
 .about p { margin: 0; }
 .about p + p { margin-top: .4rem; color: var(--ink-2); font-size: 14.5px; }
 .about b { font-weight: 600; }
 
 /* ---- части ---- */
 main { width: min(100% - 24px, var(--col)); margin: 40px auto 0; }
-.part { margin: 0 0 54px; scroll-margin-top: 14px; }
-.part-head { position: relative; display: grid; justify-items: start; gap: 10px; margin: 0 6px 16px; }
-.tag { display: inline-flex; align-items: baseline; gap: 8px; padding: 6px 16px 8px; color: var(--paper); transform: rotate(-2.5deg); }
-.tag-n { font: 700 2.2rem/1 var(--display); }
-.tag-t { font: 1.2rem/1 var(--hand); letter-spacing: .02em; }
-.tag-t.big { font-size: 1.6rem; padding: 2px 0; }
-.part-head h2 { margin: 0; padding: 0 4px; font-family: var(--display); font-weight: 500; font-size: clamp(1.25rem, 4.6vw, 1.6rem); line-height: 1.22; color: #2a1d10; text-wrap: balance; text-shadow: 0 1px 0 rgba(255,235,200,.35); }
-.sheet { padding: 26px 22px 24px; }
+.part { margin: 0 0 48px; scroll-margin-top: 14px; }
+.part-head { position: relative; display: grid; justify-items: start; gap: 4px; margin: 0 8px 14px; }
+.tag { display: inline-flex; align-items: baseline; gap: 6px; color: var(--accent); }
+.tag-n { font: 500 1.35rem/1 var(--display); }
+.tag-t { font: 1.15rem/1 var(--hand); letter-spacing: .02em; }
+.tag-t.big { font-size: 1.3rem; }
+.part-head h2 { margin: 0; padding: 0 4px; font-family: var(--display); font-weight: 500; font-size: clamp(1.25rem, 4.6vw, 1.6rem); line-height: 1.22; color: var(--ink); text-wrap: balance; }
+.sheet { padding: 28px 26px 26px; }
 .sheet p { margin: 0 0 1em; }
 .sheet p:last-child { margin-bottom: 0; }
 .sheet ul { margin: 0 0 1em; padding: 0; list-style: none; }
 .sheet li { position: relative; padding-left: 1.35em; margin: 0 0 .55em; }
-.sheet li::before { content: ''; position: absolute; left: .15em; top: .62em; width: .62em; height: .42em; background: var(--coral); clip-path: polygon(0 14%, 100% 0, 88% 100%, 6% 86%); transform: rotate(-6deg); }
-.sheet strong { font-weight: 600; color: #1f2c4a; background: linear-gradient(176deg, transparent 0 52%, rgba(229,179,63,.5) 52% 90%, transparent 90%); padding: 0 .08em; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
-.part:nth-child(3n+2) .sheet strong { background-image: linear-gradient(176deg, transparent 0 52%, rgba(222,107,79,.32) 52% 90%, transparent 90%); }
-.part:nth-child(3n) .sheet strong { background-image: linear-gradient(176deg, transparent 0 52%, rgba(143,176,138,.55) 52% 90%, transparent 90%); }
-.part:nth-child(3n+2) .sheet li::before { background: var(--teal); }
-.part:nth-child(3n) .sheet li::before { background: var(--mustard); }
+.sheet li::before { content: ''; position: absolute; left: .15em; top: .62em; width: .62em; height: .42em; background: #c9b48e; clip-path: polygon(0 14%, 100% 0, 88% 100%, 6% 86%); }
+.sheet strong { font-weight: 600; color: inherit; background: linear-gradient(176deg, transparent 0 58%, rgba(229,179,63,.22) 58% 92%, transparent 92%); padding: 0 .08em; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
 
-/* ---- карточка эпизода ---- */
-.ep { margin: 26px 4px 0; padding: 16px; display: grid; grid-template-columns: 112px 1fr; gap: 14px 16px; align-items: center; color: var(--paper); transform: rotate(.8deg); }
-.part:nth-child(even) .ep { transform: rotate(-.9deg); }
-.ep-screen { height: 78px; overflow: hidden; }
-.ep-screen > .pp { overflow: hidden; }
-.mini { position: absolute; }
-.mini.sun { left: 58%; top: 12%; width: 26%; aspect-ratio: 1; }
-.mini.hill1 { left: -12%; top: 46%; width: 80%; height: 60%; }
-.mini.hill2 { left: 34%; top: 56%; width: 80%; height: 52%; }
-.ep-txt { min-width: 0; }
-.ep-txt p { margin: 0; }
-.ep-k { font: 1.05rem/1.2 var(--hand); opacity: .85; }
-.ep-t { font: 700 1.12rem/1.2 var(--display); margin-top: 3px !important; text-wrap: balance; }
-.ep-d { font-size: 13.5px; line-height: 1.4; opacity: .8; margin-top: 4px !important; }
-.ep-btn { grid-column: 1 / -1; display: flex; align-items: center; justify-content: center; gap: 12px; padding: 12px 16px; border: 0; border-radius: 0; cursor: pointer; font: 700 1rem/1.2 var(--display); color: var(--ink); background: var(--cream); clip-path: polygon(0 6%, 2% 0, 50% 4%, 98% 0, 100% 10%, 99% 92%, 97% 100%, 48% 96%, 3% 100%, 0 88%); filter: var(--sh-lo); transition: transform .12s steps(2); }
-.ep-btn:hover { transform: translateY(-2px) rotate(-.6deg); }
-.ep-btn:active { transform: translateY(1px); }
-.ep-btn:focus-visible { outline: 3px dashed var(--mustard); outline-offset: 4px; }
-.ep-ic { width: 38px; height: 38px; display: grid; place-items: center; flex: none; }
-.ep-ic svg { width: 18px; height: 18px; fill: var(--navy); margin-left: 3px; }
-.ep.seen .ep-bt::after { content: ' ещё раз'; }
-.ep.seen .ep-k::after { content: ' · посмотрен ✓'; }
-.ep.pulse .ep-btn { animation: pulse 1.6s steps(6) 3; }
-@keyframes pulse { 50% { transform: scale(1.04) rotate(-1deg); } }
-
-/* закрытая часть: конверт с названием */
-.lock { width: min(100% - 40px, 520px); margin: 0 auto 54px; padding: 18px 20px; text-align: center; transform: rotate(-1.2deg); color: var(--ink-2); }
-.lock .lk { font: 1.15rem/1.3 var(--hand); margin: 0; }
-.lock .lt { font: 500 1.05rem/1.3 var(--display); color: var(--ink); margin: 6px 0 0; text-wrap: balance; }
-.lock .lm { font-size: 14px; margin: 8px 0 0; }
-.lock svg { width: 22px; height: 22px; fill: none; stroke: var(--coral); stroke-width: 2.2; vertical-align: -4px; margin-right: 4px; }
-.finale { width: min(100% - 32px, 520px); margin: 0 auto 54px; padding: 26px 22px; text-align: center; transform: rotate(.8deg); color: var(--paper); }
-.finale h3 { font: 700 1.5rem/1.15 var(--display); margin: 0 0 10px; }
-.finale p { margin: 0 0 14px; }
-.finale a, .finale button { font: 1.15rem/1 var(--hand); color: var(--navy); background: var(--cream); border: 0; padding: 10px 16px; cursor: pointer; text-decoration: none; display: inline-block; margin: 4px; clip-path: polygon(0 8%, 96% 0, 100% 90%, 4% 100%); }
-
-/* появление: вырезки «выкладываются на стол» рывками, как в перекладке */
-.arrive .part-head, .arrive .sheet, .arrive .ep { animation: lay .72s steps(6) both; }
-.arrive .sheet { animation-delay: .14s; }
-.arrive .ep { animation-delay: .28s; }
-@keyframes lay { from { opacity: 0; translate: 26px 34px; rotate: 4deg; } 40% { opacity: 1; } }
+/* ---- мультфильм в конце статьи ---- */
+.movie { margin: 64px 0 40px; scroll-margin-top: 14px; }
+.movie .part-head { margin-bottom: 12px; }
+.mv-d { margin: 2px 8px 14px; font-size: 15.5px; line-height: 1.5; color: var(--ink-2); }
+.mv-frame { padding: 10px; }
+.mv-frame video { display: block; width: 100%; aspect-ratio: 16 / 9; background: #e9e1d2; }
+.mv-end { margin: 28px 8px 0; text-align: center; font: 1.15rem/1.45 var(--hand); color: var(--ink-2); }
+.mv-end a { color: var(--accent); }
 
 /* ---- озвучка: подсветка слова ---- */
 .w-now { background: var(--mustard); color: var(--ink); border-radius: 2px; }
@@ -166,41 +129,14 @@ main { width: min(100% - 24px, var(--col)); margin: 40px auto 0; }
 .dock.off .dk-lbl { white-space: normal; grid-row: span 2; }
 .tofollow { position: fixed; left: 50%; translate: -50% 0; bottom: calc(108px + env(safe-area-inset-bottom, 0px)); z-index: 21; font: 1.1rem/1 var(--hand); color: var(--ink); background: var(--cream); border: 0; padding: 10px 16px; cursor: pointer; clip-path: polygon(0 10%, 97% 0, 100% 88%, 3% 100%); filter: var(--sh-lo); }
 
-/* ---- окно эпизода ---- */
-.film { position: fixed; inset: 0; z-index: 40; display: grid; place-items: center; padding: 16px; background: rgba(30,20,10,.72); }
-.film-box { width: min(100%, 760px); padding: 16px 16px 20px; color: var(--paper); display: grid; gap: 10px; }
-.film-x { position: absolute; right: 8px; top: 6px; z-index: 3; width: 40px; height: 40px; border: 0; background: transparent; color: var(--paper); font-size: 22px; cursor: pointer; }
-.film-stage { position: relative; aspect-ratio: 16 / 9; overflow: hidden; background: var(--sky); }
-.film-stage video { position: absolute; inset: 0; width: 100%; height: 100%; background: #000; }
-.film-k { margin: 6px 0 0; font: 1.05rem/1.2 var(--hand); opacity: .85; }
-.film-box h3 { margin: 0; font: 700 clamp(1.15rem, 4.4vw, 1.5rem)/1.2 var(--display); }
-.film-note { margin: 0; font-size: 15px; line-height: 1.5; opacity: .85; }
-.film-next { justify-self: start; margin-top: 6px; font: 700 1rem/1.2 var(--display); color: var(--ink); background: var(--mustard); border: 0; padding: 13px 20px; cursor: pointer; clip-path: polygon(0 8%, 3% 0, 97% 4%, 100% 14%, 98% 100%, 2% 94%); }
-.film-next:disabled { opacity: .45; cursor: default; }
-.film-next:focus-visible, .film-x:focus-visible { outline: 3px dashed var(--mustard); outline-offset: 3px; }
-/* заглушка ролика: маленькая перекладка, слои двигаются рывками */
-.ph .piece { position: absolute; }
-.ph-sun { left: 64%; top: 12%; width: 17%; aspect-ratio: 1; animation: ph-sun 4s steps(8) infinite alternate; }
-.ph-cl { left: 8%; top: 18%; width: 24%; height: 11%; animation: ph-cl 6s steps(10) infinite alternate; }
-.ph-h1 { left: -10%; top: 50%; width: 75%; height: 55%; animation: ph-h 5s steps(7) infinite alternate; }
-.ph-h2 { left: 35%; top: 60%; width: 80%; height: 48%; animation: ph-h 5s steps(7) infinite alternate-reverse; }
-.ph-lbl { left: 50%; top: 40%; translate: -50% -50%; width: min(72%, 380px); padding: 12px 18px 14px; text-align: center; color: var(--ink); animation: ph-l 2.4s steps(4) infinite alternate; }
-.ph-lbl b { display: block; font: 700 clamp(15px, 3.8vw, 22px)/1.15 var(--display); color: var(--navy); }
-.ph-lbl span { font: clamp(14px, 3.3vw, 19px)/1.2 var(--hand); color: var(--ink-2); }
-@keyframes ph-sun { to { translate: 0 -14%; rotate: 8deg; } }
-@keyframes ph-cl { to { translate: 60% 0; } }
-@keyframes ph-h { to { translate: 6% 0; } }
-@keyframes ph-l { from { rotate: -2deg; } to { rotate: 1.5deg; } }
 
-.foot { width: min(100% - 32px, var(--col)); margin: 0 auto; text-align: center; font: 1.05rem/1.4 var(--hand); color: #3b2a19; }
+.foot { width: min(100% - 32px, var(--col)); margin: 0 auto; text-align: center; font: 1.05rem/1.4 var(--hand); color: var(--ink-2); }
 .foot a { color: inherit; }
 .toast { position: fixed; left: 50%; translate: -50% 0; bottom: calc(112px + env(safe-area-inset-bottom, 0px)); z-index: 30; background: var(--cream); color: var(--ink); font: 1.05rem/1.3 var(--hand); padding: 9px 14px; max-width: calc(100% - 32px); text-align: center; clip-path: polygon(0 8%, 98% 0, 100% 92%, 2% 100%); }
 
 @media (max-width: 420px) {
   body { font-size: 17px; }
   .sheet { padding: 22px 18px 20px; }
-  .ep { grid-template-columns: 88px 1fr; }
-  .ep-screen { height: 64px; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
@@ -211,7 +147,7 @@ main { width: min(100% - 24px, var(--col)); margin: 40px auto 0; }
 
 <header class="top">
   <div class="hero" id="hero" aria-hidden="true">
-    <div class="bg cut" data-c="var(--sky)" data-rough="4"></div>
+    <div class="bg cut" data-c="#b7c2cc" data-rough="4"></div>
     <i class="piece cut p-sun" data-shape="ellipse" data-c="var(--mustard)" data-depth=".15"></i>
     <i class="piece cut p-cl1" data-shape="ellipse" data-c="var(--cream)" data-depth=".25" data-rough="2"></i>
     <i class="piece cut p-cl2" data-shape="ellipse" data-c="var(--cream)" data-depth=".3" data-rough="2"></i>
@@ -219,7 +155,7 @@ main { width: min(100% - 24px, var(--col)); margin: 40px auto 0; }
     <i class="piece cut p-hill2" data-shape="hill" data-c="var(--teal)" data-depth=".45"></i>
     <i class="piece cut p-box" data-c="#c99a62" data-depth=".62" data-rot="-7"></i>
     <i class="piece cut p-heart" data-shape="heart" data-c="var(--pink)" data-depth=".7" data-rot="9" data-rough="1.5"></i>
-    <i class="piece cut p-low" data-c="var(--deep)" data-depth=".55" data-rough="4"></i>
+    <i class="piece cut p-low" data-c="#9fb0a6" data-depth=".55" data-rough="4"></i>
     <i class="piece cut p-rain" data-shape="ellipse" data-c="var(--grey)" data-depth=".66" data-rough="2"></i>
     <i class="piece p-drops" data-depth=".7"></i>
     <i class="piece cut p-zero" data-c="var(--cream)" data-depth=".5" data-rot="-1.4" data-rough="2.6"><span class="ticks"></span><b>0</b><em>норма</em></i>
@@ -230,8 +166,8 @@ main { width: min(100% - 24px, var(--col)); margin: 40px auto 0; }
     <h1 id="title" data-say="0">{{TITLE_H1}}</h1>
     <p class="lede" data-say="0">{{LEDE}}</p>
   </div>
-  <div class="about cut lo" data-c="var(--cream)" data-rough="2.5">
-    <p><b>Шесть частей и шесть эпизодов.</b> После каждой части — короткий ролик, после него открывается следующая часть.</p>
+  <div class="about cut lo" data-c="var(--paper)" data-rough="2.5">
+    <p><b>Шесть частей и мультфильм.</b> Статью можно прочитать целиком, а в конце посмотреть короткий мультфильм по ней, около трёх минут. <a href="#multfilm">Сразу к мультфильму</a></p>
     <p id="about-voice">Статью я озвучиваю сам. Когда запись появится, внизу заработает плеер: нажмите на любое слово, и звук начнётся с него.</p>
   </div>
 </header>
@@ -239,24 +175,23 @@ main { width: min(100% - 24px, var(--col)); margin: 40px auto 0; }
 <main id="col">
 {{ARTICLE}}
 
-<div class="lock cut lo" id="lock" data-c="var(--cream)" data-rough="2.5" hidden>
-  <p class="lk"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="1"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><span id="lock-k">Следующая часть</span></p>
-  <p class="lt" id="lock-t"></p>
-  <p class="lm" id="lock-m"></p>
+<section class="movie" id="multfilm">
+<header class="part-head">
+<div class="tag"><span class="tag-t big">мультфильм по статье</span></div>
+<h2>Дубль два</h2>
+</header>
+<p class="mv-d">Один и тот же день, показанный два раза. 2 минуты 52 секунды, лучше со звуком.</p>
+<div class="mv-frame cut lo" data-c="var(--paper)" data-rough="2">
+<video id="movie" controls playsinline preload="metadata" poster="video/multfilm.jpg" src="video/multfilm.mp4"></video>
 </div>
-
-<section class="finale cut" id="finale" data-c="var(--navy)" data-rough="3" hidden>
-  <h3>Вот и всё</h3>
-  <p>Спасибо, что дочитали и досмотрели. Пусть хорошее сегодня побудет просто хорошим.</p>
-  <a href="#title">Наверх</a>
-  <button type="button" id="restart">Начать сначала</button>
+<p class="mv-end">Спасибо, что дочитали. Пусть хорошее сегодня побудет просто хорошим.<br><a href="#title">Наверх</a></p>
 </section>
 </main>
 
 <p class="foot"><a href="../gorizont/">Ещё одна статья: «Горизонт отношений»</a></p>
 
 <button type="button" class="tofollow" id="tofollow" hidden>Вернуться к озвучке ↓</button>
-<div class="dock cut" id="dock" data-c="var(--navy)" data-rough="3" data-tear="top">
+<div class="dock cut" id="dock" hidden data-c="var(--navy)" data-rough="3" data-tear="top">
   <button type="button" class="dk-play cut" id="dk-play" data-shape="ellipse" data-c="var(--mustard)" data-rough="1.4" aria-label="Слушать"><svg viewBox="0 0 24 24" id="dk-ic"><path d="M8 5l12 7-12 7z"/></svg></button>
   <span class="dk-lbl" id="dk-lbl">Озвучка</span>
   <button type="button" class="dk-speed" id="dk-speed" aria-label="Скорость">1×</button>
@@ -267,20 +202,10 @@ main { width: min(100% - 24px, var(--col)); margin: 40px auto 0; }
   <audio id="au" preload="none"></audio>
 </div>
 
-<div class="film" id="film" role="dialog" aria-modal="true" aria-labelledby="film-t" hidden>
-  <div class="film-box cut" data-c="var(--navy)" data-rough="3.5">
-    <button type="button" class="film-x" id="film-x" aria-label="Закрыть">✕</button>
-    <div class="film-stage cut" id="film-stage" data-c="var(--sky)" data-rough="2"></div>
-    <p class="film-k" id="film-k"></p>
-    <h3 id="film-t"></h3>
-    <p class="film-note" id="film-note"></p>
-    <button type="button" class="film-next" id="film-next"></button>
-  </div>
-</div>
 
 <script>
 const DATA = {{DATA}};
-const NP = DATA.parts.length, KEY = 'kak-dolzhno-v1';
+const KEY = 'kak-dolzhno-v1';
 const $ = id => document.getElementById(id);
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -327,85 +252,17 @@ const ro = new ResizeObserver(es => es.forEach(e => tear(e.target)));
 cuts.forEach(el => { tear(el); ro.observe(el); });
 function tearAll(root){ root.querySelectorAll('.cut').forEach(el => { if (!el._seed) ro.observe(el); el._w = 0; tear(el); }); }
 
-/* ============ шапка: слои живут рывками (≈8 кадров в секунду) и уезжают с разной скоростью ============ */
-(() => {
-  const hero = $('hero'), pcs = [...hero.querySelectorAll('[data-depth]')].map((el, k) => ({el, d: +el.dataset.depth, r: +(el.dataset.rot || 0), s: k * 13 + 3}));
-  let last = 0, fr = 0;
-  function frame(now){
-    requestAnimationFrame(frame);
-    if (now - last < 125) return; last = now; fr++;
-    const y = Math.min(window.scrollY, 900), hh = hero.offsetHeight;
-    pcs.forEach(p => {
-      const jr = rng(p.s + fr % 3 * 101); // три «кадра» вырезки по кругу — лёгкое дрожание перекладки
-      const j = reduced ? 0 : 1, dx = (jr() - .5) * 1.4 * j, dy = (jr() - .5) * 1.4 * j, dr = (jr() - .5) * .9 * j;
-      const py = Math.round(-y * p.d * .32 / 2) * 2;      // параллакс, ступеньками по 2px
-      p.el.style.transform = `translate(${dx.toFixed(1)}px, ${(py + dy).toFixed(1)}px) rotate(${(p.r + dr).toFixed(2)}deg)`;
-    });
-  }
-  requestAnimationFrame(frame);
-})();
+/* ============ шапка: слои стоят на месте, только чуть повёрнуты ============ */
+document.querySelectorAll('#hero [data-rot]').forEach(el => { el.style.transform = 'rotate(' + el.dataset.rot + 'deg)'; });
 
-/* ============ части и эпизоды ============ */
-let S = {open: 1, seen: []};
-try { const v = JSON.parse(localStorage.getItem(KEY) || 'null'); if (v && v.open) S = v; } catch (e) {}
-if (/[?&]vse\b/.test(location.search)) S.open = NP;
-const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} };
 const sections = [...document.querySelectorAll('.part')];
-const partName = i => DATA.parts[i].num ? DATA.parts[i].num + '. ' + DATA.parts[i].title : DATA.parts[i].title;
-function render(){
-  sections.forEach((s, i) => { s.hidden = i >= S.open; s.querySelector('.ep').classList.toggle('seen', !!S.seen[i]); });
-  const lock = $('lock');
-  if (S.open < NP){ lock.hidden = false; $('lock-k').textContent = 'Дальше'; $('lock-t').textContent = partName(S.open);
-    const left = NP - S.open - 1; $('lock-m').textContent = 'Откроется после эпизода ' + S.open + (left > 0 ? ' · потом ещё ' + left + ' ' + plural(left, 'часть', 'части', 'частей') : '');
-    sections[S.open - 1].after(lock); } else lock.hidden = true;
-  $('finale').hidden = !S.seen[NP - 1];
-}
-const plural = (n, a, b, c) => n % 10 === 1 && n % 100 !== 11 ? a : (n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20) ? b : c);
-render();
-
-function openPart(i){
-  if (i >= NP){ $('finale').hidden = false; tearAll($('finale')); setTimeout(() => $('finale').scrollIntoView({behavior: reduced ? 'auto' : 'smooth', block: 'center'}), 120); return; }
-  if (i < S.open) return;
-  S.open = i + 1; save(); render();
-  const s = sections[i]; tearAll(s); s.classList.remove('arrive'); void s.offsetWidth; s.classList.add('arrive');
-  setTimeout(() => s.scrollIntoView({behavior: reduced ? 'auto' : 'smooth', block: 'start'}), 120);
-}
-
-/* окно эпизода: пока ролика нет — бумажная заглушка */
-let filmI = -1;
-function showFilm(i){
-  filmI = i; const ep = DATA.episodes[i], st = $('film-stage');
-  st.querySelectorAll(':scope > :not(.pp)').forEach(n => n.remove());
-  $('film-k').textContent = 'Эпизод ' + (i + 1) + ' из ' + NP;
-  $('film-t').textContent = ep.title;
-  const nextTxt = i + 1 < NP ? 'Открыть часть ' + DATA.parts[i + 1].num : 'К финалу';
-  $('film-next').textContent = nextTxt;
-  const nb = $('film-next');
-  if (ep.video){
-    const v = document.createElement('video'); v.src = ep.video; v.controls = true; v.playsInline = true; v.preload = 'auto'; if (ep.poster) v.poster = ep.poster;
-    st.appendChild(v); nb.disabled = !S.seen[i];
-    $('film-note').textContent = S.seen[i] ? '' : 'Кнопка ниже станет доступна, когда эпизод закончится.';
-    v.addEventListener('ended', () => { S.seen[i] = true; save(); nb.disabled = false; $('film-note').textContent = ''; render(); nb.focus(); });
-    pauseVoice(); v.play().catch(() => {});
-  } else {
-    const ph = document.createElement('div'); ph.className = 'ph';
-    ph.innerHTML = '<i class="piece cut ph-sun" data-shape="ellipse" data-c="var(--mustard)"></i><i class="piece cut ph-cl" data-shape="ellipse" data-c="var(--cream)" data-rough="2"></i><i class="piece cut ph-h1" data-shape="hill" data-c="var(--sage)"></i><i class="piece cut ph-h2" data-shape="hill" data-c="var(--teal)"></i><div class="piece cut ph-lbl" data-c="var(--paper)" data-rough="2.5"><b>«' + ep.title + '»</b><span>ролик скоро будет здесь</span></div>';
-    st.appendChild(ph); nb.disabled = false;
-    $('film-note').textContent = 'Эпизод ещё в работе. Пока можно сразу идти дальше.';
-  }
-  $('film').hidden = false; tearAll($('film')); document.body.style.overflow = 'hidden'; $('film-x').focus();
-}
-function closeFilm(){ const v = $('film-stage').querySelector('video'); if (v) v.pause(); $('film').hidden = true; document.body.style.overflow = ''; const b = document.querySelector('.js-ep[data-ep="' + filmI + '"]'); if (b) b.focus({preventScroll: true}); }
-document.querySelectorAll('.js-ep').forEach(b => b.addEventListener('click', () => showFilm(+b.dataset.ep)));
-$('film-x').addEventListener('click', closeFilm);
-$('film').addEventListener('click', e => { if (e.target === $('film')) closeFilm(); });
-document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('film').hidden) closeFilm(); });
-$('film-next').addEventListener('click', () => { const i = filmI; S.seen[i] = true; save(); closeFilm(); render(); openPart(i + 1); });
-$('restart').addEventListener('click', () => { S = {open: 1, seen: []}; save(); render(); window.scrollTo({top: 0, behavior: reduced ? 'auto' : 'smooth'}); });
 
 /* ============ озвучка: у каждой части своя запись, слово подсвечивается, страница едет за голосом ============ */
 const au = $('au'), dock = $('dock');
-let pauseVoice = () => { if (!au.paused) au.pause(); };
+const movie = $('movie');
+// мультфильм и озвучка не звучат одновременно
+movie.addEventListener('play', () => { if (!au.paused) au.pause(); });
+au.addEventListener('play', () => { if (!movie.paused) movie.pause(); });
 const toast = (t, ms = 3200) => { const d = document.createElement('div'); d.className = 'toast'; d.textContent = t; document.body.appendChild(d); setTimeout(() => d.remove(), ms); };
 const fmt = v => { v = Math.max(0, Math.floor(v || 0)); return Math.floor(v / 60) + ':' + String(v % 60).padStart(2, '0'); };
 const idxAt = (arr, t) => { let lo = 0, hi = arr.length - 1, r = 0; while (lo <= hi){ const mid = (lo + hi) >> 1; if (arr[mid] <= t + .02){ r = mid; lo = mid + 1; } else hi = mid - 1; } return r; };
@@ -433,6 +290,7 @@ const P = DATA.parts.map((d, i) => {
   p.ok = true; return p;
 });
 const anyAudio = P.some(p => p.d.audio);
+if (anyAudio){ dock.hidden = false; document.body.classList.add('has-dock'); }
 if (anyAudio) $('about-voice').textContent = 'Статью я озвучиваю сам. Нажмите на любое слово, и звук начнётся с него, или включите плеер внизу.';
 let cur = -1; // часть, чья запись сейчас в плеере
 const dur = () => (au.duration && isFinite(au.duration)) ? au.duration : (P[cur] && P[cur].d.dur) || 1;
@@ -470,7 +328,7 @@ $('dk-play').addEventListener('click', () => {
 const tf = $('tofollow'); let followOff = false, autoY = NaN, userT = -1e9, everPlayed = false, hinted = false;
 try { hinted = !!localStorage.getItem(KEY + '-hint'); } catch (e) {}
 const userScroll = () => { userT = performance.now(); if (!au.paused) followOff = true; };
-['touchstart', 'touchmove', 'wheel', 'keydown', 'mousedown'].forEach(ev => window.addEventListener(ev, e => { if (!e.target.closest || !e.target.closest('.dock, .tofollow, .film')) userScroll(); }, {passive: true}));
+['touchstart', 'touchmove', 'wheel', 'keydown', 'mousedown'].forEach(ev => window.addEventListener(ev, e => { if (!e.target.closest || !e.target.closest('.dock, .tofollow, .movie')) userScroll(); }, {passive: true}));
 window.addEventListener('scroll', () => { if (!au.paused && !(Math.abs(window.scrollY - autoY) <= 3)) userScroll(); }, {passive: true});
 tf.addEventListener('click', () => { followOff = false; userT = -1e9; tf.hidden = true; });
 // нажали на слово или абзац — звучит с этого места
@@ -488,8 +346,6 @@ P.forEach(p => { if (!p.ok) return; p.els.forEach((e, k) => { e.classList.add('t
 }); }); });
 au.addEventListener('play', () => { everPlayed = true; userT = -1e9; followOff = false;
   if (!hinted){ hinted = true; try { localStorage.setItem(KEY + '-hint', '1'); } catch (er) {} setTimeout(() => toast('Нажмите на любое слово — озвучка начнётся с него'), 900); } });
-// часть дочитана голосом — показываем её эпизод
-au.addEventListener('ended', () => { const s = sections[cur], ep = s && s.querySelector('.ep'); if (!ep) return; ep.scrollIntoView({behavior: reduced ? 'auto' : 'smooth', block: 'center'}); ep.classList.remove('pulse'); void ep.offsetWidth; ep.classList.add('pulse'); });
 // каждый кадр: подсветка слова и прокрутка следуют за временем записи
 let curW = -1, curWP = -1;
 function tick(){
