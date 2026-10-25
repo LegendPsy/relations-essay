@@ -1,8 +1,29 @@
 [
-  {"title": "Невидимая шкала", "video": "video/epizod-1.mp4", "poster": "video/epizod-1.jpg"},
-  {"title": "Линейка ожидания", "video": null},
-  {"title": "Три слоя вместо крепости", "video": null},
-  {"title": "Первый кирпич", "video": null},
-  {"title": "Снять серую кальку", "video": null},
-  {"title": "Возвращение курьера", "video": null}
+ {
+  "title": "Невидимая шкала",
+  "video": "video/epizod-1.mp4",
+  "poster": "video/epizod-1.jpg"
+ },
+ {
+  "title": "Линейка ожидания",
+  "video": "video/epizod-2.mp4",
+  "poster": "video/epizod-2.jpg"
+ },
+ {
+  "title": "Три слоя вместо крепости",
+  "video": "video/epizod-3.mp4",
+  "poster": "video/epizod-3.jpg"
+ },
+ {
+  "title": "Первый кирпич",
+  "video": null
+ },
+ {
+  "title": "Снять серую кальку",
+  "video": null
+ },
+ {
+  "title": "Возвращение курьера",
+  "video": null
+ }
 ]

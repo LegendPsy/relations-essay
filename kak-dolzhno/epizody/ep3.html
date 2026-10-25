@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><title>Эпизод 3 · Три слоя вместо крепости</title>
+<style>html,body{margin:0;background:#111}canvas{display:block;width:100vw;height:auto}</style></head>
+<body><canvas id="cv" width="1920" height="1080"></canvas>
+<script src="engine.js"></script><script src="kit.js"></script><script src="ep3.js"></script>
+<script>
+build(); cues();
+const cv = document.getElementById('cv');
+window.DUR = DUR; window.CUES = CUES;
+window.renderFrame = (i, q = .95) => { const t = i / FPS; frameWithBlur(cv, renderAt, t, subFor(t)); return cv.toDataURL('image/jpeg', q); };
+window.renderTime = (t, sub) => { frameWithBlur(cv, renderAt, t, sub || subFor(t)); return cv.toDataURL("image/png"); };
+// просмотр в браузере: ?t=секунды или воспроизведение
+const q = new URLSearchParams(location.search);
+if (q.has('t')) frameWithBlur(cv, renderAt, +q.get('t'), 1);
+else if (q.has('play')) { const t0 = performance.now(); (function loop(){ const t = ((performance.now() - t0) / 1000) % DUR; renderAt(cv.getContext('2d'), t); requestAnimationFrame(loop); })(); }
+window.ready = true;
+</script></body></html>

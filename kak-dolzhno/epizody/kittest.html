@@ -1,0 +1,27 @@
+<!doctype html><html><head><meta charset="utf-8"></head><body style="margin:0"><canvas id="cv" width="1920" height="1080"></canvas>
+<script src="engine.js"></script><script src="kit.js"></script>
+<script>
+GRAIN = makeGrain(7);
+const Wd = G({z: 0});
+Wd.add(N(paper({shape: S.rect(-3200, -2200, 3200, 2200), color: COL.kraft, amp: 0, res: .5, edge: false, texScale: 3}), {z: 150}));
+const fa = makeFacade({x: -1500, y: 300, z: 80}); fa.lights[1].a = 1; fa.lights[4].a = 1; Wd.add(fa.root);
+Wd.add(N(paper({shape: S.rect(-3000, 270, 3000, 1200), color: '#b8b0a2', res: .6, amp: 3}), {z: 40, lift: 3}));
+const A = makePerson(); A.root.x = -900; A.root.y = 420; face(A, 'annoyed'); A.coat.soak = .4; Wd.add(A.root);
+const B = makePerson({body: 'B', hair: 'B', coat: '#d8b98a', coatA: '#cfae7e', coatB: '#bf9e70', lapel: '#a8865a', hairC: '#6b4a2e', skin: '#f0c09a'}); B.root.x = -600; B.root.y = 420; face(B, 'smile'); armPose(B, 0, 0, .5, 2.3); Wd.add(B.root);
+const mp = makeMoped('#7fb2d6', -1); mp.root.x = -150; mp.root.y = 420; Wd.add(mp.root);
+const cu = makePerson({body: 'jacket', hair: 'helmet', coat: '#3f8f86', coatA: '#3a857c', coatB: '#2f7068', helmet: '#f2b84e', pants: '#3b3f4f'}); cu.root.x = -170; cu.root.y = 330; sitPose(cu, true); face(cu, 'grin'); armPose(cu, 1.2, .3, 0, 0); mp.root.add(cu.root); cu.root.x = -20; cu.root.y = -90 + 108 - 120 + 120;
+const bx = makeBox(); cu.armB.grip.add(bx.root); bx.root.y = 40;
+const P = makePerson({body: 'sweater', hair: 'bob', coat: '#c86f6a', coatB: '#a8564f', coatA: '#bd655f', hairC: '#3b2a24', skin: '#eab896'}); P.root.x = 300; P.root.y = 420; face(P, 'smile'); Wd.add(P.root);
+const K = makePerson({body: 'kid', hair: 'kid', coat: '#6aa0d8', coatA: '#5f94cc', coatB: '#4f7fb5', k: .6, R: 64, stripe: '#f4d27a'}); K.root.x = 520; K.root.y = 420; face(K, 'grin'); Wd.add(K.root);
+const T = makePerson({body: 'trench', hair: 'hat', coat: '#9b9a97', coatA: '#8f8e8b', coatB: '#7d7c79', lapel: '#6f6e6b', hairC: '#4a4a52'}); T.root.x = 760; T.root.y = 420; face(T, 'calm'); Wd.add(T.root);
+const pl = makePlank(700, 80); pl.root.x = 200; pl.root.y = -380; pl.root.z = -10; Wd.add(pl.root);
+const bb = makeBubble(150, 100); bb.x = 900; bb.y = -300; Wd.add(bb);
+const tr = makeTree(); tr.x = 1300; tr.y = 330; tr.z = 60; Wd.add(tr);
+const cl = makeCloud(); cl.x = 600; cl.y = -700; cl.z = 120; Wd.add(cl);
+const cup = makeCup(1.5); cup.root.x = 1150; cup.root.y = 460; Wd.add(cup.root);
+const bx2 = makeBox(120, 100); bx2.root.x = 1500; bx2.root.y = 470; bx2.lid.r = -1; Wd.add(bx2.root);
+const R = makeRays(9, 130); bx2.root.add(R.root); R.root.y = -50; fan(R, 1, 0);
+const cv = document.getElementById('cv'), g = cv.getContext('2d');
+drawWorld(g, Wd, toCam({x: 200, y: 0, ls: Math.log(.82)}), 0); grade(g);
+window.out = cv.toDataURL('image/png');
+</script></body></html>

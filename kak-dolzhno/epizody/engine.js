@@ -155,6 +155,7 @@ function drawWorld(g, root, cam, t, opt = {}){
     const {n, m, z} = it; const dist = F + z - cam.z; if (dist < 30) continue;
     const a = it.a; if (a <= .003) continue;
     const M = mul(viewM(cam, z), m), sp = n.sp, bw = n.blur !== null ? n.blur : dofK(z, opt);
+    if (offscreen(M, sp, 40 + bw * 3)) continue;
     if (!it.dyn){
       const bk = bake(n, sp, bw), k = 1 / bk.res;
       g.setTransform(M[0] * k, M[1] * k, M[2] * k, M[3] * k, M[0] * bk.x0 + M[2] * bk.y0 + M[4], M[1] * bk.x0 + M[3] * bk.y0 + M[5]);
@@ -176,6 +177,8 @@ function drawWorld(g, root, cam, t, opt = {}){
   }
   g.setTransform(1, 0, 0, 1, 0, 0); g.filter = 'none'; g.shadowColor = 'transparent'; g.globalAlpha = 1;
 }
+// вырезка целиком за краем кадра — не рисуем
+function offscreen(M, sp, pad){ let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9; [[sp.x0, sp.y0], [sp.x0 + sp.w, sp.y0], [sp.x0, sp.y0 + sp.h], [sp.x0 + sp.w, sp.y0 + sp.h]].forEach(([x, y]) => { const X = M[0] * x + M[2] * y + M[4], Y = M[1] * x + M[3] * y + M[5]; x0 = Math.min(x0, X); x1 = Math.max(x1, X); y0 = Math.min(y0, Y); y1 = Math.max(y1, Y); }); const sc = Math.hypot(M[0], M[1]) * pad; return x1 < -sc || y1 < -sc || x0 > W + sc || y0 > H + sc; }
 // экранная матрица картинки узла (для масок)
 function viewM(cam, z){ const s = F / (F + z - cam.z), cr = Math.cos(cam.roll || 0), sr = Math.sin(cam.roll || 0); return [cr * s, sr * s, -sr * s, cr * s, W / 2 + (-cam.x * cr + cam.y * sr) * s, H / 2 + (-cam.x * sr - cam.y * cr) * s]; }
 function spriteM(node, cam, t){ const step = Math.floor(t * 12 + 1e-6), b = base(node, step), m = mul(b.M, local(node, step)), z = node.z !== null ? node.z : b.z + node.dz, M = mul(viewM(cam, z), m), sp = node.sp, k = 1 / sp.res; return [M[0] * k, M[1] * k, M[2] * k, M[3] * k, M[0] * sp.x0 + M[2] * sp.y0 + M[4], M[1] * sp.x0 + M[3] * sp.y0 + M[5]]; }
