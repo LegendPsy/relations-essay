@@ -104,6 +104,16 @@ function walkPose(p, on, ph, amp = 1){
 }
 function sitPose(p, s){ p.legs.forEach(l => l.vis = !s); p.legsSit.forEach(l => l.vis = s); if (s) p.hip.y = -108; }
 function armPose(p, bS, bE, fS, fE){ p.armB.sh.r = bS; p.armB.el.r = bE; p.armF.sh.r = fS; p.armF.el.r = fE; }
+// рука на двух булавках дотягивается кистью до точки (tx, ty) мира; bend — в какую сторону локоть
+function ik(p, arm, tx, ty, sp, bend = 1){
+  const k = p.root.sx || 1, [sx, sy] = worldOf(arm.sh, sp), L1 = 76 * k, L2 = 84 * k;
+  const dx = tx - sx, dy = ty - sy, d = clamp(Math.hypot(dx, dy), 14 * k, L1 + L2 - 2 * k);
+  const phi = Math.atan2(dy, dx), al = Math.acos(clamp((L1 * L1 + d * d - L2 * L2) / (2 * L1 * d), -1, 1));
+  const t1 = phi + bend * al, ex = sx + Math.cos(t1) * L1, ey = sy + Math.sin(t1) * L1, t2 = Math.atan2(ty - ey, tx - ex);
+  arm.sh.r = t1 - Math.PI / 2 - p.hip.r - p.root.r; arm.el.r = ((t2 - t1 + 3 * Math.PI) % TAU) - Math.PI;
+}
+// на корточках: ноги расходятся на булавках, корпус опускается (k от 0 до 1)
+function crouchPose(p, k){ const r = .95 * k; p.legs[0].r = r; p.legs[1].r = -r; p.hip.y = -(116 * Math.cos(r) + 4); }
 
 /* ---------- предметы серии ---------- */
 function makeRays(n, len, c1 = COL.mustard, c2 = '#f4d27a'){

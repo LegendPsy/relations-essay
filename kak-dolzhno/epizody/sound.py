@@ -526,6 +526,216 @@ def score_ep3(mx):
     mx.add('m', b(63), kalimba(midi(74), dur=2.6, vel=0.3))
 
 
+# ---------- шумы эпизода 4 ----------
+def clank(v=0.5):
+    n = int(0.5 * SR); t = np.arange(n) / SR; y = np.zeros(n)
+    for f, a, d in ((523, 1, .18), (1187, .6, .12), (1931, .4, .08), (2797, .25, .05)):
+        y += a * np.sin(2 * np.pi * f * t) * np.exp(-t / d)
+    return (y * 0.3 + hp(noise(n), 2000) * np.exp(-t / 0.004) * 0.4) * v
+
+
+def sigh(v=0.4, dur=0.9):
+    n = int(dur * SR); t = np.arange(n) / SR; y = np.zeros(n)
+    for m in (62, 65, 69):
+        f = midi(m) * (1 - 0.06 * (t / dur) ** 1.5)
+        saw = 2 * ((np.cumsum(f) / SR) % 1) - 1
+        y += lp(saw, 1400)
+    return y * np.sin(np.pi * np.minimum(1, t / dur)) ** 1.5 * v * 0.18
+
+
+def ticks(dur=4.0, rate=8, v=0.3):
+    n = int(dur * SR); y = np.zeros(n)
+    for k in range(int(dur * rate)):
+        i = int(k / rate * SR); c = wclick(v * (0.7 + 0.3 * rng.random()))
+        y[i:i + len(c)] += c[: n - i]
+    return y
+
+
+def buzz(dur=2.5, v=0.3):
+    n = int(dur * SR); t = np.arange(n) / SR
+    hum = np.sin(2 * np.pi * 100 * t) + 0.5 * np.sin(2 * np.pi * 200 * t) + 0.3 * np.sign(np.sin(2 * np.pi * 50 * t)) * 0.3
+    gate = (lp(rng.random(n), 12) > 0.5).astype(float) * 0.7 + 0.3
+    return lp(hum, 900) * gate * np.minimum(1, t / 0.2) * np.minimum(1, (dur - t) / 0.2) * v * 0.25
+
+
+def hammer(v=0.6):
+    n = int(0.4 * SR); t = np.arange(n) / SR
+    ring = np.sin(2 * np.pi * 2300 * t) * np.exp(-t / 0.03) * 0.25 + np.sin(2 * np.pi * 3400 * t) * np.exp(-t / 0.02) * 0.15
+    return (thud(0.7, 140)[:n] + ring + bp(noise(n), 1000, 6000) * np.exp(-t / 0.006) * 0.5) * v
+
+
+def clay(v=0.5):
+    n = int(0.35 * SR); t = np.arange(n) / SR
+    return (thud(0.8, 85)[:n] + bp(noise(n), 300, 2500) * np.exp(-t / 0.03) * 0.5 * (1 + 0.5 * np.sign(np.sin(2 * np.pi * 60 * t)))) * v
+
+
+def pat(v=0.4):
+    n = int(0.15 * SR); t = np.arange(n) / SR
+    return (lp(noise(n), 1500) * np.exp(-t / 0.015) + np.sin(2 * np.pi * 180 * t) * np.exp(-t / 0.03) * 0.4) * v
+
+
+def birdcall(v=0.4):
+    out = np.zeros(int(0.7 * SR))
+    for k, (f0, f1) in enumerate(((1700, 2500), (1900, 2900))):
+        n = int(0.22 * SR); t = np.arange(n) / SR
+        f = f0 + (f1 - f0) * (t / 0.22) ** 0.7 + 90 * np.sin(2 * np.pi * 28 * t)
+        y = np.sin(2 * np.pi * np.cumsum(f) / SR) * np.sin(np.pi * t / 0.22) ** 1.5
+        i = int(k * 0.27 * SR); out[i:i + n] += y
+    return out * v * 0.35
+
+
+# ---------- музыка эпизода 4 ----------
+def score_ep4(mx):
+    b = lambda k: k * BEAT
+    pat = [[74, 69, 78, 69], [76, 69, 78, 69]]
+    # А. гантель: тема серии, на надрезах съезжает вниз
+    ostinato(mx, 0, 4, pat, vel=(0.36, 0.22))
+    mx.add('m', b(0), pad([50, 54, 57], 3.0, vel=0.42)); mx.add('m', b(0), bass(midi(38), 2.4, 0.42))
+    ostinato(mx, 4, 7, [[74, 69, 77, 69], [73, 69, 76, 68]], vel=(0.3, 0.18))
+    mx.add('m', b(4), pad([50, 53, 57], 2.2, vel=0.38)); mx.add('m', b(4), bass(midi(37), 2.0, 0.4))
+    mx.add('m', b(8), pad([45, 50, 53], 2.4, vel=0.32, att=0.6))
+    # шаги к стене с дисками: лёгкая калимба
+    ostinato(mx, 10, 14, [[69, 74, 76, 74], [71, 74, 78, 74]], vel=(0.28, 0.18), pan=0.25)
+    # Б. механизм: с каждым диском аккорд на ступень выше, пульс маримбы
+    for k in range(2 * (22 - 14)):
+        tt = b(14) + k * BEAT / 2
+        mx.add('m', tt, marimba(midi([62, 69, 66, 69][k % 4] + (k // 4)), dur=0.45, vel=0.18 + k * 0.006), pan=0.25 if k % 2 else -0.15)
+    for i, ch in enumerate(([38, 50, 54, 57], [40, 52, 55, 59], [42, 54, 57, 61], [43, 55, 59, 62])):
+        mx.add('m', b(14 + i * 2), pad(ch[1:], 1.4, vel=0.32 + i * 0.03, att=0.15, rel=0.5)); mx.add('m', b(14 + i * 2), bass(midi(ch[0]), 1.2, 0.38))
+    # упрямый диск: подвешенный аккорд, ожидание
+    for k in range(3):
+        mx.add('m', b(22 + k), pad([57, 62, 64, 69], 0.9, vel=0.3, att=0.05, rel=0.4)); mx.add('m', b(22 + k), bass(midi(45), 0.8, 0.36))
+    # удар планки: тишина, низкое пианино
+    mx.add('m', b(26), piano_low([38, 50], 2.4, 0.4)); mx.add('m', b(28), piano_low([36, 48], 2.0, 0.32))
+    # В. порог: молоток в долю, мелочи прыгают — короткая фраза вверх и ответ вниз
+    mx.add('m', b(30), pad([43, 50, 55], 3.6, vel=0.3, att=0.4))
+    for r, t0 in enumerate((22.5, 23.75, 25.0)):
+        for k, m in enumerate([74, 78, 81 + r]):
+            mx.add('m', t0 + k * 0.08, kalimba(midi(m), dur=0.9, vel=0.26), pan=-0.3 + k * 0.3)
+        for k, m in enumerate([79, 76, 74 - r]):
+            mx.add('m', t0 + 0.5 + k * 0.1, kalimba(midi(m), dur=0.9, vel=0.2, damp=True), pan=0.3 - k * 0.3)
+    mx.add('m', b(36), pad([43, 47, 50], 2.6, vel=0.3)); mx.add('m', b(40), pad([40, 47, 52], 3.2, vel=0.3, att=0.8))
+    # Г. первый кирпич: тихо, потом тёплый пульс маримбы и тема в ре мажоре
+    mx.add('m', b(44), pad([38, 45, 50], 4.0, vel=0.28, att=1.0))
+    mx.add('m', b(48), pad([43, 50, 55, 59], 3.0, vel=0.32, att=0.6)); mx.add('m', b(48), bass(midi(43), 2.4, 0.38))
+    mx.add('m', b(52), pad([45, 50, 54, 57], 2.4, vel=0.32, att=0.4))
+    for k in range(2 * (64 - 55)):
+        tt = 34.7 + k * BEAT / 2
+        if tt < 39.6: mx.add('m', tt, marimba(midi([50, 57, 54, 57][k % 4]), dur=0.5, vel=0.16 + min(k, 8) * 0.012), pan=-0.2 if k % 2 else 0.15)
+    ostinato(mx, 57, 63, [[74, 69, 78, 69], [76, 71, 81, 78]], vel=(0.34, 0.22), fade=8)
+    mx.add('m', b(56), pad([50, 54, 57, 62], 2.6, vel=0.42)); mx.add('m', b(56), bass(midi(38), 2.4, 0.42))
+    mx.add('m', b(60), pad([43, 50, 55, 59], 2.4, vel=0.4)); mx.add('m', b(60), bass(midi(43), 2.2, 0.4))
+    mx.add('m', b(62), pad([50, 54, 57, 62, 66], 2.6, vel=0.36, att=0.3)); mx.add('m', b(63), kalimba(midi(78), dur=2.6, vel=0.3))
+
+
+# ---------- шумы эпизода 5 ----------
+def clink(v=0.45):
+    n = int(0.6 * SR); t = np.arange(n) / SR; y = np.zeros(n)
+    for f, a, d in ((1320, 1, .25), (2510, .5, .15), (3870, .3, .08)):
+        y += a * np.sin(2 * np.pi * f * t) * np.exp(-t / d)
+    th = thud(0.3, 160); th = np.pad(th, (0, max(0, n - len(th))))[:n]
+    return (y * 0.25 + th * 0.5) * v
+
+
+def bubble(dur=2.0, v=0.3):
+    n = int(dur * SR); y = np.zeros(n)
+    for k in range(int(dur * 9)):
+        i = int(rng.random() * (n - 0.06 * SR)); m = int(0.05 * SR); tt = np.arange(m) / SR
+        f = 300 + rng.random() * 500
+        y[i:i + m] += np.sin(2 * np.pi * np.cumsum(f * (1 + tt * 12)) / SR) * np.exp(-tt / 0.012)
+    return y * np.minimum(1, np.arange(n) / SR / 0.3) * v * 0.3
+
+
+def blocks(v=0.5):
+    out = np.zeros(int(0.45 * SR))
+    for k, f in ((0, 620), (0.09, 540), (0.16, 700)):
+        n = int(0.12 * SR); t = np.arange(n) / SR; i = int(k * SR)
+        out[i:i + n] += (np.sin(2 * np.pi * f * t) * np.exp(-t / 0.025) + bp(noise(n), 800, 4000) * np.exp(-t / 0.004) * 0.6) * (1 - k * 2)
+    return out * v
+
+
+def popper(v=0.6):
+    n = int(0.9 * SR); t = np.arange(n) / SR
+    y = pop(0.9)[:n] if len(pop(0.9)) >= n else np.pad(pop(0.9), (0, n - len(pop(0.9))))
+    return (y + crumble_sfx(0.3, 0.9)[:n] * 0.6) * v
+
+
+def bell(v=0.4, f0=1568):
+    n = int(2.4 * SR); t = np.arange(n) / SR; y = np.zeros(n)
+    for r, a, d in ((1, 1, 1.2), (2.76, .4, .5), (5.4, .2, .25), (8.9, .1, .12)):
+        y += a * np.sin(2 * np.pi * f0 * r * t) * np.exp(-t / d)
+    return y * env(n, 0.002) * v * 0.3
+
+
+# ---------- музыка эпизода 5 ----------
+def score_ep5(mx):
+    b = lambda k: k * BEAT
+    # А. дом в разрезе: тихий пэд, редкая калимба
+    mx.add('m', b(0), pad([50, 57, 62], 5.0, vel=0.32, att=1.4))
+    for k, m in enumerate([74, 78, 76, 69]):
+        mx.add('m', b(2 + k * 2), kalimba(midi(m), dur=2.2, vel=0.26), pan=-0.3 + k * 0.2)
+    # Б. ужин: тема серии мягко, колпак — серая пауза
+    ostinato(mx, 8, 11, [[74, 69, 78, 69], [76, 69, 78, 69]], vel=(0.32, 0.2))
+    mx.add('m', b(8), pad([50, 54, 57], 2.0, vel=0.36)); mx.add('m', b(8), bass(midi(38), 1.8, 0.4))
+    mx.add('m', b(11.5), pad([45, 48, 52], 3.4, vel=0.3, att=0.3))
+    # снял кальку: тёплые аккорды «гитары» — калимба перебором
+    arp = [[50, 57, 62, 66], [47, 54, 59, 62], [43, 50, 55, 59], [45, 52, 57, 61]]
+    for i, ch in enumerate(arp + arp[:2]):
+        t0 = b(17 + i * 2)
+        mx.add('m', t0, bass(midi(ch[0]), 1.2, 0.38))
+        for k, m in enumerate(ch[1:] + [ch[2] + 12]):
+            mx.add('m', t0 + k * BEAT / 2, kalimba(midi(m + 12), dur=1.4, vel=0.26), pan=-0.3 + k * 0.2)
+        mx.add('m', t0, pad([m + 12 for m in ch[1:]], 1.3, vel=0.24, att=0.2, rel=0.6))
+    # В. детская: лёгкая тема выше, призрак линейки — минорная тень, росток — подъём
+    ostinato(mx, 30, 34, [[81, 76, 83, 76], [79, 76, 83, 76]], vel=(0.3, 0.18), pan=0.25)
+    mx.add('m', b(30), pad([55, 59, 62], 2.4, vel=0.3)); mx.add('m', b(34.5), pad([55, 58, 62], 1.8, vel=0.3)); mx.add('m', b(34.5), bass(midi(43), 1.6, 0.36))
+    mx.add('m', b(37), pad([50, 55, 59], 2.0, vel=0.3, att=0.5))
+    for k, m in enumerate([67, 71, 74, 79, 83]):
+        mx.add('m', 25.0 + k * 0.0833, marimba(midi(m), dur=0.6, vel=0.26), pan=-0.2 + k * 0.1)
+    ostinato(mx, 41, 48, [[79, 74, 83, 74], [81, 74, 86, 83]], vel=(0.34, 0.22))
+    for i, ch in enumerate(([43, 55, 59, 62], [40, 55, 59, 64], [48, 55, 60, 64], [50, 57, 62, 66])):
+        mx.add('m', b(41 + i * 2), pad(ch[1:], 1.6, vel=0.36)); mx.add('m', b(41 + i * 2), bass(midi(ch[0]), 1.4, 0.4))
+    # Г. отъезд: калимба с пэдом и последняя нота
+    mx.add('m', b(50), pad([50, 57, 62, 66], 6.0, vel=0.36, att=1.2))
+    mx.add('m', b(50), bass(midi(38), 3.0, 0.38)); mx.add('m', b(56), pad([43, 50, 55, 59], 3.0, vel=0.34, att=0.6)); mx.add('m', b(56), bass(midi(43), 2.4, 0.36))
+    mx.add('m', b(60), pad([50, 54, 57, 62], 3.4, vel=0.36, att=0.5)); mx.add('m', b(60), bass(midi(38), 3.0, 0.38))
+    mx.add('m', b(63), kalimba(midi(74), dur=2.8, vel=0.3))
+
+
+def score_ep6(mx):
+    b = lambda k: k * BEAT
+    # А. улица: тема серии в ре мажоре, колючка — короткая минорная тень
+    pat = [[74, 69, 78, 69], [76, 69, 78, 69], [74, 69, 81, 78], [76, 71, 78, 69]]
+    ostinato(mx, 0, 3, pat, vel=(0.32, 0.2))
+    mx.add('m', b(0), pad([50, 54, 57], 2.0, vel=0.42)); mx.add('m', b(0), bass(midi(38), 1.8, 0.44))
+    mx.add('m', b(3.5), pad([50, 53, 57], 1.2, vel=0.3, att=0.1, rel=0.6))
+    ostinato(mx, 6, 12, pat, vel=(0.32, 0.2))
+    mx.add('m', b(6), pad([50, 54, 57], 2.4, vel=0.4)); mx.add('m', b(6), bass(midi(38), 2.2, 0.42))
+    mx.add('m', b(10), pad([47, 54, 59], 2.4, vel=0.38)); mx.add('m', b(10), bass(midi(47), 2.2, 0.4))
+    # огонёк перешёл к прохожему: тёплый подъём
+    ostinato(mx, 13, 18, [[79, 74, 83, 74], [81, 74, 86, 83]], vel=(0.34, 0.22))
+    mx.add('m', b(13), pad([43, 50, 55, 59], 3.0, vel=0.42)); mx.add('m', b(13), bass(midi(43), 2.4, 0.42))
+    mx.add('m', b(16), pad([45, 52, 57, 61], 2.0, vel=0.36)); mx.add('m', b(16), bass(midi(45), 1.8, 0.4))
+    # Б. вечер: мелодию ведут сами окна, под ними тихий пэд
+    for i, ch in enumerate(([50, 57, 62, 66], [47, 54, 59, 62], [43, 50, 55, 59])):
+        mx.add('m', b(18 + i * 4), pad(ch[1:], 4 * BEAT + 0.4, vel=0.3, att=0.8, rel=1.0)); mx.add('m', b(18 + i * 4), bass(midi(ch[0]), 2.2, 0.32))
+    # В. двор из второго ролика: соль мажор, курьер вовремя
+    patg = [[79, 74, 83, 74], [81, 74, 83, 76], [79, 74, 86, 83], [81, 76, 83, 74]]
+    ostinato(mx, 30, 44, patg, vel=(0.36, 0.22))
+    for i, ch in enumerate(([43, 47, 50, 55], [40, 47, 52, 55], [36, 43, 48, 52], [38, 45, 50, 54])):
+        mx.add('m', b(30 + i * 3.5), pad(ch, 2.2, vel=0.42)); mx.add('m', b(30 + i * 3.5), bass(midi(ch[0]), 2.0, 0.44))
+    # сгибы: музыка затихает до пэда, каждый сгиб — своя нота вверх
+    mx.add('m', b(44), pad([43, 50, 55, 59], 6 * BEAT, vel=0.3, att=0.6, rel=0.8))
+    for k, m in enumerate([67, 71, 74, 76, 79, 83]):
+        mx.add('m', 28.1 + k * 0.63, kalimba(midi(m), dur=1.2, vel=0.28), pan=-0.2 + k * 0.08)
+    # Г. звезда у курьера и облёт города: вся тема, широко, затем последняя нота
+    ostinato(mx, 52, 64, pat, vel=(0.36, 0.22), fade=10)
+    for i, ch in enumerate(([50, 57, 62, 66], [43, 50, 55, 59], [47, 54, 59, 62], [45, 52, 57, 61], [50, 57, 62, 66])):
+        mx.add('m', b(50 + i * 3), pad(ch[1:], 2.4, vel=0.42)); mx.add('m', b(50 + i * 3), bass(midi(ch[0]), 2.2, 0.42))
+    mx.add('m', b(65), pad([50, 54, 57, 62, 66], 3.6, vel=0.34, att=0.4))
+    mx.add('m', b(66), kalimba(midi(78), dur=3.0, vel=0.3))
+
+
 def render_cues(mx, cues):
     for c in cues:
         t, ty, p = c['t'], c['type'], c.get('pan', 0.0)
@@ -593,6 +803,33 @@ def render_cues(mx, cues):
         elif ty == 'drone': pass
         elif ty == 'latch': mx.add('s', t, latch(0.55), p)
         elif ty == 'scatter': mx.add('s', t, crumble_sfx(0.55, 1.5), p); mx.add('s', t + 0.1, tissue(0.5, 1.4), p)
+        elif ty == 'clank': mx.add('s', t, clank(v or 0.5), p)
+        elif ty == 'sigh': mx.add('m', t, sigh(0.5), 0)
+        elif ty == 'tick': mx.add('s', t, ticks(c.get('dur', 4.0), c.get('rate', 8), 0.28), p)
+        elif ty == 'lock':
+            mx.add('s', t, wclick(0.6), p); mx.add('m', t + 0.17, kalimba(midi(c['note'] + 12), dur=1.4, vel=0.3), p)
+        elif ty == 'strain': mx.add('s', t, creak(0.3, 0.3), p)
+        elif ty == 'buzz': mx.add('s', t, buzz(c.get('dur', 2.5), 0.35), 0)
+        elif ty == 'hammer': mx.add('s', t, hammer(0.6), p)
+        elif ty == 'clay': mx.add('s', t, clay(v or 0.5), p)
+        elif ty == 'pat': mx.add('s', t, pat(0.45), p)
+        elif ty == 'glow': mx.add('m', t, pad([62, 66, 69, 74], 2.2, vel=0.3, att=0.3, rel=1.2), 0)
+        elif ty == 'bird': mx.add('s', t, birdcall(v or 0.4), p)
+        elif ty == 'clink': mx.add('s', t, clink(0.45), p)
+        elif ty == 'cap': mx.add('s', t - 0.1, whoosh(0.25, 0.5, up=False), 0, 0.6); mx.add('s', t, tissue(0.4, 0.6), 0)
+        elif ty == 'bubble': mx.add('s', t, bubble(c.get('dur', 2.0), 0.35), p)
+        elif ty == 'blocks': mx.add('s', t, blocks(0.5), p)
+        elif ty == 'popper': mx.add('s', t, popper(0.55), p)
+        elif ty == 'bell': mx.add('m', t, bell(0.5), p)
+        elif ty == 'hinge':
+            mx.add('s', t, creak(0.32, 0.35), p)
+            if c.get('close'): mx.add('s', t + 0.3, thud(0.25, 120), p)
+        elif ty == 'chime':
+            for k, m in enumerate((86, 90, 93) if c.get('hi') else (81, 86)): mx.add('m', t + k * 0.06, kalimba(midi(m), dur=1.8, vel=0.3), p + k * 0.1)
+        elif ty == 'unfurl': mx.add('m', t, pad([62, 66, 69, 74], 1.8, vel=0.26, att=0.2, rel=1.0), 0)
+        elif ty == 'light': mx.add('m', t, kalimba(midi(c['note']), dur=1.4, vel=0.24), p)
+        elif ty == 'crease': mx.add('s', t, slide(0.4, 0.1), p, v or 0.5); mx.add('s', t + 0.09, wclick(0.22), p)
+        elif ty == 'sprout': mx.add('s', t, pop(0.25), p); mx.add('m', t, kalimba(midi(c['note']), dur=1.2, vel=0.16), p)
 
 
 def main():
@@ -600,7 +837,7 @@ def main():
     cues = json.load(open(cues_path))
     dur = float(sys.argv[4]) if len(sys.argv) > 4 else 40.0
     mx = Mix(dur)
-    {'ep1': score_ep1, 'ep2': score_ep2, 'ep3': score_ep3}[ep](mx)
+    {'ep1': score_ep1, 'ep2': score_ep2, 'ep3': score_ep3, 'ep4': score_ep4, 'ep5': score_ep5, 'ep6': score_ep6}[ep](mx)
     render_cues(mx, cues)
     music = reverb(mx.music, 1.6, 0.25) * 0.5
     sfx = reverb(mx.sfx, 0.7, 0.12) * 0.9

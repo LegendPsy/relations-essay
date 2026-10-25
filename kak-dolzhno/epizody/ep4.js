@@ -39,15 +39,6 @@ function makeBrick(c = COL.terra){
   root.add(glow, cold, warm);
   return {root, glow, cold, warm};
 }
-// плоская рука-два-сустава: ставит кисть в точку (tx, ty) мира
-function ik(p, arm, tx, ty, sp, bend = 1){
-  const [sx, sy] = worldOf(arm.sh, sp), L1 = 76, L2 = 84;
-  const dx = tx - sx, dy = ty - sy, d = clamp(Math.hypot(dx, dy), 14, L1 + L2 - 2);
-  const phi = Math.atan2(dy, dx), al = Math.acos(clamp((L1 * L1 + d * d - L2 * L2) / (2 * L1 * d), -1, 1));
-  const t1 = phi + bend * al, ex = sx + Math.cos(t1) * L1, ey = sy + Math.sin(t1) * L1, t2 = Math.atan2(ty - ey, tx - ex);
-  arm.sh.r = t1 - Math.PI / 2 - p.hip.r - p.root.r; arm.el.r = ((t2 - t1 + 3 * Math.PI) % TAU) - Math.PI;
-}
-
 function build(){
   GRAIN = makeGrain(9);
   WORLD = G({z: 0});
@@ -78,8 +69,9 @@ function build(){
   // 4.2 щит с восемью дисками, лампочки, люстра и рычаг
   WORLD.add(N(paper({shape: S.rrect(PX4 - 480, -680, PX4 + 480, 60, 26), color: '#9a6e48', res: .8, amp: 2.4, deco: g => { g.strokeStyle = 'rgba(60,30,10,.25)'; g.lineWidth = 5; for (let y = -640; y < 40; y += 70){ g.beginPath(); g.moveTo(PX4 - 470, y); g.lineTo(PX4 + 470, y + 8); g.stroke(); } }}), {z: 60, lift: 6}));
   E4.discs = Array.from({length: 8}, (_, i) => {
-    const d = G({x: PX4 + [-330, -110, 110, 330][i % 4], y: [-430, -180][Math.floor(i / 4)], z: 58, dyn: true});
-    d.add(N(paper({shape: S.ell(0, 0, 92, 92, 44), color: i % 2 ? '#f1e6cf' : '#efdcb8', res: 2, amp: 1.4, deco: g => { g.strokeStyle = 'rgba(120,80,40,.3)'; g.lineWidth = 4; g.beginPath(); g.arc(0, 0, 80, 0, TAU); g.stroke(); for (let k = 0; k < 12; k++){ const a = k / 12 * TAU; g.beginPath(); g.moveTo(Math.cos(a) * 84, Math.sin(a) * 84); g.lineTo(Math.cos(a) * 91, Math.sin(a) * 91); g.stroke(); } }}), {lift: 5}));
+    const d = G({x: PX4 + [-330, -110, 110, 330][i % 4], y: [-430, -180][Math.floor(i / 4)], z: 58});
+    // тень считаем на лету только у самого диска: у мелких значков она почти не видна
+    d.add(N(paper({shape: S.ell(0, 0, 92, 92, 44), color: i % 2 ? '#f1e6cf' : '#efdcb8', res: 2, amp: 1.4, deco: g => { g.strokeStyle = 'rgba(120,80,40,.3)'; g.lineWidth = 4; g.beginPath(); g.arc(0, 0, 80, 0, TAU); g.stroke(); for (let k = 0; k < 12; k++){ const a = k / 12 * TAU; g.beginPath(); g.moveTo(Math.cos(a) * 84, Math.sin(a) * 84); g.lineTo(Math.cos(a) * 91, Math.sin(a) * 91); g.stroke(); } }}), {lift: 5, dyn: true}));
     d.add(N(paper({shape: S.ell(0, -50, 34, 34, 26), color: '#3b3a4c', res: 2, amp: .8}), {lift: 1}), icon(i), N(paper({shape: S.ell(0, 0, 10, 10, 14), color: '#c9a24a', res: 3, amp: .5}), {lift: 2}));
     d.a0 = (1 + (i * 5) % 11) * TAU / 12;
     WORLD.add(d); return d;
