@@ -293,7 +293,7 @@ main { width: min(100% - 24px, var(--col)); margin: 40px auto 0; }
   </div>
   <div class="ep-txt">
     <p class="ep-k">Эпизод 2 из 6</p>
-    <p class="ep-t">Курьер у подъезда</p>
+    <p class="ep-t">Линейка ожидания</p>
     <p class="ep-d">После эпизода откроется часть 2</p>
   </div>
   <button type="button" class="ep-btn js-ep" data-ep="1"><span class="ep-ic cut" data-shape="ellipse" data-c="var(--mustard)" data-rough="1.4" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5l12 7-12 7z"/></svg></span><span class="ep-bt">Посмотреть эпизод</span></button>
@@ -326,7 +326,7 @@ main { width: min(100% - 24px, var(--col)); margin: 40px auto 0; }
   </div>
   <div class="ep-txt">
     <p class="ep-k">Эпизод 3 из 6</p>
-    <p class="ep-t">Молоток и тарелки</p>
+    <p class="ep-t">Три слоя вместо крепости</p>
     <p class="ep-d">После эпизода откроется часть 3</p>
   </div>
   <button type="button" class="ep-btn js-ep" data-ep="2"><span class="ep-ic cut" data-shape="ellipse" data-c="var(--mustard)" data-rough="1.4" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5l12 7-12 7z"/></svg></span><span class="ep-bt">Посмотреть эпизод</span></button>
@@ -384,7 +384,7 @@ main { width: min(100% - 24px, var(--col)); margin: 40px auto 0; }
   </div>
   <div class="ep-txt">
     <p class="ep-k">Эпизод 5 из 6</p>
-    <p class="ep-t">Спасибо за ужин</p>
+    <p class="ep-t">Снять серую кальку</p>
     <p class="ep-d">После эпизода откроется часть 5</p>
   </div>
   <button type="button" class="ep-btn js-ep" data-ep="4"><span class="ep-ic cut" data-shape="ellipse" data-c="var(--mustard)" data-rough="1.4" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5l12 7-12 7z"/></svg></span><span class="ep-bt">Посмотреть эпизод</span></button>
@@ -417,7 +417,7 @@ main { width: min(100% - 24px, var(--col)); margin: 40px auto 0; }
   </div>
   <div class="ep-txt">
     <p class="ep-k">Эпизод 6 из 6</p>
-    <p class="ep-t">Хорошее — просто хорошее</p>
+    <p class="ep-t">Возвращение курьера</p>
     <p class="ep-d">После эпизода дальше финал</p>
   </div>
   <button type="button" class="ep-btn js-ep" data-ep="5"><span class="ep-ic cut" data-shape="ellipse" data-c="var(--mustard)" data-rough="1.4" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5l12 7-12 7z"/></svg></span><span class="ep-bt">Посмотреть эпизод</span></button>
@@ -464,7 +464,7 @@ main { width: min(100% - 24px, var(--col)); margin: 40px auto 0; }
 </div>
 
 <script>
-const DATA = {"parts": [{"num": "", "title": "Вступление"}, {"num": "1", "title": "Курьер у подъезда и странная бытовая бухгалтерия"}, {"num": "2", "title": "Незаметная функция возмущения"}, {"num": "3", "title": "Счёт самому себе"}, {"num": "4", "title": "Близкие, ужин и детские игрушки"}, {"num": "5", "title": "Парадокс подкрепления и то, как на самом деле меняется мир вокруг"}], "episodes": [{"title": "Невидимая шкала", "video": null}, {"title": "Курьер у подъезда", "video": null}, {"title": "Молоток и тарелки", "video": null}, {"title": "Первый кирпич", "video": null}, {"title": "Спасибо за ужин", "video": null}, {"title": "Хорошее — просто хорошее", "video": null}]};
+const DATA = {"parts": [{"num": "", "title": "Вступление"}, {"num": "1", "title": "Курьер у подъезда и странная бытовая бухгалтерия"}, {"num": "2", "title": "Незаметная функция возмущения"}, {"num": "3", "title": "Счёт самому себе"}, {"num": "4", "title": "Близкие, ужин и детские игрушки"}, {"num": "5", "title": "Парадокс подкрепления и то, как на самом деле меняется мир вокруг"}], "episodes": [{"title": "Невидимая шкала", "video": "video/epizod-1.mp4", "poster": "video/epizod-1.jpg"}, {"title": "Линейка ожидания", "video": null}, {"title": "Три слоя вместо крепости", "video": null}, {"title": "Первый кирпич", "video": null}, {"title": "Снять серую кальку", "video": null}, {"title": "Возвращение курьера", "video": null}]};
 const NP = DATA.parts.length, KEY = 'kak-dolzhno-v1';
 const $ = id => document.getElementById(id);
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -567,7 +567,7 @@ function showFilm(i){
   $('film-next').textContent = nextTxt;
   const nb = $('film-next');
   if (ep.video){
-    const v = document.createElement('video'); v.src = ep.video; v.controls = true; v.playsInline = true; v.preload = 'auto';
+    const v = document.createElement('video'); v.src = ep.video; v.controls = true; v.playsInline = true; v.preload = 'auto'; if (ep.poster) v.poster = ep.poster;
     st.appendChild(v); nb.disabled = !S.seen[i];
     $('film-note').textContent = S.seen[i] ? '' : 'Кнопка ниже станет доступна, когда эпизод закончится.';
     v.addEventListener('ended', () => { S.seen[i] = true; save(); nb.disabled = false; $('film-note').textContent = ''; render(); nb.focus(); });

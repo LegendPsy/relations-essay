@@ -1,8 +1,8 @@
 [
-  {"title": "Невидимая шкала", "video": null},
-  {"title": "Курьер у подъезда", "video": null},
-  {"title": "Молоток и тарелки", "video": null},
+  {"title": "Невидимая шкала", "video": "video/epizod-1.mp4", "poster": "video/epizod-1.jpg"},
+  {"title": "Линейка ожидания", "video": null},
+  {"title": "Три слоя вместо крепости", "video": null},
   {"title": "Первый кирпич", "video": null},
-  {"title": "Спасибо за ужин", "video": null},
-  {"title": "Хорошее — просто хорошее", "video": null}
+  {"title": "Снять серую кальку", "video": null},
+  {"title": "Возвращение курьера", "video": null}
 ]

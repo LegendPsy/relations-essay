@@ -382,7 +382,7 @@ function showFilm(i){
   $('film-next').textContent = nextTxt;
   const nb = $('film-next');
   if (ep.video){
-    const v = document.createElement('video'); v.src = ep.video; v.controls = true; v.playsInline = true; v.preload = 'auto';
+    const v = document.createElement('video'); v.src = ep.video; v.controls = true; v.playsInline = true; v.preload = 'auto'; if (ep.poster) v.poster = ep.poster;
     st.appendChild(v); nb.disabled = !S.seen[i];
     $('film-note').textContent = S.seen[i] ? '' : 'Кнопка ниже станет доступна, когда эпизод закончится.';
     v.addEventListener('ended', () => { S.seen[i] = true; save(); nb.disabled = false; $('film-note').textContent = ''; render(); nb.focus(); });
