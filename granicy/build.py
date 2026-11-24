@@ -7,14 +7,12 @@
   text.md      — статья
   scenes.html  — живые сцены (всё нарисовано кодом: SVG и CSS)
   template.html — страница: шрифты, цвета, стили (облик открыток каталога)
-  garden.py    — картинка открытки в шапке (сад с калиткой), нарисована кодом
+  img/otkrytka.jpg — картинка открытки в шапке: та же, что у статьи в каталоге (stati/art/granicy.jpg)
   app.js       — поведение сайта: дыхание, тёплый след, сцены, память
 
 Запуск: python3 build.py  →  index.html (для сайта) и preview.html (для предпросмотра в Claude)
 """
-import html, pathlib, re
-
-import garden as garden_art
+import base64, html, io, pathlib, re
 
 ROOT = pathlib.Path(__file__).parent
 NBSP = " "
@@ -224,6 +222,20 @@ def title_h1(title):
     return " ".join(spans)
 
 
+def data_uri(path):
+    return "data:image/jpeg;base64," + base64.b64encode(path.read_bytes()).decode()
+
+
+def stamp_uri(path):
+    from PIL import Image
+    im = Image.open(path).convert("RGB")
+    w, h = im.size
+    cw = int(h * 46 / 56)  # пропорции марки
+    im = im.crop(((w - cw) // 2, 0, (w + cw) // 2, h)).resize((92, 112), Image.LANCZOS)
+    buf = io.BytesIO(); im.save(buf, "JPEG", quality=82)
+    return "data:image/jpeg;base64," + base64.b64encode(buf.getvalue()).decode()
+
+
 def main():
     md = (ROOT / "text.md").read_text(encoding="utf-8")
     title, lede, parts = parse(md)
@@ -232,7 +244,6 @@ def main():
     minutes = max(1, round(words / 190))
     tpl = (ROOT / "template.html").read_text(encoding="utf-8")
     app = (ROOT / "app.js").read_text(encoding="utf-8")
-    art = garden_art.garden()
     page = (tpl.replace("{{TITLE}}", html.escape(title))
                .replace("{{TITLE_H1}}", title_h1(title))
                .replace("{{LEDE}}", inline(lede))
@@ -240,11 +251,12 @@ def main():
                .replace("{{MINUTES}}", str(minutes))
                .replace("{{ARTICLE}}", render(parts, scenes))
                .replace("{{INK_FILTERS}}", ink_filters())
-               .replace("{{GARDEN}}", art["back"] + "\n      " + art["clouds"] + "\n      " + art["land"])
-               .replace("{{STAMP_ART}}", garden_art.stamp_art())
                .replace("{{APP_JS}}", app))
-    assert "{{" not in page, "В шаблоне осталась незаполненная метка"
-    (ROOT / "index.html").write_text(page, encoding="utf-8")
+    # на сайте картинка лежит рядом файлом, в предпросмотре вшита в страницу (марке хватает маленькой копии)
+    site = page.replace("{{OTKRYTKA}}", "img/otkrytka.jpg").replace("{{MARKA}}", "img/otkrytka.jpg")
+    assert "{{" not in site, "В шаблоне осталась незаполненная метка"
+    (ROOT / "index.html").write_text(site, encoding="utf-8")
+    page = page.replace("{{OTKRYTKA}}", data_uri(ROOT / "img" / "otkrytka.jpg")).replace("{{MARKA}}", stamp_uri(ROOT / "img" / "otkrytka.jpg"))
 
     # предпросмотр: без <!doctype>, <html>, <head>, <body>
     head = re.search(r"<head>(.*?)</head>", page, re.S).group(1)
@@ -253,7 +265,7 @@ def main():
     body = re.search(r"<body[^>]*>(.*)</body>", page, re.S).group(1)
     preview = '<meta name="claude:viewport-fit-sides" content="cover">\n' + head.strip() + "\n" + body.strip() + "\n"
     (ROOT / "preview.html").write_text(preview, encoding="utf-8")
-    print("OK:", len(parts) - 1, "разделов + вступление,", words, "слов, ~", minutes, "мин,", len(page) // 1024, "КБ")
+    print("OK:", len(parts) - 1, "разделов + вступление,", words, "слов, ~", minutes, "мин,", len(site) // 1024, "КБ")
 
 
 if __name__ == "__main__":
