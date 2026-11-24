@@ -37,7 +37,7 @@
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
 html { background: var(--bg); overflow-x: clip; }
-body { margin: 0; color: var(--ink); background: var(--bg); font-family: var(--serif); font-size: 18px; line-height: 1.68; -webkit-font-smoothing: antialiased; overflow-x: clip;
+body { margin: 0; color: var(--ink); background: transparent; font-family: var(--serif); font-size: 18px; line-height: 1.68; -webkit-font-smoothing: antialiased; overflow-x: clip;
   padding-bottom: 56px; }
 body.has-dock { padding-bottom: calc(100px + env(safe-area-inset-bottom, 0px)); }
 
@@ -143,6 +143,8 @@ main { width: min(100% - 32px, var(--col)); margin: 44px auto 0; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+/* ---- живые детали (zhivoe.css) ---- */
+{{LIVE_CSS}}
 </style>
 </head>
 <body>
@@ -164,12 +166,19 @@ main { width: min(100% - 32px, var(--col)); margin: 44px auto 0; }
   </svg>
 </div>
 
+<div class="glow" aria-hidden="true"></div>
+<i class="pin" id="pin" aria-hidden="true"><i class="pin-ring"></i><i class="pin-dot"></i></i>
+<div class="ruler" id="ruler" aria-hidden="true"><i class="r-line"></i><i class="r-fill" id="r-fill"></i><span class="r-zero" id="r-zero"><b>0</b>норма</span><i class="r-ptr" id="r-ptr"></i></div>
+<div class="push" id="push" role="status" aria-live="polite" hidden><span class="p-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 8.5 12 4l8 4.5v8L12 21l-8-4.5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M4 8.5 12 13l8-4.5M12 13v8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></span><span class="p-tx"><b>Доставка</b><span id="push-msg"></span></span><span class="p-t">сейчас</span></div>
+
 <header class="top">
   <a class="home" href="https://legendpsy.github.io/stati/"><span>← Все статьи</span></a>
   <div class="card paper">
     <div class="pic">
       <img src="{{IMG}}" alt="Курьер на велосипеде отдаёт посылку женщине у подъезда, тёплый вечер во дворе" width="900" height="600" fetchpriority="high">
+      <span class="stamp-under" aria-hidden="true"><span>вы<br>заметили</span></span>
       <span class="stamp" aria-hidden="true"><i style="background-image:url('{{IMG}}')"></i><b>ГОРОД</b></span>
+      <span class="stamp-flap" aria-hidden="true"><i></i></span>
       <span class="postmark" aria-hidden="true">как должно<br>быть</span>
     </div>
     <div class="title">
@@ -187,6 +196,7 @@ main { width: min(100% - 32px, var(--col)); margin: 44px auto 0; }
 <main id="col">
 {{ARTICLE}}
 
+<div class="spot" id="spot" aria-hidden="true"><svg viewBox="0 0 120 70"><path d="M6 58 C30 50 52 64 76 56 S106 50 116 54" fill="none" stroke="var(--line)" stroke-width="1.2"/><path d="M8 64 C34 57 54 70 78 62 S108 57 118 60" fill="none" stroke="var(--line)" stroke-width="1.2" opacity=".7"/><path d="M44 52V30l16-12 16 12v22z" fill="var(--paper)" stroke="var(--ink2)" stroke-width="1.4" stroke-linejoin="round"/><path d="M41 32 60 17l19 15" fill="none" stroke="var(--accent)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><rect x="55" y="39" width="10" height="13" rx="1.5" fill="var(--bg2)" stroke="var(--ink2)" stroke-width="1.2"/><rect x="66" y="31" width="6" height="6" fill="var(--gold)" opacity=".75"/></svg><i class="spot-mark" id="spot-mark"></i></div>
 <p class="fin">Спасибо, что дочитали. Пусть хорошее сегодня побудет просто хорошим.<br><a href="#title">Наверх</a></p>
 </main>
 
@@ -322,6 +332,9 @@ function tick(){
   }
 }
 requestAnimationFrame(tick);
+</script>
+<script>
+{{LIVE_JS}}
 </script>
 </body>
 </html>

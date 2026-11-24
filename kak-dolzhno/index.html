@@ -37,7 +37,7 @@
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
 html { background: var(--bg); overflow-x: clip; }
-body { margin: 0; color: var(--ink); background: var(--bg); font-family: var(--serif); font-size: 18px; line-height: 1.68; -webkit-font-smoothing: antialiased; overflow-x: clip;
+body { margin: 0; color: var(--ink); background: transparent; font-family: var(--serif); font-size: 18px; line-height: 1.68; -webkit-font-smoothing: antialiased; overflow-x: clip;
   padding-bottom: 56px; }
 body.has-dock { padding-bottom: calc(100px + env(safe-area-inset-bottom, 0px)); }
 
@@ -143,6 +143,137 @@ main { width: min(100% - 32px, var(--col)); margin: 44px auto 0; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+/* ---- живые детали (zhivoe.css) ---- */
+/* Живые детали «Как вообще-то должно быть». Характер: тихий вечерний двор с открытки, который замечает мелочи.
+   Всё второстепенное: на полях, между частями, на фоне. Текст ничем не закрывается. */
+
+/* ---- 8. свет по времени суток: медленно дышит, лежит только на фоне ---- */
+.glow { position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: .9; animation: breathe 11s ease-in-out infinite alternate; }
+@keyframes breathe { to { opacity: .62; } }
+[data-tod="morning"] .glow { background: radial-gradient(ellipse 90% 60% at 12% 0%, rgba(196,218,236,.42), transparent 70%), linear-gradient(rgba(214,226,232,.18), transparent 60%); }
+[data-tod="day"] .glow { background: radial-gradient(ellipse 80% 55% at 50% 0%, rgba(255,244,214,.35), transparent 70%); }
+[data-tod="evening"] .glow { background: radial-gradient(ellipse 95% 65% at 88% 0%, rgba(255,170,84,.26), transparent 72%), linear-gradient(transparent 55%, rgba(214,140,80,.10)); }
+[data-tod="night"] .glow { background: linear-gradient(rgba(46,40,60,.10), rgba(46,40,60,.06)), radial-gradient(ellipse 70% 45% at 82% 100%, rgba(255,184,104,.20), transparent 70%); }
+[data-tod="evening"] { --paper: #fcf4e6; }
+[data-tod="night"] { --paper: #f9f2e4; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .glow { opacity: .45; animation: none; } :root:not([data-theme="light"])[data-tod] { --paper: #2a221b; } }
+:root[data-theme="dark"] .glow { opacity: .45; animation: none; }
+:root[data-theme="dark"][data-tod] { --paper: #2a221b; }
+
+/* ---- 9. тонкая линейка с нулём ---- */
+.ruler { position: fixed; left: 0; right: 0; top: 0; z-index: 15; height: calc(26px + env(safe-area-inset-top, 0px)); pointer-events: none;
+  background: linear-gradient(var(--bg) 55%, color-mix(in srgb, var(--bg) 0%, transparent)); opacity: 0; translate: 0 -6px; transition: opacity .6s, translate .6s; }
+.ruler.on { opacity: 1; translate: 0 0; }
+.ruler > * { position: absolute; }
+.r-line { left: 16px; right: 16px; bottom: 9px; height: 7px; border-bottom: 1px solid var(--line);
+  background: repeating-linear-gradient(90deg, var(--line) 0 1px, transparent 1px 10px) bottom / 100% 4px no-repeat,
+              repeating-linear-gradient(90deg, var(--muted) 0 1px, transparent 1px 50px) bottom / 100% 7px no-repeat; opacity: .9; }
+.r-fill { left: 16px; bottom: 9px; height: 1.5px; width: calc((100% - 32px) * var(--p, 0)); background: var(--accent); opacity: .75; border-radius: 1px; }
+.r-ptr { left: calc(16px + (100% - 32px) * var(--p, 0)); bottom: 10px; width: 0; height: 0; margin-left: -4px; border: 4px solid transparent; border-top: 6px solid var(--accent); border-bottom: 0; }
+.r-zero { left: 13px; bottom: 15px; font: 500 9px/1 var(--sans); letter-spacing: .06em; color: var(--muted); white-space: nowrap; transition: opacity 1.1s, filter 1.1s; }
+.r-zero b { font: 600 10px/1 var(--serif); color: var(--accent); margin-right: 4px; letter-spacing: 0; }
+.r-zero::before { content: ''; position: absolute; left: 2px; top: 11px; width: 1.5px; height: 9px; background: var(--accent); }
+.r-zero.gone { opacity: 0; filter: blur(1.5px); }
+.r-smudge { position: absolute; bottom: 14px; left: 10px; width: 52px; height: 9px; border-radius: 50%; background: radial-gradient(closest-side, rgba(120,110,100,.22), transparent); pointer-events: none; }
+.r-eraser { position: absolute; bottom: 13px; left: 14px; width: 20px; height: 11px; border-radius: 3px; z-index: 2;
+  background: linear-gradient(90deg, #e98f86 0 62%, #5d7fa3 62%); box-shadow: 0 1px 2px rgba(0,0,0,.25); rotate: -12deg; }
+.r-crumb { position: absolute; width: 2.5px; height: 2px; border-radius: 1px; background: #d9918a; pointer-events: none; }
+
+/* ---- 1. уведомление «Курьер на месте» ---- */
+.push { position: fixed; left: 50%; top: calc(8px + env(safe-area-inset-top, 0px)); z-index: 40; width: min(100% - 24px, 360px); margin-left: calc(min(100% - 24px, 360px) / -2);
+  display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: center; padding: 10px 12px; border-radius: 16px;
+  background: #fffaf2; color: #2b2119; box-shadow: 0 10px 30px -10px rgba(40,25,10,.45), 0 1px 3px rgba(40,25,10,.18);
+  font: 400 14px/1.3 var(--sans); touch-action: none; cursor: grab; user-select: none; -webkit-user-select: none; }
+.p-ic { width: 34px; height: 34px; border-radius: 9px; display: grid; place-items: center; background: #a5563a; color: #fbf6ec; }
+.p-ic svg { width: 20px; height: 20px; }
+.p-tx { display: grid; min-width: 0; }
+.p-tx b { font-weight: 600; font-size: 13px; }
+.p-t { align-self: start; font-size: 11px; color: #8a7764; }
+
+/* ---- 2. метка курьера на карте и дом в конце ---- */
+.pin { position: fixed; left: 0; top: 0; z-index: -1; width: 0; height: 0; pointer-events: none; opacity: 0; transition: opacity .8s; }
+.pin.show { opacity: 1; }
+.pin-dot { position: absolute; left: -6px; top: -6px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent2); border: 2px solid #fbf6ec; box-shadow: 0 1px 3px rgba(40,25,10,.4); }
+.pin-ring { position: absolute; left: -22px; top: -22px; width: 44px; height: 44px; border-radius: 50%; background: color-mix(in srgb, var(--accent2) 16%, transparent); border: 1px solid color-mix(in srgb, var(--accent2) 30%, transparent); }
+.pin.lost .pin-ring { animation: gps 1.6s ease-in-out infinite; }
+.pin.lost .pin-dot { animation: jitter .9s steps(1) infinite; }
+@keyframes gps { 50% { transform: scale(1.25); opacity: .55; } }
+@keyframes jitter { 0% { translate: 0 0; } 25% { translate: 1.5px -1px; } 50% { translate: -1px 1.5px; } 75% { translate: 1px 1px; } }
+.pin.home { position: absolute; z-index: 1; opacity: 1; }
+.pin.home .pin-ring { transform: scale(.55); opacity: .7; animation: settle 6s ease-in-out infinite; }
+@keyframes settle { 50% { transform: scale(.7); opacity: .4; } }
+.spot { position: relative; width: 120px; height: 70px; margin: 8px auto -26px; }
+.spot svg { width: 100%; height: 100%; display: block; }
+.spot-mark { position: absolute; left: 50%; top: 77%; width: 0; height: 0; }
+.ripple { position: absolute; left: -6px; top: -6px; width: 12px; height: 12px; border-radius: 50%; border: 1.5px solid var(--accent2); pointer-events: none; }
+
+/* ---- 3. красные чернила ---- */
+.ink { position: relative; transition: color 1.6s ease-out, text-shadow 2.4s ease-out; }
+.ink.on { color: #a3271e; text-shadow: 0 0 .5px rgba(163,39,30,.6), 0 0 2.2px rgba(163,39,30,.2); }
+.ink::after { content: ''; position: absolute; right: -5px; bottom: .12em; width: 5px; height: 5px; border-radius: 48% 52% 60% 40%; background: #a3271e; opacity: 0; transform: scale(.2); transition: transform .5s cubic-bezier(.2,1.6,.4,1) 1.1s, opacity .3s 1.1s; }
+.ink.on::after { opacity: .7; transform: scale(1); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .ink.on { color: #e9806f; text-shadow: 0 0 2px rgba(233,128,111,.25); } :root:not([data-theme="light"]) .ink::after { background: #e9806f; } }
+:root[data-theme="dark"] .ink.on { color: #e9806f; text-shadow: 0 0 2px rgba(233,128,111,.25); }
+
+/* ---- 4. три полки ---- */
+.sheet ul.shelves li { padding-left: .2em; margin-bottom: 1.25em; padding-bottom: .25em; }
+.sheet ul.shelves li::before { display: none; }
+.sheet ul.shelves li::after { content: ''; position: absolute; left: -4px; right: 10%; bottom: -6px; height: 5px; border-radius: 1.5px;
+  background: linear-gradient(#cf9f6e, #a9784c); box-shadow: 0 2px 3px rgba(70,45,20,.25), inset 0 1px 0 rgba(255,235,200,.5); }
+.sheet ul.shelves li.hit::after { animation: plank .34s ease-out; }
+@keyframes plank { 35% { transform: translateY(2px) scaleY(.85); } 70% { transform: translateY(-.5px); } }
+.sh-txt { display: block; will-change: transform; }
+.shelves.wait .sh-txt { transform: translateY(-16px); opacity: 0; }
+
+/* ---- 5. кирпичики между частями ---- */
+.wall { position: relative; width: 96px; height: 24px; margin: 22px auto 0; }
+.brick { position: absolute; width: 26px; height: 11px; border-radius: 1.5px; background: var(--b, #b5653f);
+  box-shadow: inset 0 1px 0 rgba(255,220,190,.35), inset 0 -1px 0 rgba(60,25,10,.25), 0 1px 1.5px rgba(60,30,10,.25); }
+.brick.slot { background: none; box-shadow: none; border: 1px dashed var(--line); opacity: .8; }
+.dust { position: absolute; width: 3px; height: 3px; border-radius: 50%; background: #c9b597; pointer-events: none; }
+
+/* ---- 6. чашка с паром у четвёртой части ---- */
+.cup { display: inline-block; width: 34px; height: 40px; margin: -24px 0 -4px 6px; vertical-align: bottom; color: var(--ink2); }
+.cup svg { width: 100%; height: 100%; overflow: visible; display: block; }
+.cup .wisp { fill: none; stroke: var(--muted); stroke-width: 1.5; stroke-linecap: round; opacity: 0; transform-box: fill-box; transform-origin: 50% 100%; }
+.cup.hot .wisp { animation: steam 3.4s ease-in-out infinite; }
+.cup.hot .wisp:nth-child(2) { animation-delay: 1.1s; }
+.cup.hot .wisp:nth-child(3) { animation-delay: 2.2s; }
+.cup.cooling .wisp { animation-duration: 4.6s; stroke-width: 1.1; }
+.cup.cold .wisp { animation: none; opacity: 0; }
+@keyframes steam { 0% { opacity: 0; transform: translateY(5px) scaleX(1); } 30% { opacity: .75; } 70% { opacity: .35; transform: translateY(-6px) scaleX(-1); } 100% { opacity: 0; transform: translateY(-12px) scaleX(1.2); } }
+
+/* ---- 7. пара добрых слов ---- */
+.rate { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; margin: -.3em 0 1.2em; font: 400 13px/1.3 var(--sans); color: var(--muted); }
+.rate button { width: 32px; height: 32px; padding: 4px; border: 0; background: none; cursor: pointer; color: var(--line); -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+.rate button svg { width: 100%; height: 100%; display: block; overflow: visible; }
+.rate button path { fill: transparent; stroke: currentColor; stroke-width: 1.6; stroke-linejoin: round; transition: fill .35s, stroke .35s; }
+.rate button.on { color: #c98a2c; }
+.rate button.on path { fill: var(--gold); }
+.rate button.press { transform: scale(.82); filter: brightness(.9); }
+.rate button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; border-radius: 6px; }
+.rate .r-cap { margin-left: 6px; transition: opacity .4s; }
+
+/* ---- 10. марка отклеивается уголком ---- */
+.stamp { --peel: 0; cursor: pointer; touch-action: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none;
+  clip-path: polygon(-6px -6px, calc(100% + 6px) -6px, calc(100% + 6px) calc(100% + 6px - var(--peel) * 62px), calc(100% + 6px - var(--peel) * 62px) calc(100% + 6px), -6px calc(100% + 6px)); }
+.stamp-under, .stamp-flap { position: absolute; right: 12px; top: 12px; width: 58px; height: 68px; rotate: 3deg; pointer-events: none; }
+.stamp-under { z-index: 1; padding: 4px; background: #efe5d2; box-shadow: inset 0 0 6px rgba(120,90,50,.25); display: flex; align-items: flex-end; justify-content: flex-end; text-align: right; }
+.stamp-under span { font: italic 400 8.5px/1.2 var(--serif); color: #5d564e; opacity: .9; padding: 0 1px 1px 0; }
+.stamp-flap { z-index: 3; filter: drop-shadow(-1px -1px 1.5px rgba(40,25,10,.35)); --peel: 0; }
+.stamp-flap i { position: absolute; inset: -6px; background: linear-gradient(135deg, #f7f0e2, #e2d6bf 70%, #d8caaf);
+  clip-path: polygon(calc(100% - var(--peel) * 62px) 100%, 100% calc(100% - var(--peel) * 62px), calc(100% - var(--peel) * 62px) calc(100% - var(--peel) * 62px)); }
+@media (max-width: 420px) {
+  .stamp-under, .stamp-flap { width: 48px; height: 56px; right: 10px; top: 10px; }
+  .stamp-under span { font-size: 7.5px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glow { animation: none; }
+  .pin.lost .pin-ring, .pin.lost .pin-dot, .cup .wisp { animation: none !important; }
+  .shelves.wait .sh-txt { transform: none; opacity: 1; }
+}
+
 </style>
 </head>
 <body>
@@ -164,12 +295,19 @@ main { width: min(100% - 32px, var(--col)); margin: 44px auto 0; }
   </svg>
 </div>
 
+<div class="glow" aria-hidden="true"></div>
+<i class="pin" id="pin" aria-hidden="true"><i class="pin-ring"></i><i class="pin-dot"></i></i>
+<div class="ruler" id="ruler" aria-hidden="true"><i class="r-line"></i><i class="r-fill" id="r-fill"></i><span class="r-zero" id="r-zero"><b>0</b>норма</span><i class="r-ptr" id="r-ptr"></i></div>
+<div class="push" id="push" role="status" aria-live="polite" hidden><span class="p-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 8.5 12 4l8 4.5v8L12 21l-8-4.5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M4 8.5 12 13l8-4.5M12 13v8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></span><span class="p-tx"><b>Доставка</b><span id="push-msg"></span></span><span class="p-t">сейчас</span></div>
+
 <header class="top">
   <a class="home" href="https://legendpsy.github.io/stati/"><span>← Все статьи</span></a>
   <div class="card paper">
     <div class="pic">
       <img src="img/otkrytka.jpg" alt="Курьер на велосипеде отдаёт посылку женщине у подъезда, тёплый вечер во дворе" width="900" height="600" fetchpriority="high">
+      <span class="stamp-under" aria-hidden="true"><span>вы<br>заметили</span></span>
       <span class="stamp" aria-hidden="true"><i style="background-image:url('img/otkrytka.jpg')"></i><b>ГОРОД</b></span>
+      <span class="stamp-flap" aria-hidden="true"><i></i></span>
       <span class="postmark" aria-hidden="true">как должно<br>быть</span>
     </div>
     <div class="title">
@@ -206,14 +344,14 @@ main { width: min(100% - 32px, var(--col)); margin: 44px auto 0; }
 </header>
 <div class="sheet paper">
 <p data-say="1">Посмотрим, как эта механика работает в самой заурядной пятиминутной сцене.</p>
-<p data-say="1">Вы заказали доставку. Аккуратно вбили адрес, номер подъезда, даже дописали в комментарии, под какую арку свернуть. Телефон звякает: «Курьер на месте». Вы накидываете куртку, спускаетесь — у двери пусто. Начинаются звонки сквозь помехи, прыгающая точка на карте, путаница в корпусах, и через пять минут выясняется, что курьер ждёт вас у соседнего дома. Вы идёте туда, забираете пакет — и возвращаетесь раздражённым.</p>
+<p data-say="1">Вы заказали доставку. Аккуратно вбили адрес, номер подъезда, даже дописали в комментарии, под какую арку свернуть. Телефон звякает: «<span class="k-ping" data-ping="1">Курьер на месте</span>». Вы накидываете куртку, спускаетесь — у двери пусто. Начинаются звонки сквозь помехи, прыгающая точка на карте, путаница в корпусах, и через пять минут выясняется, что курьер ждёт вас у соседнего дома. Вы идёте туда, забираете пакет — и возвращаетесь раздражённым.</p>
 <p data-say="1">На эту сцену можно посмотреть сразу двумя глазами.</p>
 <p data-say="1">Первый взгляд — сочувственный, изнутри самого человека. В его злости нет ничего преувеличенного или неадекватного: ты оплатил услугу, дал точные инструкции, с какой стати тебе теперь исправлять чужую рассеянность?</p>
 <p data-say="1">Второй взгляд — чуть шире, на саму конструкцию, которая прямо сейчас управляет твоим вечером. Представьте в соседнем подъезде другого человека с точно таким же заказом. Он ничуть не меньше любит удобство, просто в его карте реальности записан тихий факт: курьеры периодически путают дома и не читают комментарии. Он не считает это образцовым сервисом — просто знает, что жизнь устроена так.</p>
 <p data-say="1">И вот к нему курьер подъезжает точно к нужной двери. Человек выходит, забирает пакет и ловит короткую, тёплую волну облегчения: «Отлично, даже искать не пришлось». Он улыбается, говорит спасибо и поднимается домой в чуть лучшем настроении, чем спускался.</p>
 <p data-say="1">А что почувствовал бы первый человек, окажись курьер ровно у его подъезда? Почти ничего. Ну приехал и приехал — куда ему ещё деваться? Чтобы первого действительно порадовать, курьеру пришлось бы сотворить маленькое чудо: подняться к самой квартире, назвать по имени, проявить редкую заботу.</p>
 <p data-say="1">На видеокамере произошло одно и то же событие — передача пакета. Но для одного оно стало маленькой точкой опоры в середине дня, а для другого пролетело в глухом эмоциональном нуле.</p>
-<p data-say="1">Если заглянуть в эту внутреннюю бухгалтерию, становится не по себе. Допустим, девять курьеров из десяти доезжают без ошибок, а десятый путает дом. Когда безупречная доставка вписана в обязательный минимум, девять удачных раз вообще не попадают в колонку доходов — они просто уходят в счёт погашения «долга» мира перед нами. Зато единственная осечка заносится в книгу учёта красными чернилами и портит вечер. Это всё равно что надеть отличную вещь и не испытать ни капли удовольствия, а вместо этого крутиться перед зеркалом, выискивая крошечное пятнышко на рукаве, потом ещё одно на спине — и злиться, что кругом одни дефекты. При таком счёте сальдо почти всегда оказывается в минусе.</p>
+<p data-say="1">Если заглянуть в эту внутреннюю бухгалтерию, становится не по себе. Допустим, девять курьеров из десяти доезжают без ошибок, а десятый путает дом. Когда безупречная доставка вписана в обязательный минимум, девять удачных раз вообще не попадают в колонку доходов — они просто уходят в счёт погашения «долга» мира перед нами. Зато единственная осечка заносится в книгу учёта <span class="ink">красными чернилами</span> и портит вечер. Это всё равно что надеть отличную вещь и не испытать ни капли удовольствия, а вместо этого крутиться перед зеркалом, выискивая крошечное пятнышко на рукаве, потом ещё одно на спине — и злиться, что кругом одни дефекты. При таком счёте сальдо почти всегда оказывается в минусе.</p>
 </div>
 </section>
 
@@ -276,11 +414,12 @@ main { width: min(100% - 32px, var(--col)); margin: 44px auto 0; }
 <p data-say="5">В этом и кроется парадокс. Когда мы задираем планку обязательной доброжелательности до потолка, мы слепнем к живым проявлениям доброты. А когда трезво признаём несовершенство мира и снимаем с окружающих обязанность быть идеальными по умолчанию, мы вовсе не опускаем свои стандарты — наоборот, мы начинаем яснее видеть хорошее и сильнее поддерживать его своим присутствием. Это не розовые очки: менять сломанные системы, отстаивать правила и уходить оттуда, где плохо, всё равно придётся — и с холодной головой это получается куда точнее, чем в кипящем негодовании. Мы просто перестаём отдавать плохому сто процентов нашего зрения.</p>
 <p data-say="5">Время от времени вместо привычного автоматического «Что здесь опять не так?» стоит в ручном режиме задать себе три простых вопроса:</p>
 <ul><li data-say="5">Если я хочу больше тепла от мира — замечаю ли я его, когда оно случается со мной?</li><li data-say="5">Если я хочу больше заботы в близких отношениях — умею ли я радоваться заботе партнёра или веду учёт только её нехватки?</li><li data-say="5">Если я хочу расти и меняться — поддерживаю ли я свои первые кирпичи или каждый вечер упрекаю себя за то, что дом ещё не достроен?</li></ul>
-<p data-say="5">И здесь мы снова возвращаемся к курьеру у подъезда. Он приехал вовремя, по нужному адресу, протянул вам пакет. Можно на автомате подумать «ну, так и должно быть» и захлопнуть дверь. А можно выбрать заметить, что всё прошло гладко: улыбнуться, поблагодарить, оставить пару добрых слов в приложении — не поступившись ни одним своим требованием к качеству сервиса.</p>
+<p data-say="5">И здесь мы снова возвращаемся к курьеру у подъезда. <span class="k-ping" data-ping="2">Он приехал вовремя, по нужному адресу</span>, протянул вам пакет. Можно на автомате подумать «ну, так и должно быть» и захлопнуть дверь. А можно выбрать заметить, что всё прошло гладко: улыбнуться, поблагодарить, <span class="k-rate">оставить пару добрых слов в приложении</span> — не поступившись ни одним своим требованием к качеству сервиса.</p>
 <p data-say="5">Потому что, если говорить начистоту, мы хотим доброты, уважения, близости и хорошей жизни вовсе не для того, чтобы реальность наконец-то сдала экзамен на соответствие нашим стандартам. Мы хотим их потому, что нам от них хорошо. И чтобы хорошего вокруг становилось больше, иногда достаточно сделать самую простую и самую трудную вещь — снова разрешить хорошему быть просто хорошим.</p>
 </div>
 </section>
 
+<div class="spot" id="spot" aria-hidden="true"><svg viewBox="0 0 120 70"><path d="M6 58 C30 50 52 64 76 56 S106 50 116 54" fill="none" stroke="var(--line)" stroke-width="1.2"/><path d="M8 64 C34 57 54 70 78 62 S108 57 118 60" fill="none" stroke="var(--line)" stroke-width="1.2" opacity=".7"/><path d="M44 52V30l16-12 16 12v22z" fill="var(--paper)" stroke="var(--ink2)" stroke-width="1.4" stroke-linejoin="round"/><path d="M41 32 60 17l19 15" fill="none" stroke="var(--accent)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><rect x="55" y="39" width="10" height="13" rx="1.5" fill="var(--bg2)" stroke="var(--ink2)" stroke-width="1.2"/><rect x="66" y="31" width="6" height="6" fill="var(--gold)" opacity=".75"/></svg><i class="spot-mark" id="spot-mark"></i></div>
 <p class="fin">Спасибо, что дочитали. Пусть хорошее сегодня побудет просто хорошим.<br><a href="#title">Наверх</a></p>
 </main>
 
@@ -416,6 +555,328 @@ function tick(){
   }
 }
 requestAnimationFrame(tick);
+</script>
+<script>
+/* Живые детали «Как вообще-то должно быть». Работают поверх статьи и ничего в ней не ломают:
+   если какой-то фразы нет, деталь просто не появляется. */
+(() => {
+  const LK = 'kak-dolzhno-live-';
+  const store = {
+    get(k, d) { try { const v = localStorage.getItem(LK + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
+    set(k, v) { try { localStorage.setItem(LK + k, JSON.stringify(v)); } catch (e) {} }
+  };
+  const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const q = (s, r = document) => r.querySelector(s), qa = (s, r = document) => [...r.querySelectorAll(s)];
+  const anim = (el, kf, o) => (RM || !el.animate) ? null : el.animate(kf, o);
+  // срабатывает один раз, когда элемент поднялся до нужной высоты экрана
+  const when = (el, fn, line = .7) => {
+    if (!el) return;
+    const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { io.disconnect(); fn(); } }),
+      {rootMargin: '0px 0px -' + Math.round((1 - line) * 100) + '% 0px'});
+    io.observe(el);
+  };
+
+  /* ---- 8. свет по времени суток ---- */
+  const hr = new Date().getHours();
+  document.documentElement.dataset.tod = hr >= 5 && hr < 11 ? 'morning' : hr < 17 ? 'day' : hr < 22 ? 'evening' : 'night';
+
+  /* ---- 1. уведомление от доставки ---- */
+  const push = q('#push'), pushMsg = q('#push-msg');
+  let pushBusy = false;
+  function ping(text) {
+    if (!push || pushBusy) return;
+    pushBusy = true; pushMsg.textContent = text; push.hidden = false; push.style.transform = '';
+    const cleanup = () => { push.getAnimations().forEach(x => x.cancel()); push.hidden = true; pushBusy = false; push.style.transform = ''; };
+    if (RM) { setTimeout(cleanup, 3400); return; }
+    // въезжает сверху с пружиной, коротко «вибрирует», полежав, уезжает
+    const a = push.animate([
+      {transform: 'translateY(-140%)'}, {transform: 'translateY(7px)', offset: .62}, {transform: 'translateY(-2px)', offset: .84}, {transform: 'translateY(0)'}
+    ], {duration: 560, easing: 'cubic-bezier(.2,.8,.3,1)'});
+    let gone = false, timer;
+    const leave = (from = 0) => {
+      if (gone) return; gone = true; clearTimeout(timer);
+      push.animate([{transform: `translateY(${from}px)`}, {transform: 'translateY(-150%)'}], {duration: 360, easing: 'cubic-bezier(.5,0,.9,.5)', fill: 'forwards'}).onfinish = cleanup;
+    };
+    a.onfinish = () => {
+      if (gone) return;
+      push.animate([{transform: 'translateX(0)'}, {transform: 'translateX(-2.5px)'}, {transform: 'translateX(2.5px)'}, {transform: 'translateX(-2px)'}, {transform: 'translateX(1.5px)'}, {transform: 'translateX(0)'}], {duration: 300});
+      timer = setTimeout(() => leave(0), 3000);
+    };
+    // можно смахнуть вверх пальцем: уведомление идёт за пальцем и пружинит назад, если не дотянули
+    let y0 = null, dy = 0;
+    push.onpointerdown = e => { y0 = e.clientY; dy = 0; push.setPointerCapture(e.pointerId); clearTimeout(timer); a.finish(); };
+    push.onpointermove = e => { if (y0 == null || gone) return; dy = Math.min(0, e.clientY - y0) + Math.max(0, e.clientY - y0) * .15; push.style.transform = `translateY(${dy}px)`; };
+    push.onpointerup = push.onpointercancel = () => {
+      if (y0 == null) return; y0 = null;
+      if (dy < -22 || Math.abs(dy) < 3) leave(dy);
+      else { push.animate([{transform: `translateY(${dy}px)`}, {transform: 'translateY(2px)', offset: .7}, {transform: 'translateY(0)'}], {duration: 300, easing: 'ease-out'}); push.style.transform = ''; timer = setTimeout(() => leave(0), 2200); }
+    };
+  }
+  const ping1 = q('.k-ping[data-ping="1"]'), ping2 = q('.k-ping[data-ping="2"]');
+  when(ping1, () => { ping('Курьер на месте'); }, .5);
+  when(ping2, () => { ping('Курьер у вашего подъезда'); }, .5);
+
+  /* ---- 2. метка курьера на карте: в первой части путается, в конце встаёт к двери ---- */
+  const pin = q('#pin'), part1 = q('#part-1'), spot = q('#spot'), spotMark = q('#spot-mark');
+  let px = innerWidth * .8, py = innerHeight * .35, lostOn = false, hopT = 0, homed = false;
+  const placePin = (x, y) => { px = x; py = y; pin.style.transform = `translate(${x}px, ${y}px)`; };
+  const onBackground = (x, y) => {
+    const el = document.elementFromPoint(x, y);
+    return !el || el === document.body || el === document.documentElement || el.matches('main, section.part, header.top, .part-head, .wall, .spot, .fin');
+  };
+  function hop() {
+    if (!lostOn || homed || document.hidden) return;
+    // ищем место, где видна карта; если не нашли — метка «теряется» за домами, как и положено
+    let tx = 16 + Math.random() * (innerWidth - 32), ty = 70 + Math.random() * (innerHeight - 140);
+    for (let k = 0; k < 18; k++) {
+      const x = 8 + Math.random() * (innerWidth - 16), y = 60 + Math.random() * (innerHeight - 120);
+      if (onBackground(x, y)) { tx = x; ty = y; break; }
+    }
+    const x0 = px, y0 = py, d = Math.hypot(tx - x0, ty - y0), lift = Math.min(70, 18 + d * .22), kf = [];
+    for (let i = 0; i <= 10; i++) { const t = i / 10; kf.push({transform: `translate(${x0 + (tx - x0) * t}px, ${y0 + (ty - y0) * t - Math.sin(Math.PI * t) * lift}px)`}); }
+    placePin(tx, ty);
+    anim(pin, kf, {duration: 420 + Math.min(360, d * .5), easing: 'cubic-bezier(.45,.05,.55,.95)'});
+    anim(q('.pin-dot', pin), [{transform: 'scale(1)'}, {transform: 'scale(1)', offset: .82}, {transform: 'scale(1.3,.75)', offset: .9}, {transform: 'scale(1)'}], {duration: 420 + Math.min(360, d * .5)});
+    hopT = setTimeout(hop, 1050 + Math.random() * 900);
+  }
+  if (pin && part1 && !RM) {
+    placePin(px, py);
+    new IntersectionObserver(es => es.forEach(e => {
+      if (homed) return;
+      lostOn = e.isIntersecting; pin.classList.toggle('show', lostOn); pin.classList.toggle('lost', lostOn);
+      clearTimeout(hopT); if (lostOn) hopT = setTimeout(hop, 600);
+    }), {rootMargin: '-20% 0px -20% 0px'}).observe(part1);
+    document.addEventListener('visibilitychange', () => { clearTimeout(hopT); if (!document.hidden && lostOn) hopT = setTimeout(hop, 600); });
+  }
+  function goHome() {
+    if (!pin || !spotMark || homed) return;
+    homed = true; lostOn = false; clearTimeout(hopT);
+    const r = spotMark.getBoundingClientRect(), tx = r.left, ty = r.top;
+    const settle = () => {
+      pin.classList.remove('lost'); pin.classList.add('home', 'show'); pin.style.transform = ''; spotMark.appendChild(pin);
+      const rp = document.createElement('i'); rp.className = 'ripple'; spotMark.appendChild(rp);
+      anim(rp, [{transform: 'scale(1)', opacity: .9}, {transform: 'scale(4.5)', opacity: 0}], {duration: 900, easing: 'ease-out'});
+      setTimeout(() => rp.remove(), 950);
+    };
+    if (RM) { settle(); return; }
+    pin.classList.add('show'); pin.classList.remove('lost');
+    // если метка ещё не появлялась, она влетает сверху экрана
+    if (!pin.style.transform || py > innerHeight) placePin(tx + (Math.random() < .5 ? -1 : 1) * innerWidth * .3, -20);
+    const x0 = px, y0 = py, kf = [];
+    for (let i = 0; i <= 12; i++) { const t = i / 12, e = 1 - Math.pow(1 - t, 3); kf.push({transform: `translate(${x0 + (tx - x0) * e}px, ${y0 + (ty - y0) * e - Math.sin(Math.PI * t) * 40}px)`}); }
+    placePin(tx, ty);
+    const a = pin.animate(kf, {duration: 1100, easing: 'linear'});
+    q('.pin-dot', pin).animate([{transform: 'scale(1)'}, {transform: 'scale(1)', offset: .85}, {transform: 'scale(1.35,.7)', offset: .92}, {transform: 'scale(1)'}], {duration: 1100});
+    a.onfinish = settle;
+  }
+  if (spot) when(spot, goHome, .92);
+
+  /* ---- 3. красные чернила расплываются ---- */
+  const ink = q('.ink');
+  when(ink, () => ink.classList.add('on'), .72);
+
+  /* ---- 4. три пункта разводят по полкам ---- */
+  const shelves = q('#part-2 ul');
+  if (shelves) {
+    shelves.classList.add('shelves');
+    const items = qa('li', shelves);
+    items.forEach(li => { const s = document.createElement('span'); s.className = 'sh-txt'; while (li.firstChild) s.appendChild(li.firstChild); li.appendChild(s); });
+    if (!RM) {
+      shelves.classList.add('wait');
+      when(shelves, () => {
+        shelves.classList.remove('wait');
+        items.forEach((li, k) => {
+          const t = q('.sh-txt', li);
+          t.style.opacity = '0'; t.style.transform = 'translateY(-16px)';
+          setTimeout(() => {
+            t.style.opacity = ''; t.style.transform = '';
+            // падает под своим весом, касается доски, доска прогибается, текст чуть отскакивает
+            t.animate([
+              {transform: 'translateY(-16px) rotate(-.8deg)', opacity: 0, easing: 'cubic-bezier(.55,0,1,.45)'},
+              {opacity: 1, offset: .25},
+              {transform: 'translateY(0) rotate(0)', offset: .62, easing: 'cubic-bezier(0,.55,.45,1)'},
+              {transform: 'translateY(-3px)', offset: .8, easing: 'cubic-bezier(.55,0,1,.45)'},
+              {transform: 'translateY(0)'}
+            ], {duration: 560});
+            setTimeout(() => { li.classList.remove('hit'); void li.offsetWidth; li.classList.add('hit'); }, 340);
+          }, 120 + k * 380);
+        });
+      }, .72);
+    }
+  }
+
+  /* ---- 5. кирпичики: каждая прочитанная часть кладёт свой кирпич ---- */
+  const parts = qa('section.part');
+  const read = store.get('bricks', []);
+  const COLORS = ['#b5653f', '#a85a37', '#c0714a', '#ad6040', '#b86a45', '#a5563a'];
+  const POS = [[0, 13], [28, 13], [56, 13], [14, 0], [42, 0], [70, 0]];
+  const walls = parts.map((sec, i) => {
+    const w = document.createElement('div'); w.className = 'wall'; w.setAttribute('aria-hidden', 'true');
+    sec.appendChild(w);
+    return w;
+  });
+  function drawWall(i, fresh) {
+    const w = walls[i]; w.innerHTML = '';
+    for (let k = 0; k <= Math.min(i, 5); k++) {
+      const b = document.createElement('i'), laid = read.includes(k);
+      b.className = 'brick' + (laid ? '' : ' slot'); b.style.left = POS[k][0] + 'px'; b.style.top = POS[k][1] + 'px';
+      if (laid) b.style.setProperty('--b', COLORS[k]);
+      if (k === fresh) b.dataset.fresh = '1';
+      w.appendChild(b);
+    }
+  }
+  walls.forEach((w, i) => drawWall(i));
+  walls.forEach((w, i) => when(w, () => {
+    if (read.includes(i) || i > 5) return;
+    read.push(i); store.set('bricks', read);
+    walls.forEach((_, j) => { if (j >= i) drawWall(j, j === i ? i : -1); });
+    const b = q('[data-fresh]', w); if (!b || RM) return;
+    // кирпич падает с высоты, касается кладки, от удара вылетает пыль раствора
+    b.animate([
+      {transform: 'translateY(-48px) rotate(-4deg)', opacity: 0, easing: 'cubic-bezier(.55,0,1,.45)'},
+      {opacity: 1, offset: .2},
+      {transform: 'translateY(0) rotate(0)', offset: .7, easing: 'cubic-bezier(0,.55,.45,1)'},
+      {transform: 'translateY(-3px) rotate(.6deg)', offset: .84, easing: 'cubic-bezier(.55,0,1,.45)'},
+      {transform: 'translateY(0)'}
+    ], {duration: 640});
+    setTimeout(() => {
+      w.animate([{transform: 'translateY(0)'}, {transform: 'translateY(1px)'}, {transform: 'translateY(0)'}], {duration: 160});
+      const bx = parseFloat(b.style.left), by = parseFloat(b.style.top) + 11;
+      for (let n = 0; n < 7; n++) {
+        const d = document.createElement('i'); d.className = 'dust'; d.style.left = (bx + (n % 2 ? 24 : 0)) + 'px'; d.style.top = (by - 2) + 'px'; w.appendChild(d);
+        const dir = n % 2 ? 1 : -1, vx = dir * (6 + Math.random() * 12), vy = -(3 + Math.random() * 8);
+        d.animate([{transform: 'translate(0,0) scale(1)', opacity: .9}, {transform: `translate(${vx}px, ${vy}px) scale(.8)`, opacity: .6, offset: .5}, {transform: `translate(${vx * 1.3}px, ${vy * .2 + 6}px) scale(.5)`, opacity: 0}], {duration: 520 + Math.random() * 200, easing: 'ease-out'}).onfinish = () => d.remove();
+      }
+    }, 640 * .7);
+  }, .85));
+
+  /* ---- 6. чашка с паром у четвёртой части: остывает примерно за минуту ---- */
+  const tag4 = q('#part-4 .tag');
+  if (tag4) {
+    const cup = document.createElement('span'); cup.className = 'cup'; cup.setAttribute('aria-hidden', 'true');
+    cup.innerHTML = '<svg viewBox="0 0 34 40"><g><path class="wisp" d="M12 17c-2-3 2-5 0-8s2-5 0-8"/><path class="wisp" d="M17 17c-2-3 2-5 0-8s2-5 0-8"/><path class="wisp" d="M22 17c-2-3 2-5 0-8s2-5 0-8"/></g>' +
+      '<path d="M7 21h20v6a8 8 0 0 1-8 8h-4a8 8 0 0 1-8-8z" fill="var(--paper)" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>' +
+      '<path d="M27 23.5h2.2a3 3 0 0 1 0 6H26.5" fill="none" stroke="currentColor" stroke-width="1.4"/>' +
+      '<path d="M3 37.5h28" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>';
+    tag4.appendChild(cup);
+    let warm = 0, last = 0, seen = false, raf = 0;
+    const tickCup = t => {
+      if (!seen || document.hidden) { last = 0; raf = 0; return; }
+      if (last) warm += (t - last) / 1000; last = t;
+      cup.classList.toggle('cooling', warm > 40 && warm < 62);
+      if (warm >= 62) { cup.classList.remove('hot', 'cooling'); cup.classList.add('cold'); raf = 0; return; }
+      raf = requestAnimationFrame(tickCup);
+    };
+    new IntersectionObserver(es => es.forEach(e => {
+      seen = e.isIntersecting;
+      if (seen && !cup.classList.contains('cold')) { cup.classList.add('hot'); if (!raf) raf = requestAnimationFrame(tickCup); }
+    })).observe(q('#part-4'));
+    document.addEventListener('visibilitychange', () => { if (!document.hidden && seen && !raf && !cup.classList.contains('cold')) raf = requestAnimationFrame(tickCup); });
+  }
+
+  /* ---- 7. пара добрых слов: звёздочки только для себя ---- */
+  const rateP = q('.k-rate') && q('.k-rate').closest('p');
+  if (rateP) {
+    const box = document.createElement('div'); box.className = 'rate'; box.setAttribute('role', 'group'); box.setAttribute('aria-label', 'Оценка курьеру, только для себя');
+    const STAR = '<svg viewBox="0 0 24 24"><path d="M12 3.2l2.6 5.6 6.1.7-4.5 4.2 1.2 6-5.4-3-5.4 3 1.2-6L3.3 9.5l6.1-.7z"/></svg>';
+    const stars = [1, 2, 3, 4, 5].map(n => { const b = document.createElement('button'); b.type = 'button'; b.setAttribute('aria-label', n + ' из 5'); b.innerHTML = STAR; box.appendChild(b); return b; });
+    const cap = document.createElement('span'); cap.className = 'r-cap'; box.appendChild(cap);
+    rateP.after(box);
+    const CAP0 = 'пара добрых слов курьеру, только для себя', CAP1 = 'хорошее замечено';
+    const show = (n, fresh) => {
+      stars.forEach((b, k) => {
+        const on = k < n;
+        if (fresh && on && !b.classList.contains('on')) setTimeout(() => { b.classList.add('on'); anim(b, [{transform: 'scale(.82)'}, {transform: 'scale(1.18)', offset: .55}, {transform: 'scale(1)'}], {duration: 380, easing: 'ease-out'}); }, k * 70);
+        else b.classList.toggle('on', on);
+        b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+      cap.textContent = n ? CAP1 : CAP0;
+      if (fresh) anim(cap, [{opacity: 0}, {opacity: 1}], {duration: 500});
+    };
+    show(store.get('stars', 0));
+    stars.forEach((b, k) => {
+      // звёздочка вдавливается под пальцем и теплеет, когда палец отпускает
+      b.addEventListener('pointerdown', () => b.classList.add('press'));
+      ['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => b.addEventListener(ev, () => b.classList.remove('press')));
+      b.addEventListener('click', () => { const n = k + 1; stars.forEach(s => s.classList.remove('on')); store.set('stars', n); show(n, true); });
+    });
+  }
+
+  /* ---- 9. тонкая линейка с нулём; в конце ноль стирается ластиком ---- */
+  const ruler = q('#ruler'), zero = q('#r-zero'), col = q('#col'), card = q('.card');
+  let erased = store.get('erased', false);
+  if (erased && zero) zero.classList.add('gone');
+  function erase() {
+    if (erased || !zero) return;
+    if (pushBusy) { setTimeout(erase, 700); return; } // ластик ждёт, пока уедет уведомление, иначе его не видно
+    erased = true; store.set('erased', true);
+    if (RM) { zero.classList.add('gone'); return; }
+    const er = document.createElement('i'); er.className = 'r-eraser'; ruler.appendChild(er);
+    const sm = document.createElement('i'); sm.className = 'r-smudge'; sm.style.opacity = '0'; ruler.appendChild(sm);
+    const a = er.animate([
+      {transform: 'translate(-6px,-10px)', opacity: 0}, {transform: 'translate(0,0)', opacity: 1, offset: .12},
+      {transform: 'translate(30px,1px)', offset: .26}, {transform: 'translate(2px,0)', offset: .4}, {transform: 'translate(32px,1px)', offset: .54},
+      {transform: 'translate(4px,0)', offset: .68}, {transform: 'translate(26px,1px)', offset: .82}, {transform: 'translate(40px,-12px)', opacity: 0}
+    ], {duration: 1500, easing: 'ease-in-out'});
+    setTimeout(() => { zero.classList.add('gone'); sm.animate([{opacity: 0}, {opacity: 1, offset: .3}, {opacity: .5}], {duration: 2200, fill: 'forwards'}); }, 250);
+    // крошки резинки падают вниз
+    for (let n = 0; n < 6; n++) setTimeout(() => {
+      const c = document.createElement('i'); c.className = 'r-crumb'; c.style.left = (18 + Math.random() * 32) + 'px'; c.style.bottom = '12px'; ruler.appendChild(c);
+      c.animate([{transform: 'translate(0,0)', opacity: 1}, {transform: `translate(${(Math.random() - .5) * 10}px, 14px)`, opacity: 0}], {duration: 700, easing: 'cubic-bezier(.5,0,1,1)'}).onfinish = () => c.remove();
+    }, 300 + n * 160);
+    a.onfinish = () => er.remove();
+  }
+  if (ruler && col) {
+    let pend = false;
+    const upd = () => {
+      pend = false;
+      const top = col.offsetTop, h = col.offsetHeight, y = scrollY + innerHeight * .5;
+      const p = Math.max(0, Math.min(1, (y - top) / h));
+      ruler.style.setProperty('--p', p.toFixed(4));
+      ruler.classList.toggle('on', card ? card.getBoundingClientRect().bottom < 0 : scrollY > 300);
+    };
+    addEventListener('scroll', () => { if (!pend) { pend = true; requestAnimationFrame(upd); } }, {passive: true});
+    addEventListener('resize', upd); upd();
+    const lastP = qa('#part-5 p').pop();
+    when(lastP, () => setTimeout(erase, 500), .75);
+  }
+
+  /* ---- 10. марка отклеивается уголком, если её подержать ---- */
+  const stamp = q('.stamp'), flap = q('.stamp-flap');
+  if (stamp && flap) {
+    let peel = 0, holding = false, raf = 0, last = 0, done = false;
+    const MAX = 1;
+    const setPeel = v => { peel = v; stamp.style.setProperty('--peel', v.toFixed(3)); flap.style.setProperty('--peel', v.toFixed(3)); };
+    const springTo = (target, after) => {
+      cancelAnimationFrame(raf);
+      let v = 0, x = peel; const step = () => {
+        // пружина с затуханием: уголок шлёпается обратно и чуть подрагивает
+        v += (target - x) * .18; v *= .72; x += v; setPeel(Math.max(0, x));
+        if (Math.abs(target - x) > .002 || Math.abs(v) > .002) raf = requestAnimationFrame(step); else { setPeel(target); after && after(); }
+      };
+      raf = requestAnimationFrame(step);
+    };
+    const grow = t => {
+      if (!holding) return;
+      if (last) peel += (t - last) / 900 * (0.35 + peel * 1.3); // сначала клей держит, потом уголок поддаётся всё легче
+      last = t;
+      if (peel >= MAX) { holding = false; done = true; springTo(MAX); return; }
+      setPeel(peel); raf = requestAnimationFrame(grow);
+    };
+    stamp.addEventListener('contextmenu', e => e.preventDefault());
+    stamp.addEventListener('pointerdown', e => {
+      e.preventDefault(); stamp.setPointerCapture && stamp.setPointerCapture(e.pointerId);
+      if (done) { done = false; springTo(0); return; }
+      if (RM) { done = true; setPeel(MAX); return; }
+      holding = true; last = 0; cancelAnimationFrame(raf); raf = requestAnimationFrame(grow);
+    });
+    const release = () => { if (!holding) return; holding = false; if (!done) springTo(0); };
+    ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(ev => stamp.addEventListener(ev, release));
+    stamp.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse' && !done && !holding) springTo(.07); });
+    stamp.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse' && !done && !holding) springTo(0); });
+  }
+})();
+
 </script>
 </body>
 </html>
