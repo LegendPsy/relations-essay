@@ -187,18 +187,28 @@
   <div class="wcard" data-card>
     <div class="wcard-in">
       <div class="wcard-face wcard-front">
-        <p class="wc-line"><span class="wc-k">Если</span> <textarea class="wc-f" data-f="if" rows="1" maxlength="90" placeholder="на меня кричат" aria-label="Если…"></textarea></p>
-        <p class="wc-line"><span class="wc-k">я</span> <textarea class="wc-f" data-f="do" rows="1" maxlength="90" placeholder="выхожу из комнаты" aria-label="…я"></textarea></p>
+        <p class="wc-line" data-line="if"><span class="wc-k">Если</span> <textarea class="wc-f" data-f="if" rows="1" maxlength="90" placeholder="выберите или впишите своё" aria-label="Если…"></textarea></p>
+        <p class="wc-line" data-line="do"><span class="wc-k">я</span> <textarea class="wc-f" data-f="do" rows="1" maxlength="90" placeholder="выберите или впишите своё" aria-label="…я"></textarea></p>
         <p class="wc-note">Ничего личного — просто я так <span data-gw>устроен</span>.</p>
         <p class="wc-sign">сказано заранее, в спокойный час · <span data-date></span></p>
+        <span class="wc-seal" aria-hidden="true">Сказано<br>заранее</span>
       </div>
-      <div class="wcard-face wcard-back" aria-hidden="true"><p class="wc-saved">Сохранено</p><p class="wc-sign">остаётся у вас</p></div>
     </div>
   </div>
-  <div class="wc-hints" role="group" aria-label="Подсказки из статьи"></div>
+  <div class="wc-pick">
+    <div class="wc-tabs" role="tablist" aria-label="Какую половину выбрать">
+      <button type="button" role="tab" data-tab="if" aria-selected="true" aria-controls="wc-opts-if" id="wc-tab-if">Если…</button>
+      <button type="button" role="tab" data-tab="do" aria-selected="false" aria-controls="wc-opts-do" id="wc-tab-do">…я</button>
+    </div>
+    <div class="wc-opts" id="wc-opts-if" data-opts="if" role="tabpanel" aria-labelledby="wc-tab-if">
+      <p class="wc-cap">что может случиться: снаружи или внутри</p>
+    </div>
+    <div class="wc-opts" id="wc-opts-do" data-opts="do" role="tabpanel" aria-labelledby="wc-tab-do" hidden>
+      <p class="wc-cap wc-scale"><span>мягкий шаг</span><i aria-hidden="true"></i><span>решительный</span></p>
+    </div>
+  </div>
   <div class="wc-row">
     <span class="wc-g" role="group" aria-label="Как о себе"><button type="button" data-g="m" aria-pressed="true">устроен</button><button type="button" data-g="f" aria-pressed="false">устроена</button></span>
-    <button type="button" class="wc-save">Сохранить картинкой</button>
   </div>
   <p class="wc-msg voice" aria-live="polite"></p>
 </figure>
