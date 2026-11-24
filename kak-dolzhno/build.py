@@ -1,15 +1,15 @@
 """Собирает kak-dolzhno/index.html: текст статьи (text.md) + шаблон (template.html).
 
-Статья делится на части по заголовкам «## …». Все части открыты сразу,
-в конце статьи стоит мультфильм video/multfilm.mp4 (обложка video/multfilm.jpg).
+Статья делится на части по заголовкам «## …». Все части открыты сразу.
 
 Что можно положить рядом, и сайт подхватит это при следующей сборке:
   audio/chast-N.mp3        — озвучка части N (N = 0 … 5, 0 — вступление)
   timings/chast-N.json     — {"dur": секунды, "para": [...], "words": [[...], ...]}
                              время начала каждого абзаца и каждого слова, для подсветки
 Запуск: python3 kak-dolzhno/build.py
+(--preview ПУТЬ — ещё и предпросмотр одним файлом с картинкой внутри)
 """
-import html, json, pathlib, re
+import base64, html, json, pathlib, re, sys
 
 ROOT = pathlib.Path(__file__).parent
 
@@ -48,15 +48,34 @@ def parse(md):
     return title, lede, parts
 
 
+# живые детали: фразы, которые на странице получают свою обёртку (каждая должна встретиться ровно один раз)
+MARKS = [
+    ("«Курьер на месте»", '«<span class="k-ping" data-ping="1">Курьер на месте</span>»'),
+    ("красными чернилами", '<span class="ink">красными чернилами</span>'),
+    ("Он приехал вовремя, по нужному адресу", '<span class="k-ping" data-ping="2">Он приехал вовремя, по нужному адресу</span>'),
+    ("оставить пару добрых слов в приложении", '<span class="k-rate">оставить пару добрых слов в приложении</span>'),
+]
+MARK_HITS = {}
+
+
+def marked(text):
+    out = inline(text)
+    for plain, wrapped in MARKS:
+        if plain in out:
+            MARK_HITS[plain] = MARK_HITS.get(plain, 0) + out.count(plain)
+            out = out.replace(plain, wrapped)
+    return out
+
+
 def render(parts):
     out = []
     for i, p in enumerate(parts):
         body = []
         for kind, val in p["blocks"]:
             if kind == "p":
-                body.append(f'<p data-say="{i}">{inline(val)}</p>')
+                body.append(f'<p data-say="{i}">{marked(val)}</p>')
             else:
-                body.append("<ul>" + "".join(f'<li data-say="{i}">{inline(x)}</li>' for x in val) + "</ul>")
+                body.append("<ul>" + "".join(f'<li data-say="{i}">{marked(x)}</li>' for x in val) + "</ul>")
         tag = (f'<span class="tag-t">часть</span><span class="tag-n">{p["num"]}</span>' if p["num"]
                else '<span class="tag-t big">вступление</span>')
         head = "" if not p["num"] else f'<h2 data-say="{i}">{inline(p["title"])}</h2>'
@@ -65,7 +84,7 @@ def render(parts):
 <div class="tag">{tag}</div>
 {head}
 </header>
-<div class="sheet cut" data-c="var(--paper)" data-rough="2">
+<div class="sheet paper">
 {chr(10).join(body)}
 </div>
 </section>''')
@@ -88,8 +107,20 @@ def main():
     h1 = re.sub(r"(\w+-\w+)", r'<span class="nw">\1</span>', inline(title))
     page = (tpl.replace("{{TITLE_H1}}", h1).replace("{{TITLE}}", inline(title)).replace("{{LEDE}}", inline(lede))
                .replace("{{ARTICLE}}", render(parts))
-               .replace("{{DATA}}", json.dumps(data, ensure_ascii=False)))
-    (ROOT / "index.html").write_text(page, encoding="utf-8")
+               .replace("{{DATA}}", json.dumps(data, ensure_ascii=False))
+               .replace("{{LIVE_CSS}}", (ROOT / "zhivoe.css").read_text(encoding="utf-8"))
+               .replace("{{LIVE_JS}}", (ROOT / "zhivoe.js").read_text(encoding="utf-8")))
+    for plain, _ in MARKS:
+        if MARK_HITS.get(plain) != 1:
+            print("ВНИМАНИЕ: фраза для живой детали найдена", MARK_HITS.get(plain, 0), "раз:", plain)
+    site = page.replace("{{IMG}}", "img/otkrytka.jpg")
+    (ROOT / "index.html").write_text(site, encoding="utf-8")
+    if "--preview" in sys.argv:
+        # предпросмотр одним файлом: картинка внутри
+        img = "data:image/jpeg;base64," + base64.b64encode((ROOT / "img/otkrytka.jpg").read_bytes()).decode()
+        live = "https://legendpsy.github.io/relations-essay/kak-dolzhno/"
+        prev = (page.replace("{{IMG}}", img).replace('href="../gorizont/"', 'href="' + live + '../gorizont/"'))
+        pathlib.Path(sys.argv[sys.argv.index("--preview") + 1]).write_text(prev, encoding="utf-8")
     words = sum(len(re.findall(r"[0-9A-Za-zА-Яа-яЁё]+", (" ".join(v if k == "p" else " ".join(v) for k, v in p["blocks"])))) for p in parts)
     print("OK:", len(parts), "частей,", words, "слов, озвучка:", sum("audio" in d for d in data["parts"]))
 
