@@ -1,0 +1,237 @@
+<!-- Живые сцены. build.py вставляет каждую после абзаца, с которого она начинается (см. SCENES в build.py).
+     Всё нарисовано кодом: SVG и CSS, без картинок. Тексты подписей — голос сайта, не текст статьи. -->
+
+<!--scene:stamp-->
+<figure class="scene stamp-scene" data-scene="stamp" aria-label="Печать со словом «границы». Каждый новый оттиск бледнее и расплывчатее предыдущего.">
+  <div class="sheet" data-sheet>
+    <div class="prints" aria-hidden="true"></div>
+    <div class="stamp" aria-hidden="true"><i class="st-knob"></i><i class="st-neck"></i><i class="st-block"></i><i class="st-rubber"></i></div>
+  </div>
+  <figcaption class="voice" data-cap>Нажмите на лист — поставлю печать.</figcaption>
+</figure>
+<!--/scene-->
+
+<!--scene:bubble-->
+<figure class="scene bubble-scene" data-scene="bubble" aria-hidden="true">
+  <div class="bubble" data-bubble><span class="bub-shell"></span><span class="bub-text">Нельзя прыгать на меня с разбега и визжать в ухо!</span></div>
+</figure>
+<!--/scene-->
+
+<!--scene:nail-->
+<figure class="scene nail-scene" data-scene="nail" aria-label="Табличка с правилами для других висит на одном гвозде. От прикосновения она раскачивается, гвоздь шатается.">
+  <div class="wall" aria-hidden="true">
+    <i class="nail" data-nail></i>
+    <div class="sign" data-sign>
+      <svg class="strings" viewBox="0 0 200 60" preserveAspectRatio="none"><path d="M100 2L18 58M100 2L182 58"/></svg>
+      <div class="board">
+        <p class="board-h">Нельзя</p>
+        <ul><li>поднимать на меня руку</li><li>кричать на меня</li><li>прыгать с разбега и визжать в ухо</li><li>так на меня смотреть</li></ul>
+      </div>
+    </div>
+    <div class="crumbs"></div>
+  </div>
+</figure>
+<!--/scene-->
+
+<!--scene:bill-->
+<figure class="scene bill-scene" data-scene="bill" aria-label="Чек печатается, пока вы листаете: «Поменяй выражение лица, объяснись, извинись, докажи, что понял. Итого: твой ход». Его можно оторвать, потянув вбок.">
+  <div class="printer" aria-hidden="true"><i class="pr-body"></i><i class="pr-slot"></i><i class="teeth"></i></div>
+  <div class="bill-clip" aria-hidden="true">
+    <div class="bill" data-bill>
+      <div class="bill-paper">
+        <p class="b-head">Счёт</p>
+        <p class="b-row"><span>Дата</span><span data-date>сегодня</span></p>
+        <p class="b-row"><span>Граница</span><span>моя</span></p>
+        <p class="b-row"><span>Плательщик</span><span>ты</span></p>
+        <p class="b-rule"></p>
+        <p class="b-item"><span>Поменяй выражение лица</span><span>1</span></p>
+        <p class="b-item"><span>Объяснись</span><span>1</span></p>
+        <p class="b-item"><span>Извинись</span><span>1</span></p>
+        <p class="b-item"><span>Докажи, что понял</span><span>1</span></p>
+        <p class="b-item"><span>Сделай так, чтобы я больше никогда не видел этого взгляда</span><span>∞</span></p>
+        <p class="b-rule"></p>
+        <p class="b-total"><span>Итого</span><span>твой ход</span></p>
+        <p class="b-code"></p>
+      </div>
+      <svg class="tear" viewBox="0 0 300 10" preserveAspectRatio="none"><path pathLength="1" d="M0 5L7 1L14 8L21 2L28 7L35 1L42 8L49 3L56 7L63 1L70 8L77 2L84 7L91 1L98 8L105 3L112 7L119 1L126 8L133 2L140 7L147 1L154 8L161 3L168 7L175 1L182 8L189 2L196 7L203 1L210 8L217 3L224 7L231 1L238 8L245 2L252 7L259 1L266 8L273 3L280 7L287 1L294 8L300 4"/></svg>
+    </div>
+  </div>
+  <figcaption class="voice" data-cap></figcaption>
+</figure>
+<!--/scene-->
+
+<!--scene:nosmoke-->
+<figure class="scene nosmoke-scene" data-scene="nosmoke" aria-label="Табличка «Не курить» качается на гвозде, а дым проходит прямо сквозь неё.">
+  <div class="ns-wall">
+    <i class="ns-nail" aria-hidden="true"></i>
+    <button class="ns-sign" type="button" data-sign aria-label="Табличка «Не курить». Можно качнуть">
+      <svg viewBox="0 0 120 120" aria-hidden="true">
+        <circle cx="60" cy="60" r="55" fill="#fff"/>
+        <path d="M23 51c-5-6 4-9-1-16" fill="none" stroke="#8b8b8b" stroke-width="3" stroke-linecap="round"/>
+        <rect x="26" y="55" width="56" height="11" rx="1.5" fill="#fff" stroke="#2c2c2c" stroke-width="2.4"/>
+        <rect x="82" y="55" width="14" height="11" rx="1.5" fill="#d99a56" stroke="#2c2c2c" stroke-width="2.4"/>
+        <rect x="21" y="56.5" width="6" height="8" rx="1.5" fill="#e4572e"/>
+        <circle cx="60" cy="60" r="48" fill="none" stroke="#d1352a" stroke-width="10"/>
+        <path d="M26 26L94 94" stroke="#d1352a" stroke-width="10"/>
+      </svg>
+      <span>Не курить</span>
+    </button>
+    <canvas class="ns-smoke" aria-hidden="true"></canvas>
+  </div>
+  <figcaption class="voice" data-cap>Табличка висит. Дым идёт.</figcaption>
+</figure>
+<!--/scene-->
+
+<!--scene:exit-->
+<figure class="scene exit-scene" data-scene="exit" aria-label="Коридор затягивает дымом. Если прижать палец к знаку «Выход» и подержать, дым расходится.">
+  <div class="ex-room">
+    <canvas class="ex-smoke" aria-hidden="true"></canvas>
+    <button class="ex-sign" type="button" aria-label="Знак «Выход». Нажмите и держите">
+      <svg viewBox="0 0 120 64" aria-hidden="true">
+        <rect class="ex-panel" x="1" y="1" width="118" height="62" rx="8"/>
+        <path d="M11 32H25M19 25L26 32L19 39" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="56" cy="13" r="5" fill="#fff"/>
+        <path d="M54 20L48 36M53 23L61 28L66 24M53 23L45 27L41 33M48 36L57 42L57 52M48 36L42 45L33 47" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <rect x="80" y="10" width="28" height="44" rx="2" fill="none" stroke="#fff" stroke-width="3.2"/>
+        <path d="M80 54H108" stroke="#fff" stroke-width="3.2"/>
+      </svg>
+      <span>Выход</span>
+    </button>
+    <i class="ex-floor" aria-hidden="true"></i>
+  </div>
+  <figcaption class="voice" data-cap>Прижмите палец к «Выходу» и держите.</figcaption>
+</figure>
+<!--/scene-->
+
+<!--scene:lift-->
+<figure class="scene lift-scene" data-scene="lift" aria-label="Кнопка вызова лифта. Лифт едет с одной и той же скоростью, сколько ни нажимай.">
+  <div class="lift">
+    <div class="lift-doors" aria-hidden="true"><i class="cabin"></i><i class="door l"></i><i class="door r"></i></div>
+    <div class="lift-panel">
+      <div class="lift-display" aria-hidden="true"><span class="arrow">▼</span><span class="floor" data-floor>9</span><span class="msg"><span data-msg></span></span></div>
+      <button class="lift-btn" type="button" aria-label="Вызвать лифт"><span class="ring"></span><span class="cap"></span></button>
+    </div>
+  </div>
+  <figcaption class="voice" data-cap>Можно нажимать.</figcaption>
+</figure>
+<!--/scene-->
+
+<!--scene:kettle-->
+<figure class="scene kettle-scene" data-scene="kettle" aria-label="Горячий чайник. Если коснуться его, рука отдёргивается. Потом рядом появляется прихватка, и с ней чайник можно поднять.">
+  <div class="k-stage">
+    <div class="k-steam" aria-hidden="true"><i></i><i></i><i></i></div>
+    <div class="k-kettle" data-kettle role="button" tabindex="0" aria-label="Коснуться чайника">
+      <svg class="k-svg" viewBox="0 0 220 190" aria-hidden="true">
+        <defs>
+          <radialGradient id="kHeat" cx="50%" cy="100%" r="78%">
+            <stop offset="0" stop-color="#ff6a26" stop-opacity=".95"/>
+            <stop offset=".5" stop-color="#ff9a3c" stop-opacity=".42"/>
+            <stop offset="1" stop-color="#ffb35a" stop-opacity="0"/>
+          </radialGradient>
+          <clipPath id="kClip"><path d="M44 168C40 122 66 84 110 82C154 84 180 122 176 168Z"/></clipPath>
+        </defs>
+        <path class="k-handle" d="M74 90C68 40 152 40 146 90"/>
+        <path class="k-spout" d="M60 140C44 132 30 118 18 98C17 95 19 92 22 92L30 92C38 108 50 120 66 124Z"/>
+        <path class="k-body" d="M44 168C40 122 66 84 110 82C154 84 180 122 176 168Z"/>
+        <g clip-path="url(#kClip)"><rect class="k-heat" x="30" y="80" width="160" height="92" fill="url(#kHeat)"/></g>
+        <path class="k-shine" d="M70 116C78 101 92 94 105 93"/>
+        <rect class="k-band" x="44" y="159" width="132" height="10" rx="2"/>
+        <ellipse class="k-lid" cx="110" cy="85" rx="33" ry="7"/>
+        <rect class="k-knob" x="106.5" y="73" width="7" height="9" rx="2"/>
+        <circle class="k-knob" cx="110" cy="72" r="7"/>
+      </svg>
+      <span class="k-sticker" aria-hidden="true">Не обжигать!</span>
+    </div>
+    <button class="k-mitt" type="button" aria-label="Взять прихватку" hidden>
+      <svg viewBox="0 0 80 86" aria-hidden="true">
+        <defs><clipPath id="mClip"><rect x="6" y="12" width="68" height="68" rx="13"/></clipPath></defs>
+        <path class="m-loop" d="M33 14C33 3 47 3 47 14"/>
+        <rect class="m-pad" x="6" y="12" width="68" height="68" rx="13"/>
+        <g clip-path="url(#mClip)" class="m-quilt"><path d="M-10 32L40 -18M-10 56L64 -18M-10 80L88 -18M6 96L100 2M30 96L100 26M54 96L100 50M90 32L40 -18M90 56L16 -18M90 80L-8 -18M74 96L-20 2M50 96L-20 26M26 96L-20 50"/></g>
+        <rect class="m-stitch" x="11.5" y="17.5" width="57" height="57" rx="9"/>
+      </svg>
+    </button>
+    <i class="k-plate" aria-hidden="true"></i>
+    <div class="k-fx" aria-hidden="true"></div>
+  </div>
+  <figcaption class="voice" data-cap>Он горячий.</figcaption>
+</figure>
+<!--/scene-->
+
+<!--scene:knee-->
+<figure class="scene knee-scene" data-scene="knee" aria-label="Молоточек и колено. После удара нога дёргается, каждый раз одинаково.">
+  <button class="knee" type="button" aria-label="Стукнуть молоточком по колену">
+    <svg viewBox="0 0 260 160" aria-hidden="true">
+      <rect class="kn-seat" x="0" y="70" width="128" height="10" rx="3"/>
+      <rect class="kn-seat" x="104" y="80" width="9" height="74" rx="2"/>
+      <g class="kn-shin">
+        <rect class="kn-pants" x="135" y="56" width="22" height="74" rx="9"/>
+        <path class="kn-shoe" d="M133 126h25c10 0 22 6 24 13v5h-49z"/>
+      </g>
+      <path class="kn-pants" d="M24 45H146a13 13 0 0 1 0 26H24a13 13 0 0 1 0-26z"/>
+      <circle class="kn-cap" cx="147" cy="58" r="10"/>
+      <circle class="kn-hit" cx="161" cy="72" r="5"/>
+      <g class="kn-hammer">
+        <path class="kn-handle" d="M236 24L176 70"/>
+        <path class="kn-rubber" d="M160 64L180 58L176 84Z"/>
+      </g>
+    </svg>
+  </button>
+  <figcaption class="voice" data-cap>Коснитесь колена.</figcaption>
+</figure>
+<!--/scene-->
+
+<!--scene:card-->
+<figure class="scene card-scene" data-scene="card" aria-label="Соберите своё предупреждение: если…, я…">
+  <p class="card-kicker">Своё предупреждение — заранее, в спокойный час</p>
+  <div class="wcard" data-card>
+    <div class="wcard-in">
+      <div class="wcard-face wcard-front">
+        <p class="wc-line"><span class="wc-k">Если</span> <textarea class="wc-f" data-f="if" rows="1" maxlength="90" placeholder="на меня кричат" aria-label="Если…"></textarea></p>
+        <p class="wc-line"><span class="wc-k">я</span> <textarea class="wc-f" data-f="do" rows="1" maxlength="90" placeholder="выхожу из комнаты" aria-label="…я"></textarea></p>
+        <p class="wc-note">Ничего личного — просто я так <span data-gw>устроен</span>.</p>
+        <p class="wc-sign">сказано заранее, в спокойный час · <span data-date></span></p>
+      </div>
+      <div class="wcard-face wcard-back" aria-hidden="true"><p class="wc-saved">Сохранено</p><p class="wc-sign">остаётся у вас</p></div>
+    </div>
+  </div>
+  <div class="wc-hints" role="group" aria-label="Подсказки из статьи"></div>
+  <div class="wc-row">
+    <span class="wc-g" role="group" aria-label="Как о себе"><button type="button" data-g="m" aria-pressed="true">устроен</button><button type="button" data-g="f" aria-pressed="false">устроена</button></span>
+    <button type="button" class="wc-save">Сохранить картинкой</button>
+  </div>
+  <p class="wc-msg voice" aria-live="polite"></p>
+</figure>
+<!--/scene-->
+
+<!--scene:pause-->
+<figure class="scene pause-scene" data-scene="pause" aria-label="Кнопка «Стоп». Нажмите и держите, чтобы остановить поток. Потом она помогает взять паузу: держите — вдох, отпустите — выдох.">
+  <button class="pz-btn" type="button"><span class="pz-ring" aria-hidden="true"></span><span class="pz-fill" aria-hidden="true"></span><span class="pz-label">Стоп</span></button>
+  <p class="pz-dots" aria-hidden="true"><i></i><i></i><i></i><i></i></p>
+  <figcaption class="voice" data-cap>Нажмите и держите.</figcaption>
+</figure>
+<!--/scene-->
+
+<!--scene:agree-->
+<figure class="scene agree-scene" data-scene="agree" aria-label="Договорённость: стол и две чашки. Чашки съезжаются, только если коснуться стола двумя пальцами сразу.">
+  <div class="ag-table" data-table>
+    <i class="ag-glow" aria-hidden="true"></i>
+    <div class="cup a" aria-hidden="true"><svg viewBox="0 0 64 56"><path class="cup-steam" d="M22 9c-3-4 3-5 0-9M33 9c-3-4 3-5 0-9"/><path class="cup-body" d="M8 13h40v17c0 12-9 20-20 20S8 42 8 30z"/><path class="cup-handle" d="M48 19c8 0 10 4 10 8s-3 8-10 8"/></svg></div>
+    <div class="cup b" aria-hidden="true"><svg viewBox="0 0 64 56"><path class="cup-steam" d="M22 9c-3-4 3-5 0-9M33 9c-3-4 3-5 0-9"/><path class="cup-body" d="M8 13h40v17c0 12-9 20-20 20S8 42 8 30z"/><path class="cup-handle" d="M48 19c8 0 10 4 10 8s-3 8-10 8"/></svg></div>
+    <i class="ag-clink" aria-hidden="true"></i>
+    <i class="ag-top" aria-hidden="true"></i><i class="ag-leg l" aria-hidden="true"></i><i class="ag-leg r" aria-hidden="true"></i>
+  </div>
+  <figcaption class="voice" data-cap>Коснитесь стола двумя пальцами сразу.</figcaption>
+  <p class="ag-desk">На компьютере: зажмите пробел и нажмите на стол.</p>
+</figure>
+<!--/scene-->
+
+<!--scene:mine-->
+<figure class="scene stamp-scene mine-scene" data-scene="mine" aria-label="Граница: одного нажатия достаточно, чтобы поставить чёткий оттиск «Граница — это я».">
+  <div class="sheet" data-sheet>
+    <div class="prints" aria-hidden="true"></div>
+    <div class="stamp big" aria-hidden="true"><i class="st-knob"></i><i class="st-neck"></i><i class="st-block"></i><i class="st-rubber"></i></div>
+  </div>
+  <figcaption class="voice" data-cap>Нажмите один раз.</figcaption>
+</figure>
+<!--/scene-->
