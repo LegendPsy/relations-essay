@@ -1,7 +1,6 @@
 """Собирает kak-dolzhno/index.html: текст статьи (text.md) + шаблон (template.html).
 
-Статья делится на части по заголовкам «## …». Все части открыты сразу,
-в конце статьи стоит мультфильм video/multfilm.mp4 (обложка video/multfilm.jpg).
+Статья делится на части по заголовкам «## …». Все части открыты сразу.
 
 Что можно положить рядом, и сайт подхватит это при следующей сборке:
   audio/chast-N.mp3        — озвучка части N (N = 0 … 5, 0 — вступление)
@@ -90,16 +89,13 @@ def main():
     page = (tpl.replace("{{TITLE_H1}}", h1).replace("{{TITLE}}", inline(title)).replace("{{LEDE}}", inline(lede))
                .replace("{{ARTICLE}}", render(parts))
                .replace("{{DATA}}", json.dumps(data, ensure_ascii=False)))
-    site = (page.replace("{{IMG}}", "img/otkrytka.jpg").replace("{{POSTER}}", "video/multfilm.jpg")
-                .replace("{{MOVIE}}", "video/multfilm.mp4"))
+    site = page.replace("{{IMG}}", "img/otkrytka.jpg")
     (ROOT / "index.html").write_text(site, encoding="utf-8")
     if "--preview" in sys.argv:
-        # предпросмотр одним файлом: картинка внутри, мультфильм берётся с сайта
+        # предпросмотр одним файлом: картинка внутри
         img = "data:image/jpeg;base64," + base64.b64encode((ROOT / "img/otkrytka.jpg").read_bytes()).decode()
         live = "https://legendpsy.github.io/relations-essay/kak-dolzhno/"
-        poster = "data:image/jpeg;base64," + base64.b64encode((ROOT / "video/multfilm.jpg").read_bytes()).decode()
-        prev = (page.replace("{{IMG}}", img).replace("{{POSTER}}", poster)
-                    .replace("{{MOVIE}}", live + "video/multfilm.mp4").replace('href="../gorizont/"', 'href="' + live + '../gorizont/"'))
+        prev = (page.replace("{{IMG}}", img).replace('href="../gorizont/"', 'href="' + live + '../gorizont/"'))
         pathlib.Path(sys.argv[sys.argv.index("--preview") + 1]).write_text(prev, encoding="utf-8")
     words = sum(len(re.findall(r"[0-9A-Za-zА-Яа-яЁё]+", (" ".join(v if k == "p" else " ".join(v) for k, v in p["blocks"])))) for p in parts)
     print("OK:", len(parts), "частей,", words, "слов, озвучка:", sum("audio" in d for d in data["parts"]))

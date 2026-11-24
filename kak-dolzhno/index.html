@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#efe4d0">
 <title>Как вообще-то должно быть</title>
-<meta name="description" content="Где проходит ваша норма? Или почему нам так сложно радоваться тому, что уже хорошо. Статья психолога в шести частях: читать и посмотреть мультфильм по ней.">
+<meta name="description" content="Где проходит ваша норма? Или почему нам так сложно радоваться тому, что уже хорошо. Статья психолога в шести частях.">
 <meta property="og:title" content="Как вообще-то должно быть">
 <meta property="og:description" content="Где проходит ваша норма? Или почему нам так сложно радоваться тому, что уже хорошо.">
 <meta property="og:image" content="https://legendpsy.github.io/relations-essay/kak-dolzhno/img/otkrytka.jpg">
@@ -98,14 +98,9 @@ main { width: min(100% - 32px, var(--col)); margin: 44px auto 0; }
 .sheet li::before { content: ''; position: absolute; left: .2em; top: .68em; width: .42em; height: .42em; border-radius: 50%; background: var(--accent); opacity: .75; }
 .sheet strong { font-weight: 600; color: inherit; background: linear-gradient(176deg, transparent 0 60%, var(--mark) 60% 92%, transparent 92%); padding: 0 .08em; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
 
-/* ---- мультфильм в конце статьи ---- */
-.movie { margin: 64px 0 40px; scroll-margin-top: 14px; }
-.movie .part-head { margin-bottom: 12px; }
-.mv-d { margin: 2px 6px 14px; font: 400 15.5px/1.5 var(--sans); color: var(--ink2); }
-.mv-frame { padding: 10px; rotate: .5deg; }
-.mv-frame video { display: block; width: 100%; aspect-ratio: 16 / 9; border-radius: 6px; background: #d9cbb4; }
-.mv-end { margin: 30px 8px 0; text-align: center; font: italic 400 1.1rem/1.5 var(--serif); color: var(--ink2); }
-.mv-end a { color: var(--accent); font: 400 15px/1 var(--sans); text-underline-offset: 3px; }
+/* ---- конец статьи ---- */
+.fin { margin: 56px 8px 40px; text-align: center; font: italic 400 1.1rem/1.5 var(--serif); color: var(--ink2); }
+.fin a { color: var(--accent); font: 400 15px/1 var(--sans); text-underline-offset: 3px; }
 
 /* ---- озвучка: подсветка слова ---- */
 .w-now { background: var(--gold); color: #2b2119; border-radius: 3px; }
@@ -120,7 +115,7 @@ main { width: min(100% - 32px, var(--col)); margin: 44px auto 0; }
 .dk-play { grid-row: span 2; width: 48px; height: 48px; border: 0; padding: 0; border-radius: 50%; background: var(--accent2); cursor: pointer; display: grid; place-items: center; box-shadow: inset 0 1px 0 #fff3; }
 .dk-play svg { width: 20px; height: 20px; fill: #fbf6ec; }
 .dk-play:disabled { cursor: default; opacity: .5; }
-.dk-play:focus-visible, .dk-speed:focus-visible, .dk-seek:focus-visible, .home:focus-visible, .tofollow:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+.dk-play:focus-visible, .dk-speed:focus-visible, .dk-seek:focus-visible, .home:focus-visible, .tofollow:focus-visible, .fin a:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
 .dk-lbl { font: 400 15px/1.25 var(--sans); min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .dk-lbl b { font-weight: 600; color: var(--gold); }
 .dk-time { font: 12px/1 var(--sans); font-variant-numeric: tabular-nums; opacity: .75; white-space: nowrap; }
@@ -184,7 +179,7 @@ main { width: min(100% - 32px, var(--col)); margin: 44px auto 0; }
     </div>
   </div>
   <div class="about paper lo">
-    <p><b>Шесть частей и мультфильм.</b> Статью можно прочитать целиком, а в конце посмотреть короткий мультфильм по ней, около трёх минут. <a href="#multfilm">Сразу к мультфильму</a></p>
+    <p><b>Шесть частей, около 16 минут чтения.</b></p>
     <p id="about-voice">Статью я озвучиваю сам. Когда запись появится, внизу заработает плеер: нажмите на любое слово, и звук начнётся с него.</p>
   </div>
 </header>
@@ -299,17 +294,7 @@ main { width: min(100% - 32px, var(--col)); margin: 44px auto 0; }
 </div>
 </section>
 
-<section class="movie" id="multfilm">
-<header class="part-head">
-<div class="tag"><span class="tag-t big">мультфильм по статье</span></div>
-<h2>Дубль два</h2>
-</header>
-<p class="mv-d">Один и тот же день, показанный два раза. 2 минуты 52 секунды, лучше со звуком.</p>
-<div class="mv-frame paper lo">
-<video id="movie" controls playsinline preload="metadata" poster="video/multfilm.jpg" src="video/multfilm.mp4"></video>
-</div>
-<p class="mv-end">Спасибо, что дочитали. Пусть хорошее сегодня побудет просто хорошим.<br><a href="#title">Наверх</a></p>
-</section>
+<p class="fin">Спасибо, что дочитали. Пусть хорошее сегодня побудет просто хорошим.<br><a href="#title">Наверх</a></p>
 </main>
 
 <nav class="foot" aria-label="Другие статьи">
@@ -340,10 +325,6 @@ const sections = [...document.querySelectorAll('.part')];
 
 /* ============ озвучка: у каждой части своя запись, слово подсвечивается, страница едет за голосом ============ */
 const au = $('au'), dock = $('dock');
-const movie = $('movie');
-// мультфильм и озвучка не звучат одновременно
-movie.addEventListener('play', () => { if (!au.paused) au.pause(); });
-au.addEventListener('play', () => { if (!movie.paused) movie.pause(); });
 const toast = (t, ms = 3200) => { const d = document.createElement('div'); d.className = 'toast'; d.textContent = t; document.body.appendChild(d); setTimeout(() => d.remove(), ms); };
 const fmt = v => { v = Math.max(0, Math.floor(v || 0)); return Math.floor(v / 60) + ':' + String(v % 60).padStart(2, '0'); };
 const idxAt = (arr, t) => { let lo = 0, hi = arr.length - 1, r = 0; while (lo <= hi){ const mid = (lo + hi) >> 1; if (arr[mid] <= t + .02){ r = mid; lo = mid + 1; } else hi = mid - 1; } return r; };
@@ -409,7 +390,7 @@ $('dk-play').addEventListener('click', () => {
 const tf = $('tofollow'); let followOff = false, autoY = NaN, userT = -1e9, everPlayed = false, hinted = false;
 try { hinted = !!localStorage.getItem(KEY + '-hint'); } catch (e) {}
 const userScroll = () => { userT = performance.now(); if (!au.paused) followOff = true; };
-['touchstart', 'touchmove', 'wheel', 'keydown', 'mousedown'].forEach(ev => window.addEventListener(ev, e => { if (!e.target.closest || !e.target.closest('.dock, .tofollow, .movie')) userScroll(); }, {passive: true}));
+['touchstart', 'touchmove', 'wheel', 'keydown', 'mousedown'].forEach(ev => window.addEventListener(ev, e => { if (!e.target.closest || !e.target.closest('.dock, .tofollow')) userScroll(); }, {passive: true}));
 window.addEventListener('scroll', () => { if (!au.paused && !(Math.abs(window.scrollY - autoY) <= 3)) userScroll(); }, {passive: true});
 tf.addEventListener('click', () => { followOff = false; userT = -1e9; tf.hidden = true; });
 // нажали на слово или абзац — звучит с этого места
