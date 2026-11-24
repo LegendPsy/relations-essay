@@ -8,8 +8,9 @@
   timings/chast-N.json     — {"dur": секунды, "para": [...], "words": [[...], ...]}
                              время начала каждого абзаца и каждого слова, для подсветки
 Запуск: python3 kak-dolzhno/build.py
+(--preview ПУТЬ — ещё и предпросмотр одним файлом с картинкой внутри)
 """
-import html, json, pathlib, re
+import base64, html, json, pathlib, re, sys
 
 ROOT = pathlib.Path(__file__).parent
 
@@ -65,7 +66,7 @@ def render(parts):
 <div class="tag">{tag}</div>
 {head}
 </header>
-<div class="sheet cut" data-c="var(--paper)" data-rough="2">
+<div class="sheet paper">
 {chr(10).join(body)}
 </div>
 </section>''')
@@ -89,7 +90,17 @@ def main():
     page = (tpl.replace("{{TITLE_H1}}", h1).replace("{{TITLE}}", inline(title)).replace("{{LEDE}}", inline(lede))
                .replace("{{ARTICLE}}", render(parts))
                .replace("{{DATA}}", json.dumps(data, ensure_ascii=False)))
-    (ROOT / "index.html").write_text(page, encoding="utf-8")
+    site = (page.replace("{{IMG}}", "img/otkrytka.jpg").replace("{{POSTER}}", "video/multfilm.jpg")
+                .replace("{{MOVIE}}", "video/multfilm.mp4"))
+    (ROOT / "index.html").write_text(site, encoding="utf-8")
+    if "--preview" in sys.argv:
+        # предпросмотр одним файлом: картинка внутри, мультфильм берётся с сайта
+        img = "data:image/jpeg;base64," + base64.b64encode((ROOT / "img/otkrytka.jpg").read_bytes()).decode()
+        live = "https://legendpsy.github.io/relations-essay/kak-dolzhno/"
+        poster = "data:image/jpeg;base64," + base64.b64encode((ROOT / "video/multfilm.jpg").read_bytes()).decode()
+        prev = (page.replace("{{IMG}}", img).replace("{{POSTER}}", poster)
+                    .replace("{{MOVIE}}", live + "video/multfilm.mp4").replace('href="../gorizont/"', 'href="' + live + '../gorizont/"'))
+        pathlib.Path(sys.argv[sys.argv.index("--preview") + 1]).write_text(prev, encoding="utf-8")
     words = sum(len(re.findall(r"[0-9A-Za-zА-Яа-яЁё]+", (" ".join(v if k == "p" else " ".join(v) for k, v in p["blocks"])))) for p in parts)
     print("OK:", len(parts), "частей,", words, "слов, озвучка:", sum("audio" in d for d in data["parts"]))
 
