@@ -888,39 +888,150 @@ function kneeScene(fig) {
 }
 
 /* ---------- своя карточка «Если…, я…» ---------- */
-const claudeDownloads = (W.claude && typeof W.claude.use === 'function') ? W.claude.use('downloads').catch(() => null) : Promise.resolve(null);
+// Обе половинки читатель выбирает сам: из охапки вариантов по мотивам статьи или своими словами.
+const CARD_IF = [
+  'на меня повышают голос',
+  'спор переходит на личности',
+  'моё «нет» продолжают продавливать',
+  'меня торопят там, где мне нужно время',
+  'ко мне прикасаются без спроса',
+  'над моими чувствами смеются',
+  'меня стыдят при других',
+  'на меня давят чувством вины',
+  'за меня решают, не спросив',
+  'от меня снова и снова требуют оправданий',
+  'договорённость нарушают не в первый раз',
+  'я замечаю, что меня несёт',
+  'я соглашаюсь из страха, а не из желания',
+  'я перестаю слышать собственный голос',
+  'мне становится плохо, а я всё терплю'
+];
+const CARD_DO = [ // от мягкого шага к решительному
+  'делаю медленный вдох, прежде чем ответить',
+  'спрашиваю себя: «Я правда этого хочу?»',
+  'говорю вслух, что со мной сейчас происходит',
+  'прошу сбавить тон',
+  'говорю: «Мне нужно подумать»',
+  'говорю «нет» без долгих оправданий',
+  'предлагаю договориться, как быть в следующий раз',
+  'прошу перерыв на десять минут',
+  'нажимаю на паузу, даже если было приятно',
+  'буквально отступаю на шаг',
+  'предлагаю вернуться к разговору завтра',
+  'откладываю решение до утра',
+  'беру время побыть наедине с собой',
+  'спокойно заканчиваю разговор',
+  'уезжаю домой своим ходом',
+  'решаю, сколько места оставить человеку в моей жизни',
+  'сворачиваю общение'
+];
+// готовые пары из прошлой версии сайта: если они остались в памяти браузера, не показываем их снова
+const CARD_OLD = ['на меня кричат', 'выхожу из комнаты', 'разговор переходит на оскорбления', 'вешаю трубку', 'подойти ко мне сзади и резко схватить за руку', 'почти наверняка отмахнусь', 'меня предают', 'исчезаю из жизни человека', 'на меня давят', 'ставлю разговор на паузу'];
 function cardScene(fig) {
-  const card = $('[data-card]', fig), fIf = $('[data-f="if"]', fig), fDo = $('[data-f="do"]', fig), gw = $('[data-gw]', fig), hints = $('.wc-hints', fig), save = $('.wc-save', fig), msg = $('.wc-msg', fig);
+  const card = $('[data-card]', fig), gw = $('[data-gw]', fig), msg = $('.wc-msg', fig);
+  const F = { if: $('[data-f="if"]', fig), do: $('[data-f="do"]', fig) };
   const date = dmy(new Date());
   $$('[data-date]', fig).forEach(el => { el.textContent = date; });
-  const HINTS = [
-    ['на меня кричат', 'выхожу из комнаты'],
-    ['разговор переходит на оскорбления', 'вешаю трубку'],
-    ['подойти ко мне сзади и резко схватить за руку', 'почти наверняка отмахнусь'],
-    ['меня предают', 'исчезаю из жизни человека'],
-    ['на меня давят', 'ставлю разговор на паузу']
-  ];
   const saved = store.get('card', null);
-  let g = (saved && saved.g) || 'm';
+  let g = (saved && saved.g) || 'm', tab = 'if', sealed = false;
   const grow = ta => { ta.style.height = 'auto'; ta.style.height = ta.scrollHeight + 'px'; };
   function setG(v) { g = v; gw.textContent = v === 'f' ? 'устроена' : 'устроен'; $$('.wc-g button', fig).forEach(b => b.setAttribute('aria-pressed', String(b.dataset.g === v))); persist(); }
-  function persist() { store.set('card', { if: fIf.value, do: fDo.value, g }); }
-  if (saved) { fIf.value = saved.if || ''; fDo.value = saved.do || ''; }
+  function persist() { store.set('card', { if: F.if.value, do: F.do.value, g }); }
+  if (saved) for (const k of ['if', 'do']) { const v = saved[k] || ''; F[k].value = CARD_OLD.includes(v.trim()) ? '' : v; }
   setG(g);
-  [fIf, fDo].forEach(ta => { ta.addEventListener('input', () => { grow(ta); persist(); }); setTimeout(() => grow(ta), 0); });
-  bus.on('resize', () => { grow(fIf); grow(fDo); });
-  $$('.wc-g button', fig).forEach(b => b.addEventListener('click', () => setG(b.dataset.g)));
-  HINTS.forEach(([a, b]) => {
-    const bt = D.createElement('button'); bt.type = 'button'; bt.textContent = `${a} → ${b}`;
-    bt.addEventListener('click', () => { write(fIf, a); setTimeout(() => write(fDo, b), RM ? 0 : a.length * 16 + 120); haptic(5); });
-    hints.append(bt);
-  });
-  function write(ta, text) { // будто пишут от руки
-    clearInterval(ta._w);
-    if (RM) { ta.value = text; grow(ta); persist(); return; }
-    ta.value = ''; let i = 0;
-    ta._w = setInterval(() => { ta.value = text.slice(0, ++i); grow(ta); if (i >= text.length) { clearInterval(ta._w); persist(); } }, 16);
+  // вкладки: какую половинку сейчас выбираем
+  function setTab(k, focusTab) {
+    tab = k;
+    $$('.wc-tabs [data-tab]', fig).forEach(b => { const on = b.dataset.tab === k; b.setAttribute('aria-selected', String(on)); b.tabIndex = on ? 0 : -1; if (on && focusTab) b.focus(); });
+    $$('[data-opts]', fig).forEach(p => { p.hidden = p.dataset.opts !== k; });
+    $$('[data-line]', fig).forEach(l => l.classList.toggle('on', l.dataset.line === k));
   }
+  $$('.wc-tabs [data-tab]', fig).forEach(b => {
+    b.addEventListener('click', () => setTab(b.dataset.tab));
+    b.addEventListener('keydown', e => { if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') { e.preventDefault(); setTab(tab === 'if' ? 'do' : 'if', true); } });
+  });
+  // охапка вариантов
+  const chips = { if: [], do: [] };
+  for (const [k, list] of [['if', CARD_IF], ['do', CARD_DO]]) {
+    const box = $(`[data-opts="${k}"]`, fig), wrap = D.createElement('div');
+    wrap.className = 'wc-chips';
+    list.forEach((text, i) => {
+      const bt = D.createElement('button'); bt.type = 'button'; bt.className = 'wc-chip'; bt.textContent = text;
+      if (k === 'do') bt.style.setProperty('--w', (i / (list.length - 1)).toFixed(3)); // чем решительнее шаг, тем плотнее край
+      bt.addEventListener('click', () => choose(k, text, bt));
+      wrap.append(bt); chips[k].push(bt);
+    });
+    box.append(wrap);
+  }
+  function mark() {
+    for (const k of ['if', 'do']) { const v = F[k].value.trim(); chips[k].forEach(c => c.setAttribute('aria-pressed', String(c.textContent === v))); }
+  }
+  function choose(k, text, bt) {
+    haptic(5);
+    F[k]._busy = true;
+    chips[k].forEach(c => c.setAttribute('aria-pressed', String(c === bt)));
+    const go = () => fly(bt, F[k], () => write(F[k], text, () => {
+      F[k]._busy = false; mark();
+      const other = k === 'if' ? 'do' : 'if';
+      if (!F[other].value.trim()) setTimeout(() => setTab(other), RM ? 0 : 260);
+      check(true);
+    }));
+    // если карточка уже уехала вверх за край экрана, сначала мягко возвращаем её в поле зрения
+    const top = card.getBoundingClientRect().top;
+    if (top < 0) { W.scrollBy({ top: top - 24, behavior: RM ? 'auto' : 'smooth' }); setTimeout(go, RM ? 0 : 420); }
+    else go();
+  }
+  // вариант слетает с охапки на свою строчку и ложится на неё
+  function fly(bt, ta, done) {
+    if (RM) { done(); return; }
+    const a = bt.getBoundingClientRect(), b = ta.getBoundingClientRect();
+    const f = D.createElement('span'); f.className = 'wc-fly'; f.textContent = bt.textContent; f.setAttribute('aria-hidden', 'true');
+    f.style.left = a.left + 'px'; f.style.top = a.top + 'px'; f.style.width = a.width + 'px';
+    D.body.append(f);
+    const dx = b.left - a.left, dy = b.top + Math.min(b.height, 34) / 2 - (a.top + a.height / 2);
+    const anim = f.animate([
+      { transform: 'translate(0,0) scale(1)', opacity: 1 },
+      { transform: `translate(${dx * .5}px, ${dy * .5 - 26}px) scale(1.04) rotate(-1.5deg)`, opacity: 1, offset: .45 },
+      { transform: `translate(${dx}px, ${dy}px) scale(.92)`, opacity: .9 }
+    ], { duration: 460, easing: 'cubic-bezier(.3,.7,.4,1)' });
+    let ok = false;
+    const land = () => {
+      if (ok) return; ok = true;
+      f.remove();
+      const line = ta.closest('.wc-line');
+      line.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(2px)', offset: .3 }, { transform: 'translateY(0)' }], { duration: 260, easing: 'ease-out' });
+      haptic(8); done();
+    };
+    anim.onfinish = land; setTimeout(land, 700);
+  }
+  function write(ta, text, done) { // будто пишут от руки
+    clearInterval(ta._w);
+    if (RM) { ta.value = text; grow(ta); persist(); if (done) done(); return; }
+    ta.value = ''; let i = 0;
+    ta._w = setInterval(() => { ta.value = text.slice(0, ++i); grow(ta); if (i >= text.length) { clearInterval(ta._w); persist(); if (done) done(); } }, 16);
+  }
+  for (const k of ['if', 'do']) {
+    const ta = F[k];
+    ta.addEventListener('focus', () => setTab(k));
+    ta.addEventListener('input', () => { clearInterval(ta._w); ta._busy = false; grow(ta); persist(); mark(); check(false); });
+    ta.addEventListener('blur', () => check(true));
+    setTimeout(() => grow(ta), 0);
+  }
+  bus.on('resize', () => { grow(F.if); grow(F.do); });
+  $$('.wc-g button', fig).forEach(b => b.addEventListener('click', () => setG(b.dataset.g)));
+  // когда обе половинки на месте, карточку припечатывает штемпель «Сказано заранее»
+  function check(stampNow) {
+    const full = !!(F.if.value.trim() && F.do.value.trim());
+    if (!full) { if (sealed) { sealed = false; card.classList.remove('sealed', 'thump'); } return; }
+    if (sealed || !stampNow || F.if._busy || F.do._busy || D.activeElement === F.if || D.activeElement === F.do) return;
+    sealed = true;
+    card.classList.add('sealed');
+    if (!RM) { card.classList.remove('thump'); void card.offsetWidth; card.classList.add('thump'); setTimeout(() => haptic(14), 180); }
+    say(msg, 'Сказано заранее. Карточка подождёт вас здесь.');
+  }
+  mark();
+  if (F.if.value.trim() && F.do.value.trim()) { sealed = true; card.classList.add('sealed'); }
+  setTab(F.if.value.trim() && !F.do.value.trim() ? 'do' : 'if');
   // картон под пальцем чуть прогибается
   const inner = $('.wcard-in', fig);
   card.addEventListener('pointerdown', e => {
@@ -930,93 +1041,8 @@ function cardScene(fig) {
     inner.style.transition = 'transform .12s ease-out';
     inner.style.transform = `rotateX(${(-ny * 7).toFixed(2)}deg) rotateY(${(nx * 7).toFixed(2)}deg) scale(.99)`;
   });
-  const release = () => { if (card.classList.contains('flip')) return; inner.style.transition = 'transform .5s cubic-bezier(.3,1.6,.5,1)'; inner.style.transform = ''; };
+  const release = () => { inner.style.transition = 'transform .5s cubic-bezier(.3,1.6,.5,1)'; inner.style.transform = ''; };
   W.addEventListener('pointerup', release); W.addEventListener('pointercancel', release);
-  save.addEventListener('click', async () => {
-    const a = fIf.value.trim(), b = fDo.value.trim();
-    if (!a || !b) { say(msg, 'Сначала допишите обе половинки.'); (a ? fDo : fIf).focus(); return; }
-    let blob = null;
-    try { blob = await drawCard(a, b, g, date); } catch (e) { blob = null; }
-    if (!blob) { say(msg, 'Не получилось сохранить, можно сделать снимок экрана.'); return; }
-    flip();
-    const ok = await deliver(blob, 'moyo-preduprezhdenie.png', 'Моё предупреждение');
-    say(msg, ok === 'saved' ? 'Картинка сохранена.' : ok === 'shared' ? '' : ok === 'declined' ? '' : 'Не получилось сохранить, можно сделать снимок экрана.');
-  });
-  function flip() {
-    if (RM) return;
-    inner.style.transition = ''; inner.style.transform = '';
-    card.classList.add('flip');
-    setTimeout(() => card.classList.remove('flip'), 1700);
-  }
-}
-async function deliver(blob, filename, title) {
-  const viewerSave = await claudeDownloads;
-  if (viewerSave) {
-    try { await viewerSave.save({ filename, data: blob }); return 'saved'; }
-    catch (e) { return e && e.code === 'declined' ? 'declined' : 'fail'; }
-  }
-  try {
-    const file = new File([blob], filename, { type: 'image/png' });
-    if (navigator.canShare && navigator.canShare({ files: [file] })) { await navigator.share({ files: [file], title }); return 'shared'; }
-  } catch (e) { if (e && e.name === 'AbortError') return 'declined'; }
-  try {
-    const url = URL.createObjectURL(blob);
-    const a = D.createElement('a'); a.href = url; a.download = filename;
-    D.body.append(a); a.click(); a.remove();
-    setTimeout(() => URL.revokeObjectURL(url), 4000);
-    return 'saved';
-  } catch (e) { return 'fail'; }
-}
-async function drawCard(a, b, g, date) {
-  try { await D.fonts.ready; } catch (e) {}
-  const c = D.createElement('canvas'); c.width = 1080; c.height = 1350;
-  const x = c.getContext('2d');
-  // облик открыток каталога: стол цвета старой бумаги, горизонтали карты, светлая открытка со штемпелем
-  x.fillStyle = '#efe4d0'; x.fillRect(0, 0, 1080, 1350);
-  const gl = x.createRadialGradient(540, 620, 40, 540, 620, 720);
-  gl.addColorStop(0, 'rgba(236,180,100,.3)'); gl.addColorStop(1, 'rgba(236,180,100,0)');
-  x.fillStyle = gl; x.fillRect(0, 0, 1080, 1350);
-  x.save(); x.strokeStyle = 'rgba(184,160,124,.5)'; x.lineWidth = 2;
-  for (const [y0, a] of [[96, 1], [146, .8], [1170, 1], [1222, .7]]) {
-    x.globalAlpha = a; x.beginPath(); x.moveTo(-20, y0);
-    x.bezierCurveTo(260, y0 - 60, 520, y0 + 70, 760, y0 + 16); x.bezierCurveTo(900, y0 - 16, 1000, y0 - 30, 1100, y0); x.stroke();
-  }
-  x.restore();
-  const rr = (X, Y, Wd, H, r) => { x.beginPath(); x.moveTo(X + r, Y); x.arcTo(X + Wd, Y, X + Wd, Y + H, r); x.arcTo(X + Wd, Y + H, X, Y + H, r); x.arcTo(X, Y + H, X, Y, r); x.arcTo(X, Y, X + Wd, Y, r); x.closePath(); };
-  const wrap = (text, maxW) => { const words = text.split(/\s+/), lines = []; let line = ''; for (const wd of words) { const t = line ? line + ' ' + wd : wd; if (x.measureText(t).width > maxW && line) { lines.push(line); line = wd; } else line = t; } if (line) lines.push(line); return lines; };
-  x.save(); x.shadowColor = 'rgba(40,25,10,.24)'; x.shadowBlur = 44; x.shadowOffsetY = 16;
-  rr(110, 230, 860, 820, 20); x.fillStyle = '#fbf6ec'; x.fill(); x.restore();
-  x.save(); rr(110, 230, 860, 820, 20); x.clip(); x.strokeStyle = 'rgba(120,90,50,.032)'; x.lineWidth = 3;
-  for (let X = -440; X < 980; X += 10) { x.beginPath(); x.moveTo(X, 1050); x.lineTo(X + 532, 230); x.stroke(); }
-  x.restore();
-  x.strokeStyle = '#e4d5bb'; x.lineWidth = 2; rr(110, 230, 860, 820, 20); x.stroke();
-  x.save(); x.translate(862, 330); x.rotate(-.24); x.strokeStyle = 'rgba(43,33,25,.42)'; x.lineWidth = 3;
-  x.beginPath(); x.arc(0, 0, 58, 0, Math.PI * 2); x.stroke();
-  x.fillStyle = 'rgba(43,33,25,.5)'; x.textAlign = 'center'; x.font = '600 19px "Golos Text", "Segoe UI", sans-serif';
-  x.fillText('ГРАНИЦЫ', 0, -2); x.fillText(String(new Date().getFullYear()), 0, 22);
-  x.setLineDash([12, 6]); x.lineWidth = 3; x.strokeStyle = 'rgba(43,33,25,.36)';
-  x.beginPath(); x.moveTo(-120, -10); x.lineTo(-62, -10); x.moveTo(-120, 10); x.lineTo(-62, 10); x.stroke();
-  x.restore();
-  x.fillStyle = '#8a7764'; x.textAlign = 'center'; x.font = '600 30px "Golos Text", "Segoe UI", sans-serif';
-  x.fillText('МОЁ ПРЕДУПРЕЖДЕНИЕ', 540, 320);
-  x.textAlign = 'left';
-  let y = 420;
-  const block = (label, text) => {
-    x.fillStyle = '#2b2119'; x.font = '600 50px Lora, Georgia, serif'; x.fillText(label, 180, y);
-    x.fillStyle = '#a2462a'; x.font = 'italic 500 58px Lora, Georgia, serif';
-    const lines = wrap(text, 700).slice(0, 3);
-    lines.forEach((ln, i) => x.fillText(ln, 180, y + 80 + i * 72));
-    y += 80 + lines.length * 72 + 34;
-  };
-  block('Если', a + ',');
-  block('я', b + '.');
-  x.fillStyle = '#5a4a3c'; x.font = 'italic 400 38px Lora, Georgia, serif';
-  wrap(`Ничего личного — просто я так ${g === 'f' ? 'устроена' : 'устроен'}.`, 720).forEach((ln, i) => x.fillText(ln, 180, Math.max(y + 10, 820) + i * 50));
-  x.font = '500 28px "Golos Text", "Segoe UI", sans-serif'; x.fillStyle = '#8a7764';
-  x.fillText(`сказано заранее, в спокойный час · ${date}`, 180, 990);
-  x.textAlign = 'center'; x.font = '400 28px "Golos Text", "Segoe UI", sans-serif'; x.fillStyle = '#8a7764';
-  x.fillText('Из статьи «Чьи это границы?»', 540, 1250);
-  return await new Promise(res => c.toBlob(res, 'image/png'));
 }
 
 /* ---------- дежурство: прожектор и журнал про читателя ---------- */

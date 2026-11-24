@@ -411,27 +411,42 @@ main > section > ul > li::before { content: ""; position: absolute; left: .2em; 
 /* карточка «Если…, я…» */
 .card-kicker { font: 600 12.5px/1.35 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); text-align: center; margin: 0 0 14px !important; }
 .wcard { perspective: 900px; max-width: 390px; margin: 0 auto; }
-.wcard-in { position: relative; transform-style: preserve-3d; transition: transform .85s cubic-bezier(.3, 1.25, .5, 1); }
-.wcard.flip .wcard-in { transform: rotateY(180deg); }
-.wcard-face { -webkit-backface-visibility: hidden; backface-visibility: hidden; border-radius: 12px; background-color: var(--card); background-image: var(--hatch); box-shadow: 0 1px 0 var(--card-edge) inset, 0 1px 3px var(--card-shadow), 0 16px 34px -14px var(--card-shadow); padding: 22px 22px 18px; }
-.wcard-back { position: absolute; inset: 0; transform: rotateY(180deg); display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.wcard-in { position: relative; transform-style: preserve-3d; }
+.wcard-face { position: relative; border-radius: 12px; background-color: var(--card); background-image: var(--hatch); box-shadow: 0 1px 0 var(--card-edge) inset, 0 1px 3px var(--card-shadow), 0 16px 34px -14px var(--card-shadow); padding: 22px 22px 18px; }
 .wc-line { display: flex; align-items: baseline; gap: 10px; margin: 0 0 10px !important; }
-.wc-k { flex: none; font: 600 21px/1 var(--serif); }
-.wc-f { flex: 1; min-width: 0; padding: 2px 0 5px; border: 0; border-bottom: 1.5px solid var(--line); border-radius: 0; background: transparent; color: var(--accent); font: italic 500 22px/1.3 var(--serif); resize: none; overflow: hidden; outline: none; }
-.wc-f::placeholder { color: var(--muted); opacity: .45; }
+.wc-k { flex: none; font: 600 21px/1 var(--serif); transition: color .25s; }
+.wc-line.on .wc-k { color: var(--accent); }
+.wc-f { flex: 1; min-width: 0; padding: 2px 0 5px; border: 0; border-bottom: 1.5px solid var(--line); border-radius: 0; background: transparent; color: var(--accent); font: italic 500 22px/1.3 var(--serif); resize: none; overflow: hidden; outline: none; transition: border-color .25s; }
+.wc-line.on .wc-f { border-bottom-color: color-mix(in srgb, var(--accent) 60%, var(--line)); }
+.wc-f::placeholder { color: var(--muted); opacity: .55; font-size: 17px; }
 .wc-f:focus { border-bottom-color: var(--accent); }
 .wc-note { font: italic 400 17px/1.4 var(--serif); color: var(--muted); margin: 16px 0 8px !important; }
-.wc-sign { font: 500 12.5px/1.3 var(--sans); color: var(--muted); margin: 0 !important; }
-.wc-saved { font: italic 600 27px/1.1 var(--serif); color: var(--accent); margin: 0 0 6px !important; }
-.wc-hints { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; max-width: 430px; margin: 16px auto 0; }
-.wc-hints button { padding: 8px 12px; border: 1px solid var(--line); border-radius: 999px; background: var(--card); color: var(--fg); font: 500 13.5px/1.25 var(--sans); text-align: left; cursor: pointer; transition: transform .1s; }
-.wc-hints button:active { transform: scale(.96); }
+.wc-sign { font: 500 12.5px/1.3 var(--sans); color: var(--muted); margin: 0 !important; padding-right: 54px; }
+.wc-seal { position: absolute; right: -8px; bottom: -12px; width: 76px; height: 76px; border: 2px solid var(--accent); border-radius: 50%; box-shadow: 0 0 0 3px var(--card) inset, 0 0 0 4.5px color-mix(in srgb, var(--accent) 70%, transparent) inset; display: flex; align-items: center; justify-content: center; text-align: center; font: 700 9.5px/1.3 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--accent); background: color-mix(in srgb, var(--card) 70%, transparent); rotate: -12deg; opacity: 0; transform: scale(1.5); pointer-events: none; transition: opacity .3s, transform .3s; }
+.wcard.sealed .wc-seal { opacity: .85; transform: none; }
+.wcard.thump .wc-seal { animation: wc-thump .52s cubic-bezier(.3, 1.5, .5, 1) both; }
+.wcard.thump .wcard-face { animation: wc-press .5s ease-out; }
+@keyframes wc-thump { 0% { opacity: 0; transform: scale(1.75); } 40% { opacity: .95; transform: scale(.93); } 100% { opacity: .85; transform: none; } }
+@keyframes wc-press { 0%, 32% { transform: none; } 44% { transform: translateY(2px) scale(.993); } 100% { transform: none; } }
+.wc-pick { max-width: 440px; margin: 18px auto 0; }
+.wc-tabs { display: flex; gap: 4px; width: max-content; margin: 0 auto 12px; padding: 3px; border: 1px solid var(--line); border-radius: 999px; background: var(--card); }
+.wc-tabs button { min-width: 92px; padding: 11px 18px; border: 0; border-radius: 999px; background: none; color: var(--muted); font: 600 16px/1 var(--serif); cursor: pointer; transition: background-color .2s, color .2s; }
+.wc-tabs button[aria-selected="true"] { background: var(--accent); color: var(--accent-ink); }
+.wc-cap { font: 500 11.5px/1.3 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); text-align: center; margin: 0 0 10px !important; }
+.wc-scale { display: flex; align-items: center; justify-content: center; gap: 8px; }
+.wc-scale span { white-space: nowrap; }
+.wc-scale i { flex: 0 1 110px; min-width: 24px; height: 2px; border-radius: 2px; background: linear-gradient(90deg, var(--line), var(--accent)); }
+.wc-chips { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+@media (min-width: 600px) { .wc-chips { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.wc-chip { min-height: 48px; padding: 9px 11px; border: 1px solid var(--line); border-radius: 10px; background: var(--card); color: var(--fg); font: 500 13.5px/1.28 var(--sans); text-align: left; overflow-wrap: break-word; cursor: pointer; box-shadow: 0 1px 0 var(--card-edge) inset, 0 1px 2px var(--card-shadow); transition: transform .1s, border-color .2s, background-color .2s; -webkit-tap-highlight-color: transparent; }
+[data-opts="do"] .wc-chip { border-color: color-mix(in srgb, var(--accent) calc(var(--w, 0) * 75%), var(--line)); }
+.wc-chip:active { transform: scale(.96); }
+.wc-chip[aria-pressed="true"] { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 13%, var(--card)); font-weight: 600; }
+.wc-fly { position: fixed; z-index: 60; box-sizing: border-box; padding: 9px 11px; border: 1px solid var(--accent); border-radius: 10px; background: var(--card); color: var(--accent); font: italic 500 15px/1.3 var(--serif); pointer-events: none; box-shadow: 0 12px 26px -10px var(--card-shadow); }
 .wc-row { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 12px; margin-top: 16px; }
 .wc-g { display: inline-flex; padding: 3px; border: 1px solid var(--line); border-radius: 999px; background: var(--card); }
 .wc-g button { padding: 9px 13px; border: 0; border-radius: 999px; background: none; color: var(--muted); font: 500 14px/1 var(--sans); cursor: pointer; }
 .wc-g button[aria-pressed="true"] { background: var(--fg); color: var(--bg); }
-.wc-save { padding: 13px 18px; border: 0; border-radius: 999px; background: var(--accent); color: var(--accent-ink); font: 600 15px/1 var(--sans); cursor: pointer; box-shadow: 0 3px 0 color-mix(in srgb, var(--accent) 62%, #000); transition: transform .08s, box-shadow .08s; }
-.wc-save:active { transform: translateY(2px); box-shadow: 0 1px 0 color-mix(in srgb, var(--accent) 62%, #000); }
 
 /* «Стоп» → пауза → дыхание */
 .pause-scene { display: flex; flex-direction: column; align-items: center; --pz-c: #b8473a; }
@@ -825,18 +840,28 @@ ul.lamps.all > li.on { background-color: rgba(217, 164, 65, .26); }
   <div class="wcard" data-card>
     <div class="wcard-in">
       <div class="wcard-face wcard-front">
-        <p class="wc-line"><span class="wc-k">Если</span> <textarea class="wc-f" data-f="if" rows="1" maxlength="90" placeholder="на меня кричат" aria-label="Если…"></textarea></p>
-        <p class="wc-line"><span class="wc-k">я</span> <textarea class="wc-f" data-f="do" rows="1" maxlength="90" placeholder="выхожу из комнаты" aria-label="…я"></textarea></p>
+        <p class="wc-line" data-line="if"><span class="wc-k">Если</span> <textarea class="wc-f" data-f="if" rows="1" maxlength="90" placeholder="выберите или впишите своё" aria-label="Если…"></textarea></p>
+        <p class="wc-line" data-line="do"><span class="wc-k">я</span> <textarea class="wc-f" data-f="do" rows="1" maxlength="90" placeholder="выберите или впишите своё" aria-label="…я"></textarea></p>
         <p class="wc-note">Ничего личного — просто я так <span data-gw>устроен</span>.</p>
         <p class="wc-sign">сказано заранее, в спокойный час · <span data-date></span></p>
+        <span class="wc-seal" aria-hidden="true">Сказано<br>заранее</span>
       </div>
-      <div class="wcard-face wcard-back" aria-hidden="true"><p class="wc-saved">Сохранено</p><p class="wc-sign">остаётся у вас</p></div>
     </div>
   </div>
-  <div class="wc-hints" role="group" aria-label="Подсказки из статьи"></div>
+  <div class="wc-pick">
+    <div class="wc-tabs" role="tablist" aria-label="Какую половину выбрать">
+      <button type="button" role="tab" data-tab="if" aria-selected="true" aria-controls="wc-opts-if" id="wc-tab-if">Если…</button>
+      <button type="button" role="tab" data-tab="do" aria-selected="false" aria-controls="wc-opts-do" id="wc-tab-do">…я</button>
+    </div>
+    <div class="wc-opts" id="wc-opts-if" data-opts="if" role="tabpanel" aria-labelledby="wc-tab-if">
+      <p class="wc-cap">что может случиться: снаружи или внутри</p>
+    </div>
+    <div class="wc-opts" id="wc-opts-do" data-opts="do" role="tabpanel" aria-labelledby="wc-tab-do" hidden>
+      <p class="wc-cap wc-scale"><span>мягкий шаг</span><i aria-hidden="true"></i><span>решительный</span></p>
+    </div>
+  </div>
   <div class="wc-row">
     <span class="wc-g" role="group" aria-label="Как о себе"><button type="button" data-g="m" aria-pressed="true">устроен</button><button type="button" data-g="f" aria-pressed="false">устроена</button></span>
-    <button type="button" class="wc-save">Сохранить картинкой</button>
   </div>
   <p class="wc-msg voice" aria-live="polite"></p>
 </figure>
@@ -1808,39 +1833,150 @@ function kneeScene(fig) {
 }
 
 /* ---------- своя карточка «Если…, я…» ---------- */
-const claudeDownloads = (W.claude && typeof W.claude.use === 'function') ? W.claude.use('downloads').catch(() => null) : Promise.resolve(null);
+// Обе половинки читатель выбирает сам: из охапки вариантов по мотивам статьи или своими словами.
+const CARD_IF = [
+  'на меня повышают голос',
+  'спор переходит на личности',
+  'моё «нет» продолжают продавливать',
+  'меня торопят там, где мне нужно время',
+  'ко мне прикасаются без спроса',
+  'над моими чувствами смеются',
+  'меня стыдят при других',
+  'на меня давят чувством вины',
+  'за меня решают, не спросив',
+  'от меня снова и снова требуют оправданий',
+  'договорённость нарушают не в первый раз',
+  'я замечаю, что меня несёт',
+  'я соглашаюсь из страха, а не из желания',
+  'я перестаю слышать собственный голос',
+  'мне становится плохо, а я всё терплю'
+];
+const CARD_DO = [ // от мягкого шага к решительному
+  'делаю медленный вдох, прежде чем ответить',
+  'спрашиваю себя: «Я правда этого хочу?»',
+  'говорю вслух, что со мной сейчас происходит',
+  'прошу сбавить тон',
+  'говорю: «Мне нужно подумать»',
+  'говорю «нет» без долгих оправданий',
+  'предлагаю договориться, как быть в следующий раз',
+  'прошу перерыв на десять минут',
+  'нажимаю на паузу, даже если было приятно',
+  'буквально отступаю на шаг',
+  'предлагаю вернуться к разговору завтра',
+  'откладываю решение до утра',
+  'беру время побыть наедине с собой',
+  'спокойно заканчиваю разговор',
+  'уезжаю домой своим ходом',
+  'решаю, сколько места оставить человеку в моей жизни',
+  'сворачиваю общение'
+];
+// готовые пары из прошлой версии сайта: если они остались в памяти браузера, не показываем их снова
+const CARD_OLD = ['на меня кричат', 'выхожу из комнаты', 'разговор переходит на оскорбления', 'вешаю трубку', 'подойти ко мне сзади и резко схватить за руку', 'почти наверняка отмахнусь', 'меня предают', 'исчезаю из жизни человека', 'на меня давят', 'ставлю разговор на паузу'];
 function cardScene(fig) {
-  const card = $('[data-card]', fig), fIf = $('[data-f="if"]', fig), fDo = $('[data-f="do"]', fig), gw = $('[data-gw]', fig), hints = $('.wc-hints', fig), save = $('.wc-save', fig), msg = $('.wc-msg', fig);
+  const card = $('[data-card]', fig), gw = $('[data-gw]', fig), msg = $('.wc-msg', fig);
+  const F = { if: $('[data-f="if"]', fig), do: $('[data-f="do"]', fig) };
   const date = dmy(new Date());
   $$('[data-date]', fig).forEach(el => { el.textContent = date; });
-  const HINTS = [
-    ['на меня кричат', 'выхожу из комнаты'],
-    ['разговор переходит на оскорбления', 'вешаю трубку'],
-    ['подойти ко мне сзади и резко схватить за руку', 'почти наверняка отмахнусь'],
-    ['меня предают', 'исчезаю из жизни человека'],
-    ['на меня давят', 'ставлю разговор на паузу']
-  ];
   const saved = store.get('card', null);
-  let g = (saved && saved.g) || 'm';
+  let g = (saved && saved.g) || 'm', tab = 'if', sealed = false;
   const grow = ta => { ta.style.height = 'auto'; ta.style.height = ta.scrollHeight + 'px'; };
   function setG(v) { g = v; gw.textContent = v === 'f' ? 'устроена' : 'устроен'; $$('.wc-g button', fig).forEach(b => b.setAttribute('aria-pressed', String(b.dataset.g === v))); persist(); }
-  function persist() { store.set('card', { if: fIf.value, do: fDo.value, g }); }
-  if (saved) { fIf.value = saved.if || ''; fDo.value = saved.do || ''; }
+  function persist() { store.set('card', { if: F.if.value, do: F.do.value, g }); }
+  if (saved) for (const k of ['if', 'do']) { const v = saved[k] || ''; F[k].value = CARD_OLD.includes(v.trim()) ? '' : v; }
   setG(g);
-  [fIf, fDo].forEach(ta => { ta.addEventListener('input', () => { grow(ta); persist(); }); setTimeout(() => grow(ta), 0); });
-  bus.on('resize', () => { grow(fIf); grow(fDo); });
-  $$('.wc-g button', fig).forEach(b => b.addEventListener('click', () => setG(b.dataset.g)));
-  HINTS.forEach(([a, b]) => {
-    const bt = D.createElement('button'); bt.type = 'button'; bt.textContent = `${a} → ${b}`;
-    bt.addEventListener('click', () => { write(fIf, a); setTimeout(() => write(fDo, b), RM ? 0 : a.length * 16 + 120); haptic(5); });
-    hints.append(bt);
-  });
-  function write(ta, text) { // будто пишут от руки
-    clearInterval(ta._w);
-    if (RM) { ta.value = text; grow(ta); persist(); return; }
-    ta.value = ''; let i = 0;
-    ta._w = setInterval(() => { ta.value = text.slice(0, ++i); grow(ta); if (i >= text.length) { clearInterval(ta._w); persist(); } }, 16);
+  // вкладки: какую половинку сейчас выбираем
+  function setTab(k, focusTab) {
+    tab = k;
+    $$('.wc-tabs [data-tab]', fig).forEach(b => { const on = b.dataset.tab === k; b.setAttribute('aria-selected', String(on)); b.tabIndex = on ? 0 : -1; if (on && focusTab) b.focus(); });
+    $$('[data-opts]', fig).forEach(p => { p.hidden = p.dataset.opts !== k; });
+    $$('[data-line]', fig).forEach(l => l.classList.toggle('on', l.dataset.line === k));
   }
+  $$('.wc-tabs [data-tab]', fig).forEach(b => {
+    b.addEventListener('click', () => setTab(b.dataset.tab));
+    b.addEventListener('keydown', e => { if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') { e.preventDefault(); setTab(tab === 'if' ? 'do' : 'if', true); } });
+  });
+  // охапка вариантов
+  const chips = { if: [], do: [] };
+  for (const [k, list] of [['if', CARD_IF], ['do', CARD_DO]]) {
+    const box = $(`[data-opts="${k}"]`, fig), wrap = D.createElement('div');
+    wrap.className = 'wc-chips';
+    list.forEach((text, i) => {
+      const bt = D.createElement('button'); bt.type = 'button'; bt.className = 'wc-chip'; bt.textContent = text;
+      if (k === 'do') bt.style.setProperty('--w', (i / (list.length - 1)).toFixed(3)); // чем решительнее шаг, тем плотнее край
+      bt.addEventListener('click', () => choose(k, text, bt));
+      wrap.append(bt); chips[k].push(bt);
+    });
+    box.append(wrap);
+  }
+  function mark() {
+    for (const k of ['if', 'do']) { const v = F[k].value.trim(); chips[k].forEach(c => c.setAttribute('aria-pressed', String(c.textContent === v))); }
+  }
+  function choose(k, text, bt) {
+    haptic(5);
+    F[k]._busy = true;
+    chips[k].forEach(c => c.setAttribute('aria-pressed', String(c === bt)));
+    const go = () => fly(bt, F[k], () => write(F[k], text, () => {
+      F[k]._busy = false; mark();
+      const other = k === 'if' ? 'do' : 'if';
+      if (!F[other].value.trim()) setTimeout(() => setTab(other), RM ? 0 : 260);
+      check(true);
+    }));
+    // если карточка уже уехала вверх за край экрана, сначала мягко возвращаем её в поле зрения
+    const top = card.getBoundingClientRect().top;
+    if (top < 0) { W.scrollBy({ top: top - 24, behavior: RM ? 'auto' : 'smooth' }); setTimeout(go, RM ? 0 : 420); }
+    else go();
+  }
+  // вариант слетает с охапки на свою строчку и ложится на неё
+  function fly(bt, ta, done) {
+    if (RM) { done(); return; }
+    const a = bt.getBoundingClientRect(), b = ta.getBoundingClientRect();
+    const f = D.createElement('span'); f.className = 'wc-fly'; f.textContent = bt.textContent; f.setAttribute('aria-hidden', 'true');
+    f.style.left = a.left + 'px'; f.style.top = a.top + 'px'; f.style.width = a.width + 'px';
+    D.body.append(f);
+    const dx = b.left - a.left, dy = b.top + Math.min(b.height, 34) / 2 - (a.top + a.height / 2);
+    const anim = f.animate([
+      { transform: 'translate(0,0) scale(1)', opacity: 1 },
+      { transform: `translate(${dx * .5}px, ${dy * .5 - 26}px) scale(1.04) rotate(-1.5deg)`, opacity: 1, offset: .45 },
+      { transform: `translate(${dx}px, ${dy}px) scale(.92)`, opacity: .9 }
+    ], { duration: 460, easing: 'cubic-bezier(.3,.7,.4,1)' });
+    let ok = false;
+    const land = () => {
+      if (ok) return; ok = true;
+      f.remove();
+      const line = ta.closest('.wc-line');
+      line.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(2px)', offset: .3 }, { transform: 'translateY(0)' }], { duration: 260, easing: 'ease-out' });
+      haptic(8); done();
+    };
+    anim.onfinish = land; setTimeout(land, 700);
+  }
+  function write(ta, text, done) { // будто пишут от руки
+    clearInterval(ta._w);
+    if (RM) { ta.value = text; grow(ta); persist(); if (done) done(); return; }
+    ta.value = ''; let i = 0;
+    ta._w = setInterval(() => { ta.value = text.slice(0, ++i); grow(ta); if (i >= text.length) { clearInterval(ta._w); persist(); if (done) done(); } }, 16);
+  }
+  for (const k of ['if', 'do']) {
+    const ta = F[k];
+    ta.addEventListener('focus', () => setTab(k));
+    ta.addEventListener('input', () => { clearInterval(ta._w); ta._busy = false; grow(ta); persist(); mark(); check(false); });
+    ta.addEventListener('blur', () => check(true));
+    setTimeout(() => grow(ta), 0);
+  }
+  bus.on('resize', () => { grow(F.if); grow(F.do); });
+  $$('.wc-g button', fig).forEach(b => b.addEventListener('click', () => setG(b.dataset.g)));
+  // когда обе половинки на месте, карточку припечатывает штемпель «Сказано заранее»
+  function check(stampNow) {
+    const full = !!(F.if.value.trim() && F.do.value.trim());
+    if (!full) { if (sealed) { sealed = false; card.classList.remove('sealed', 'thump'); } return; }
+    if (sealed || !stampNow || F.if._busy || F.do._busy || D.activeElement === F.if || D.activeElement === F.do) return;
+    sealed = true;
+    card.classList.add('sealed');
+    if (!RM) { card.classList.remove('thump'); void card.offsetWidth; card.classList.add('thump'); setTimeout(() => haptic(14), 180); }
+    say(msg, 'Сказано заранее. Карточка подождёт вас здесь.');
+  }
+  mark();
+  if (F.if.value.trim() && F.do.value.trim()) { sealed = true; card.classList.add('sealed'); }
+  setTab(F.if.value.trim() && !F.do.value.trim() ? 'do' : 'if');
   // картон под пальцем чуть прогибается
   const inner = $('.wcard-in', fig);
   card.addEventListener('pointerdown', e => {
@@ -1850,93 +1986,8 @@ function cardScene(fig) {
     inner.style.transition = 'transform .12s ease-out';
     inner.style.transform = `rotateX(${(-ny * 7).toFixed(2)}deg) rotateY(${(nx * 7).toFixed(2)}deg) scale(.99)`;
   });
-  const release = () => { if (card.classList.contains('flip')) return; inner.style.transition = 'transform .5s cubic-bezier(.3,1.6,.5,1)'; inner.style.transform = ''; };
+  const release = () => { inner.style.transition = 'transform .5s cubic-bezier(.3,1.6,.5,1)'; inner.style.transform = ''; };
   W.addEventListener('pointerup', release); W.addEventListener('pointercancel', release);
-  save.addEventListener('click', async () => {
-    const a = fIf.value.trim(), b = fDo.value.trim();
-    if (!a || !b) { say(msg, 'Сначала допишите обе половинки.'); (a ? fDo : fIf).focus(); return; }
-    let blob = null;
-    try { blob = await drawCard(a, b, g, date); } catch (e) { blob = null; }
-    if (!blob) { say(msg, 'Не получилось сохранить, можно сделать снимок экрана.'); return; }
-    flip();
-    const ok = await deliver(blob, 'moyo-preduprezhdenie.png', 'Моё предупреждение');
-    say(msg, ok === 'saved' ? 'Картинка сохранена.' : ok === 'shared' ? '' : ok === 'declined' ? '' : 'Не получилось сохранить, можно сделать снимок экрана.');
-  });
-  function flip() {
-    if (RM) return;
-    inner.style.transition = ''; inner.style.transform = '';
-    card.classList.add('flip');
-    setTimeout(() => card.classList.remove('flip'), 1700);
-  }
-}
-async function deliver(blob, filename, title) {
-  const viewerSave = await claudeDownloads;
-  if (viewerSave) {
-    try { await viewerSave.save({ filename, data: blob }); return 'saved'; }
-    catch (e) { return e && e.code === 'declined' ? 'declined' : 'fail'; }
-  }
-  try {
-    const file = new File([blob], filename, { type: 'image/png' });
-    if (navigator.canShare && navigator.canShare({ files: [file] })) { await navigator.share({ files: [file], title }); return 'shared'; }
-  } catch (e) { if (e && e.name === 'AbortError') return 'declined'; }
-  try {
-    const url = URL.createObjectURL(blob);
-    const a = D.createElement('a'); a.href = url; a.download = filename;
-    D.body.append(a); a.click(); a.remove();
-    setTimeout(() => URL.revokeObjectURL(url), 4000);
-    return 'saved';
-  } catch (e) { return 'fail'; }
-}
-async function drawCard(a, b, g, date) {
-  try { await D.fonts.ready; } catch (e) {}
-  const c = D.createElement('canvas'); c.width = 1080; c.height = 1350;
-  const x = c.getContext('2d');
-  // облик открыток каталога: стол цвета старой бумаги, горизонтали карты, светлая открытка со штемпелем
-  x.fillStyle = '#efe4d0'; x.fillRect(0, 0, 1080, 1350);
-  const gl = x.createRadialGradient(540, 620, 40, 540, 620, 720);
-  gl.addColorStop(0, 'rgba(236,180,100,.3)'); gl.addColorStop(1, 'rgba(236,180,100,0)');
-  x.fillStyle = gl; x.fillRect(0, 0, 1080, 1350);
-  x.save(); x.strokeStyle = 'rgba(184,160,124,.5)'; x.lineWidth = 2;
-  for (const [y0, a] of [[96, 1], [146, .8], [1170, 1], [1222, .7]]) {
-    x.globalAlpha = a; x.beginPath(); x.moveTo(-20, y0);
-    x.bezierCurveTo(260, y0 - 60, 520, y0 + 70, 760, y0 + 16); x.bezierCurveTo(900, y0 - 16, 1000, y0 - 30, 1100, y0); x.stroke();
-  }
-  x.restore();
-  const rr = (X, Y, Wd, H, r) => { x.beginPath(); x.moveTo(X + r, Y); x.arcTo(X + Wd, Y, X + Wd, Y + H, r); x.arcTo(X + Wd, Y + H, X, Y + H, r); x.arcTo(X, Y + H, X, Y, r); x.arcTo(X, Y, X + Wd, Y, r); x.closePath(); };
-  const wrap = (text, maxW) => { const words = text.split(/\s+/), lines = []; let line = ''; for (const wd of words) { const t = line ? line + ' ' + wd : wd; if (x.measureText(t).width > maxW && line) { lines.push(line); line = wd; } else line = t; } if (line) lines.push(line); return lines; };
-  x.save(); x.shadowColor = 'rgba(40,25,10,.24)'; x.shadowBlur = 44; x.shadowOffsetY = 16;
-  rr(110, 230, 860, 820, 20); x.fillStyle = '#fbf6ec'; x.fill(); x.restore();
-  x.save(); rr(110, 230, 860, 820, 20); x.clip(); x.strokeStyle = 'rgba(120,90,50,.032)'; x.lineWidth = 3;
-  for (let X = -440; X < 980; X += 10) { x.beginPath(); x.moveTo(X, 1050); x.lineTo(X + 532, 230); x.stroke(); }
-  x.restore();
-  x.strokeStyle = '#e4d5bb'; x.lineWidth = 2; rr(110, 230, 860, 820, 20); x.stroke();
-  x.save(); x.translate(862, 330); x.rotate(-.24); x.strokeStyle = 'rgba(43,33,25,.42)'; x.lineWidth = 3;
-  x.beginPath(); x.arc(0, 0, 58, 0, Math.PI * 2); x.stroke();
-  x.fillStyle = 'rgba(43,33,25,.5)'; x.textAlign = 'center'; x.font = '600 19px "Golos Text", "Segoe UI", sans-serif';
-  x.fillText('ГРАНИЦЫ', 0, -2); x.fillText(String(new Date().getFullYear()), 0, 22);
-  x.setLineDash([12, 6]); x.lineWidth = 3; x.strokeStyle = 'rgba(43,33,25,.36)';
-  x.beginPath(); x.moveTo(-120, -10); x.lineTo(-62, -10); x.moveTo(-120, 10); x.lineTo(-62, 10); x.stroke();
-  x.restore();
-  x.fillStyle = '#8a7764'; x.textAlign = 'center'; x.font = '600 30px "Golos Text", "Segoe UI", sans-serif';
-  x.fillText('МОЁ ПРЕДУПРЕЖДЕНИЕ', 540, 320);
-  x.textAlign = 'left';
-  let y = 420;
-  const block = (label, text) => {
-    x.fillStyle = '#2b2119'; x.font = '600 50px Lora, Georgia, serif'; x.fillText(label, 180, y);
-    x.fillStyle = '#a2462a'; x.font = 'italic 500 58px Lora, Georgia, serif';
-    const lines = wrap(text, 700).slice(0, 3);
-    lines.forEach((ln, i) => x.fillText(ln, 180, y + 80 + i * 72));
-    y += 80 + lines.length * 72 + 34;
-  };
-  block('Если', a + ',');
-  block('я', b + '.');
-  x.fillStyle = '#5a4a3c'; x.font = 'italic 400 38px Lora, Georgia, serif';
-  wrap(`Ничего личного — просто я так ${g === 'f' ? 'устроена' : 'устроен'}.`, 720).forEach((ln, i) => x.fillText(ln, 180, Math.max(y + 10, 820) + i * 50));
-  x.font = '500 28px "Golos Text", "Segoe UI", sans-serif'; x.fillStyle = '#8a7764';
-  x.fillText(`сказано заранее, в спокойный час · ${date}`, 180, 990);
-  x.textAlign = 'center'; x.font = '400 28px "Golos Text", "Segoe UI", sans-serif'; x.fillStyle = '#8a7764';
-  x.fillText('Из статьи «Чьи это границы?»', 540, 1250);
-  return await new Promise(res => c.toBlob(res, 'image/png'));
 }
 
 /* ---------- дежурство: прожектор и журнал про читателя ---------- */
