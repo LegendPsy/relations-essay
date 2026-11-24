@@ -6,12 +6,15 @@
 
   text.md      — статья
   scenes.html  — живые сцены (всё нарисовано кодом: SVG и CSS)
-  template.html — страница: шрифты, цвета, стили
+  template.html — страница: шрифты, цвета, стили (облик открыток каталога)
+  garden.py    — картинка открытки в шапке (сад с калиткой), нарисована кодом
   app.js       — поведение сайта: дыхание, тёплый след, сцены, память
 
 Запуск: python3 build.py  →  index.html (для сайта) и preview.html (для предпросмотра в Claude)
 """
 import html, pathlib, re
+
+import garden as garden_art
 
 ROOT = pathlib.Path(__file__).parent
 NBSP = " "
@@ -229,6 +232,7 @@ def main():
     minutes = max(1, round(words / 190))
     tpl = (ROOT / "template.html").read_text(encoding="utf-8")
     app = (ROOT / "app.js").read_text(encoding="utf-8")
+    art = garden_art.garden()
     page = (tpl.replace("{{TITLE}}", html.escape(title))
                .replace("{{TITLE_H1}}", title_h1(title))
                .replace("{{LEDE}}", inline(lede))
@@ -236,6 +240,8 @@ def main():
                .replace("{{MINUTES}}", str(minutes))
                .replace("{{ARTICLE}}", render(parts, scenes))
                .replace("{{INK_FILTERS}}", ink_filters())
+               .replace("{{GARDEN}}", art["back"] + "\n      " + art["clouds"] + "\n      " + art["land"])
+               .replace("{{STAMP_ART}}", garden_art.stamp_art())
                .replace("{{APP_JS}}", app))
     assert "{{" not in page, "В шаблоне осталась незаполненная метка"
     (ROOT / "index.html").write_text(page, encoding="utf-8")

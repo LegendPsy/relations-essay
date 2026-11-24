@@ -971,33 +971,50 @@ async function drawCard(a, b, g, date) {
   try { await D.fonts.ready; } catch (e) {}
   const c = D.createElement('canvas'); c.width = 1080; c.height = 1350;
   const x = c.getContext('2d');
-  x.fillStyle = '#f6efe3'; x.fillRect(0, 0, 1080, 1350);
+  // облик открыток каталога: стол цвета старой бумаги, горизонтали карты, светлая открытка со штемпелем
+  x.fillStyle = '#efe4d0'; x.fillRect(0, 0, 1080, 1350);
   const gl = x.createRadialGradient(540, 620, 40, 540, 620, 720);
-  gl.addColorStop(0, 'rgba(255,186,118,.42)'); gl.addColorStop(1, 'rgba(255,186,118,0)');
+  gl.addColorStop(0, 'rgba(236,180,100,.3)'); gl.addColorStop(1, 'rgba(236,180,100,0)');
   x.fillStyle = gl; x.fillRect(0, 0, 1080, 1350);
+  x.save(); x.strokeStyle = 'rgba(184,160,124,.5)'; x.lineWidth = 2;
+  for (const [y0, a] of [[96, 1], [146, .8], [1170, 1], [1222, .7]]) {
+    x.globalAlpha = a; x.beginPath(); x.moveTo(-20, y0);
+    x.bezierCurveTo(260, y0 - 60, 520, y0 + 70, 760, y0 + 16); x.bezierCurveTo(900, y0 - 16, 1000, y0 - 30, 1100, y0); x.stroke();
+  }
+  x.restore();
   const rr = (X, Y, Wd, H, r) => { x.beginPath(); x.moveTo(X + r, Y); x.arcTo(X + Wd, Y, X + Wd, Y + H, r); x.arcTo(X + Wd, Y + H, X, Y + H, r); x.arcTo(X, Y + H, X, Y, r); x.arcTo(X, Y, X + Wd, Y, r); x.closePath(); };
   const wrap = (text, maxW) => { const words = text.split(/\s+/), lines = []; let line = ''; for (const wd of words) { const t = line ? line + ' ' + wd : wd; if (x.measureText(t).width > maxW && line) { lines.push(line); line = wd; } else line = t; } if (line) lines.push(line); return lines; };
-  x.save(); x.shadowColor = 'rgba(60,40,20,.18)'; x.shadowBlur = 44; x.shadowOffsetY = 16;
-  rr(110, 230, 860, 820, 40); x.fillStyle = '#fffaf2'; x.fill(); x.restore();
-  x.strokeStyle = '#e3d6c2'; x.lineWidth = 2; rr(110, 230, 860, 820, 40); x.stroke();
-  x.fillStyle = '#8a7f72'; x.textAlign = 'center'; x.font = '600 30px "Golos Text", "Segoe UI", sans-serif';
+  x.save(); x.shadowColor = 'rgba(40,25,10,.24)'; x.shadowBlur = 44; x.shadowOffsetY = 16;
+  rr(110, 230, 860, 820, 20); x.fillStyle = '#fbf6ec'; x.fill(); x.restore();
+  x.save(); rr(110, 230, 860, 820, 20); x.clip(); x.strokeStyle = 'rgba(120,90,50,.032)'; x.lineWidth = 3;
+  for (let X = -440; X < 980; X += 10) { x.beginPath(); x.moveTo(X, 1050); x.lineTo(X + 532, 230); x.stroke(); }
+  x.restore();
+  x.strokeStyle = '#e4d5bb'; x.lineWidth = 2; rr(110, 230, 860, 820, 20); x.stroke();
+  x.save(); x.translate(862, 330); x.rotate(-.24); x.strokeStyle = 'rgba(43,33,25,.42)'; x.lineWidth = 3;
+  x.beginPath(); x.arc(0, 0, 58, 0, Math.PI * 2); x.stroke();
+  x.fillStyle = 'rgba(43,33,25,.5)'; x.textAlign = 'center'; x.font = '600 19px "Golos Text", "Segoe UI", sans-serif';
+  x.fillText('ГРАНИЦЫ', 0, -2); x.fillText(String(new Date().getFullYear()), 0, 22);
+  x.setLineDash([12, 6]); x.lineWidth = 3; x.strokeStyle = 'rgba(43,33,25,.36)';
+  x.beginPath(); x.moveTo(-120, -10); x.lineTo(-62, -10); x.moveTo(-120, 10); x.lineTo(-62, 10); x.stroke();
+  x.restore();
+  x.fillStyle = '#8a7764'; x.textAlign = 'center'; x.font = '600 30px "Golos Text", "Segoe UI", sans-serif';
   x.fillText('МОЁ ПРЕДУПРЕЖДЕНИЕ', 540, 320);
   x.textAlign = 'left';
   let y = 420;
   const block = (label, text) => {
-    x.fillStyle = '#27231f'; x.font = '600 50px Literata, Georgia, serif'; x.fillText(label, 180, y);
-    x.fillStyle = '#c25e2a'; x.font = '600 74px Caveat, "Segoe Print", cursive';
+    x.fillStyle = '#2b2119'; x.font = '600 50px Lora, Georgia, serif'; x.fillText(label, 180, y);
+    x.fillStyle = '#a2462a'; x.font = 'italic 500 58px Lora, Georgia, serif';
     const lines = wrap(text, 700).slice(0, 3);
-    lines.forEach((ln, i) => x.fillText(ln, 180, y + 82 + i * 76));
-    y += 82 + lines.length * 76 + 34;
+    lines.forEach((ln, i) => x.fillText(ln, 180, y + 80 + i * 72));
+    y += 80 + lines.length * 72 + 34;
   };
   block('Если', a + ',');
   block('я', b + '.');
-  x.fillStyle = '#6e665c'; x.font = 'italic 400 38px Literata, Georgia, serif';
+  x.fillStyle = '#5a4a3c'; x.font = 'italic 400 38px Lora, Georgia, serif';
   wrap(`Ничего личного — просто я так ${g === 'f' ? 'устроена' : 'устроен'}.`, 720).forEach((ln, i) => x.fillText(ln, 180, Math.max(y + 10, 820) + i * 50));
-  x.font = '500 28px "Golos Text", "Segoe UI", sans-serif'; x.fillStyle = '#8a7f72';
+  x.font = '500 28px "Golos Text", "Segoe UI", sans-serif'; x.fillStyle = '#8a7764';
   x.fillText(`сказано заранее, в спокойный час · ${date}`, 180, 990);
-  x.textAlign = 'center'; x.font = '400 28px "Golos Text", "Segoe UI", sans-serif'; x.fillStyle = '#8a7f72';
+  x.textAlign = 'center'; x.font = '400 28px "Golos Text", "Segoe UI", sans-serif'; x.fillStyle = '#8a7764';
   x.fillText('Из статьи «Чьи это границы?»', 540, 1250);
   return await new Promise(res => c.toBlob(res, 'image/png'));
 }
