@@ -617,7 +617,22 @@ function drawTags(p, dt) {
   }
 }
 const ro = new ResizeObserver(es => { for (const e of es) { const p = pics.find(q => q.cv === e.target); if (p) sizePic(p); } });
-const vio = new IntersectionObserver(es => { for (const e of es) { const p = pics.find(q => q.el === e.target); if (p) { p.vis = e.isIntersecting; if (p.vis && !p.seenAt) p.seenAt = clock; } } }, { rootMargin: '60px 0px' });
+const vio = new IntersectionObserver(es => { for (const e of es) { const p = pics.find(q => q.el === e.target); if (p) p.vis = e.isIntersecting; } }, { rootMargin: '60px 0px' });
+// сцена начинает двигаться (бирки, сканирование), только когда видна целиком: низ поднялся выше 90% экрана
+// (или верх ушёл выше 10% у высокой сцены). Иначе всё успевает закончиться, пока читаешь текст над ней.
+const focusList = [];
+function checkFocus() {
+  const H = innerHeight;
+  for (let i = focusList.length - 1; i >= 0; i--) {
+    const it = focusList[i], r = it.el.getBoundingClientRect();
+    const ok = isPhone() || !it.desk ? r.height && (r.bottom <= H * .9 || r.top <= H * .1) : it.desk(r, H);
+    if (ok) { focusList.splice(i, 1); it.f(); }
+  }
+}
+addEventListener('scroll', checkFocus, { passive: true }); addEventListener('resize', checkFocus);
+// на компьютере экран большой: там сцена запускается как раньше (desk), «целиком на экране» — только для телефона
+function isPhone() { return matchMedia('(hover: none) and (pointer: coarse)').matches || innerWidth < 700; }
+function onFocus(el, f, desk) { focusList.push({ el, f, desk }); requestAnimationFrame(checkFocus); }
 
 /* ---------- улица у моря: шапка и сцена в конце ---------- */
 const PERSON_VALS = [['7,4 / 10', .74], ['3,1 / 10', .31], ['9,2 / 10', .92], ['5,5 / 10', .55], ['2,0 / 10', .2], ['8,1 / 10', .81], ['?', .5]];
@@ -1003,7 +1018,7 @@ function drawBook(p, dt, t) {
   ctx.restore();
 }
 
-for (const p of pics) { ro.observe(p.cv); vio.observe(p.el); sizePic(p); }
+for (const p of pics) { ro.observe(p.cv); vio.observe(p.el); sizePic(p); onFocus(p.el, () => { if (!p.seenAt) p.seenAt = clock || 1e-6; }, (r, H) => r.top <= H + 60 && r.bottom >= -60); }
 
 /* =====================================================================
    Сама страница: солнечный воздух, тени облаков, ласточки, «очки» по краям экрана
