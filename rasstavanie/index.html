@@ -1,0 +1,1191 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f1e6d4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1b1820" media="(prefers-color-scheme: dark)">
+<title>Точка рождения</title>
+<meta name="description" content="Почему мы привыкли оплакивать конец отношений как личный крах — и как увидеть в разрыве не поражение, а акт сострадания и точку рождения">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Точка рождения">
+<meta property="og:description" content="Почему мы привыкли оплакивать конец отношений как личный крах — и как увидеть в разрыве не поражение, а акт сострадания и точку рождения">
+<meta property="og:image" content="https://legendpsy.github.io/relations-essay/rasstavanie/art/og.jpg">
+<meta property="og:url" content="https://legendpsy.github.io/relations-essay/rasstavanie/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400..600&family=Lora:ital,wght@0,400..700;1,400..600&display=swap">
+<style>
+/* «Точка рождения» — живой сайт в облике открыток каталога (legendpsy.github.io/stati/).
+   Мир сайта: луг у развилки, где двое расходятся каждый своей тропой, и один долгий закат.
+   Главные герои (продолжают текст): сцены, нарисованные кодом.
+   Дополненная реальность (продолжает мир сайта): очки поверх луга — до заката, карта развилки, ветер,
+   бирки на всём, что пролетает мимо: семена одуванчика, стрижи, бабочка, солнце, первые звёзды. */
+
+:root {
+  --bg: #f1e6d4; --fg: #2b241f; --fg2: #584b41; --muted: #7d6c5d; --line: #c9b79f;
+  --accent: #b5573f; --hl: rgba(240, 150, 110, .28);
+  --ar: 44, 127, 128; --ar-warn: 192, 72, 58; --ar-cold: 70, 110, 160;
+  --hatch: repeating-linear-gradient(33deg, rgba(90, 60, 40, .026) 0 2px, transparent 2px 6px);
+  --vignette: rgba(90, 60, 40, .12);
+  --grey: linear-gradient(180deg, rgba(120, 124, 132, .22), rgba(150, 150, 156, .14));
+  --day: radial-gradient(120% 70% at 80% -10%, rgba(255, 220, 150, .32), transparent 70%);
+  --sunset: radial-gradient(140% 70% at 60% 110%, rgba(255, 140, 90, .30), transparent 70%), linear-gradient(180deg, rgba(200, 120, 170, .14), rgba(255, 170, 110, .12));
+  --dusk: linear-gradient(180deg, rgba(70, 70, 140, .26), rgba(130, 90, 150, .14) 60%, rgba(240, 140, 110, .12));
+  --pool: rgba(255, 214, 160, .38); --vig: rgba(90, 50, 40, .2);
+  --mote: 255, 200, 130; --seed: 250, 246, 236; --grass: 108, 140, 72; --grass2: 84, 116, 58;
+  --serif: "Lora", "PT Serif", Georgia, serif;
+  --sans: "Golos Text", "Segoe UI", system-ui, -apple-system, sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1b1820; --fg: #efe7dc; --fg2: #c9bfb2; --muted: #9e9488; --line: #3f3a44;
+    --accent: #f0a07e; --hl: rgba(240, 150, 110, .22);
+    --ar: 134, 216, 204; --ar-warn: 255, 138, 122; --ar-cold: 150, 190, 240;
+    --hatch: repeating-linear-gradient(33deg, rgba(240, 230, 210, .018) 0 2px, transparent 2px 6px);
+    --vignette: rgba(0, 0, 0, .34);
+    --grey: linear-gradient(180deg, rgba(30, 32, 40, .5), rgba(30, 30, 36, .3));
+    --day: radial-gradient(120% 70% at 80% -10%, rgba(255, 200, 130, .12), transparent 70%);
+    --sunset: radial-gradient(140% 70% at 60% 110%, rgba(255, 120, 80, .2), transparent 70%), linear-gradient(180deg, rgba(150, 80, 140, .14), rgba(240, 130, 90, .08));
+    --dusk: linear-gradient(180deg, rgba(20, 24, 70, .5), rgba(60, 40, 90, .24) 60%, rgba(160, 80, 70, .12));
+    --pool: rgba(255, 190, 130, .1); --vig: rgba(0, 0, 0, .5);
+    --mote: 255, 200, 140; --seed: 240, 236, 226; --grass: 54, 66, 48; --grass2: 40, 50, 38;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #1b1820; --fg: #efe7dc; --fg2: #c9bfb2; --muted: #9e9488; --line: #3f3a44;
+  --accent: #f0a07e; --hl: rgba(240, 150, 110, .22);
+  --ar: 134, 216, 204; --ar-warn: 255, 138, 122; --ar-cold: 150, 190, 240;
+  --hatch: repeating-linear-gradient(33deg, rgba(240, 230, 210, .018) 0 2px, transparent 2px 6px);
+  --vignette: rgba(0, 0, 0, .34);
+  --grey: linear-gradient(180deg, rgba(30, 32, 40, .5), rgba(30, 30, 36, .3));
+  --day: radial-gradient(120% 70% at 80% -10%, rgba(255, 200, 130, .12), transparent 70%);
+  --sunset: radial-gradient(140% 70% at 60% 110%, rgba(255, 120, 80, .2), transparent 70%), linear-gradient(180deg, rgba(150, 80, 140, .14), rgba(240, 130, 90, .08));
+  --dusk: linear-gradient(180deg, rgba(20, 24, 70, .5), rgba(60, 40, 90, .24) 60%, rgba(160, 80, 70, .12));
+  --pool: rgba(255, 190, 130, .1); --vig: rgba(0, 0, 0, .5);
+  --mote: 255, 200, 140; --seed: 240, 236, 226; --grass: 54, 66, 48; --grass2: 40, 50, 38;
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; background: var(--bg); }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 400 clamp(18px, 4.7vw, 20.5px)/1.7 var(--serif); overflow-x: hidden; overflow-x: clip; -webkit-font-smoothing: antialiased; }
+::selection { background: var(--hl); }
+:focus-visible { outline: 2.5px solid var(--accent); outline-offset: 4px; border-radius: 6px; }
+button { font: inherit; color: inherit; }
+a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.nobr { white-space: nowrap; }
+
+/* ---------- слои позади текста: карта, свет дня, закат, сумерки ---------- */
+#map { position: fixed; inset: -10%; z-index: 0; pointer-events: none; opacity: .32; background: radial-gradient(ellipse at 30% 20%, transparent 0 40%, var(--vignette) 100%); }
+#map svg { position: absolute; inset: 0; width: 100%; height: 100%; animation: drift 56s ease-in-out infinite alternate; }
+#map g { fill: none; stroke: var(--line); stroke-width: 1.2; }
+@keyframes drift { to { transform: translate(-2%, 1.5%) rotate(.6deg); } }
+#sky { position: fixed; inset: 0; z-index: 1; pointer-events: none; }
+#sky i { position: absolute; inset: 0; opacity: 0; will-change: opacity; }
+#sky .t-grey { background: var(--grey); }
+#sky .t-day { background: var(--day); }
+#sky .t-sunset { background: var(--sunset); }
+#sky .t-dusk { background: var(--dusk); }
+#pool { position: fixed; left: 0; right: 0; top: 0; height: 90vh; z-index: 1; pointer-events: none; opacity: .5; will-change: transform, opacity; background: radial-gradient(ellipse 62% 42% at 50% 50%, var(--pool), transparent 72%); }
+#vig { position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: .3; background: radial-gradient(ellipse 78% 70% at 50% 46%, transparent 50%, var(--vig) 100%); }
+#air { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; }
+
+main { position: relative; z-index: 3; overflow-x: clip; }
+.hero, .part, .end { width: 100%; max-width: calc(36rem + 40px); margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left)); padding-right: max(20px, env(safe-area-inset-right)); }
+main p { margin: 0 0 1.15em; }
+
+/* ---------- дополненная реальность: очки поверх мира ---------- */
+#hud { position: fixed; inset: 0; z-index: 5; pointer-events: none; color: rgb(var(--ar)); --h: 0; }
+#hud .cn { position: absolute; width: 18px; height: 18px; border: 0 solid currentColor; opacity: calc(var(--h) * .5); transition: opacity 1.4s ease; }
+#hud .c1 { left: 8px; top: calc(8px + env(safe-area-inset-top)); border-width: 1.5px 0 0 1.5px; }
+#hud .c2 { right: 8px; top: calc(8px + env(safe-area-inset-top)); border-width: 1.5px 1.5px 0 0; }
+#hud .c3 { left: 8px; bottom: calc(8px + env(safe-area-inset-bottom)); border-width: 0 0 1.5px 1.5px; }
+#hud .c4 { right: 8px; bottom: calc(8px + env(safe-area-inset-bottom)); border-width: 0 1.5px 1.5px 0; }
+#bar { position: absolute; left: 50%; top: calc(10px + env(safe-area-inset-top)); translate: -50% -8px; display: flex; align-items: center; gap: 0; height: 32px; padding: 0 4px; border: 1px solid rgba(var(--ar), .55); border-radius: 16px;
+  background: color-mix(in srgb, var(--bg) 80%, transparent); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); font: 500 11.5px/1 var(--sans); letter-spacing: .02em; white-space: nowrap;
+  opacity: 0; transition: opacity 1.2s ease, translate 1.2s cubic-bezier(.2, .8, .2, 1); }
+#hud.on #bar { opacity: .92; translate: -50% 0; }
+#bar > span { display: inline-flex; align-items: center; gap: 6px; padding: 0 9px; height: 100%; }
+#bar > span + span { border-left: 1px solid rgba(var(--ar), .3); }
+#bar b { font-weight: 500; color: var(--fg2); font-variant-numeric: tabular-nums; }
+#bar svg { display: block; overflow: visible; }
+#bar svg * { vector-effect: non-scaling-stroke; }
+.b-sun svg { width: 22px; height: 14px; } .b-map svg { width: 46px; height: 20px; } .b-wind svg { width: 14px; height: 14px; }
+#b-arrow { transition: transform 1.8s ease; transform-origin: 7px 7px; }
+#bar .ok { color: rgb(var(--ar)); }
+@media (max-width: 520px) { #bar > span { padding: 0 7px; } .b-wind b, .w-long { display: none; } }
+@media (max-width: 360px) { #bar { font-size: 10.5px; } }
+
+/* бирки — общий язык для обложки, сцен и мира */
+.tg .ld { fill: none; stroke: rgb(var(--ar)); stroke-width: 1.3; stroke-dasharray: 1; stroke-dashoffset: 1; vector-effect: non-scaling-stroke; transition: stroke-dashoffset .9s cubic-bezier(.5, 0, .2, 1); }
+.tg .pin { fill: rgb(var(--ar)); opacity: 0; transition: opacity .3s ease; }
+.tg .ping { fill: none; stroke: rgb(var(--ar)); stroke-width: 1.2; opacity: 0; vector-effect: non-scaling-stroke; transform-box: fill-box; transform-origin: center; }
+.tg .lb { opacity: 0; transition: opacity .6s ease .7s; }
+.tg .lb rect, .panel { fill: rgba(251, 246, 236, .88); stroke: rgb(var(--ar)); stroke-width: 1; vector-effect: non-scaling-stroke; }
+.tg .lb text, .ar text { font-family: var(--sans); font-weight: 500; fill: #24403f; letter-spacing: .02em; }
+.tg.on .ld { stroke-dashoffset: 0; } .tg.on .pin { opacity: 1; } .tg.on .lb { opacity: 1; }
+.tg.on .ping { animation: ping 2.6s ease-out .2s 2; }
+@keyframes ping { 0% { opacity: .8; transform: scale(1); } 100% { opacity: 0; transform: scale(5); } }
+.tg.gone .ld { stroke-dashoffset: -1; transition-duration: .8s; } .tg.gone .lb, .tg.gone .pin { opacity: 0; transition: opacity .6s ease; }
+.tg.warn .ld, .tg.warn .pin { stroke: rgb(var(--ar-warn)); fill: rgb(var(--ar-warn)); } .tg.warn .ld { fill: none; }
+.tg.warn .lb rect { stroke: rgb(var(--ar-warn)); } .tg.warn .lb text { fill: #7a2c22; }
+.tg.cold .ld, .tg.cold .lb rect { stroke: rgb(var(--ar-cold)); } .tg.cold .pin { fill: rgb(var(--ar-cold)); } .tg.cold .lb text { fill: #2c4466; }
+.tg.q .lb text { font-style: italic; }
+.tg.big .lb text { font-weight: 600; }
+.tg.center .ld { display: none; } .tg.center .pin, .tg.center .ping { display: none; }
+
+/* ---------- первый экран: открытка ---------- */
+.hero { position: relative; min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; justify-content: center; padding-top: calc(52px + env(safe-area-inset-top)); padding-bottom: 12vh; }
+.home { position: absolute; left: max(14px, env(safe-area-inset-left)); top: max(4px, env(safe-area-inset-top)); display: inline-flex; align-items: center; min-height: 44px; padding: 0 6px; color: var(--muted); font: 400 14px/1 var(--sans); text-decoration: none; z-index: 6; }
+.home span { border-bottom: 1px solid var(--line); padding-bottom: 2px; }
+.home:hover { color: var(--accent); }
+.pc { --fg: #2b241f; position: relative; margin: 0 -6px 1.6rem; padding: 10px 10px 2px; border-radius: 10px; color: var(--fg); background-color: #fbf6ec; background-image: var(--hatch); rotate: -.6deg;
+  box-shadow: 0 1px 0 #fff8 inset, 0 18px 40px -18px rgba(60, 35, 20, .55), 0 2px 6px rgba(60, 35, 20, .16); }
+.pc-pic { position: relative; aspect-ratio: 1024 / 683; width: 100%; border-radius: 6px; overflow: hidden; background: #e8a982; }
+.pc-pic img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: cover; }
+.pc-pic canvas, .pc-pic .hero-ar { position: absolute; inset: 0; width: 100%; height: 100%; display: block; pointer-events: none; }
+.pc-pic::after, .sv-wrap::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: var(--hatch); box-shadow: inset 0 0 0 1px rgba(60, 40, 30, .14); border-radius: inherit; }
+.hero-ar .tg .lb rect { fill: rgba(251, 246, 236, .82); }
+.pc-stamp { position: absolute; right: 10px; top: 10px; z-index: 2; width: 46px; height: 56px; padding: 4px; background: #fbf6ec; outline: 3px dotted #fbf6ec; outline-offset: 1px; box-shadow: 0 2px 6px #0004; rotate: 3deg; }
+.pc-stamp svg { display: block; width: 100%; height: 100%; }
+.pc-stamp b { position: absolute; left: 0; right: 0; bottom: 5px; text-align: center; font: 600 7px/1 var(--sans); letter-spacing: .06em; color: #fff; text-shadow: 0 1px 2px #000a; }
+.pc-postmark { position: absolute; right: 52px; top: 50px; z-index: 2; width: 64px; height: 64px; border: 1.5px solid rgba(255, 248, 236, .6); border-radius: 50%; display: flex; align-items: center; justify-content: center; text-align: center; font: 600 7px/1.3 var(--sans); letter-spacing: .08em; text-transform: uppercase; color: rgba(255, 248, 236, .8); rotate: -14deg; pointer-events: none; text-shadow: 0 1px 2px #0006; }
+.pc-body { padding: 16px 8px 14px; }
+.eyebrow { font: 500 12px/1.3 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: #7d6c5d; margin: 0 0 .55rem; }
+.hero h1 { font: 600 clamp(40px, 11vw, 64px)/1.06 var(--serif); letter-spacing: -.012em; margin: 0 0 .35em; }
+.hero h1 .ch { display: inline-block; } .hero h1 .w { white-space: nowrap; }
+.js .hero h1 .ch { animation: chIn 1.1s cubic-bezier(.2, .8, .2, 1) both; animation-delay: calc(var(--i) * 60ms + .2s); }
+@keyframes chIn { from { opacity: 0; translate: 0 .35em; filter: blur(3px); } }
+.lede { font: italic 400 1.02em/1.5 var(--serif); color: #4f433a; margin: 0; }
+.meta { font: 500 14px/1.3 var(--sans); color: var(--muted); margin: 0 0 1.1em; }
+.hello { display: flex; gap: 12px; align-items: flex-start; margin: 0; font: italic 400 17px/1.45 var(--serif); color: var(--fg); max-width: 28em; }
+.hello .dot { flex: none; width: 10px; height: 10px; margin-top: .5em; border: 1.5px solid rgb(var(--ar)); border-radius: 50%; position: relative; }
+.hello .dot::after { content: ""; position: absolute; inset: 2px; border-radius: 50%; background: rgb(var(--ar)); animation: blink 3.2s ease-in-out infinite; }
+@keyframes blink { 0%, 100% { opacity: .3; } 50% { opacity: 1; } }
+.js .hero .pc { animation: land 1.2s cubic-bezier(.2, .8, .2, 1) both; }
+@keyframes land { from { opacity: 0; translate: 0 22px; rotate: -2.4deg; } }
+.js .hero .meta, .js .hero .hello { animation: up 1s cubic-bezier(.2, .8, .2, 1) both; }
+.js .hero .meta { animation-delay: .9s; } .js .hero .hello { animation-delay: 1.2s; }
+@keyframes up { from { opacity: 0; translate: 0 14px; } }
+.cue { position: absolute; left: 50%; bottom: 5vh; width: 2px; height: 46px; margin-left: -1px; border-radius: 1px; background: linear-gradient(var(--muted), transparent); opacity: .55; animation: cue 3.4s ease-in-out infinite; }
+@keyframes cue { 0%, 100% { transform: translateY(0); opacity: .2; } 50% { transform: translateY(10px); opacity: .6; } }
+
+/* ---------- части статьи и развилка между ними ---------- */
+#r0 { padding-top: 6vh; }
+.part h2 { font: 600 clamp(26px, 7vw, 36px)/1.2 var(--serif); letter-spacing: -.01em; margin: 0 0 .9em; text-wrap: balance; }
+.h2-n { display: block; width: fit-content; font: 500 11px/1 var(--sans); letter-spacing: .14em; color: rgb(var(--ar)); border: 1px solid rgba(var(--ar), .6); border-radius: 3px; padding: 4px 6px 3px; margin-bottom: .9em; }
+.h2-n::before { content: "часть "; }
+.fork { max-width: 36rem; height: 60px; margin: 14vh auto 10vh; padding: 0 20px; }
+.fork svg { width: 100%; height: 100%; overflow: visible; display: block; }
+.fork path { fill: none; stroke: var(--line); stroke-width: 2.2; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; vector-effect: non-scaling-stroke; transition: stroke-dashoffset 2.4s cubic-bezier(.3, .7, .2, 1); }
+.fork.seen path { stroke-dashoffset: 0; }
+
+.js main [data-p] { transition: opacity 1.2s ease, translate 1.3s cubic-bezier(.2, .8, .2, 1), filter 1.4s ease; }
+.js main [data-p]:not(.seen) { opacity: 0; translate: 0 12px; filter: blur(2px); }
+
+.pull { font: 600 clamp(23px, 6.2vw, 30px)/1.34 var(--serif); letter-spacing: -.004em; margin: 1.4em 0 1.2em !important; text-wrap: balance; }
+.pull::before { content: ""; display: block; width: 34px; height: 3px; border-radius: 2px; background: var(--accent); margin-bottom: .6em; opacity: .7; }
+
+/* живые слова */
+.k { transition: color 1.6s ease, text-shadow 1.6s ease, letter-spacing 1.8s ease; }
+.k-toast { position: relative; }
+.k-toast i { position: absolute; bottom: .2em; width: 4px; height: 4px; border-radius: 50%; border: 1px solid #e0b45c; opacity: 0; pointer-events: none; }
+.x-mourn.hush .k-hush { color: var(--muted); letter-spacing: .04em; }
+.k-lens { position: relative; }
+.k-lens::before, .k-lens::after { content: ""; position: absolute; top: -.05em; bottom: -.05em; width: .35em; border: 1.5px solid rgb(var(--ar)); opacity: 0; transition: opacity .8s ease .3s, translate 1.2s cubic-bezier(.2, .8, .2, 1) .3s; }
+.k-lens::before { left: -.28em; border-right: 0; translate: -6px 0; } .k-lens::after { right: -.28em; border-left: 0; translate: 6px 0; }
+.on .k-lens::before, .on .k-lens::after { opacity: .9; translate: 0 0; }
+.on .k-lens { color: rgb(var(--ar)); }
+.k-two { display: inline-block; transition: letter-spacing 2s cubic-bezier(.2, .8, .2, 1) .6s, color 2s ease .6s; }
+.on .k-two { letter-spacing: .14em; color: var(--accent); }
+.k-blame { position: relative; transition: color 1.4s ease, opacity 1.4s ease; }
+.k-blame::after { content: "виноват?"; position: absolute; left: 0; top: -1.45em; font: 600 10px/1 var(--sans); letter-spacing: .08em; text-transform: uppercase; color: rgb(var(--ar-warn)); border: 1px solid rgb(var(--ar-warn)); border-radius: 3px; padding: 3px 4px 2px; background: color-mix(in srgb, var(--bg) 85%, transparent); opacity: 0; translate: 0 4px; transition: opacity .7s ease, translate .7s ease; white-space: nowrap; pointer-events: none; }
+.x-blame.on .k-blame { color: rgb(var(--ar-warn)); }
+.x-blame.on .k-blame::after { opacity: 1; translate: 0 0; }
+.x-blame.off .k-blame { color: inherit; }
+.x-blame.off .k-blame::after { opacity: 0; translate: 0 -6px; }
+.k-who { box-shadow: inset 0 -.12em 0 rgba(var(--ar), 0); transition: box-shadow 1.6s ease .4s; }
+.on .k-who { box-shadow: inset 0 -.12em 0 rgba(var(--ar), .6); }
+.k-green { color: #4f8a3c; } .k-red { color: #c4473b; }
+:root[data-theme="dark"] .k-green { color: #9fd388; } :root[data-theme="dark"] .k-red { color: #ff8f80; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .k-green { color: #9fd388; } :root:not([data-theme="light"]) .k-red { color: #ff8f80; } }
+.k-wipe { background: linear-gradient(90deg, rgba(196, 71, 59, .22), rgba(196, 71, 59, .22)) no-repeat 0 85% / 100% .45em; transition: background-size 2.4s ease .8s; }
+.on .k-wipe { background-size: 100% .45em; }
+.k-fail { position: relative; }
+.k-fail::after { content: ""; position: absolute; left: -2%; right: -2%; top: 55%; height: 1.5px; background: rgb(var(--ar)); transform: scaleX(0); transform-origin: left; transition: transform 1.4s cubic-bezier(.5, 0, .2, 1) 1.2s; }
+.on .k-fail::after { transform: scaleX(1); }
+.k-hands { display: inline-block; transition: letter-spacing 2.4s cubic-bezier(.2, .8, .2, 1) .6s; }
+.on .k-hands { letter-spacing: .1em; }
+.k-rise { transition: color 2.4s ease .6s, text-shadow 2.4s ease .6s; }
+.last.on .k-rise { color: var(--accent); text-shadow: 0 0 18px rgba(255, 170, 110, .45); }
+.last { font: 600 clamp(24px, 6.6vw, 34px)/1.34 var(--serif); text-align: center; margin: 1.8em auto 1.2em !important; max-width: 17em; text-wrap: balance; position: relative; }
+.last::before { content: ""; position: absolute; left: 50%; top: 50%; width: 110%; height: 230%; translate: -50% -50%; z-index: -1; background: radial-gradient(closest-side, rgba(255, 170, 110, .22), transparent); animation: glowB 7s ease-in-out infinite; pointer-events: none; }
+@keyframes glowB { 0%, 100% { opacity: .55; scale: .94; } 50% { opacity: 1; scale: 1.04; } }
+
+/* подчёркивание, которое само рисуется */
+.u { position: relative; }
+.u-line { position: absolute; left: -1%; bottom: -.3em; width: 102%; height: .5em; overflow: visible; pointer-events: none; }
+.u-line path { fill: none; stroke: var(--accent); stroke-width: 2.2; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; vector-effect: non-scaling-stroke; transition: stroke-dashoffset 1.8s cubic-bezier(.5, 0, .2, 1) .5s; }
+.on .u-line path { stroke-dashoffset: 0; }
+
+/* ---------- сцены (главные герои) ---------- */
+.scene { position: relative; }
+.sv-wrap { position: relative; border-radius: 5px; overflow: hidden; background: #f3e2c9; }
+.sv { display: block; width: 100%; height: auto; }
+.sv .grain { pointer-events: none; }
+.card { margin: 1.4rem -6px 2.6rem; padding: 8px 8px 0; background: #fbf6ec; background-image: var(--hatch); border-radius: 8px; rotate: var(--tilt, -.6deg);
+  box-shadow: 0 1px 0 #fff8 inset, 0 16px 34px -16px rgba(60, 35, 20, .55), 0 2px 6px rgba(60, 35, 20, .14); }
+.card:nth-of-type(even) { --tilt: .7deg; }
+.card figcaption { font: italic 400 15px/1.2 var(--serif); color: #6a5a4c; padding: 8px 4px 9px; }
+.card figcaption .credit { display: block; font: normal 11px/1.3 system-ui, sans-serif; opacity: .6; margin-top: 3px; }
+.band .credit.bc { position: absolute; left: 20px; bottom: 16px; font: normal 10.5px/1.2 system-ui, sans-serif; color: #fff; opacity: .8; text-shadow: 0 1px 2px rgba(0, 0, 0, .6); }
+.zk-btn { position: absolute; right: 22px; bottom: 20px; z-index: 3; display: inline-flex; align-items: center; gap: 7px; min-height: 40px; padding: 0 16px; border: 1px solid rgb(var(--ar)); border-radius: 20px; background: rgba(251, 246, 236, .92); color: #24403f; font: 600 14px/1 var(--sans); letter-spacing: .02em; cursor: pointer; box-shadow: 0 2px 10px rgba(0, 0, 0, .18); transition: background .4s ease, color .4s ease, border-color .4s ease, transform .2s ease; -webkit-tap-highlight-color: transparent; }
+.zk-btn .i { font-size: 11px; letter-spacing: -.05em; }
+.zk-btn:hover { transform: translateY(-1px); }
+.zk-btn:active { transform: scale(.97); }
+.zk-btn:focus-visible { outline: 2px solid rgb(var(--ar)); outline-offset: 3px; }
+.zk-btn.own { border-color: rgb(var(--ar-warn)); color: #7a2c22; background: rgba(251, 240, 232, .95); }
+@media (max-width: 760px) { .band .credit.bc { max-width: calc(100% - 175px); } .zk-btn { right: 14px; bottom: 14px; min-height: 38px; padding: 0 13px; font-size: 13px; } }
+.band { position: relative; left: 50%; width: min(58rem, calc(100vw - 24px)); margin: 3rem 0 2.6rem; padding: 10px; background: #fbf6ec; background-image: var(--hatch); border-radius: 10px; rotate: .4deg; transform: translateX(-50%);
+  box-shadow: 0 1px 0 #fff8 inset, 0 20px 44px -18px rgba(60, 35, 20, .55), 0 2px 6px rgba(60, 35, 20, .16); }
+.band .pc-postmark { top: 26px; right: 30px; width: 70px; height: 70px; }
+@media (max-width: 640px) { .band .sv { aspect-ratio: 4 / 3; } .band .pc-postmark { top: 16px; right: 16px; } }
+.js .scene { transition: opacity 1.4s ease, translate 1.4s cubic-bezier(.2, .8, .2, 1); }
+.js .scene:not(.seen) { opacity: 0; translate: 0 26px; }
+.js .band:not(.seen) { translate: 0 26px; }
+@media (min-width: 760px) { .card { margin: 1.6rem -3.2rem 2.8rem; } }
+@media (min-width: 900px) { .hero { max-width: calc(44rem + 40px); } }
+
+/* бирки внутри сцен: шрифт крупнее на телефоне */
+.sv .tg text { font-size: inherit; }
+.ar .ck circle { fill: rgba(251, 246, 236, .85); stroke: rgb(var(--ar)); stroke-width: 1.2; transition: fill .8s ease .3s; }
+.ar .ck.on circle { fill: rgb(var(--ar)); }
+.rz-list .cap { font-size: 11px; fill: #24403f; font-style: italic; }
+.ar .ck path { fill: none; stroke: rgb(var(--ar)); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset .6s ease .3s; }
+.ar .ck text { font-size: 13.5px; opacity: 0; transition: opacity .6s ease; }
+.ar .ck { opacity: 0; transition: opacity .5s ease; }
+.ar .ck.on { opacity: 1; } .ar .ck.on path { stroke-dashoffset: 0; } .ar .ck.on text { opacity: 1; }
+.ar .rl path { fill: none; stroke: rgb(var(--ar)); stroke-width: 1.3; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1s ease; }
+.ar .rl text { font-size: 17px; opacity: 0; transition: opacity .6s ease .6s; }
+.ar .rl.on path { stroke-dashoffset: 0; } .ar .rl.on text { opacity: 1; }
+.ar .rl2 path { stroke: rgb(var(--ar-warn)); } .ar .rl2 text { fill: #7a2c22; }
+.tf-foot { fill: none; stroke: rgb(var(--ar-warn)); stroke-width: 1.6; stroke-dasharray: .012 .008; opacity: 0; transition: opacity 1.2s ease; }
+.tf-toes { stroke: rgb(var(--ar-warn)); stroke-width: 1.3; stroke-dasharray: 2 3; opacity: 0; transition: opacity 1.2s ease .4s; }
+.pfoot .tf-foot, .pfoot .tf-toes { opacity: .85; }
+.tf-hot circle { opacity: 0; transition: opacity 1s ease; transform-box: fill-box; transform-origin: center; }
+.phot .tf-hot circle { opacity: 1; animation: hot 2.4s ease-in-out infinite; }
+.phot .tf-hot .h2 { animation-delay: 1.2s; }
+@keyframes hot { 50% { transform: scale(1.25); opacity: .6; } }
+.km-vessels { opacity: 0; transition: opacity 1s ease; } .km-vessels.on { opacity: 1; }
+.km-vessels .glass { fill: rgba(255, 255, 255, .35); stroke: rgb(var(--ar)); stroke-width: 1.4; }
+.km-vessels .lv { fill: rgba(var(--ar), .55); }
+.km-vessels .cap { font-size: 11px; }
+.chip { opacity: 0; transition: opacity 1s ease, translate 1s ease; translate: -10px 0; } .chip.on { opacity: 1; translate: 0 0; }
+.chip .t1 { font-size: 13px; font-weight: 600; } .chip .t2 { font-size: 11px; fill: #4c5f5e; }
+.chip .strike { stroke: rgb(var(--ar-warn)); stroke-width: 1.5; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1s ease 1.6s; }
+.chip.on .strike { stroke-dashoffset: .55; }
+.c-red rect:nth-child(2) { animation: redb 3s ease-in-out infinite; }
+@keyframes redb { 50% { filter: brightness(1.12) saturate(1.1); } }
+.kp-crack { stroke-dasharray: 1; stroke-dashoffset: 1; }
+.bk { transform-box: fill-box; transform-origin: center; }
+.zk-frame { opacity: 0; }
+.zk-frame .fc path { fill: none; stroke: rgb(var(--ar)); stroke-width: 2.4; vector-effect: non-scaling-stroke; }
+.zk-frame .fl rect { fill: rgba(251, 246, 236, .9); stroke: rgb(var(--ar)); stroke-width: 1; vector-effect: non-scaling-stroke; }
+.zk-frame .fl text { font-size: 15px; font-weight: 600; letter-spacing: .06em; }
+.zk-frame.lock .fc path, .zk-frame.lock .fl rect { stroke: rgb(var(--ar-warn)); } .zk-frame.lock .fl text { fill: #7a2c22; }
+
+/* ---------- конец ---------- */
+.end { padding-top: 2rem; padding-bottom: calc(5rem + env(safe-area-inset-bottom)); text-align: center; font: 400 16px/1.6 var(--sans); color: var(--muted); }
+.end .thanks { font: italic 400 20px/1.4 var(--serif); color: var(--fg); margin: 0 0 1em; }
+.end p { margin: 0 0 .7em; }
+.end .to-all { display: inline-flex; align-items: center; min-height: 44px; }
+#toast { position: fixed; left: 50%; bottom: max(14px, env(safe-area-inset-bottom)); z-index: 7; width: min(30rem, calc(100vw - 24px)); translate: -50% 0; padding: 14px 16px 12px; border-radius: 12px; background: #fbf6ec; background-image: var(--hatch); color: #2b241f;
+  box-shadow: 0 18px 40px -16px rgba(60, 35, 20, .6), 0 2px 6px rgba(60, 35, 20, .2); font: italic 400 17px/1.45 var(--serif); transition: opacity .8s ease, translate .9s cubic-bezier(.2, .8, .2, 1); }
+#toast.hide { opacity: 0; translate: -50% 20px; pointer-events: none; }
+#toast .tb { display: flex; gap: 8px; justify-content: flex-end; margin-top: 8px; }
+#toast button { font: 500 14px/1 var(--sans); border: 0; background: none; color: #2c7f80; padding: 10px; min-height: 40px; border-radius: 8px; cursor: pointer; }
+#toast button.go { background: #2c7f80; color: #f6f2ea; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; transition-delay: 0s !important; }
+  #map svg { animation: none; }
+}
+</style>
+</head>
+<body>
+<div id="map" aria-hidden="true"><svg viewBox="0 0 800 1200" preserveAspectRatio="xMidYMid slice"><g>
+<path d="M-20 160 C 120 120 240 200 400 170 S 650 120 820 160"/><path d="M-20 200 C 130 165 250 240 410 212 S 660 160 820 200" opacity=".7"/>
+<path d="M560 300 C 610 260 720 270 760 330 S 720 470 640 460 S 520 360 560 300Z"/><path d="M590 315 C 625 290 705 298 730 340 S 700 440 645 432 S 565 360 590 315Z" opacity=".7"/>
+<path d="M400 1240 C 400 1000, 390 860, 400 760 C 410 660, 300 600, 160 520 S -20 420, -40 380" stroke-dasharray="2 9" stroke-width="2"/>
+<path d="M400 760 C 420 660, 520 600, 640 520 S 820 430, 840 390" stroke-dasharray="2 9" stroke-width="2"/>
+<path d="M80 860 C 140 800 280 800 320 870 S 260 990 170 980 S 30 930 80 860Z"/>
+<path d="M-20 1060 C 160 1030 280 1110 440 1080 S 660 1030 820 1070" opacity=".7"/>
+</g></svg></div>
+<div id="sky" aria-hidden="true"><i class="t-grey"></i><i class="t-day"></i><i class="t-sunset"></i><i class="t-dusk"></i></div>
+<div id="vig" aria-hidden="true"></div>
+<div id="pool" aria-hidden="true"></div>
+<canvas id="air" aria-hidden="true"></canvas>
+
+<div id="hud" aria-hidden="true">
+  <i class="cn c1"></i><i class="cn c2"></i><i class="cn c3"></i><i class="cn c4"></i>
+  <div id="bar">
+    <span class="b-sun"><svg viewBox="0 0 22 14"><path d="M1 13 H21" stroke="currentColor" stroke-width="1.2"/><path d="M3 13 A8 8 0 0 1 19 13" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="1.5 2" opacity=".6"/><circle id="b-sundot" cx="11" cy="5" r="2.6" fill="currentColor"/></svg><b id="b-min">до заката 52 мин</b></span>
+    <span class="b-map"><svg viewBox="0 0 46 20"><path d="M23 20 C23 14 20 12 12 9 S2 4 0 2" fill="none" stroke="currentColor" stroke-width="1" opacity=".55"/><path d="M23 20 C23 14 26 12 34 9 S44 4 46 2" fill="none" stroke="currentColor" stroke-width="1" opacity=".55"/><circle id="b-w1" cx="22" cy="17" r="2.2" fill="currentColor"/><circle id="b-w2" cx="24" cy="17" r="2.2" fill="currentColor"/></svg><b><span class="w-long">между ними </span><span id="b-dist">0,1 км</span></b></span>
+    <span class="b-wind"><svg viewBox="0 0 14 14"><g id="b-arrow"><path d="M7 12 V2 M3.5 5.5 L7 2 L10.5 5.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></g></svg><b id="b-wind">ветер 2 м/с</b></span>
+  </div>
+</div>
+
+<main>
+<header class="hero">
+  <a class="home" href="https://legendpsy.github.io/stati/"><span>← Все статьи</span></a>
+  <div class="pc">
+    <div class="pc-pic" role="img" aria-label="Закат над летним лугом. Тропинка расходится на две, и по каждой уходит свой путник. У развилки на траве остались красивые туфли и два пластыря.">
+      <img src="art/razvilka.webp" alt="" width="1024" height="683" decoding="async">
+      <canvas class="hero-live" aria-hidden="true"></canvas>
+      <svg class="hero-ar ar" viewBox="0 0 1024 683" aria-hidden="true"><g class="tg " data-at="0"><path class="ld" d="M457 246 L503 120 L540 120" pathLength="1"/><circle class="pin" cx="457" cy="246" r="7.8"/><circle class="ping" cx="457" cy="246" r="7.8"/><g class="lb" data-left="1"><rect x="540" y="95.5" width="194" height="49" rx="9.1"/><text x="556.9" y="129.4" font-size="26">солнце · 4°</text></g></g><g class="tg " data-at="1"><path class="ld" d="M187 250 L222 196 L250 196" pathLength="1"/><circle class="pin" cx="187" cy="250" r="7.8"/><circle class="ping" cx="187" cy="250" r="7.8"/><g class="lb" data-left="1"><rect x="250" y="171.5" width="340" height="49" rx="9.1"/><text x="266.9" y="205.4" font-size="26">путник · своей тропой</text></g></g><g class="tg " data-at="2"><path class="ld" d="M838 262 L806 330 L780 330" pathLength="1"/><circle class="pin" cx="838" cy="262" r="7.8"/><circle class="ping" cx="838" cy="262" r="7.8"/><g class="lb" data-left="0"><rect x="440" y="305.5" width="340" height="49" rx="9.1"/><text x="456.9" y="339.4" font-size="26">путник · своей тропой</text></g></g><g class="tg " data-at="3"><path class="ld" d="M420 520 L519 600 L600 600" pathLength="1"/><circle class="pin" cx="420" cy="520" r="7.8"/><circle class="ping" cx="420" cy="520" r="7.8"/><g class="lb" data-left="1"><rect x="600" y="575.5" width="281" height="49" rx="9.1"/><text x="616.9" y="609.4" font-size="26">туфли · оставлены</text></g></g></svg>
+      <span class="pc-stamp"><svg viewBox="0 0 40 50" aria-hidden="true"><rect width="40" height="50" fill="#e9a27e"/><circle cx="20" cy="30" r="7" fill="#fff1c4"/><path d="M0 34 Q 10 30, 20 33 T 40 32 V50 H0Z" fill="#7fa257"/><path d="M20 50 C20 42 14 40 6 37 M20 50 C20 42 26 40 34 37" stroke="#e6c79a" stroke-width="1.6" fill="none"/></svg><b>РАЗВИЛКА</b></span>
+    </div>
+    <div class="pc-body">
+      <p class="eyebrow">Статья психолога</p>
+      <h1><span class="sr">Точка рождения</span><span aria-hidden="true"><span class="w"><span class="ch" style="--i:0">Т</span><span class="ch" style="--i:1">о</span><span class="ch" style="--i:2">ч</span><span class="ch" style="--i:3">к</span><span class="ch" style="--i:4">а</span></span> <span class="w"><span class="ch" style="--i:6">р</span><span class="ch" style="--i:7">о</span><span class="ch" style="--i:8">ж</span><span class="ch" style="--i:9">д</span><span class="ch" style="--i:10">е</span><span class="ch" style="--i:11">н</span><span class="ch" style="--i:12">и</span><span class="ch" style="--i:13">я</span></span></span></h1>
+      <p class="lede">Почему мы привыкли оплакивать конец отношений как личный крах — и как увидеть в разрыве не поражение, а акт сострадания и точку рождения</p>
+    </div>
+  </div>
+  <p class="meta">Около 5 минут чтения</p>
+  <aside class="hello"><i class="dot" aria-hidden="true"></i><span id="hello-text">Здесь ничего не нужно нажимать. Просто читайте: закат над лугом пройдёт вместе с вами, а очки подпишут всё, что встретится по дороге.</span></aside>
+  <div class="cue" aria-hidden="true"></div>
+</header>
+
+<section class="part" id="r0" data-sec="0">
+<p id="p1" data-p class="x-mourn">В нашей культуре для начала отношений предусмотрены <span class="k k-toast">тосты, шампанское</span> и пожелания долгой дороги, а для их конца — только <span class="k k-hush">траурная тишина</span> и неловкое сочувствие. Расставание принято переживать как маленькую смерть, личную несостоятельность, крушение всего, во что было вложено столько лет.</p>
+<p id="p2" data-p class="x-optic">С этой болью бессмысленно спорить: разрыв действительно способен разобрать человека до основания. Но что, если дело не в самой боли, а в <span class="k k-lens">оптике</span>, через которую мы на неё смотрим? Что, если увидеть в расставании не позорный финал, а <span class="u">точку торжества<svg class="u-line" viewBox="0 0 200 12" preserveAspectRatio="none" aria-hidden="true"><path d="M2 8 C 30 3, 55 11, 85 6 S 140 3, 170 7 S 192 6, 198 5" pathLength="1"/></svg></span>?</p>
+<p id="p3" data-p class="x-birth">Это похоже на роды. Процесс, в котором много боли, страха и невыносимого физического дискомфорта, но который по своей сути является не разрушением, а актом рождения. Из прежнего слияния на свет появляются <span class="k k-two">двое</span> — два абсолютно новых, качественно иных человека. И держится этот переход на трёх вещах: прекращении бессмысленного страдания, открытии новых возможностей и честном взгляде на реальность.</p>
+</section><div class="fork" aria-hidden="true"><svg viewBox="0 0 400 60" preserveAspectRatio="none"><path class="fk-a" d="M200 58 C 200 40, 170 30, 110 22 S 20 10, 0 6" pathLength="1"/><path class="fk-b" d="M200 58 C 200 40, 230 30, 290 22 S 380 10, 400 6" pathLength="1"/></svg></div><section class="part" id="r1" data-sec="1"><h2 data-p><span class="h2-n">1</span>Туфли, в которых невозможно идти</h2>
+<p id="p4" data-p>Почти у каждого в шкафу однажды случалась потрясающая пара обуви. Любовь с первого взгляда, безупречная посадка на мягком ковре в магазине. Но проходит неделя, другая — колодка начинает давить, кожа натирает до крови, каждый шаг превращается в испытание.</p>
+<p id="p5" data-p>В этот момент мы редко спокойно признаём очевидное: <span class="u">форма этой стопы и форма этой колодки просто не совпадают<svg class="u-line" viewBox="0 0 200 12" preserveAspectRatio="none" aria-hidden="true"><path d="M2 8 C 30 3, 55 11, 85 6 S 140 3, 170 7 S 192 6, 198 5" pathLength="1"/></svg></span>. Вместо этого начинается отчаянная спасательная операция. Мы клеим пластыри, которые скатываются через полчаса, натягиваем плотные носки, которые протираются до дыр, меняем походку — лишь бы доказать, что покупка была не зря.</p>
+<figure class="scene card" data-scene="tufli"><div class="sv-wrap"><svg viewBox="0 0 600 400" class="sv" role="img" aria-label="Красивая туфля на ковре. Поверх неё пунктиром контур стопы, который в неё не помещается. Пластыри сами приклеиваются к пятке и через минуту скатываются.">
+<defs>
+<linearGradient id="tf-wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6e6d0"/><stop offset="1" stop-color="#efd6bd"/></linearGradient>
+<linearGradient id="tf-shoe" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbf1e0"/><stop offset="1" stop-color="#e6cfae"/></linearGradient>
+<radialGradient id="tf-hot"><stop offset="0" stop-color="#e0574a" stop-opacity=".55"/><stop offset="1" stop-color="#e0574a" stop-opacity="0"/></radialGradient>
+<pattern id="tf-dots" width="5" height="5" patternUnits="userSpaceOnUse"><circle cx="2.5" cy="2.5" r=".9" fill="#c79a74"/></pattern>
+<filter id="tf-grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="4"/><feColorMatrix values="0 0 0 0 .35  0 0 0 0 .28  0 0 0 0 .2  0 0 0 .07 0"/><feComposite in2="SourceGraphic" operator="in"/></filter>
+</defs>
+<rect width="600" height="400" fill="url(#tf-wall)"/>
+<rect x="0" y="0" width="600" height="400" fill="url(#tf-wall)"/>
+<g opacity=".25" stroke="#d6b494" stroke-width="1"><path d="M60 0 V250"/><path d="M180 0 V250"/><path d="M300 0 V250"/><path d="M420 0 V250"/><path d="M540 0 V250"/></g>
+<rect class="tf-sun" x="360" y="30" width="150" height="190" rx="4" fill="#fff6e2" opacity=".55"/>
+<path d="M0 250 H600 V400 H0Z" fill="#c98f7c"/>
+<path d="M0 250 H600 V262 H0Z" fill="#b57b69"/>
+<g opacity=".18" stroke="#fff" stroke-width="1.2"><path d="M0 280 H600"/><path d="M0 310 H600"/><path d="M0 345 H600"/><path d="M0 382 H600"/></g>
+<ellipse cx="300" cy="346" rx="170" ry="10" fill="#7a4c3e" opacity=".25"/>
+<g class="tf-shoe">
+  <path d="M404 302 L440 302 L431 344 L418 344 Z" fill="#d9bf98" stroke="#a7865f" stroke-width="1.5"/>
+  <path d="M150 333 C138 320 148 300 186 296 L250 290 C272 300 300 300 322 284 C352 262 400 250 441 250 C448 270 447 292 441 304 L404 304 C360 308 300 332 262 338 Z" fill="url(#tf-shoe)" stroke="#a7865f" stroke-width="1.6"/>
+  <path d="M250 290 C274 297 300 296 322 284 C352 265 400 254 438 253" fill="none" stroke="#c9a57c" stroke-width="5" opacity=".7"/>
+  <path d="M168 314 C200 306 230 304 250 300" fill="none" stroke="#e8d6b8" stroke-width="2" opacity=".8"/>
+  <g transform="translate(272 292)"><path d="M0 0 C-12 -10 -20 -2 -16 6 C-12 12 -4 6 0 0 C4 6 12 12 16 6 C20 -2 12 -10 0 0Z" fill="#f3e3c6" stroke="#a7865f" stroke-width="1.2"/><circle r="3.4" fill="#e8d2ac" stroke="#a7865f" stroke-width="1"/><path d="M-2 3 L-7 16 M2 3 L8 15" stroke="#a7865f" stroke-width="1.6" fill="none"/></g>
+  <path d="M150 333 C190 336 230 338 262 338" stroke="#8b6a48" stroke-width="3" fill="none"/>
+</g>
+<g class="tf-hot"><circle class="h1" cx="168" cy="318" r="26" fill="url(#tf-hot)"/><circle class="h2" cx="436" cy="282" r="28" fill="url(#tf-hot)"/></g>
+<g class="tf-plasters"></g>
+<path class="tf-foot" d="M128 330 C118 312 126 290 160 282 C190 276 236 270 262 268 C300 262 330 250 360 236 C390 222 430 214 452 226 C470 238 468 286 456 306 C450 318 436 324 420 324 C370 328 300 344 240 346 C200 348 150 346 128 330 Z" pathLength="1"/>
+<g class="tf-toes" fill="none"><circle cx="138" cy="312" r="7"/><circle cx="148" cy="296" r="6"/><circle cx="160" cy="286" r="5"/></g>
+<rect class="grain" width="600" height="400" filter="url(#tf-grain)"/>
+<g class="ar">
+<g class="tg warn" data-at="0.22"><path class="ld" d="M166 318 L86 200 L20 200" pathLength="1"/><circle class="pin" cx="166" cy="318" r="5.7"/><circle class="ping" cx="166" cy="318" r="5.7"/><g class="lb" data-left="0"><rect x="-58" y="182.0" width="78" height="36" rx="6.6"/><text x="-45.6" y="206.8" font-size="19">давит</text></g></g>
+<g class="tg warn" data-at="0.3"><path class="ld" d="M440 282 L522 180 L590 180" pathLength="1"/><circle class="pin" cx="440" cy="282" r="5.7"/><circle class="ping" cx="440" cy="282" r="5.7"/><g class="lb" data-left="1"><rect x="590" y="162.0" width="110" height="36" rx="6.6"/><text x="602.4" y="186.8" font-size="19">натирает</text></g></g>
+<g class="tg t-plaster" data-at="0.4"><path class="ld" d="M452 240 L528 110 L590 110" pathLength="1"/><circle class="pin" cx="452" cy="240" r="5.7"/><circle class="ping" cx="452" cy="240" r="5.7"/><g class="lb" data-left="1"><rect x="590" y="92.0" width="152" height="36" rx="6.6"/><text x="602.4" y="116.8" font-size="19">пластырь № 1</text></g></g>
+<g class="rl" data-at=".5"><path d="M150 366 V376 M150 371 H441 M441 366 V376" pathLength="1"/><text x="296" y="390" text-anchor="middle">колодка · 23,5</text></g>
+<g class="rl rl2" data-at=".58"><path d="M128 352 V362 M128 357 H468 M468 352 V362" pathLength="1"/><text x="296" y="349" text-anchor="middle">стопа · 25</text></g>
+<g class="tg center big" data-at="0.72"><path class="ld" d="M300 160 L300 40 L300 40" pathLength="1"/><circle class="pin" cx="300" cy="160" r="5.7"/><circle class="ping" cx="300" cy="160" r="5.7"/><g class="lb" data-left="1"><rect x="300" y="22.0" width="386" height="36" rx="6.6"/><text x="312.4" y="46.8" font-size="19">формы не совпадают · виноватых нет</text></g></g>
+</g>
+</svg></div><figcaption>Потрясающая пара. Пластырь № …</figcaption></figure>
+<p id="p6" data-p class="x-blame">Точно так же мы проживаем страдание от «неподходящести» в отношениях — и почти мгновенно проваливаемся в поиск виноватого. Если ушли от меня — значит, со мной <span class="nobr">что-то</span> не так, <span class="k k-blame">я бракованный</span>. Если мне невыносимо больно — значит, партнёр оказался <span class="k k-blame">плохим, холодным, неправильным</span>. Эта тесная, замкнутая на себе оптика способна запереть двоих в многолетнем мучении.</p>
+<p id="p7" data-p class="x-up">Но стоит подняться на шаг выше и посмотреть на отношения как на живую систему, картина резко меняется.</p>
+<p id="p8" data-p class="x-who">В близости мы связаны сообщающимися сосудами. Представьте, что ваш партнёр в этом союзе раз за разом больно бьётся головой о люстру, а вы спокойно отвечаете: <em>«ох как жаль, бедный. ты как? ты же все еще можешь меня любить с шишкой на лбу? Просто меня все устраивает. И люстра нравится и то как ты за мной ухаживаешь. Не хотелось бы <span class="nobr">что-то</span> менять. Может начнешь наклоняться?»</em>. В эту секунду стоит задать себе один беспощадный вопрос: <span class="k k-who">кого именно вы сейчас любите?</span> Живого человека напротив — или ту питательную, тёплую среду, которую он для вас бесперебойно обеспечивает?</p>
+<p id="p9" data-p class="x-both">Отношения не могут быть комнатой, где одному уютно, пока другой медленно замерзает у стены. Здесь действует простое правило: <span class="u">либо подходят оба, либо не подходит никто<svg class="u-line" viewBox="0 0 200 12" preserveAspectRatio="none" aria-hidden="true"><path d="M2 8 C 30 3, 55 11, 85 6 S 140 3, 170 7 S 192 6, 198 5" pathLength="1"/></svg></span>. Если одной части системы постоянно больно, система нежизнеспособна. И тогда расставание перестаёт быть предательством. Оно становится актом глубокого сострадания — решением прекратить взаимную пытку и выбрать <em>свободу для</em> жизни, а не бесконечное выживание рядом.</p>
+</section><div class="fork" aria-hidden="true"><svg viewBox="0 0 400 60" preserveAspectRatio="none"><path class="fk-a" d="M200 58 C 200 40, 170 30, 110 22 S 20 10, 0 6" pathLength="1"/><path class="fk-b" d="M200 58 C 200 40, 230 30, 290 22 S 380 10, 400 6" pathLength="1"/></svg></div><section class="part" id="r2" data-sec="2"><h2 data-p><span class="h2-n">2</span>Жить жизнь красным</h2>
+<p id="p10" data-p class="pull">Именно в этой точке, когда отступает шум взаимных упрёков, открывается горизонт, о котором в разгар боли почти никто не думает.</p>
+<p id="p11" data-p class="x-red">Вступая в настоящую близость, мы неизбежно позволяем другому оставить на нас след. Отношения перекрашивают нас изнутри. Представьте, что до этой встречи вы всю жизнь были условно <span class="k k-green">«зелёным»</span>: знали свои автоматические реакции, привычные вкусы, предсказуемый маршрут. Но в глубоком контакте с этим человеком вы стали <span class="k k-red">«красным»</span>.</p>
+<figure class="scene card" data-scene="kraska"><div class="sv-wrap"><svg viewBox="0 0 600 400" class="sv" role="img" aria-label="Старая парижская модная гравюра: дама в зелёном полосатом платье. От прикосновения господина в красном её платье понемногу становится красным. Потом она пытается оттереть краску, но прежней уже не станет. Рядом бирки-вопросы: какая я теперь?">
+<defs>
+<linearGradient id="kr-fill" x1="1" y1="0" x2="0" y2="0"><stop class="s1" offset="0" stop-color="#fff"/><stop class="s2" offset="0" stop-color="#fff"/><stop class="s3" offset="0" stop-color="#000"/><stop offset="1" stop-color="#000"/></linearGradient>
+<mask id="kr-m" maskUnits="userSpaceOnUse" x="0" y="0" width="600" height="400"><rect x="250" y="20" width="160" height="340" fill="url(#kr-fill)"/></mask>
+<filter id="kr-wet"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="3" seed="7"/><feDisplacementMap in="SourceGraphic" scale="9"/></filter>
+<filter id="kg-grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="4"/><feColorMatrix values="0 0 0 0 .35  0 0 0 0 .28  0 0 0 0 .2  0 0 0 .07 0"/><feComposite in2="SourceGraphic" operator="in"/></filter>
+</defs>
+<rect width="600" height="400" fill="#ebe7dd"/>
+<rect x="8" y="8" width="584" height="384" fill="none" stroke="#6d6150" stroke-width="1.2"/><rect x="13" y="13" width="574" height="374" fill="none" stroke="#6d6150" stroke-width=".5"/>
+<text x="300" y="34" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="17" fill="#4a3f33">Costume Parisien</text>
+<g stroke="#b9b0a0" stroke-width=".8" fill="none"><path d="M13 348 H587"/><path d="M13 372 H587"/><path d="M60 348 L30 387 M180 348 L160 387 M300 348 L300 387 M420 348 L440 387 M540 348 L570 387"/></g>
+<g class="kr-blots" filter="url(#kr-wet)" opacity=".22"></g>
+<g class="kr-other" transform="translate(470 0)"><image href="art/foto/man-red.webp" x="-65" y="52" width="130" height="300"/></g>
+<image href="art/foto/lady.webp" x="257" y="30" width="147" height="320"/>
+<image href="art/foto/lady-red.webp" x="257" y="30" width="147" height="320" mask="url(#kr-m)"/>
+<path class="kr-rag" d="M240 210 C290 230 340 200 390 230" stroke="#fffaf0" stroke-width="26" stroke-linecap="round" fill="none" opacity="0" pathLength="1"/>
+<g class="kr-streak" opacity="0" stroke="#7d9a4a" stroke-width="3" stroke-linecap="round"><path d="M298 236 L340 226"/><path d="M304 260 L336 252"/></g>
+<g class="kr-drops" fill="#c8483c"></g>
+<rect class="grain" width="600" height="400" filter="url(#kg-grain)"/>
+<g class="ar">
+<g class="chip c-green" data-at=".55" transform="translate(22 48) scale(1.3)"><rect width="172" height="52" rx="6" class="panel"/><rect x="8" y="8" width="36" height="36" rx="4" fill="#77ad62"/><text x="52" y="23" class="t1">«зелёный»</text><text x="52" y="40" class="t2">знакомый маршрут</text><path class="strike" d="M50 30 H142" pathLength="1"/></g>
+<g class="chip c-red" data-at=".66" transform="translate(22 128) scale(1.3)"><rect width="172" height="52" rx="6" class="panel"/><rect x="8" y="8" width="36" height="36" rx="4" fill="#d9584c"/><text x="52" y="23" class="t1">«красный»</text><text x="52" y="40" class="t2">ещё не исследован</text></g>
+<g class="tg q" data-at="0.74"><path class="ld" d="M318 66 L374 70 L420 70" pathLength="1"/><circle class="pin" cx="318" cy="66" r="5.7"/><circle class="ping" cx="318" cy="66" r="5.7"/><g class="lb" data-left="1"><rect x="420" y="52.0" width="184" height="36" rx="6.6"/><text x="432.4" y="76.8" font-size="19">какая я теперь?</text></g></g>
+<g class="tg q" data-at="0.8"><path class="ld" d="M352 220 L389 170 L420 170" pathLength="1"/><circle class="pin" cx="352" cy="220" r="5.7"/><circle class="ping" cx="352" cy="220" r="5.7"/><g class="lb" data-left="1"><rect x="420" y="152.0" width="227" height="36" rx="6.6"/><text x="432.4" y="176.8" font-size="19">мой новый голос · ?</text></g></g>
+<g class="tg q" data-at="0.86"><path class="ld" d="M330 320 L380 300 L420 300" pathLength="1"/><circle class="pin" cx="330" cy="320" r="5.7"/><circle class="ping" cx="330" cy="320" r="5.7"/><g class="lb" data-left="1"><rect x="420" y="282.0" width="206" height="36" rx="6.6"/><text x="432.4" y="306.8" font-size="19">чего я захочу · ?</text></g></g>
+</g>
+</svg></div><figcaption>Жизнь красным<small class="credit">Модные гравюры «Costume Parisien», около 1800 — общественное достояние (CC0)</small></figcaption></figure>
+<p id="p12" data-p class="x-wipe">Вы никогда раньше не проживали свою жизнь красным — не принимали так решений, не ходили так на свидания, не смотрели на мир из этого оттенка. После разрыва первый импульс почти всегда один: в панике <span class="k k-wipe">оттереть с себя чужую краску</span> и любой ценой вернуться в прежнее, «безопасное» состояние.</p>
+<p id="p13" data-p class="x-explore">Но как прежде уже не будет — и в этом скрыт <span class="u">главный подарок<svg class="u-line" viewBox="0 0 200 12" preserveAspectRatio="none" aria-hidden="true"><path d="M2 8 C 30 3, 55 11, 85 6 S 140 3, 170 7 S 192 6, 198 5" pathLength="1"/></svg></span>. Если сменить взгляд жертвы на взгляд исследователя, вместо пустоты вдруг обнаруживается бездна любопытства. <em>Какой я теперь? Как звучит мой новый голос? Чего я захочу, если попробую шагнуть в мир этим обновлённым собой?</em> Жизнь в точке расставания не обрывается — она меняет плотность и разворачивается с совершенно иной интенсивностью.</p>
+</section><div class="fork" aria-hidden="true"><svg viewBox="0 0 400 60" preserveAspectRatio="none"><path class="fk-a" d="M200 58 C 200 40, 170 30, 110 22 S 20 10, 0 6" pathLength="1"/><path class="fk-b" d="M200 58 C 200 40, 230 30, 290 22 S 380 10, 400 6" pathLength="1"/></svg></div><section class="part" id="r3" data-sec="3"><h2 data-p><span class="h2-n">3</span>Крепость или закат</h2>
+<p id="p14" data-p>И всё же мы упрямо держимся за странную мерку: успешными считаются только те отношения, которые дотянули до финальных титров. Любое завершение автоматически записывается в графу <span class="k k-fail">«неудача»</span>.</p>
+<p id="p15" data-p>Мы привыкли относиться к союзу как к капитальной стройке: заложили фундамент, возвели толстые стены, заперлись внутри и подписались сидеть там до самой старости. Стоит этому зданию дать трещину и рухнуть — и мы остаёмся сидеть на обломках с тяжёлым чувством, что провалили главный экзамен жизни.</p>
+<figure class="scene card" data-scene="krepost"><div class="sv-wrap"><svg viewBox="0 0 600 390" class="sv" role="img" aria-label="Картина Томаса Коула: замок с высокой башней над рыцарским турниром. День сменяется закатом, по стенам бегут трещины, замок осыпается кусками, и на его месте остаются заросшие руины.">
+<defs><clipPath id="kf-c0"><path d="M268.0 58.8 L294.6 61.8 L294.2 92.3 L268.0 87.7Z"/></clipPath><clipPath id="kf-c1"><path d="M268.0 87.7 L294.2 92.3 L294.8 118.5 L268.0 127.4Z"/></clipPath><clipPath id="kf-c2"><path d="M268.0 127.4 L294.8 118.5 L301.2 161.9 L268.0 149.8Z"/></clipPath><clipPath id="kf-c3"><path d="M268.0 149.8 L301.2 161.9 L295.8 183.9 L268.0 188.9Z"/></clipPath><clipPath id="kf-c4"><path d="M268.0 188.9 L295.8 183.9 L304.9 220.0 L268.0 220.0Z"/></clipPath><clipPath id="kf-c5"><path d="M300.2 30.0 L345.2 30.0 L338.5 60.0 L294.6 61.8Z"/></clipPath><clipPath id="kf-c6"><path d="M294.6 61.8 L338.5 60.0 L345.7 86.1 L294.2 92.3Z"/></clipPath><clipPath id="kf-c7"><path d="M294.2 92.3 L345.7 86.1 L343.6 121.6 L294.8 118.5Z"/></clipPath><clipPath id="kf-c8"><path d="M294.8 118.5 L343.6 121.6 L330.7 150.6 L301.2 161.9Z"/></clipPath><clipPath id="kf-c9"><path d="M301.2 161.9 L330.7 150.6 L333.7 193.4 L295.8 183.9Z"/></clipPath><clipPath id="kf-c10"><path d="M295.8 183.9 L333.7 193.4 L331.4 220.0 L304.9 220.0Z"/></clipPath><clipPath id="kf-c11"><path d="M345.2 30.0 L373.2 30.0 L374.2 59.6 L338.5 60.0Z"/></clipPath><clipPath id="kf-c12"><path d="M338.5 60.0 L374.2 59.6 L372.6 86.3 L345.7 86.1Z"/></clipPath><clipPath id="kf-c13"><path d="M345.7 86.1 L372.6 86.3 L363.8 120.3 L343.6 121.6Z"/></clipPath><clipPath id="kf-c14"><path d="M343.6 121.6 L363.8 120.3 L375.0 155.5 L330.7 150.6Z"/></clipPath><clipPath id="kf-c15"><path d="M330.7 150.6 L375.0 155.5 L368.4 189.7 L333.7 193.4Z"/></clipPath><clipPath id="kf-c16"><path d="M333.7 193.4 L368.4 189.7 L370.9 220.0 L331.4 220.0Z"/></clipPath><clipPath id="kf-c17"><path d="M372.6 86.3 L401.7 94.5 L406.7 131.0 L363.8 120.3Z"/></clipPath><clipPath id="kf-c18"><path d="M363.8 120.3 L406.7 131.0 L410.4 153.3 L375.0 155.5Z"/></clipPath><clipPath id="kf-c19"><path d="M375.0 155.5 L410.4 153.3 L414.9 182.2 L368.4 189.7Z"/></clipPath><clipPath id="kf-c20"><path d="M368.4 189.7 L414.9 182.2 L404.8 220.0 L370.9 220.0Z"/></clipPath><clipPath id="kf-c21"><path d="M406.7 131.0 L445.6 126.2 L447.6 153.7 L410.4 153.3Z"/></clipPath><clipPath id="kf-c22"><path d="M410.4 153.3 L447.6 153.7 L444.4 189.8 L414.9 182.2Z"/></clipPath><clipPath id="kf-c23"><path d="M414.9 182.2 L444.4 189.8 L442.3 220.0 L404.8 220.0Z"/></clipPath><clipPath id="kf-c24"><path d="M432.6 96.0 L475.0 96.0 L467.5 128.2 L445.6 126.2Z"/></clipPath><clipPath id="kf-c25"><path d="M445.6 126.2 L467.5 128.2 L478.1 164.6 L447.6 153.7Z"/></clipPath><clipPath id="kf-c26"><path d="M447.6 153.7 L478.1 164.6 L481.2 184.9 L444.4 189.8Z"/></clipPath><clipPath id="kf-c27"><path d="M444.4 189.8 L481.2 184.9 L473.4 220.0 L442.3 220.0Z"/></clipPath><clipPath id="kf-c28"><path d="M475.0 96.0 L510.0 85.7 L510.0 124.4 L467.5 128.2Z"/></clipPath><clipPath id="kf-c29"><path d="M467.5 128.2 L510.0 124.4 L510.0 151.4 L478.1 164.6Z"/></clipPath><clipPath id="kf-c30"><path d="M478.1 164.6 L510.0 151.4 L510.0 182.2 L481.2 184.9Z"/></clipPath><clipPath id="kf-c31"><path d="M481.2 184.9 L510.0 182.2 L510.0 220.0 L473.4 220.0Z"/></clipPath><filter id="kf-grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="4"/><feColorMatrix values="0 0 0 0 .35  0 0 0 0 .28  0 0 0 0 .2  0 0 0 .07 0"/><feComposite in2="SourceGraphic" operator="in"/></filter></defs>
+<image href="art/foto/present.webp" width="600" height="390"/>
+<image class="kf-past" href="art/foto/past.webp" width="600" height="390"/>
+<g class="kf-shards"><g class="sh" data-cx="281.2" data-cy="75.2" data-fx="-44" data-rot="38" data-d="0.28" data-ty="195"><g clip-path="url(#kf-c0)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="281.3" data-cy="106.5" data-fx="-11" data-rot="52" data-d="0.22" data-ty="179"><g clip-path="url(#kf-c1)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="283.0" data-cy="139.4" data-fx="5" data-rot="54" data-d="0.25" data-ty="180"><g clip-path="url(#kf-c2)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="283.3" data-cy="171.1" data-fx="-22" data-rot="-12" data-d="0.13" data-ty="150"><g clip-path="url(#kf-c3)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="284.2" data-cy="203.2" data-fx="46" data-rot="-49" data-d="0.05" data-ty="65"><g clip-path="url(#kf-c4)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="319.6" data-cy="45.4" data-fx="-27" data-rot="-2" data-d="0.39" data-ty="226"><g clip-path="url(#kf-c5)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="318.3" data-cy="75.0" data-fx="-50" data-rot="-11" data-d="0.31" data-ty="220"><g clip-path="url(#kf-c6)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="319.6" data-cy="104.6" data-fx="45" data-rot="27" data-d="0.27" data-ty="195"><g clip-path="url(#kf-c7)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="317.6" data-cy="138.1" data-fx="18" data-rot="-62" data-d="0.26" data-ty="174"><g clip-path="url(#kf-c8)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="315.4" data-cy="172.4" data-fx="37" data-rot="42" data-d="0.13" data-ty="109"><g clip-path="url(#kf-c9)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="316.4" data-cy="204.3" data-fx="-40" data-rot="19" data-d="0.04" data-ty="51"><g clip-path="url(#kf-c10)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="357.8" data-cy="44.9" data-fx="-29" data-rot="-47" data-d="0.36" data-ty="209"><g clip-path="url(#kf-c11)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="357.8" data-cy="73.0" data-fx="-50" data-rot="-49" data-d="0.28" data-ty="206"><g clip-path="url(#kf-c12)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="356.4" data-cy="103.6" data-fx="-47" data-rot="52" data-d="0.29" data-ty="158"><g clip-path="url(#kf-c13)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="353.3" data-cy="137.0" data-fx="-25" data-rot="-21" data-d="0.20" data-ty="123"><g clip-path="url(#kf-c14)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="351.9" data-cy="172.3" data-fx="35" data-rot="69" data-d="0.14" data-ty="116"><g clip-path="url(#kf-c15)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="351.1" data-cy="205.8" data-fx="-41" data-rot="-56" data-d="0.07" data-ty="65"><g clip-path="url(#kf-c16)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="386.2" data-cy="108.0" data-fx="33" data-rot="-47" data-d="0.21" data-ty="218"><g clip-path="url(#kf-c17)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="389.0" data-cy="140.0" data-fx="3" data-rot="-49" data-d="0.21" data-ty="112"><g clip-path="url(#kf-c18)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="392.2" data-cy="170.2" data-fx="3" data-rot="67" data-d="0.20" data-ty="136"><g clip-path="url(#kf-c19)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="389.7" data-cy="203.0" data-fx="-24" data-rot="-19" data-d="0.05" data-ty="109"><g clip-path="url(#kf-c20)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="427.6" data-cy="141.0" data-fx="3" data-rot="39" data-d="0.19" data-ty="127"><g clip-path="url(#kf-c21)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="429.3" data-cy="169.8" data-fx="31" data-rot="68" data-d="0.19" data-ty="145"><g clip-path="url(#kf-c22)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="426.6" data-cy="203.0" data-fx="32" data-rot="34" data-d="0.06" data-ty="88"><g clip-path="url(#kf-c23)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="455.2" data-cy="111.6" data-fx="-14" data-rot="-66" data-d="0.20" data-ty="161"><g clip-path="url(#kf-c24)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="459.7" data-cy="143.2" data-fx="-24" data-rot="27" data-d="0.26" data-ty="143"><g clip-path="url(#kf-c25)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="462.8" data-cy="173.2" data-fx="44" data-rot="68" data-d="0.20" data-ty="106"><g clip-path="url(#kf-c26)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="460.3" data-cy="203.7" data-fx="-28" data-rot="-38" data-d="0.05" data-ty="63"><g clip-path="url(#kf-c27)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="490.6" data-cy="108.6" data-fx="12" data-rot="56" data-d="0.31" data-ty="180"><g clip-path="url(#kf-c28)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="491.4" data-cy="142.1" data-fx="15" data-rot="42" data-d="0.15" data-ty="161"><g clip-path="url(#kf-c29)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="494.8" data-cy="170.8" data-fx="41" data-rot="40" data-d="0.18" data-ty="117"><g clip-path="url(#kf-c30)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="493.6" data-cy="201.8" data-fx="-32" data-rot="40" data-d="0.07" data-ty="112"><g clip-path="url(#kf-c31)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g></g>
+<path class="kf-crack" d="M327 70 L320 98 L331 120 L316 150 L326 176 M392 150 L401 170 L394 190 M450 128 L441 152 L452 176 L444 200" fill="none" stroke="#3b2a1e" stroke-width="1.6" stroke-linejoin="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+<g class="kf-dust" fill="#e7d2b4"></g>
+<rect class="grain" width="600" height="390" filter="url(#kf-grain)"/>
+<g class="ar">
+<g class="tg center big" data-at="0.82"><path class="ld" d="M300 330 L300 362 L300 362" pathLength="1"/><circle class="pin" cx="300" cy="330" r="5.7"/><circle class="ping" cx="300" cy="330" r="5.7"/><g class="lb" data-left="1"><rect x="300" y="344.0" width="131" height="36" rx="6.6"/><text x="312.4" y="368.8" font-size="19">«неудача»?</text></g></g>
+</g>
+</svg></div><figcaption>Капитальная стройка<small class="credit">Томас Коул, «Прошлое» и «Настоящее», 1838 — общественное достояние</small></figcaption></figure>
+<p id="p16" data-p class="pull">А что, если отношения — это вообще не недвижимость? Что, если они больше похожи на закат?</p>
+<figure class="scene band" data-scene="zakat"><div class="sv-wrap"><svg viewBox="0 0 1000 500" preserveAspectRatio="xMidYMid slice" class="sv" role="img" aria-label="Картина Айвазовского: закат над морем, пароход уходит к горизонту. Рамка пытается поймать и остановить солнце, и всё внутри неё сереет; рамка отпускает, и цвет возвращается.">
+<defs>
+<radialGradient id="zk-sun"><stop offset="0" stop-color="#fffbe6" stop-opacity=".5"/><stop offset=".3" stop-color="#ffe7a6" stop-opacity=".35"/><stop offset=".6" stop-color="#ffb46a" stop-opacity=".25"/><stop offset="1" stop-color="#ff9a5a" stop-opacity="0"/></radialGradient>
+<linearGradient id="zf-dusk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2b2347" stop-opacity=".9"/><stop offset=".6" stop-color="#3b2a4a" stop-opacity=".35"/><stop offset="1" stop-color="#1c1830" stop-opacity=".6"/></linearGradient>
+<filter id="zk-grey" x="-4%" y="-4%" width="108%" height="108%"><feColorMatrix class="zk-sat" type="saturate" values="1" result="c"/><feTurbulence type="fractalNoise" baseFrequency=".03 .0035" numOctaves="2" seed="3" result="n"/><feDisplacementMap class="zk-melt" in="c" in2="n" scale="0" xChannelSelector="R" yChannelSelector="G"/></filter>
+<radialGradient id="zf-burnG"><stop offset="0" stop-color="#fffaf0"/><stop offset=".55" stop-color="#fff0cf"/><stop offset=".68" stop-color="#ffcf7a"/><stop offset=".76" stop-color="#d0601e"/><stop offset=".82" stop-color="#4a1a07"/><stop offset=".9" stop-color="#2a1006" stop-opacity=".75"/><stop offset="1" stop-color="#2a1006" stop-opacity="0"/></radialGradient>
+<filter id="zf-ragged" x="-20%" y="-20%" width="140%" height="140%"><feTurbulence type="fractalNoise" baseFrequency=".014" numOctaves="4" seed="9" result="t"/><feDisplacementMap in="SourceGraphic" in2="t" scale="80" xChannelSelector="R" yChannelSelector="G"/></filter>
+<filter id="zf-grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="4"/><feColorMatrix values="0 0 0 0 .35  0 0 0 0 .28  0 0 0 0 .2  0 0 0 .07 0"/><feComposite in2="SourceGraphic" operator="in"/></filter>
+</defs>
+<g class="zk-world" filter="url(#zk-grey)">
+<image href="art/foto/zakat.webp" width="1000" height="500"/>
+<circle class="zk-sunglow" cx="730" cy="250" r="200" fill="url(#zk-sun)" style="mix-blend-mode:screen"/>
+<circle class="zk-sun" cx="730" cy="250" r="0" fill="none"/>
+<g class="zf-glit" fill="#fff4d0"></g>
+<g class="zk-birds" fill="none" stroke="#4a3a40" stroke-width="2" stroke-linecap="round"></g>
+<rect class="zf-dusk" width="1000" height="500" fill="url(#zf-dusk)" opacity="0"/>
+</g>
+<g class="zf-film" pointer-events="none"><rect class="zf-flick" width="1000" height="500" fill="#fff8e8" opacity="0"/><g class="zf-scr" stroke="#f4ead6" stroke-width="1.2" opacity="0"><path d="M0 0 V500"/><path d="M0 0 V500"/><path d="M0 0 V500"/></g><g class="zf-burn" filter="url(#zf-ragged)"><circle class="zb1" cx="745" cy="262" r="0" fill="url(#zf-burnG)"/><circle class="zb2" cx="250" cy="120" r="0" fill="url(#zf-burnG)"/><circle class="zb3" cx="470" cy="440" r="0" fill="url(#zf-burnG)"/></g></g>
+<rect class="grain" width="1000" height="500" filter="url(#zf-grain)"/>
+<g class="ar">
+<g class="tg " data-at="0.22"><path class="ld" d="M730 250 L636 120 L560 120" pathLength="1"/><circle class="pin" cx="730" cy="250" r="5.7"/><circle class="ping" cx="730" cy="250" r="5.7"/><g class="lb" data-left="0"><rect x="312" y="102.0" width="248" height="36" rx="6.6"/><text x="324.4" y="126.8" font-size="19">время · воздух · свет</text></g></g>
+<g class="tg t-pres" data-at="0.7"><path class="ld" d="M400 306 L345 220 L300 220" pathLength="1"/><circle class="pin" cx="400" cy="306" r="5.7"/><circle class="ping" cx="400" cy="306" r="5.7"/><g class="lb" data-left="0"><rect x="158" y="202.0" width="142" height="36" rx="6.6"/><text x="170.3" y="226.8" font-size="19">присутствие</text></g></g>
+<g class="tg t-agree" data-at="0.76"><path class="ld" d="M300 90 L366 60 L420 60" pathLength="1"/><circle class="pin" cx="300" cy="90" r="5.7"/><circle class="ping" cx="300" cy="90" r="5.7"/><g class="lb" data-left="1"><rect x="420" y="42.0" width="110" height="36" rx="6.6"/><text x="432.4" y="66.8" font-size="19">согласие</text></g></g>
+<g class="zk-frame"><g class="fc"><path class="f1" d="M0 26 V0 H26"/><path class="f2" d="M0 26 V0 H26"/><path class="f3" d="M0 26 V0 H26"/><path class="f4" d="M0 26 V0 H26"/></g>
+<g class="fl"><rect x="-74" y="-16" width="148" height="28" rx="5"/><text x="0" y="4" text-anchor="middle">❚❚ присвоить</text></g></g>
+</g>
+</svg></div><span class="pc-postmark">Закат<br>не&nbsp;в&nbsp;собственности</span><small class="credit bc">Иван Айвазовский, «Закат» — общественное достояние</small><button class="zk-btn" type="button" aria-pressed="false"><span class="i" aria-hidden="true">❚❚</span> <span class="t">присвоить</span></button></figure>
+<p id="p17" data-p class="x-sunset">Закат — не вещь, которую можно купить в собственность. Это живой процесс, вспыхивающий в конкретном времени, воздухе и свете. Никому не придёт в голову прибить закат гвоздями к небу или потребовать, чтобы он длился вечно. Более того, стоит попытаться поставить его на паузу и присвоить — и вы мгновенно перестанете его видеть. Чтобы <span class="nobr">по-настоящему</span> пережить его красоту, требуются только две вещи: <span class="u">полное присутствие<svg class="u-line" viewBox="0 0 200 12" preserveAspectRatio="none" aria-hidden="true"><path d="M2 8 C 30 3, 55 11, 85 6 S 140 3, 170 7 S 192 6, 198 5" pathLength="1"/></svg></span> и <span class="u">тихое согласие с тем, что однажды небо потемнеет<svg class="u-line" viewBox="0 0 200 12" preserveAspectRatio="none" aria-hidden="true"><path d="M2 8 C 30 3, 55 11, 85 6 S 140 3, 170 7 S 192 6, 198 5" pathLength="1"/></svg></span>.</p>
+</section><div class="fork" aria-hidden="true"><svg viewBox="0 0 400 60" preserveAspectRatio="none"><path class="fk-a" d="M200 58 C 200 40, 170 30, 110 22 S 20 10, 0 6" pathLength="1"/><path class="fk-b" d="M200 58 C 200 40, 230 30, 290 22 S 380 10, 400 6" pathLength="1"/></svg></div><section class="part fin" id="r4" data-sec="4">
+<p id="p18" data-p class="x-wedding">Возможно, нам пора изменить сам язык, на котором мы говорим о конце любви. Научиться желать друг другу вовремя случившихся, ясных и чистых расставаний с тем же трепетом, с каким мы желаем <span class="k k-toast">счастья в день свадьбы</span>.</p>
+<p id="p19" data-p class="x-hands">Если разрыв уже вошёл в вашу систему, спорить с ним поздно: самим фактом своего появления он подтверждает, что вы больше не совпадаете. И найти в себе честность признать это, <span class="k k-hands">разжать руки</span> и позволить процессу завершиться — вовсе не слабость и не позорный проигрыш.</p>
+<p id="p20" data-p class="last">Это взрослая смелость отпраздновать тот день, когда два неподходящих друг другу человека наконец перестали наносить друг другу раны. И шагнуть в <span class="k k-rise">новое начало</span>.</p>
+</section>
+
+<footer class="end">
+  <p class="thanks">Спасибо, что дошли до развилки.</p>
+  <p>Ещё статьи: <a href="../doverie/">«Доверие»</a>, <a href="../partner/">«На что можно смотреть бесконечно»</a>, <a href="../granicy/">«Чьи это границы?»</a>, <a href="../gorizont/">«Горизонт отношений»</a>, <a href="../kak-dolzhno/">«Как вообще-то должно быть»</a> и <a href="https://legendpsy.github.io/love-essay/">«Любовь не измеряется страданием»</a></p>
+  <p><a class="to-all" href="https://legendpsy.github.io/stati/">← Все статьи</a></p>
+</footer>
+</main>
+<div id="toast" class="hide" role="status"></div>
+<script>
+/* «Точка рождения» — жизнь сайта.
+   Мир: летний луг у развилки и один долгий закат, который проходит вместе с чтением.
+   Сначала всё серое (траур), с «оптикой» приходит тёплый день, к «Крепости или закату» солнце садится,
+   в конце сумерки и две первые звезды, каждая на своём месте.
+   Дополненная реальность продолжает мир сайта: очки показывают, сколько осталось до заката, где на развилке
+   двое путников и какой ветер, и подписывают всё, что пролетает мимо.
+   Сцены (главные герои) нарисованы кодом и живут сами. Ничего не нужно нажимать. */
+(() => {
+'use strict';
+const D = document, R = D.documentElement, W = window;
+R.classList.add('js');
+const $ = (s, el = D) => el.querySelector(s), $$ = (s, el = D) => [...el.querySelectorAll(s)];
+const RM = W.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const TAU = Math.PI * 2;
+const clamp = (v, a = 0, b = 1) => v < a ? a : v > b ? b : v;
+const lerp = (a, b, t) => a + (b - a) * t;
+const sstep = (a, b, v) => { const t = clamp((v - a) / (b - a)); return t * t * (3 - 2 * t); };
+const ease = t => t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+const nz = x => Math.sin(x) * .5 + Math.sin(x * 2.13 + 1.3) * .3 + Math.sin(x * 4.37 + .7) * .2;
+function rng(seed) {
+  return () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+}
+const rnd = rng(Date.now() % 100000);
+const store = {
+  get(k, d) { try { const v = localStorage.getItem('razvilka:' + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem('razvilka:' + k, JSON.stringify(v)); } catch (e) {} }
+};
+const isDark = () => R.dataset.theme === 'dark' || (R.dataset.theme !== 'light' && W.matchMedia('(prefers-color-scheme: dark)').matches);
+const rgba = (c, a) => `rgba(${c[0]},${c[1]},${c[2]},${a < 0 ? 0 : a})`;
+const mixc = (a, b, t) => [Math.round(lerp(a[0], b[0], t)), Math.round(lerp(a[1], b[1], t)), Math.round(lerp(a[2], b[2], t))];
+const NS = 'http://www.w3.org/2000/svg';
+const mk = (tag, attrs, parent) => { const e = D.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; };
+const fmt = n => String(n).replace('.', ',');
+
+/* цвета из CSS (меняются с темой) */
+let C = {};
+function readColors() {
+  const cs = getComputedStyle(R), g = n => cs.getPropertyValue(n).split(',').map(v => +v.trim());
+  C = { ar: g('--ar'), warn: g('--ar-warn'), mote: g('--mote'), seed: g('--seed'), grass: g('--grass'), grass2: g('--grass2'), dark: isDark() };
+}
+readColors();
+W.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', readColors);
+new MutationObserver(readColors).observe(R, { attributes: true, attributeFilter: ['data-theme'] });
+
+/* ---------- окно и прокрутка ---------- */
+let vw = innerWidth, vh = innerHeight, docH = 1, sy = scrollY, prog = 0, lastAct = performance.now();
+function measure() { vw = innerWidth; vh = innerHeight; docH = Math.max(1, R.scrollHeight - vh); }
+measure();
+addEventListener('resize', () => { measure(); sizeAir(); sizeHero(); fitAll(); }, { passive: true });
+addEventListener('scroll', () => { sy = scrollY; lastAct = performance.now(); }, { passive: true });
+const absY = el => el ? el.getBoundingClientRect().top + scrollY : 0;
+const mid = el => { if (!el) return 9; const r = el.getBoundingClientRect(); return (r.top + r.bottom) / 2 / vh; };
+
+/* ---------- бирки: подогнать рамку под текст ---------- */
+function fitTag(g) {
+  const t = $('text', g), r = $('rect', g), lb = $('.lb', g);
+  if (!t || !r || !lb) return;
+  let w; try { w = t.getComputedTextLength(); } catch (e) { return; }
+  if (!w) return;
+  const fs = +t.getAttribute('font-size') || 13, pad = fs * .65, W2 = w + pad * 2;
+  const left = lb.dataset.left === '1';
+  if (left) { r.setAttribute('width', W2.toFixed(1)); }
+  else {
+    const right = +r.getAttribute('x') + +r.getAttribute('width');
+    r.setAttribute('x', (right - W2).toFixed(1)); r.setAttribute('width', W2.toFixed(1));
+    t.setAttribute('x', (right - W2 + pad).toFixed(1));
+  }
+  clampTag(g);
+  if (g.classList.contains('center')) {
+    const cx = +t.getAttribute('x') - pad + (+r.getAttribute('width')) / 2;
+    const x0 = +$('.pin', g).getAttribute('cx');
+    const sh = x0 - (+r.getAttribute('x') + W2 / 2);
+    r.setAttribute('x', (+r.getAttribute('x') + sh).toFixed(1)); t.setAttribute('x', (+t.getAttribute('x') + sh).toFixed(1));
+    void cx;
+  }
+}
+function visBox(svg) {
+  const vb = svg.viewBox.baseVal, r = svg.getBoundingClientRect();
+  if (!r.width || !r.height || !vb) return { x0: 0, x1: vb ? vb.width : 600 };
+  const visW = Math.min(vb.width, vb.height * r.width / r.height);
+  return { x0: (vb.width - visW) / 2, x1: (vb.width + visW) / 2 };
+}
+function clampTag(g) {
+  if (g.classList.contains('center')) return;
+  const svg = g.ownerSVGElement; if (!svg) return;
+  const r = $('rect', g), t = $('text', g), path = $('.ld', g), lb = $('.lb', g);
+  const vis = visBox(svg), m = 6;
+  const x = +r.getAttribute('x'), w = +r.getAttribute('width');
+  let sh = 0;
+  if (x + w > vis.x1 - m) sh = vis.x1 - m - (x + w);
+  if (x + sh < vis.x0 + m) sh = vis.x0 + m - x;
+  if (!sh) return;
+  r.setAttribute('x', (x + sh).toFixed(1)); t.setAttribute('x', (+t.getAttribute('x') + sh).toFixed(1));
+  const d = path.getAttribute('d').match(/-?[\d.]+/g).map(Number);
+  const px = d[0], ly = d[5], edge = lb.dataset.left === '1' ? x + sh : x + sh + w;
+  const ex = (px < x + sh) ? x + sh : (px > x + sh + w ? x + sh + w : edge);
+  path.setAttribute('d', `M${d[0]} ${d[1]} L${((d[0] + ex) / 2).toFixed(0)} ${ly} L${ex.toFixed(1)} ${ly}`);
+}
+const fitAll = () => $$('.tg').forEach(fitTag);
+fitAll();
+if (D.fonts && D.fonts.ready) D.fonts.ready.then(fitAll);
+function setTagText(g, s) { const t = $('text', g); if (t && t.textContent !== s) { t.textContent = s; fitTag(g); } }
+
+/* ---------- появление абзацев, развилок, сцен ---------- */
+const io = new IntersectionObserver(es => { for (const e of es) if (e.isIntersecting) { e.target.classList.add('seen'); io.unobserve(e.target); } }, { rootMargin: '0px 0px -8% 0px' });
+$$('main [data-p], .fork, .scene').forEach(el => io.observe(el));
+const paras = $$('main p[data-p], main h2[data-p]');
+let reading = null;
+
+/* ---------- обложка: бирки по очереди, семена с одуванчика ---------- */
+const heroTags = $$('.hero-ar .tg');
+heroTags.forEach((g, i) => setTimeout(() => g.classList.add('on'), RM ? 0 : 1500 + i * 650));
+const hcv = $('.hero-live'), hctx = hcv.getContext('2d');
+let hw = 0, hh = 0, hk = 1;
+function sizeHero() { const r = hcv.getBoundingClientRect(); if (!r.width) return; const d = Math.min(devicePixelRatio || 1, 2); hw = r.width; hh = r.height; hk = hw / 1024; hcv.width = Math.round(hw * d); hcv.height = Math.round(hh * d); hctx.setTransform(d, 0, 0, d, 0, 0); }
+sizeHero();
+const hSeeds = [];
+function drawSeed(ctx, x, y, s, a, rot, col) {
+  ctx.save(); ctx.translate(x, y); ctx.rotate(rot); ctx.globalAlpha = a;
+  ctx.strokeStyle = rgba(col, .9); ctx.lineWidth = Math.max(.6, s * .09);
+  ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(0, s * 1.1); ctx.stroke();
+  ctx.lineWidth = Math.max(.4, s * .05);
+  for (let i = 0; i < 9; i++) { const an = -Math.PI / 2 + (i - 4) * .3; ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(Math.cos(an) * s, Math.sin(an) * s * .8); ctx.stroke(); }
+  ctx.fillStyle = rgba([150, 120, 80], .9); ctx.beginPath(); ctx.ellipse(0, s * 1.15, s * .1, s * .18, 0, 0, TAU); ctx.fill();
+  ctx.restore();
+}
+function heroFrame(t, dt) {
+  const r = hcv.getBoundingClientRect();
+  if (r.bottom < 0 || r.top > vh) return;
+  hctx.clearRect(0, 0, hw, hh);
+  // солнце чуть дышит
+  const sx = 457 * hk, syy = 248 * hk, pulse = .5 + .5 * Math.sin(t * .7);
+  const g = hctx.createRadialGradient(sx, syy, 0, sx, syy, 90 * hk);
+  g.addColorStop(0, `rgba(255,248,220,${.22 + pulse * .12})`); g.addColorStop(1, 'rgba(255,220,160,0)');
+  hctx.fillStyle = g; hctx.fillRect(sx - 90 * hk, syy - 90 * hk, 180 * hk, 180 * hk);
+  // семена срываются с одуванчика
+  if (!RM && hSeeds.length < 7 && rnd() < dt * .7) hSeeds.push({ x: 902 + (rnd() - .5) * 30, y: 474 + (rnd() - .5) * 20, vx: 10 + rnd() * 18, vy: -6 - rnd() * 10, ph: rnd() * TAU, s: 7 + rnd() * 4, life: 0 });
+  for (let i = hSeeds.length - 1; i >= 0; i--) {
+    const s = hSeeds[i]; s.life += dt;
+    s.x += (s.vx + nz(t * .6 + s.ph) * 10) * dt; s.y += (s.vy + Math.sin(t * 1.3 + s.ph) * 6) * dt;
+    const a = Math.min(1, s.life * 1.5) * (1 - sstep(5, 9, s.life));
+    drawSeed(hctx, s.x * hk, s.y * hk, s.s * hk * 1.4, a * .9, Math.sin(t + s.ph) * .3, [255, 252, 244]);
+    if (s.life > 9 || s.x > 1060) hSeeds.splice(i, 1);
+  }
+  // трава у края карты едва колышется: свет пробегает по лугу
+  const sw = (t * 70) % (1024 + 400) - 200;
+  const g2 = hctx.createLinearGradient((sw - 120) * hk, 0, (sw + 120) * hk, 0);
+  g2.addColorStop(0, 'rgba(255,240,200,0)'); g2.addColorStop(.5, 'rgba(255,240,200,.07)'); g2.addColorStop(1, 'rgba(255,240,200,0)');
+  hctx.fillStyle = g2; hctx.fillRect(0, 560 * hk, hw, hh - 560 * hk);
+}
+
+/* ---------- сцены ---------- */
+const scenes = $$('.scene').map(el => ({ el, name: el.dataset.scene, svg: $('svg', el), p: 0, pmax: 0, vis: false, s: {} }));
+const sio = new IntersectionObserver(es => { for (const e of es) { const S = scenes.find(s => s.el === e.target); if (S) S.vis = e.isIntersecting; } }, { rootMargin: '120px 0px' });
+scenes.forEach(S => sio.observe(S.el));
+const sc = n => scenes.find(s => s.name === n);
+
+function tagsByP(S) {
+  for (const g of $$('[data-at]', S.svg)) {
+    const at = +g.dataset.at, out = g.dataset.out != null ? +g.dataset.out : null;
+    if (S.pmax >= at) g.classList.add('on');
+    if (out != null) g.classList.toggle('gone', S.p >= out);
+  }
+}
+
+/* трава в сценах */
+for (const g of $$('.sv .grass')) {
+  const r = rng(5);
+  for (let i = 0; i < 46; i++) {
+    const x = i * 13 + r() * 8, h = 12 + r() * 22, y = 400;
+    const p = mk('path', { d: `M${x.toFixed(0)} ${y} q ${(r() * 6 - 3).toFixed(1)} ${(-h / 2).toFixed(1)} ${(r() * 8 - 4).toFixed(1)} ${(-h).toFixed(1)}` }, g);
+    p.style.cssText = `transform-box:fill-box;transform-origin:50% 100%;animation:sway ${3 + r() * 2}s ease-in-out ${-r() * 4}s infinite alternate`;
+  }
+}
+const st = D.createElement('style'); st.textContent = '@keyframes sway{from{transform:rotate(-5deg)}to{transform:rotate(6deg)}}'; D.head.appendChild(st);
+
+/* 1. рождение */
+(function () {
+  const S = sc('rozhdenie'); if (!S) return;
+  const o1 = $('.rz-o1', S.svg), o2 = $('.rz-o2', S.svg), t1 = $('.rz-t1', S.svg), t2 = $('.rz-t2', S.svg), halo = $('.rz-halo', S.svg), sparks = $('.rz-sparks', S.svg), clouds = $('.rz-clouds', S.svg);
+  const tA = $('.t-a', S.svg), tB = $('.t-b', S.svg);
+  const pool = [];
+  S.tick = (t, dt) => {
+    const s = sstep(.22, .62, S.p), dx = s * 112, br = Math.sin(t * 1.4) * 2.2;
+    const r1 = 56 - 14 * s + br, r2 = 56 - 14 * s - br * .6;
+    o1.setAttribute('cx', (300 - dx).toFixed(1)); o1.setAttribute('r', r1.toFixed(1));
+    o2.setAttribute('cx', (300 + dx).toFixed(1)); o2.setAttribute('r', r2.toFixed(1));
+    const tint = sstep(.7, 1, s);
+    t1.setAttribute('cx', (300 - dx).toFixed(1)); t1.setAttribute('r', (r1 * .96).toFixed(1)); t1.setAttribute('opacity', (tint * .38).toFixed(2));
+    t2.setAttribute('cx', (300 + dx).toFixed(1)); t2.setAttribute('r', (r2 * .96).toFixed(1)); t2.setAttribute('opacity', (tint * .38).toFixed(2));
+    halo.setAttribute('r', (150 + s * 60 + Math.sin(t * .8) * 6).toFixed(1));
+    clouds.setAttribute('transform', `translate(${(Math.sin(t * .05) * 20).toFixed(1)} 0)`);
+    // бирки «новый человек» следуют за огоньками
+    if (tA) tA.setAttribute("transform", `translate(${(112 - dx).toFixed(1)} 0)`);
+    if (tB) tB.setAttribute('transform', `translate(${(dx - 112).toFixed(1)} 0)`);
+    // искры поднимаются от света
+    if (!RM && pool.length < 14 && rnd() < dt * 6) {
+      const side = s > .5 ? (rnd() < .5 ? -1 : 1) : 0;
+      pool.push({ x: 300 + side * dx + (rnd() - .5) * 60, y: 200 + (rnd() - .5) * 40, vy: -12 - rnd() * 16, ph: rnd() * TAU, life: 0, el: mk('circle', { r: (1 + rnd() * 1.6).toFixed(1) }, sparks) });
+    }
+    for (let i = pool.length - 1; i >= 0; i--) {
+      const q = pool[i]; q.life += dt; q.y += q.vy * dt; q.x += Math.sin(t * 2 + q.ph) * 6 * dt;
+      q.el.setAttribute('cx', q.x.toFixed(1)); q.el.setAttribute('cy', q.y.toFixed(1));
+      q.el.setAttribute('opacity', (Math.min(1, q.life * 2) * (1 - sstep(2, 4, q.life)) * .9).toFixed(2));
+      if (q.life > 4) { q.el.remove(); pool.splice(i, 1); }
+    }
+  };
+})();
+
+/* 2. туфли и пластыри */
+(function () {
+  const S = sc('tufli'); if (!S) return;
+  const layer = $('.tf-plasters', S.svg), tP = $('.t-plaster', S.svg);
+  let n = 0, next = 0; const live = [];
+  function plaster() {
+    n++;
+    const g = mk('g', {}, layer);
+    mk('rect', { x: -19, y: -7.5, width: 38, height: 15, rx: 7, fill: '#e9c39a', stroke: '#b98d63', 'stroke-width': 1 }, g);
+    mk('rect', { x: -7, y: -5.5, width: 14, height: 11, rx: 2, fill: '#f6dfc4' }, g);
+    for (const dx of [-14, -11, 11, 14]) for (const dy of [-2.5, 2.5]) mk('circle', { cx: dx, cy: dy, r: .9, fill: '#b98d63' }, g);
+    const spot = [[434, 276], [446, 262], [426, 288], [168, 316], [440, 270]][n % 5];
+    live.push({ g, x: spot[0], y: spot[1], rot: -30 + rnd() * 40, t: 0 });
+    if (tP) setTagText(tP, `пластырь № ${n} · держится полчаса`);
+  }
+  S.tick = (t, dt) => {
+    S.el.classList.toggle('phot', S.p > .2);
+    S.el.classList.toggle('pfoot', S.p > .45);
+    if (S.p > .34 && !RM) { next -= dt; if (next <= 0) { plaster(); next = 4.6; } }
+    for (let i = live.length - 1; i >= 0; i--) {
+      const q = live[i]; q.t += dt;
+      const inA = ease(clamp(q.t / .35)), peel = sstep(2.3, 3.9, q.t);
+      const x = q.x + peel * 18, y = q.y + peel * peel * 70, rot = q.rot + peel * 70, sk = peel * 25;
+      q.g.setAttribute('transform', `translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${rot.toFixed(1)}) skewX(${sk.toFixed(1)}) scale(${(.4 + .6 * inA).toFixed(2)})`);
+      q.g.setAttribute('opacity', (inA * (1 - sstep(3.4, 4.2, q.t))).toFixed(2));
+      if (q.t > 4.3) { q.g.remove(); live.splice(i, 1); }
+    }
+  };
+})();
+
+/* 3. комната */
+(function () {
+  const S = sc('komnata'); if (!S) return;
+  const tall = $('.km-tall', S.svg), body = $('.km-tall-b', S.svg), lus = $('.km-lustre', S.svg), star = $('.km-star', S.svg), bump = $('.km-bump', S.svg),
+    tray = $('.km-tray', S.svg), frost = $('.km-frostwall', S.svg), ice = $('.km-ice', S.svg), lv = $$('.lv', S.svg), tBump = $('.t-bump', S.svg), glow = $('.km-glow', S.svg);
+  // иней у стены
+  const r = rng(21), crystals = [];
+  for (let i = 0; i < 16; i++) {
+    const cx = 480 + r() * 118, cy = 20 + r() * 300, s = 5 + r() * 9; let d = '';
+    for (let k = 0; k < 6; k++) { const a = k * Math.PI / 3; d += `M${cx.toFixed(1)} ${cy.toFixed(1)} l${(Math.cos(a) * s).toFixed(1)} ${(Math.sin(a) * s).toFixed(1)} `; }
+    const p = mk('path', { d, pathLength: 1, 'stroke-dasharray': 1, 'stroke-dashoffset': 1 }, ice); crystals.push({ p, at: .25 + r() * .45 });
+  }
+  let ct = 0, bumps = 0, swingT = 99, hitDone = false, lvl = 0;
+  S.tick = (t, dt) => {
+    for (const c of crystals) c.p.setAttribute('stroke-dashoffset', (1 - sstep(c.at, c.at + .15, S.p)).toFixed(2));
+    frost.setAttribute('opacity', (sstep(.25, .7, S.p) * .85).toFixed(2));
+    glow.setAttribute('opacity', (.85 + Math.sin(t * 3.1) * .05 + Math.sin(t * 7.3) * .03).toFixed(2));
+    if (S.p < .1) return;
+    ct += dt; if (ct > 10) { ct -= 10; hitDone = false; }
+    let x = 540, face = 1, tilt = 0, duck = 1, showTray = 1;
+    if (ct < 1.5) x = 540;
+    else if (ct < 3) x = lerp(540, 400, (ct - 1.5) / 1.5);
+    else if (ct < 3.8) { x = 400 + Math.sin((ct - 3) / .8 * Math.PI) * 6; tilt = Math.sin((ct - 3) / .8 * Math.PI) * 9; }
+    else if (ct < 5.6) x = lerp(400, 215, (ct - 3.8) / 1.8);
+    else if (ct < 6.8) { x = 215; showTray = ct < 6.2 ? 1 : 0; }
+    else if (ct < 9.2) { x = lerp(215, 540, (ct - 6.8) / 2.4); face = -1; showTray = 0; duck = 1 - .1 * sstep(70, 20, Math.abs(x - 360)); }
+    else { x = 540; showTray = 0; }
+    if (!hitDone && ct >= 3) {
+      hitDone = true; bumps++; swingT = 0; lvl = 1;
+      if (tBump) setTagText(tBump, `шишка № ${bumps}`);
+      bump.setAttribute('r', Math.min(3 + bumps, 6));
+    }
+    const walking = (ct > 1.5 && ct < 3) || (ct > 3.8 && ct < 5.6) || (ct > 6.8 && ct < 9.2);
+    const bob = walking ? Math.abs(Math.sin(ct * 7)) * -3 : 0;
+    tall.setAttribute('transform', `translate(${x.toFixed(1)} ${bob.toFixed(1)})`);
+    body.setAttribute('transform', `scale(${face} 1) translate(0 ${(330 * (1 - duck)).toFixed(1)}) scale(1 ${duck.toFixed(3)}) rotate(${(-tilt).toFixed(1)} 0 330)`);
+    tray.setAttribute('opacity', showTray);
+    swingT += dt;
+    const sw = 7 * Math.exp(-swingT * .7) * Math.sin(swingT * 5) + Math.sin(t * .9) * .6;
+    lus.setAttribute('transform', `rotate(${sw.toFixed(2)} 360 0)`);
+    const so = clamp(1 - swingT / .9);
+    star.setAttribute('opacity', so.toFixed(2));
+    star.setAttribute('transform', `translate(${(x - 4).toFixed(1)} 132) scale(${(.6 + (1 - so) * .8).toFixed(2)}) rotate(${(swingT * 90).toFixed(0)})`);
+    lvl = Math.max(0, lvl - dt * .35);
+    const y = 18 + 16 * Math.sin(Math.min(1, lvl) * Math.PI / 2) + Math.sin(t * 2) * .6;
+    for (const l of lv) l.setAttribute('y', y.toFixed(1));
+  };
+})();
+
+/* 4. краска */
+(function () {
+  const S = sc('kraska'); if (!S) return;
+  const s1 = $('.s1', S.svg), s2 = $('.s2', S.svg), s3 = $('.s3', S.svg), other = $('.kr-other', S.svg), rag = $('.kr-rag', S.svg), streak = $('.kr-streak', S.svg), drops = $('.kr-drops', S.svg), blots = $('.kr-blots', S.svg);
+  const r = rng(3);
+  const bl = [];
+  for (let i = 0; i < 7; i++) bl.push({ el: mk('circle', { cx: (300 + r() * 280).toFixed(0), cy: (60 + r() * 280).toFixed(0), r: (10 + r() * 30).toFixed(0), fill: '#e58a7c', opacity: 0 }, blots), at: .12 + r() * .4 });
+  let wiped = false, wt = 0; const dl = [];
+  S.tick = (t, dt) => {
+    const s = sstep(.12, .5, S.p) + Math.sin(t * .9) * .008;
+    s1.setAttribute('offset', clamp(s * 1.02 - .06).toFixed(3)); s2.setAttribute('offset', clamp(s * 1.02).toFixed(3)); s3.setAttribute('offset', clamp(s * 1.02 + .1).toFixed(3));
+    for (const b of bl) b.el.setAttribute('opacity', (sstep(b.at, b.at + .12, S.p) * .5).toFixed(2));
+    const leave = sstep(.48, .64, S.p);
+    other.setAttribute('transform', `translate(${(470 + leave * 90).toFixed(1)} 0)`); other.setAttribute('opacity', (1 - leave * .95).toFixed(2));
+    if (!wiped && S.p > .6) { wiped = true; wt = 0; }
+    if (wiped) {
+      wt += dt;
+      const a = clamp(wt / 1.4);
+      rag.setAttribute('opacity', (Math.sin(a * Math.PI) * .85).toFixed(2));
+      rag.setAttribute('stroke-dasharray', `${a.toFixed(3)} 1`);
+      streak.setAttribute('opacity', (sstep(.4, 1.2, wt) * (1 - sstep(1.6, 5, wt) * .75)).toFixed(2));
+    }
+    if (!RM && s > .3 && dl.length < 4 && rnd() < dt * .6) dl.push({ x: 290 + rnd() * 60, y: 250 + rnd() * 80, v: 0, life: 0, el: mk('ellipse', { rx: 2.2, ry: 3, opacity: 0 }, drops) });
+    for (let i = dl.length - 1; i >= 0; i--) {
+      const q = dl[i]; q.life += dt; q.v += 40 * dt; q.y += q.v * dt;
+      q.el.setAttribute('cx', q.x.toFixed(1)); q.el.setAttribute('cy', q.y.toFixed(1)); q.el.setAttribute('opacity', (Math.min(1, q.life * 3) * (q.y < 350 ? .8 : 0)).toFixed(2));
+      if (q.y > 352) { q.el.remove(); dl.splice(i, 1); }
+    }
+  };
+})();
+
+/* 5. крепость — на картинах Томаса Коула: день → закат, замок осыпается в руины */
+(function () {
+  const S = sc('krepost'); if (!S) return;
+  const past = $('.kf-past', S.svg), crack = $('.kf-crack', S.svg), dust = $('.kf-dust', S.svg);
+  const sh = $$('.sh', S.svg).map(el => ({ el, cx: +el.dataset.cx, cy: +el.dataset.cy, fx: +el.dataset.fx, rot: +el.dataset.rot, d: +el.dataset.d, ty: +el.dataset.ty, w: $('.w', el) }));
+  let lastK = -1;
+  const puffs = [];
+  S.tick = (t, dt) => {
+    const day = 1 - sstep(.28, .6, S.p), warm = sstep(.34, .62, S.p), c = sstep(.52, .8, S.p);
+    const key = day * 1000 + warm * 100 + c;
+    crack.setAttribute('stroke-dashoffset', (1 - sstep(.32, .5, S.p)).toFixed(3));
+    crack.setAttribute('opacity', clamp(1 - c * 1.6).toFixed(2));
+    if (Math.abs(key - lastK) > .0005) {
+      lastK = key;
+      past.setAttribute('opacity', day.toFixed(3));
+      for (const s of sh) {
+        s.w.setAttribute('opacity', warm.toFixed(2));
+        const k = clamp((c - s.d) / (1 - s.d + .001)), e = k * k;
+        if (k <= 0) { s.el.setAttribute('transform', ''); s.el.setAttribute('opacity', 1); continue; }
+        const dx = s.fx * k, dy = s.ty * e, sc2 = 1 - .25 * k;
+        s.el.setAttribute('transform', `translate(${(s.cx + dx).toFixed(1)} ${(s.cy + dy).toFixed(1)}) rotate(${(s.rot * k).toFixed(1)}) scale(${sc2.toFixed(3)}) translate(${(-s.cx).toFixed(1)} ${(-s.cy).toFixed(1)})`);
+        s.el.setAttribute('opacity', (1 - sstep(.7, 1, k) * .85).toFixed(2));
+      }
+      if (c > .1 && c < .9 && !RM && puffs.length < 22) for (let i = 0; i < 2; i++) puffs.push({ x: 270 + rnd() * 240, y: 200 + rnd() * 60, vx: (rnd() - .5) * 26, vy: -6 - rnd() * 12, r: 5 + rnd() * 9, life: 0, el: mk('circle', { opacity: 0 }, dust) });
+    }
+    for (let i = puffs.length - 1; i >= 0; i--) {
+      const q = puffs[i]; q.life += dt; q.x += q.vx * dt; q.y += q.vy * dt;
+      q.el.setAttribute('cx', q.x.toFixed(1)); q.el.setAttribute('cy', q.y.toFixed(1)); q.el.setAttribute('r', (q.r * (1 + q.life)).toFixed(1));
+      q.el.setAttribute('opacity', ((1 - q.life / 2.6) * .4).toFixed(2));
+      if (q.life > 2.6) { dust.removeChild(q.el); puffs.splice(i, 1); }
+    }
+  };
+})();
+
+/* 6. закат — Айвазовский. Кнопка «присвоить»: кадр замирает, сереет, краски текут, плёнка выгорает.
+   «Отпустить» — закат снова живёт и цветной. Небо понемногу темнеет по ходу чтения. */
+(function () {
+  const S = sc('zakat'); if (!S) return;
+  const SX = 730;
+  const sun = $('.zk-sun', S.svg), sg = $('.zk-sunglow', S.svg), birds = $('.zk-birds', S.svg), sat = $('.zk-sat', S.svg), melt = $('.zk-melt', S.svg), fr = $('.zk-frame', S.svg),
+    corners = $$('.fc path', fr), lab = $('.fl', fr), labT = $('.fl text', fr), dusk = $('.zf-dusk', S.svg), glit = $('.zf-glit', S.svg), world = $('.zk-world', S.svg),
+    flick = $('.zf-flick', S.svg), scr = $('.zf-scr', S.svg), scrs = $$('.zf-scr path', S.svg), burns = $$('.zf-burn circle', S.svg),
+    btn = $('.zk-btn', S.el), btnI = btn && $('.i', btn), btnT = btn && $('.t', btn);
+  const bl = [];
+  for (let i = 0; i < 3; i++) bl.push({ el: mk('path', {}, birds), x: 80 + i * 120 + rnd() * 50, y: 170 + rnd() * 60, ph: rnd() * TAU, v: 12 + rnd() * 8 });
+  const gl = [];
+  for (let i = 0; i < 26; i++) { const k = rnd(); gl.push({ el: mk('ellipse', { rx: (2 + rnd() * 5).toFixed(1), ry: .9, cx: (SX - 120 + rnd() * 240 * (.4 + k)).toFixed(0), cy: (330 + k * 160).toFixed(0), opacity: 0 }, glit), ph: rnd() * TAU, sp: 1.5 + rnd() * 3 }); }
+  const BR = [260, 190, 150];  // до какого размера выгорают пятна
+  let owned = false, grey = 0, dmg = 0, fk = 0, lt = 0, relT = 99;
+  if (btn) btn.addEventListener('click', () => {
+    owned = !owned; relT = owned ? 99 : 0;
+    btn.setAttribute('aria-pressed', owned ? 'true' : 'false');
+    btn.classList.toggle('own', owned);
+    btnI.textContent = owned ? '▶' : '❚❚';
+    btnT.textContent = owned ? 'отпустить' : 'присвоить';
+  });
+  S.tick = (t, dt) => {
+    // присвоенный закат стоит: ни птиц, ни бликов, ни дыхания солнца
+    grey = owned ? Math.min(1, grey + dt / 1.3) : Math.max(0, grey - dt / 1.6);
+    dmg = owned ? Math.min(1, dmg + dt / 30) : Math.max(0, dmg - dt / 2.6);
+    relT += dt;
+    lt += dt * (1 - grey);
+    const cy = 246 + sstep(.1, .9, S.p) * 52;
+    sun.setAttribute('cy', cy.toFixed(1)); sg.setAttribute('cy', cy.toFixed(1));
+    sg.setAttribute('r', (200 + Math.sin(lt * .6) * 10).toFixed(0));
+    dusk.setAttribute('opacity', (sstep(.45, 1, S.p) * .55).toFixed(3));
+    for (const g of gl) g.el.setAttribute('opacity', (Math.max(0, Math.sin(lt * g.sp + g.ph)) ** 6 * .9 * (1 - sstep(.7, 1, S.p) * .7) * (1 - grey)).toFixed(2));
+    for (const b of bl) {
+      b.x += b.v * dt * (1 - grey); if (b.x > 1040) b.x = -40;
+      const f = Math.sin(lt * 6 + b.ph) * 4, y = b.y + Math.sin(lt * .5 + b.ph) * 6;
+      b.el.setAttribute('d', `M${(b.x - 8).toFixed(1)} ${(y - f).toFixed(1)} Q${(b.x - 4).toFixed(1)} ${(y - 3).toFixed(1)} ${b.x.toFixed(1)} ${y.toFixed(1)} Q${(b.x + 4).toFixed(1)} ${(y - 3).toFixed(1)} ${(b.x + 8).toFixed(1)} ${(y - f).toFixed(1)}`);
+    }
+    // цвет уходит, краски текут, плёнка выгорает
+    sat.setAttribute('values', (1 - .97 * ease(grey)).toFixed(3));
+    melt.setAttribute('scale', (sstep(.04, .6, dmg) * 40).toFixed(1));
+    burns.forEach((c, i) => c.setAttribute('r', (sstep(.18 + i * .2, 1, dmg) * BR[i]).toFixed(1)));
+    const film = sstep(.05, .3, dmg);
+    if (film > .01 && !RM) {
+      fk -= dt;
+      if (fk <= 0) {
+        fk = .06 + rnd() * .1;
+        flick.setAttribute('opacity', (rnd() * .07 * film).toFixed(3));
+        scrs.forEach(p => { const x = rnd() * 1000; p.setAttribute('d', `M${x.toFixed(0)} ${(rnd() * 200).toFixed(0)} V${(260 + rnd() * 240).toFixed(0)}`); });
+        scr.setAttribute('opacity', (rnd() * .5 * film).toFixed(2));
+        world.setAttribute('transform', `translate(${((rnd() - .5) * 3 * film).toFixed(1)} ${((rnd() - .5) * 3 * film).toFixed(1)})`);
+      }
+    } else { flick.setAttribute('opacity', 0); scr.setAttribute('opacity', 0); world.removeAttribute('transform'); }
+    // рамка «присвоено» сжимается вокруг солнца и держит его; отпустили — расходится и тает
+    const inK = ease(grey), outK = owned ? 0 : ease(clamp(relT / 1.2));
+    const vis = owned ? Math.min(1, grey * 3) : (relT < 1.6 ? 1 - outK : 0);
+    fr.style.opacity = vis.toFixed(2);
+    if (vis > 0) {
+      const box = { x: SX - 95, y: cy - 95, w: 190, h: 190 }, full = { x: 20, y: 20, w: 960, h: 460 };
+      const k = owned ? inK : 1;
+      const bx = lerp(full.x, box.x, k), byy = lerp(full.y, box.y, k), bw = lerp(full.w, box.w, k), bh = lerp(full.h, box.h, k);
+      const spread = outK * 70;
+      const pts = [[bx - spread, byy - spread, 0], [bx + bw + spread, byy - spread, 90], [bx + bw + spread, byy + bh + spread, 180], [bx - spread, byy + bh + spread, 270]];
+      corners.forEach((c, i) => c.setAttribute('transform', `translate(${pts[i][0].toFixed(1)} ${pts[i][1].toFixed(1)}) rotate(${pts[i][2]})`));
+      lab.setAttribute('transform', `translate(${(bx + bw / 2).toFixed(1)} ${(byy - 26 - spread).toFixed(1)})`);
+      fr.classList.toggle('lock', owned);
+      const want = owned ? '❚❚ присвоено' : 'отпущено';
+      if (labT.textContent !== want) labT.textContent = want;
+    }
+  };
+})();
+/* ---------- небо страницы: траур → день → закат → сумерки ---------- */
+const sky = { grey: $('#sky .t-grey'), day: $('#sky .t-day'), sunset: $('#sky .t-sunset'), dusk: $('#sky .t-dusk') };
+const pOptic = $('.x-optic'), pMourn = $('.x-mourn'), pBlame = $('.x-blame'), pUp = $('.x-up'), pLast = $('.last'), zak = $('[data-scene=zakat]');
+const pool = $('#pool'), vig = $('#vig');
+const W_ = { sunP: 0, dusk: 0, grey: 1 };
+let yOptic = 0, yZak = 1, yEnd = 2;
+function anchors() { yOptic = absY(pOptic); yZak = absY(zak) + zak.offsetHeight / 2; yEnd = absY(pLast) + pLast.offsetHeight; }
+anchors(); addEventListener('resize', anchors); if (D.fonts && D.fonts.ready) D.fonts.ready.then(anchors); setTimeout(anchors, 1500);
+
+/* ---------- очки: до заката, развилка, ветер ---------- */
+const hud = $('#hud'), bMin = $('#b-min'), bDist = $('#b-dist'), bWind = $('#b-wind'), bArrow = $('#b-arrow'), bSun = $('#b-sundot'), bW1 = $('#b-w1'), bW2 = $('#b-w2');
+const mapL = $('.b-map path:nth-of-type(1)'), mapR = $('.b-map path:nth-of-type(2)');
+let windA = 40, windV = 2, windNext = 0;
+function setTxt(el, s) { if (el.textContent !== s) el.textContent = s; }
+function hudFrame(t) {
+  const heroB = $('.hero .pc').getBoundingClientRect().bottom;
+  const on = heroB < vh * .3;
+  hud.classList.toggle('on', on);
+  hud.style.setProperty('--h', on ? 1 : 0);
+  // до заката
+  let s;
+  if (W_.sunP < .999) s = `до заката ${Math.max(1, Math.round(52 * (1 - W_.sunP)))} мин`;
+  else if (W_.dusk < .45) s = 'солнце садится';
+  else if (W_.dusk < .85) s = 'солнце село';
+  else s = 'первые звёзды: 2';
+  setTxt(bMin, s);
+  const a = Math.PI * (1 - clamp(W_.sunP * .5 + W_.dusk * .5)) ;
+  bSun.setAttribute('cx', (11 + Math.cos(a) * 8).toFixed(2)); bSun.setAttribute('cy', (13 - Math.sin(a) * 8 + W_.dusk * 3).toFixed(2));
+  // путники расходятся по своим тропам
+  const k = clamp(.04 + prog * .96);
+  try {
+    const L1 = mapL.getTotalLength(), L2 = mapR.getTotalLength();
+    const q1 = mapL.getPointAtLength(L1 * k), q2 = mapR.getPointAtLength(L2 * k);
+    bW1.setAttribute('cx', q1.x.toFixed(2)); bW1.setAttribute('cy', q1.y.toFixed(2));
+    bW2.setAttribute('cx', q2.x.toFixed(2)); bW2.setAttribute('cy', q2.y.toFixed(2));
+  } catch (e) {}
+  setTxt(bDist, `${fmt((.1 + prog * 2.3).toFixed(1))} км`);
+  // ветер
+  if (t > windNext) { windNext = t + 3 + rnd() * 3; windA = 30 + nz(t * .2) * 50; windV = Math.max(1, Math.round(2 + nz(t * .13 + 4) * 2)); setTxt(bWind, `ветер ${windV} м/с`); bArrow.style.transform = `rotate(${windA.toFixed(0)}deg)`; }
+}
+
+/* ---------- воздух мира: пыльца, семена, стрижи, бабочка, солнце, трава, звёзды ---------- */
+const cv = $('#air'), ctx = cv.getContext('2d');
+let dpr = 1;
+function sizeAir() { dpr = Math.min(devicePixelRatio || 1, 2); cv.width = Math.round(vw * dpr); cv.height = Math.round(vh * dpr); ctx.setTransform(dpr, 0, 0, dpr, 0, 0); }
+sizeAir();
+const motes = Array.from({ length: 34 }, () => ({ x: rnd(), y: rnd(), z: .3 + rnd() * .7, ph: rnd() * TAU }));
+const seeds = Array.from({ length: 6 }, () => ({ x: rnd() * 1.2 - .1, y: .2 + rnd() * .7, ph: rnd() * TAU, s: 7 + rnd() * 5, sp: .012 + rnd() * .01 }));
+const blades = [];
+function makeBlades() { blades.length = 0; const n = Math.ceil(vw / 5); const r = rng(77); for (let i = 0; i < n; i++) blades.push({ x: i * 5 + r() * 4, h: 10 + r() * 26 + (r() < .08 ? 14 : 0), ph: r() * TAU, f: r() < .06 ? (r() < .5 ? [180, 160, 220] : [250, 230, 150]) : null }); }
+makeBlades(); addEventListener('resize', makeBlades);
+let swift = null, nextSwift = 6, fly = null, nextFly = 22;
+const fireflies = Array.from({ length: 12 }, () => ({ x: rnd(), y: .65 + rnd() * .3, ph: rnd() * TAU }));
+let worldTag = null, nextTag = 4, starT = -1, starShown = false;
+/* бирки мира не ложатся на текст: на широком экране — только на полях, на телефоне — только у верхнего края */
+function freeSpot(x, y) {
+  const col = $('.part'), r = col ? col.getBoundingClientRect() : { left: 0, right: vw };
+  if (vw >= 900) return x < r.left - 30 || x > r.right + 30;
+  return y < vh * .2 && y > 56;
+}
+function drawTag(x, y, text, a, dir = 1) {
+  if (a <= .01) return;
+  ctx.save(); ctx.globalAlpha = a;
+  ctx.font = '500 11px "Golos Text", system-ui, sans-serif';
+  const w = ctx.measureText(text).width + 14, h = 20;
+  const lx = clamp(x + dir * 46, 6, vw - w - 6), ly = clamp(y - 34, 50, vh - 30);
+  ctx.strokeStyle = rgba(C.ar, .9); ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + dir * 24, ly); ctx.lineTo(dir > 0 ? lx : lx + w, ly); ctx.stroke();
+  ctx.fillStyle = rgba(C.ar, 1); ctx.beginPath(); ctx.arc(x, y, 2.2, 0, TAU); ctx.fill();
+  ctx.fillStyle = C.dark ? 'rgba(27,24,32,.85)' : 'rgba(251,246,236,.88)';
+  ctx.beginPath(); ctx.roundRect ? ctx.roundRect(lx, ly - h / 2, w, h, 4) : ctx.rect(lx, ly - h / 2, w, h); ctx.fill(); ctx.stroke();
+  ctx.fillStyle = C.dark ? 'rgb(200,236,230)' : '#24403f'; ctx.fillText(text, lx + 7, ly + 4);
+  ctx.restore();
+}
+function airFrame(t, dt) {
+  ctx.clearRect(0, 0, vw, vh);
+  const dusk = W_.dusk, sunP = W_.sunP, grey = W_.grey;
+  const warm = (1 - grey) * (1 - dusk * .6);
+  // солнце в стороне: опускается по ходу чтения
+  const sx = vw > 700 ? vw * .86 : vw - 16, syy = lerp(vh * .1, vh * 1.02, sunP) + dusk * vh * .3;
+  const sa = (1 - grey * .85) * (1 - sstep(.3, .9, dusk));
+  if (sa > .01) {
+    const R0 = Math.min(vw, vh) * .55;
+    const g = ctx.createRadialGradient(sx, syy, 0, sx, syy, R0);
+    const c1 = mixc([255, 238, 190], [255, 150, 100], sunP), c2 = mixc([255, 210, 150], [240, 110, 120], sunP);
+    g.addColorStop(0, rgba(c1, (C.dark ? .22 : .38) * sa)); g.addColorStop(.25, rgba(c2, (C.dark ? .1 : .16) * sa)); g.addColorStop(1, rgba(c2, 0));
+    ctx.fillStyle = g; ctx.fillRect(sx - R0, syy - R0, R0 * 2, R0 * 2);
+    // метка очков на солнце
+    if (syy < vh - 10 && hud.classList.contains('on')) {
+      ctx.save(); ctx.globalAlpha = .7 * sa; ctx.strokeStyle = rgba(C.ar, 1); ctx.lineWidth = 1;
+      const rr = 15 + Math.sin(t * 1.3) * 1.5; ctx.beginPath(); ctx.arc(sx, syy, rr, 0, TAU); ctx.stroke();
+      for (let i = 0; i < 4; i++) { const an = i * Math.PI / 2 + t * .2; ctx.beginPath(); ctx.moveTo(sx + Math.cos(an) * (rr + 3), syy + Math.sin(an) * (rr + 3)); ctx.lineTo(sx + Math.cos(an) * (rr + 8), syy + Math.sin(an) * (rr + 8)); ctx.stroke(); }
+      ctx.font = '500 10.5px "Golos Text", system-ui, sans-serif'; ctx.fillStyle = rgba(C.ar, 1); ctx.textAlign = 'right';
+      ctx.restore();
+    }
+  }
+  // пыльца в тёплом свете
+  const mc = C.mote;
+  for (const m of motes) {
+    if (!RM) { m.x += (.004 + windV * .0012) * dt * m.z; m.y += Math.sin(t * .4 + m.ph) * .0008 - .002 * dt; if (m.x > 1.05) m.x = -.05; if (m.y < -.05) m.y = 1.05; }
+    const x = m.x * vw, y = m.y * vh, tw = .5 + .5 * Math.sin(t * 1.6 + m.ph);
+    ctx.fillStyle = rgba(mc, (.18 + tw * .3) * m.z * (.25 + warm * .75)); ctx.beginPath(); ctx.arc(x, y, .9 + m.z * 1.4, 0, TAU); ctx.fill();
+  }
+  // семена одуванчика
+  for (const s of seeds) {
+    if (!RM) { s.x += s.sp * dt * (1 + windV * .2); s.y += Math.sin(t * .5 + s.ph) * .0006 - .004 * dt; if (s.x > 1.1) { s.x = -.1; s.y = .3 + rnd() * .6; } if (s.y < -.05) s.y = 1; }
+    s.px = s.x * vw; s.py = s.y * vh;
+    drawSeed(ctx, s.px, s.py, s.s, (C.dark ? .55 : .8) * (1 - dusk * .5), Math.sin(t * .8 + s.ph) * .35, C.dark ? [220, 216, 206] : [255, 255, 250]);
+  }
+  // стриж
+  if (!RM) {
+    nextSwift -= dt;
+    if (!swift && nextSwift < 0 && dusk < .7) { const dir = rnd() < .5 ? 1 : -1; swift = { x: dir > 0 ? -40 : vw + 40, y: vh * (.12 + rnd() * .3), dir, v: vw * (.35 + rnd() * .15), ph: rnd() * TAU }; nextSwift = 14 + rnd() * 14; }
+    if (swift) {
+      swift.x += swift.dir * swift.v * dt; swift.y += Math.sin(t * 3 + swift.ph) * 30 * dt;
+      const f = Math.sin(t * 22) * 4, x = swift.x, y = swift.y;
+      ctx.strokeStyle = C.dark ? 'rgba(220,214,230,.7)' : 'rgba(60,48,70,.75)'; ctx.lineWidth = 2; ctx.lineCap = 'round';
+      ctx.beginPath(); ctx.moveTo(x - 11 * swift.dir, y - 2 - f); ctx.quadraticCurveTo(x - 4 * swift.dir, y - 4, x, y); ctx.quadraticCurveTo(x - 4 * swift.dir, y + 3, x - 11 * swift.dir, y + 4 + f * .4); ctx.stroke();
+      swift.px = x; swift.py = y;
+      if (swift.x < -60 || swift.x > vw + 60) swift = null;
+    }
+    // бабочка
+    nextFly -= dt;
+    if (!fly && nextFly < 0 && dusk < .5) { fly = { x: -20, y: vh * (.35 + rnd() * .4), ph: rnd() * TAU, life: 0 }; nextFly = 30 + rnd() * 20; }
+    if (fly) {
+      fly.life += dt; fly.x += (28 + Math.sin(t * 1.3) * 18) * dt; fly.y += Math.sin(t * 2.1 + fly.ph) * 40 * dt;
+      const wg = Math.abs(Math.sin(t * 14)) * 6 + 1.5, x = fly.x, y = fly.y;
+      ctx.fillStyle = C.dark ? 'rgba(240,236,220,.75)' : 'rgba(255,252,244,.95)'; ctx.strokeStyle = 'rgba(120,110,90,.5)'; ctx.lineWidth = .8;
+      ctx.beginPath(); ctx.ellipse(x - 3, y - 1, wg, 5, -.4, 0, TAU); ctx.fill(); ctx.stroke();
+      ctx.beginPath(); ctx.ellipse(x + 3, y - 1, wg, 5, .4, 0, TAU); ctx.fill(); ctx.stroke();
+      fly.px = x; fly.py = y;
+      if (fly.x > vw + 30) fly = null;
+    }
+  }
+  // светлячки в сумерках
+  if (dusk > .2) for (const f of fireflies) {
+    const a = sstep(.2, .7, dusk) * Math.max(0, Math.sin(t * 1.1 + f.ph * 3)) ** 3;
+    const x = f.x * vw + Math.sin(t * .3 + f.ph) * 30, y = f.y * vh + Math.cos(t * .4 + f.ph) * 20;
+    f.px = x; f.py = y; f.a = a;
+    const g = ctx.createRadialGradient(x, y, 0, x, y, 10); g.addColorStop(0, `rgba(230,255,160,${a})`); g.addColorStop(1, 'rgba(230,255,160,0)');
+    ctx.fillStyle = g; ctx.fillRect(x - 10, y - 10, 20, 20);
+  }
+  // две первые звезды — каждая на своём месте
+  const starA = sstep(.55, .95, dusk);
+  if (dusk > .9 && starT < 0 && !starShown) { starT = 0; starShown = true; }
+  if (starT >= 0) { starT += dt; if (starT > 6) starT = -1; }
+  const stars = [[vw * .2, vh * .16], [vw * .8, vh * .11]];
+  if (starA > .01) stars.forEach(([x, y], i) => {
+    const tw = .75 + .25 * Math.sin(t * (1.7 + i * .6) + i);
+    ctx.save(); ctx.globalAlpha = starA * tw; ctx.fillStyle = C.dark ? '#fff6dc' : '#7c6aa8';
+    ctx.beginPath(); for (let k = 0; k < 8; k++) { const r = k % 2 ? 1.6 : 6, an = k * Math.PI / 4 - Math.PI / 2; ctx.lineTo(x + Math.cos(an) * r, y + Math.sin(an) * r); } ctx.closePath(); ctx.fill();
+    ctx.restore();
+  });
+  // трава внизу экрана
+  const gc = mixc(C.grass, C.dark ? [20, 22, 28] : [70, 60, 80], dusk * .8), gc2 = mixc(C.grass2, C.dark ? [14, 16, 20] : [60, 50, 70], dusk * .8);
+  const base = vh + 2, wind = windV * .02;
+  ctx.lineCap = 'round';
+  for (let i = 0; i < blades.length; i++) {
+    const b = blades[i], sw = (RM ? 0 : Math.sin(t * 1.3 + b.ph + b.x * .01) * 4 + nz(t * .4 + b.x * .004) * 6) + wind * b.h * 6;
+    ctx.strokeStyle = rgba(i % 3 ? gc : gc2, C.dark ? .9 : .5); ctx.lineWidth = 1.6;
+    ctx.beginPath(); ctx.moveTo(b.x, base); ctx.quadraticCurveTo(b.x + sw * .3, base - b.h * .6, b.x + sw, base - b.h); ctx.stroke();
+    if (b.f) { ctx.fillStyle = rgba(b.f, (C.dark ? .5 : .85) * (1 - dusk * .6)); ctx.beginPath(); ctx.arc(b.x + sw, base - b.h, 2.4, 0, TAU); ctx.fill(); }
+  }
+  // бирка очков на том, что пролетает мимо
+  if (false) { /* подписи у живых элементов убраны по его просьбе 2026-11-25: мешают чтению */
+    nextTag -= dt;
+    if (!worldTag && nextTag < 0) {
+      const opts = [];
+      if (fly && fly.px > 30 && freeSpot(fly.px, fly.py)) opts.push({ o: fly, s: 'капустница · летит на свет' });
+      if (dusk > .4) { const f = fireflies.find(f => f.a > .5 && freeSpot(f.px, f.py)); if (f) opts.push({ o: f, s: 'светлячок · ищет пару' }); }
+      if (opts.length) { worldTag = { ...opts[Math.floor(rnd() * opts.length)], life: 0 }; nextTag = 7 + rnd() * 6; }
+    }
+    if (worldTag) {
+      worldTag.life += dt;
+      const a = sstep(0, .5, worldTag.life) * (1 - sstep(4, 4.8, worldTag.life));
+      const o = worldTag.o;
+      if (o.px == null || worldTag.life > 4.8 || (o === swift && !swift) || (o === fly && !fly)) worldTag = null;
+      else drawTag(o.px, o.py, worldTag.s, a, o.px > vw * .6 ? -1 : 1);
+    }
+  }
+}
+
+/* ---------- живые слова ---------- */
+function toastBubbles(span) {
+  if (RM || !span) return;
+  for (let i = 0; i < 8; i++) {
+    const b = D.createElement('i'); span.appendChild(b);
+    b.style.left = (10 + rnd() * 80) + '%';
+    b.animate([{ opacity: 0, transform: 'translateY(0) scale(.6)' }, { opacity: .9, offset: .2 }, { opacity: 0, transform: `translateY(-${(18 + rnd() * 18).toFixed(0)}px) scale(1)` }], { duration: 1600 + rnd() * 1200, delay: i * 140, easing: 'ease-out' }).onfinish = () => b.remove();
+  }
+}
+
+/* ---------- главный цикл ---------- */
+let last = performance.now(), saveT = 0;
+function frame(now) {
+  const dt = Math.min(.05, (now - last) / 1000); last = now;
+  const t = now / 1000;
+  prog = clamp(sy / docH);
+  const c = sy + vh * .55;
+  W_.sunP = clamp((c - yOptic) / Math.max(1, yZak - yOptic));
+  W_.dusk = clamp((c - yZak) / Math.max(1, yEnd - yZak - vh * .1));
+  W_.grey = pOptic ? clamp((mid(pOptic) - .3) / .45) : 0;
+  const day = (1 - W_.grey) * (1 - sstep(.55, .95, W_.sunP) * .5) * (1 - W_.dusk);
+  sky.grey.style.opacity = W_.grey.toFixed(3);
+  sky.day.style.opacity = day.toFixed(3);
+  sky.sunset.style.opacity = (sstep(.35, 1, W_.sunP) * (1 - W_.dusk * .6)).toFixed(3);
+  sky.dusk.style.opacity = sstep(0, .9, W_.dusk).toFixed(3);
+  vig.style.opacity = (.25 + W_.grey * .15 + W_.dusk * .35).toFixed(3);
+
+  // читаемый абзац
+  let cur = null, best = 9;
+  for (const p of paras) { const m = mid(p); if (m > -.1 && m < 1.1) { const d = Math.abs(m - .45); if (d < best) { best = d; cur = p; } } if (m < .62 && !p.classList.contains('on')) { p.classList.add('on'); onPara(p); } }
+  if (cur) { reading = cur; const r = cur.getBoundingClientRect(); pool.style.transform = `translateY(${((r.top + r.bottom) / 2 - vh * .45).toFixed(0)}px)`; pool.style.opacity = (.35 + (1 - W_.grey) * .35).toFixed(2); }
+  if (pMourn) pMourn.classList.toggle('hush', W_.grey > .6 && pMourn.classList.contains('on'));
+  if (pBlame && pUp && pUp.classList.contains('on')) pBlame.classList.add('off');
+
+  for (const S of scenes) {
+    if (!S.vis) continue;
+    const r = S.el.getBoundingClientRect();
+    // сцена начинает играть, только когда она целиком на экране (низ поднялся выше 92% экрана),
+    // и доигрывает, пока её верх не дошёл до верха экрана. Если читатель остановился и смотрит,
+    // она сама понемногу идёт вперёд (до конца за ~12 с), чтобы движение не прошло мимо глаз.
+    // Так — на телефоне. На широком экране сцена видна целиком сразу, поэтому там прежний отсчёт.
+    if (innerWidth > 760) S.p = clamp((vh - r.top) / (vh * .75 + r.height * .5));
+    else {
+      const top0 = Math.max(vh * .92 - r.height, vh * .3), top1 = Math.min(vh * .04, top0 - vh * .3);
+      const sp = clamp((top0 - r.top) / (top0 - top1));
+      if (r.top > top0 + vh * .2) S.tp = 0;
+      else if (r.top <= top0 + 2 && r.bottom >= vh * .25) S.tp = Math.min(1, (S.tp || 0) + dt / 12);
+      S.p = Math.max(sp, S.tp || 0);
+    }
+    S.pmax = Math.max(S.pmax, S.p);
+    tagsByP(S);
+    if (S.tick) S.tick(t, dt);
+  }
+  heroFrame(t, dt);
+  hudFrame(t);
+  airFrame(t, dt);
+  if (now - saveT > 2000 && reading && reading.id && reading.tagName === 'P') { saveT = now; store.set('at', reading.id); }
+  requestAnimationFrame(frame);
+}
+function onPara(p) {
+  if (p.classList.contains('x-mourn')) toastBubbles($('.k-toast', p));
+  if (p.classList.contains('x-wedding')) toastBubbles($('.k-toast', p));
+}
+requestAnimationFrame(frame);
+
+/* ---------- память ---------- */
+(function () {
+  const id = store.get('at', null), el = id && D.getElementById(id);
+  if (!el || +id.slice(1) < 4) return;
+  const tx = el.textContent.trim().split(/\s+/).slice(0, 7).join(' ');
+  const T = $('#toast');
+  T.innerHTML = `<div>Луг всё тот же. В прошлый раз вы остановились на словах «${tx.replace(/[<>&]/g, '')}…»</div><div class="tb"><button type="button" class="no">Сначала</button><button type="button" class="go">Продолжить</button></div>`;
+  setTimeout(() => T.classList.remove('hide'), 2200);
+  $('.no', T).onclick = () => T.classList.add('hide');
+  $('.go', T).onclick = () => { T.classList.add('hide'); el.scrollIntoView({ behavior: RM ? 'auto' : 'smooth', block: 'center' }); };
+  setTimeout(() => T.classList.add('hide'), 14000);
+})();
+})();
+
+</script>
+</body>
+</html>
