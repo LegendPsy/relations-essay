@@ -999,12 +999,30 @@ function updateShadows(t, flick) {
   if (no && no.vis) noteEl.style.rotate = `${(.9 + wind.v * .016 + nz(t * .7) * .12).toFixed(3)}deg`;
 }
 
+// сцена начинает двигаться, только когда видна целиком: низ поднялся выше 90% экрана
+// (или верх ушёл выше 10% у высокой сцены). Иначе всё успевает закончиться, пока читаешь текст над ней.
+const focusList = [];
+function checkFocus() {
+  const H = innerHeight;
+  for (let i = focusList.length - 1; i >= 0; i--) {
+    const it = focusList[i], r = it.el.getBoundingClientRect();
+    const ok = isPhone() || !it.desk ? r.height && (r.bottom <= H * .9 || r.top <= H * .1) : it.desk(r, H);
+    if (ok) { focusList.splice(i, 1); it.f(); }
+  }
+}
+addEventListener('scroll', checkFocus, { passive: true }); addEventListener('resize', checkFocus);
+// на компьютере экран большой: там сцена запускается как раньше (desk), «целиком на экране» — только для телефона
+function isPhone() { return matchMedia('(hover: none) and (pointer: coarse)').matches || innerWidth < 700; }
+function onFocus(el, f, desk) { focusList.push({ el, f, desk }); requestAnimationFrame(checkFocus); }
+
 /* ---------- компас ---------- */
 const comp = $('.compass'), needle = comp && $('.cp-needle', comp);
 const cp = { a: 150, w: 0, vis: false, woke: false };
-if (comp) new IntersectionObserver(es => { cp.vis = es[0].isIntersecting; if (cp.vis && !cp.woke) { cp.woke = true; cp.a = 120 + rnd() * 90; cp.w = 0; } }, { rootMargin: '40px 0px' }).observe(comp);
+if (comp) new IntersectionObserver(es => { cp.vis = es[0].isIntersecting; }, { rootMargin: '40px 0px' }).observe(comp);
+if (comp) onFocus(comp, () => { if (!cp.woke) { cp.woke = true; cp.a = 120 + rnd() * 90; cp.w = 0; } }, (r, H) => r.top <= H + 40 && r.bottom >= -40);
 function updateCompass(dt, t) {
   if (!cp.vis) return;
+  if (!cp.woke) { needle.style.transform = `rotate(${cp.a}deg)`; return; } // стоит, пока компас не виден целиком
   const target = -7 + nz(t * .6) * 2.5;
   cp.w += (-(cp.a - target) * 16 - cp.w * 2.1) * dt + vel * 900 * dt;
   cp.a += cp.w * dt;

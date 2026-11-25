@@ -576,6 +576,19 @@ requestAnimationFrame(tick);
     io.observe(el);
   };
 
+  // на телефоне срабатывает один раз, когда элемент виден целиком: низ поднялся выше 90% экрана
+  // (или верх ушёл выше 10% у высокого элемента), чтобы движение не закончилось, пока читаешь текст над ним
+  const whenFull = (el, fn) => {
+    if (!el) return;
+    const check = () => {
+      const r = el.getBoundingClientRect(), vh = innerHeight;
+      // на компьютере экран большой: там как раньше (верх элемента на 70% высоты экрана)
+      const phone = matchMedia('(hover: none) and (pointer: coarse)').matches || innerWidth < 700;
+      if (phone ? r.height && (r.bottom <= vh * .9 || r.top <= vh * .1) : r.top <= vh * .7) { removeEventListener('scroll', check); removeEventListener('resize', check); fn(); }
+    };
+    addEventListener('scroll', check, {passive: true}); addEventListener('resize', check); requestAnimationFrame(check);
+  };
+
   /* ---- 8. свет по времени суток ---- */
   const hr = new Date().getHours();
   document.documentElement.dataset.tod = hr >= 5 && hr < 11 ? 'morning' : hr < 17 ? 'day' : hr < 22 ? 'evening' : 'night';
@@ -683,7 +696,7 @@ requestAnimationFrame(tick);
     items.forEach(li => { const s = document.createElement('span'); s.className = 'sh-txt'; while (li.firstChild) s.appendChild(li.firstChild); li.appendChild(s); });
     if (!RM) {
       shelves.classList.add('wait');
-      when(shelves, () => {
+      whenFull(shelves, () => {
         shelves.classList.remove('wait');
         items.forEach((li, k) => {
           const t = q('.sh-txt', li);
@@ -701,7 +714,7 @@ requestAnimationFrame(tick);
             setTimeout(() => { li.classList.remove('hit'); void li.offsetWidth; li.classList.add('hit'); }, 340);
           }, 120 + k * 380);
         });
-      }, .72);
+      });
     }
   }
 

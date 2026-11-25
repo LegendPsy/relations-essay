@@ -940,6 +940,21 @@ function onView(el, fn, opts = {}) {
   io.observe(el);
   return io;
 }
+// сцена начинает двигаться, только когда видна целиком: низ поднялся выше 90% экрана
+// (или верх ушёл выше 10% у высокой сцены). Иначе всё успевает закончиться, пока читаешь текст над ней.
+const focusList = [];
+function checkFocus() {
+  const vh = W.innerHeight;
+  for (let i = focusList.length - 1; i >= 0; i--) {
+    const it = focusList[i], r = it.el.getBoundingClientRect();
+    const ok = isPhone() || !it.desk ? r.height && (r.bottom <= vh * .9 || r.top <= vh * .1) : it.desk(r, vh);
+    if (ok) { focusList.splice(i, 1); it.f(); }
+  }
+}
+W.addEventListener('scroll', checkFocus, { passive: true }); W.addEventListener('resize', checkFocus);
+// на компьютере экран большой: там сцена запускается как раньше (desk), «целиком на экране» — только для телефона
+function isPhone() { return matchMedia('(hover: none) and (pointer: coarse)').matches || innerWidth < 700; }
+function onFocus(el, f, desk) { focusList.push({ el, f, desk }); requestAnimationFrame(checkFocus); }
 function tap(el, fn, delay = 110) { // касание, которое не путается с прокруткой
   let tm = 0, pid = null, x0 = 0, y0 = 0, fired = false;
   el.addEventListener('pointerdown', e => {
@@ -1328,7 +1343,7 @@ function bubbleScene(fig) {
     setTimeout(() => { busy = false; }, 1000);
   }
   bub.addEventListener('click', play);
-  onView(fig, v => { if (v && !played) { played = true; setTimeout(play, 450); } }, { margin: '0px 0px -25% 0px', threshold: .6 });
+  onFocus(fig, () => { if (!played) { played = true; setTimeout(play, 450); } }, (r, vh) => Math.min(r.bottom, vh * .75) - Math.max(r.top, 0) >= r.height * .6);
 }
 
 /* ---------- табличка на одном гвозде ---------- */
@@ -1396,7 +1411,7 @@ function billScene(fig) {
   function check() {
     if (done) return;
     const r = fig.getBoundingClientRect(), vh = W.innerHeight;
-    const p = clamp((vh * .96 - r.top) / (vh * .5), 0, 1);
+    const p = clamp(((isPhone() ? vh * .75 : vh * .96) - r.top) / (vh * .5), 0, 1); // на телефоне печатает, когда принтер уже целиком на экране
     const t = RM ? (p > 0 ? rows.length : 0) : Math.ceil(p * rows.length);
     if (t > target) { target = t; if (!stepping) step(); }
   }
@@ -1611,7 +1626,7 @@ function exitScene(fig) {
 function liftScene(fig) {
   const btn = $('.lift-btn', fig), floorEl = $('[data-floor]', fig), msg = $('[data-msg]', fig), disp = $('.lift-display', fig), doors = $('.lift-doors', fig), cap = $('[data-cap]', fig);
   let floor = 9, started = false, arrived = false, count = 0, closeT = 0;
-  onView(fig, v => { if (v && !started) { started = true; setTimeout(start, 700); } }, { margin: '0px 0px -20% 0px', threshold: .6 });
+  onFocus(fig, () => { if (!started) { started = true; setTimeout(start, 700); } }, (r, vh) => Math.min(r.bottom, vh * .8) - Math.max(r.top, 0) >= r.height * .6);
   function start() { disp.classList.add('moving'); next(); }
   function next() { // лифт едет сам: этаж за 1,5 секунды, сколько ни нажимай
     setTimeout(() => {

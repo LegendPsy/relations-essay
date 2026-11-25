@@ -642,6 +642,21 @@ function sizeLive(L) {
   L.cv.width = Math.round(r.width * L.dpr); L.cv.height = Math.round(r.height * L.dpr);
 }
 const ro = new ResizeObserver(es => { for (const e of es) { const L = lives.find(l => l.cv === e.target); if (L) sizeLive(L); } });
+// сцена начинает двигаться, только когда видна целиком: низ поднялся выше 90% экрана
+// (или верх ушёл выше 10% у высокой сцены). Иначе всё успевает закончиться, пока читаешь текст над ней.
+const focusList = [];
+function checkFocus() {
+  const H = innerHeight;
+  for (let i = focusList.length - 1; i >= 0; i--) {
+    const it = focusList[i], r = it.el.getBoundingClientRect();
+    const ok = isPhone() || !it.desk ? r.height && (r.bottom <= H * .9 || r.top <= H * .1) : it.desk(r, H);
+    if (ok) { focusList.splice(i, 1); it.f(); }
+  }
+}
+addEventListener('scroll', checkFocus, { passive: true }); addEventListener('resize', checkFocus);
+// на компьютере экран большой: там сцена запускается как раньше (desk), «целиком на экране» — только для телефона
+function isPhone() { return matchMedia('(hover: none) and (pointer: coarse)').matches || innerWidth < 700; }
+function onFocus(el, f, desk) { focusList.push({ el, f, desk }); requestAnimationFrame(checkFocus); }
 const vio = new IntersectionObserver(es => { for (const e of es) { const L = lives.find(l => l.el === e.target); if (L) L.vis = e.isIntersecting; } }, { rootMargin: '80px 0px' });
 {
   const pic = $('.hero .pc-pic'), cv = $('.pc-live', pic);
@@ -812,7 +827,7 @@ D.addEventListener('click', e => { if (!progEl.contains(e.target)) { progEl.clas
   const btns = $$('.vz-t', card), tried = new Set();
   let tm = 0, busy = false;
   const replaySigh = () => { card.classList.remove('sighing'); void card.offsetWidth; card.classList.add('sighing'); };
-  new IntersectionObserver((es, o) => { if (es[0].isIntersecting) { o.disconnect(); setTimeout(replaySigh, 700); } }, { threshold: .6 }).observe(card);
+  onFocus(card, () => setTimeout(replaySigh, 700), (r, H) => Math.min(r.bottom, H) - Math.max(r.top, 0) >= r.height * .6);
   btns.forEach(b => b.addEventListener('click', () => {
     if (busy) return;
     busy = true; clearTimeout(tm);
