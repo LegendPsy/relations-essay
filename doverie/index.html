@@ -1,0 +1,967 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#e9e2d4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#16191f" media="(prefers-color-scheme: dark)">
+<title>Доверие</title>
+<meta name="description" content="Почему страх перед близостью почти никогда не связан с тем, кто сидит напротив, — и что меняется в ту ночь, когда ты наконец разрешаешь другому не справиться">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Доверие">
+<meta property="og:description" content="Почему страх перед близостью почти никогда не связан с тем, кто сидит напротив, — и что меняется в ту ночь, когда ты наконец разрешаешь другому не справиться">
+<meta property="og:image" content="https://legendpsy.github.io/relations-essay/doverie/art/og.jpg">
+<meta property="og:url" content="https://legendpsy.github.io/relations-essay/doverie/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400..600&family=Lora:ital,wght@0,400..700;1,400..600&display=swap">
+<style>
+/* «Доверие» — живой сайт в облике открыток каталога (legendpsy.github.io/stati/).
+   Характер: ночной балкон у моря. Говорит тихо, никуда не спешит.
+   Сама сцена живёт: влажный воздух, лунный свет на абзаце, море внизу экрана, свеча гаснет и потом снова загорается.
+   Над морем сгущается тьма, когда текст о тревоге, а на «тишине» всё замирает. Ночью страница дышит. */
+
+:root {
+  --bg: #ece4d4; --fg: #2a241f; --fg2: #564b42; --muted: #786a5c; --line: #c4b6a0;
+  --accent: #3f6f8a; --warm: #b4632e; --hl: rgba(120, 160, 190, .28);
+  --hatch: repeating-linear-gradient(33deg, rgba(60, 70, 90, .025) 0 2px, transparent 2px 6px);
+  --vignette: rgba(60, 70, 90, .14);
+  --night: linear-gradient(180deg, rgba(48, 66, 110, .16), rgba(60, 80, 120, .06) 55%, rgba(70, 90, 120, .1));
+  --dusk: radial-gradient(130% 60% at 50% -10%, rgba(196, 150, 210, .3), transparent 70%), radial-gradient(120% 55% at 50% 112%, rgba(248, 170, 140, .3), transparent 72%);
+  --murk: linear-gradient(0deg, rgba(28, 34, 50, .62), rgba(34, 40, 58, .34) 45%, rgba(40, 46, 64, 0));
+  --candle: radial-gradient(60% 40% at 50% 116%, rgba(255, 170, 70, .34), rgba(255, 150, 60, .1) 48%, transparent 76%);
+  --pool: rgba(200, 220, 245, .32); --pool-warm: rgba(255, 196, 140, .26); --vig: rgba(30, 40, 60, .22);
+  --mist: 236, 240, 246; --mote: 140, 170, 200; --mote-core: 230, 240, 255; --star: 70, 90, 130;
+  --sea: 80, 110, 140;
+  --serif: "Lora", "PT Serif", Georgia, serif;
+  --sans: "Golos Text", "Segoe UI", system-ui, -apple-system, sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #16191f; --fg: #ece6dc; --fg2: #c4bcb0; --muted: #9a9389; --line: #3a3f4a;
+    --accent: #9cc4dc; --warm: #e8a66c; --hl: rgba(140, 180, 210, .24);
+    --hatch: repeating-linear-gradient(33deg, rgba(220, 230, 255, .018) 0 2px, transparent 2px 6px);
+    --vignette: rgba(0, 0, 0, .34);
+    --night: linear-gradient(180deg, rgba(30, 46, 96, .3), rgba(26, 36, 80, .1) 55%, rgba(20, 30, 60, .14));
+    --dusk: radial-gradient(130% 60% at 50% -10%, rgba(150, 100, 170, .22), transparent 70%), radial-gradient(120% 55% at 50% 112%, rgba(220, 120, 100, .2), transparent 72%);
+    --murk: linear-gradient(0deg, rgba(4, 6, 12, .86), rgba(6, 8, 16, .5) 45%, rgba(8, 10, 18, 0));
+    --candle: radial-gradient(60% 40% at 50% 116%, rgba(255, 160, 60, .26), rgba(255, 140, 50, .08) 48%, transparent 76%);
+    --pool: rgba(150, 180, 230, .09); --pool-warm: rgba(255, 170, 100, .09); --vig: rgba(0, 0, 0, .55);
+    --mist: 170, 186, 210; --mote: 150, 190, 230; --mote-core: 235, 245, 255; --star: 236, 240, 255;
+    --sea: 140, 170, 200;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #16191f; --fg: #ece6dc; --fg2: #c4bcb0; --muted: #9a9389; --line: #3a3f4a;
+  --accent: #9cc4dc; --warm: #e8a66c; --hl: rgba(140, 180, 210, .24);
+  --hatch: repeating-linear-gradient(33deg, rgba(220, 230, 255, .018) 0 2px, transparent 2px 6px);
+  --vignette: rgba(0, 0, 0, .34);
+  --night: linear-gradient(180deg, rgba(30, 46, 96, .3), rgba(26, 36, 80, .1) 55%, rgba(20, 30, 60, .14));
+  --dusk: radial-gradient(130% 60% at 50% -10%, rgba(150, 100, 170, .22), transparent 70%), radial-gradient(120% 55% at 50% 112%, rgba(220, 120, 100, .2), transparent 72%);
+  --murk: linear-gradient(0deg, rgba(4, 6, 12, .86), rgba(6, 8, 16, .5) 45%, rgba(8, 10, 18, 0));
+  --candle: radial-gradient(60% 40% at 50% 116%, rgba(255, 160, 60, .26), rgba(255, 140, 50, .08) 48%, transparent 76%);
+  --pool: rgba(150, 180, 230, .09); --pool-warm: rgba(255, 170, 100, .09); --vig: rgba(0, 0, 0, .55);
+  --mist: 170, 186, 210; --mote: 150, 190, 230; --mote-core: 235, 245, 255; --star: 236, 240, 255;
+  --sea: 140, 170, 200;
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; background: var(--bg); }
+body {
+  margin: 0; background: var(--bg); color: var(--fg);
+  font: 400 clamp(18px, 4.7vw, 20.5px)/1.7 var(--serif);
+  overflow-x: hidden; overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+}
+::selection { background: var(--hl); }
+:focus-visible { outline: 2.5px solid var(--accent); outline-offset: 4px; border-radius: 6px; }
+button { font: inherit; color: inherit; }
+a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.nobr { white-space: nowrap; }
+em { font-style: italic; }
+
+/* ---------- слои позади текста: карта на столе, ночное небо, вечер, тьма над морем, свеча ---------- */
+#map { position: fixed; inset: -10%; z-index: 0; pointer-events: none; opacity: .34; background: radial-gradient(ellipse at 30% 20%, transparent 0 40%, var(--vignette) 100%); animation: mapBreath 17s ease-in-out infinite alternate; }
+#map svg { position: absolute; inset: 0; width: 100%; height: 100%; animation: drift 52s ease-in-out infinite alternate; }
+#map g { fill: none; stroke: var(--line); stroke-width: 1.2; }
+@keyframes drift { to { transform: translate(-2%, 1.5%) rotate(.6deg); } }
+@keyframes mapBreath { from { opacity: .26; } to { opacity: .4; } }
+#sky { position: fixed; inset: 0; z-index: 1; pointer-events: none; }
+#sky i { position: absolute; inset: 0; opacity: 0; will-change: opacity; }
+#sky .t-night { background: var(--night); opacity: 1; }
+#sky .t-dusk { background: var(--dusk); }
+#murk { position: fixed; left: 0; right: 0; bottom: 0; height: 100vh; z-index: 1; pointer-events: none; background: var(--murk); opacity: 0; transform-origin: 50% 100%; will-change: opacity, transform; }
+#candle { position: fixed; inset: 0; z-index: 1; pointer-events: none; background: var(--candle); opacity: .6; transform-origin: 50% 100%; will-change: opacity, transform; }
+#pool { position: fixed; left: 0; right: 0; top: 0; height: 90vh; overflow: hidden; z-index: 1; pointer-events: none; opacity: .5; will-change: transform, opacity; }
+#pool i { position: absolute; inset: 0; background: radial-gradient(ellipse 62% 42% at 50% 50%, var(--pool), transparent 72%); }
+#pool i.w { background: radial-gradient(ellipse 62% 42% at 50% 50%, var(--pool-warm), transparent 72%); opacity: 0; }
+#vig { position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: .3; will-change: opacity; background: radial-gradient(ellipse 78% 70% at 50% 46%, transparent 50%, var(--vig) 100%); }
+#air { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; }
+
+main { position: relative; z-index: 3; overflow-x: clip; }
+.hero, .part, .end {
+  width: 100%; max-width: calc(36rem + 40px); margin: 0 auto;
+  padding-left: max(20px, env(safe-area-inset-left)); padding-right: max(20px, env(safe-area-inset-right));
+}
+main p { margin: 0 0 1.15em; }
+
+/* ---------- первый экран: открытка ---------- */
+.hero { position: relative; min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; justify-content: center; padding-top: calc(52px + env(safe-area-inset-top)); padding-bottom: 12vh; }
+.home { position: absolute; left: max(14px, env(safe-area-inset-left)); top: max(4px, env(safe-area-inset-top)); display: inline-flex; align-items: center; min-height: 44px; padding: 0 6px; color: var(--muted); font: 400 14px/1 var(--sans); text-decoration: none; }
+.home span { border-bottom: 1px solid var(--line); padding-bottom: 2px; }
+.home:hover { color: var(--accent); }
+.pc { --fg: #2a241f; --muted: #6a5e52; position: relative; margin: 0 -6px 1.6rem; padding: 10px 10px 2px; border-radius: 10px; color: var(--fg); background-color: #fbf6ec; background-image: var(--hatch); rotate: -.6deg;
+  box-shadow: 0 1px 0 #fff8 inset, 0 18px 40px -18px rgba(20, 25, 40, .6), 0 2px 6px rgba(20, 25, 40, .18); }
+.pc-pic { position: relative; aspect-ratio: 1024 / 683; width: 100%; border-radius: 6px; overflow: hidden; background: #2c3346; }
+.sc-stack { position: absolute; inset: 0; }
+.sc-stack img, .card-pic img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: cover; }
+.sc-stack .sc-vecher { opacity: 0; will-change: opacity; }
+.sc-live, .card-live { position: absolute; inset: 0; width: 100%; height: 100%; display: block; pointer-events: none; }
+.pc-pic::after, .card-pic::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: var(--hatch); box-shadow: inset 0 0 0 1px rgba(30, 30, 50, .14); border-radius: inherit; }
+.pc-stamp { position: absolute; right: 10px; top: 10px; z-index: 2; width: 46px; height: 56px; padding: 4px; background: #fbf6ec; outline: 3px dotted #fbf6ec; outline-offset: 1px; box-shadow: 0 2px 6px #0004; rotate: 3deg; }
+.pc-stamp svg { display: block; width: 100%; height: 100%; }
+.pc-stamp b { position: absolute; left: 0; right: 0; bottom: 5px; text-align: center; font: 600 7.5px/1 var(--sans); letter-spacing: .08em; color: #fff; text-shadow: 0 1px 2px #000a; }
+.pc-postmark { position: absolute; right: 52px; top: 50px; z-index: 2; width: 62px; height: 62px; border: 1.5px solid rgba(240, 246, 255, .55); border-radius: 50%; display: flex; align-items: center; justify-content: center; text-align: center; font: 600 7.5px/1.3 var(--sans); letter-spacing: .08em; text-transform: uppercase; color: rgba(240, 246, 255, .72); rotate: -14deg; pointer-events: none; text-shadow: 0 1px 2px #0006; }
+.pc-postmark::before, .pc-postmark::after { content: ""; position: absolute; left: -30px; width: 30px; height: 2px; background: repeating-linear-gradient(90deg, rgba(240, 246, 255, .5) 0 6px, transparent 6px 9px); }
+.pc-postmark::before { top: 24px; } .pc-postmark::after { top: 34px; }
+.pc-body { padding: 16px 8px 14px; }
+.eyebrow { font: 500 12px/1.3 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin: 0 0 .55rem; }
+.hero h1 { font: 600 clamp(40px, 11vw, 64px)/1.06 var(--serif); letter-spacing: -.012em; margin: 0 0 .35em; }
+.hero h1 .ch { display: inline-block; }
+.js .hero h1 .ch { animation: chIn 1.1s cubic-bezier(.2, .8, .2, 1) both; animation-delay: calc(var(--i) * 70ms + .2s); }
+@keyframes chIn { from { opacity: 0; translate: 0 .35em; filter: blur(3px); } }
+.lede { font: italic 400 1.02em/1.5 var(--serif); color: #4a4038; margin: 0; }
+.meta { font: 500 14px/1.3 var(--sans); color: var(--muted); margin: 0 0 1.1em; }
+.hello { display: flex; gap: 12px; align-items: flex-start; margin: 0; font: italic 400 17px/1.45 var(--serif); color: var(--fg); max-width: 27em; }
+.hello .dot { flex: none; width: 9px; height: 9px; margin-top: .55em; border-radius: 50%; background: #e7a54a; box-shadow: 0 0 10px 2px rgba(240, 170, 70, .5); animation: flick 4.5s ease-in-out infinite; }
+@keyframes flick { 0%, 100% { transform: scale(.85); opacity: .7; } 30% { transform: scale(1.1); opacity: 1; } 34% { transform: scale(.95); opacity: .8; } 60% { transform: scale(1.05); opacity: .95; } }
+.js .hero .pc { animation: land 1.2s cubic-bezier(.2, .8, .2, 1) both; }
+@keyframes land { from { opacity: 0; translate: 0 22px; rotate: -2.4deg; } }
+.js .hero .meta, .js .hero .hello { animation: up 1s cubic-bezier(.2, .8, .2, 1) both; }
+.js .hero .meta { animation-delay: .9s; } .js .hero .hello { animation-delay: 1.2s; }
+@keyframes up { from { opacity: 0; translate: 0 14px; } }
+.cue { position: absolute; left: 50%; bottom: 5vh; width: 2px; height: 46px; margin-left: -1px; border-radius: 1px; background: linear-gradient(var(--muted), transparent); opacity: .55; animation: cue 3.4s ease-in-out infinite; }
+@keyframes cue { 0%, 100% { transform: translateY(0); opacity: .2; } 50% { transform: translateY(10px); opacity: .6; } }
+
+/* ---------- части статьи и горизонт между ними ---------- */
+#r0 { padding-top: 6vh; }
+.horizon { position: relative; max-width: 36rem; height: 38px; margin: 16vh auto 14vh; padding: 0 20px; }
+.horizon svg { width: 100%; height: 30px; overflow: visible; display: block; }
+.horizon path { fill: none; stroke: var(--accent); stroke-linecap: round; vector-effect: non-scaling-stroke; }
+.hz-a { stroke-width: 1.6; opacity: .55; } .hz-b { stroke-width: 1.1; opacity: .3; }
+.hz-moon { position: absolute; left: 50%; top: -14px; width: 7px; height: 7px; margin-left: -3.5px; border-radius: 50%; background: var(--accent); opacity: .55; box-shadow: 0 0 12px 3px var(--hl); }
+.js .horizon svg { clip-path: inset(0 50% 0 50%); transition: clip-path 2.2s cubic-bezier(.3, .7, .2, 1); }
+.js .horizon.seen svg { clip-path: inset(0 0 0 0); }
+
+/* абзацы проявляются мягко, как глаза привыкают к темноте */
+.js main [data-p] { transition: opacity 1.2s ease, translate 1.3s cubic-bezier(.2, .8, .2, 1), filter 1.4s ease; }
+.js main [data-p]:not(.seen) { opacity: 0; translate: 0 12px; filter: blur(2px); }
+
+.pull { font: 600 clamp(23px, 6.2vw, 30px)/1.34 var(--serif); letter-spacing: -.004em; margin: 1.4em 0 1.2em !important; text-wrap: balance; }
+.pull::before { content: ""; display: block; width: 34px; height: 3px; border-radius: 2px; background: var(--accent); margin-bottom: .6em; opacity: .7; }
+.pull.soft { font-weight: 500; font-style: italic; color: var(--fg2); }
+.pull.soft::before { display: none; }
+.short { font: italic 500 1.2em/1.45 var(--serif); padding-left: 1.1em; border-left: 2px solid var(--line); }
+.deal { font-size: 1.08em; padding: .2em 0 .2em 1.1em; border-left: 2px solid var(--accent); }
+
+/* свеча, зажигалка, тысяча ночей */
+.k-candle { position: relative; }
+.k-candle::after { content: ""; position: absolute; left: 50%; bottom: 92%; width: 2px; height: 1.6em; margin-left: -1px; border-radius: 2px; background: linear-gradient(to top, rgba(140, 140, 150, .5), transparent); opacity: 0; transform-origin: 50% 100%; }
+.x-candle.out .k-candle::after { animation: wisp 4.5s ease-out 1 forwards; }
+@keyframes wisp { 0% { opacity: 0; transform: scaleY(.2) skewX(0); } 15% { opacity: .9; } 60% { opacity: .4; transform: scaleY(1) skewX(-14deg) translateY(-6px); } 100% { opacity: 0; transform: scaleY(1.3) skewX(10deg) translateY(-18px); } }
+.k-lighter { position: relative; }
+.k-lighter i { position: absolute; width: 3px; height: 3px; border-radius: 50%; background: #ffd27a; box-shadow: 0 0 6px 2px rgba(255, 190, 90, .8); opacity: 0; pointer-events: none; }
+.k-nights { transition: color 2.4s ease, text-shadow 2.4s ease; }
+.x-nights.on .k-nights { color: var(--accent); text-shadow: 0 0 14px var(--hl); }
+
+/* позолота с цитаты сходит сама, когда текст называет её инструкцией */
+.k-gold { --g: 0; -webkit-box-decoration-break: clone; box-decoration-break: clone;
+  background-image: linear-gradient(100deg, #9a6a18, #d9a83c 30%, #f2d27c 45%, #c08a2a 60%, #9a6a18); background-size: 260% 100%;
+  -webkit-background-clip: text; background-clip: text; color: color-mix(in srgb, transparent calc((1 - var(--g)) * 100%), var(--fg2));
+  animation: gild 6s ease-in-out infinite alternate; }
+@keyframes gild { to { background-position: 100% 50%; } }
+.k-plain { transition: color 1.6s ease; }
+.x-gild.plained .k-plain { color: var(--fg); text-decoration: underline 1px; text-decoration-color: var(--line); text-underline-offset: 4px; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .k-gold { background-image: linear-gradient(100deg, #c99a3e, #f2cf7a 30%, #fff0bc 45%, #e0b056 60%, #c99a3e); } }
+:root[data-theme="dark"] .k-gold { background-image: linear-gradient(100deg, #c99a3e, #f2cf7a 30%, #fff0bc 45%, #e0b056 60%, #c99a3e); }
+
+/* тревога: вопросы чуть дрожат, пока тьма поднимается */
+.k-ask { display: inline; transition: color 1.6s ease; }
+.k-ask em { --q: 0; }
+.x-dread.on .k-ask { color: var(--fg2); }
+/* тишина: одно кольцо расходится, как звон */
+.k-ring { position: relative; white-space: nowrap; }
+.k-ring::before, .k-ring::after { content: ""; position: absolute; left: 50%; top: 50%; width: 1em; height: 1em; margin: -.5em 0 0 -.5em; border-radius: 50%; border: 1px solid var(--accent); opacity: 0; pointer-events: none; }
+.x-silence.rung .k-ring::before { animation: ring 3.6s cubic-bezier(.1, .6, .2, 1) 1 both; }
+.x-silence.rung .k-ring::after { animation: ring 3.6s cubic-bezier(.1, .6, .2, 1) .5s 1 both; }
+@keyframes ring { 0% { opacity: .7; transform: scale(1); } 100% { opacity: 0; transform: scale(14); } }
+.x-silence.rung .k-ring { color: var(--accent); transition: color 2s ease; }
+
+/* сон: слово дышит */
+.k-breath { display: inline-block; transition: color 2s ease; }
+.x-sleep.on .k-breath { animation: breath 5.6s ease-in-out infinite; }
+@keyframes breath { 0%, 100% { transform: scale(1); } 42% { transform: scale(1.06); color: var(--accent); } }
+
+/* струна */
+.string { margin: 2.2em 0 1em; height: 34px; }
+.string svg { width: 100%; height: 100%; overflow: visible; display: block; }
+.string path { fill: none; stroke: var(--fg2); stroke-width: 1.3; stroke-linecap: round; vector-effect: non-scaling-stroke; opacity: .7; }
+.string circle { fill: var(--fg2); opacity: .6; }
+.string.snap path { transition: opacity 4s ease 1.6s; opacity: .3; }
+
+/* подчёркивание, которое само рисуется */
+.u { position: relative; }
+.u-line { position: absolute; left: -1%; bottom: -.3em; width: 102%; height: .5em; overflow: visible; pointer-events: none; }
+.u-line path { fill: none; stroke: var(--accent); stroke-width: 2.2; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; vector-effect: non-scaling-stroke; transition: stroke-dashoffset 1.8s cubic-bezier(.5, 0, .2, 1) .5s; }
+.on .u-line path { stroke-dashoffset: 0; }
+.x-evening .u-line path { stroke: var(--warm); }
+
+.last { font: 600 clamp(24px, 6.6vw, 34px)/1.34 var(--serif); text-align: center; margin: 1.8em auto 1.2em !important; max-width: 17em; text-wrap: balance; position: relative; }
+.last::before { content: ""; position: absolute; left: 50%; top: 50%; width: 110%; height: 230%; translate: -50% -50%; z-index: -1; background: radial-gradient(closest-side, rgba(255, 180, 110, .22), transparent); animation: glowB 7s ease-in-out infinite; pointer-events: none; }
+@keyframes glowB { 0%, 100% { opacity: .55; scale: .94; } 50% { opacity: 1; scale: 1.04; } }
+.k-rise { transition: color 2.4s ease .6s, text-shadow 2.4s ease .6s; }
+.last.on .k-rise { color: var(--warm); text-shadow: 0 0 18px rgba(255, 180, 110, .35); }
+
+/* ---------- картины ---------- */
+.card { position: relative; margin: 1rem -6px 2.4rem; padding: 8px 8px 0; background: #fbf6ec; background-image: var(--hatch); border-radius: 8px; rotate: var(--tilt, 0deg);
+  box-shadow: 0 1px 0 #fff8 inset, 0 16px 34px -16px rgba(20, 25, 40, .6), 0 2px 6px rgba(20, 25, 40, .16); }
+.card-pic { position: relative; aspect-ratio: 1024 / 683; border-radius: 5px; overflow: hidden; background: #2c3346; }
+.card figcaption { font: italic 400 15px/1.2 var(--serif); color: #6a5e52; padding: 8px 4px 9px; }
+.js .card, .js .scene.band { transition: opacity 1.4s ease, translate 1.4s cubic-bezier(.2, .8, .2, 1); }
+.js .card:not(.seen), .js .scene.band:not(.seen) { opacity: 0; translate: 0 26px; }
+.scene.band { position: relative; left: 50%; width: min(54rem, calc(100vw - 24px)); margin: 5rem 0 2.6rem; padding: 10px; background: #fbf6ec; background-image: var(--hatch); border-radius: 10px; rotate: .5deg; transform: translateX(-50%);
+  box-shadow: 0 1px 0 #fff8 inset, 0 20px 44px -18px rgba(20, 25, 40, .6), 0 2px 6px rgba(20, 25, 40, .18); }
+@media (min-width: 760px) { .card { margin: 1.4rem -3.2rem 2.8rem; } }
+@media (min-width: 900px) { .hero { max-width: calc(44rem + 40px); } }
+
+/* ---------- конец ---------- */
+.end { padding-top: 2rem; padding-bottom: calc(5rem + env(safe-area-inset-bottom)); text-align: center; font: 400 16px/1.6 var(--sans); color: var(--muted); }
+.end .thanks { font: italic 400 20px/1.4 var(--serif); color: var(--fg); margin: 0 0 1em; }
+.end p { margin: 0 0 .7em; }
+.end .to-all { display: inline-flex; align-items: center; min-height: 44px; }
+
+/* ---------- звук и записка-напоминание ---------- */
+#snd { position: fixed; right: max(14px, env(safe-area-inset-right)); bottom: max(14px, env(safe-area-inset-bottom)); z-index: 6; width: 48px; height: 48px; border: 0; border-radius: 50%; padding: 0; cursor: pointer;
+  background: #fbf6ec; color: #5d6a78; box-shadow: 0 6px 16px -6px rgba(20, 25, 40, .5), 0 1px 3px rgba(20, 25, 40, .2); opacity: .9; transition: opacity .4s ease, transform .4s ease; display: grid; place-items: center; }
+#snd:hover { opacity: 1; transform: translateY(-1px); }
+#snd svg { width: 26px; height: 26px; }
+#snd .wv { opacity: .35; }
+#snd[aria-pressed="true"] { color: #3f6f8a; }
+#snd[aria-pressed="true"] .wv { opacity: 1; animation: wv 3.2s ease-in-out infinite; }
+#snd[aria-pressed="true"] .wv2 { animation-delay: .6s; }
+@keyframes wv { 50% { transform: translateX(-2px); opacity: .5; } }
+#snd-tip { position: fixed; right: calc(max(14px, env(safe-area-inset-right)) + 56px); bottom: calc(max(14px, env(safe-area-inset-bottom)) + 12px); z-index: 6; font: 500 13px/1 var(--sans); color: var(--muted); background: var(--bg); padding: 6px 9px; border-radius: 12px; opacity: 0; transition: opacity 1s ease; pointer-events: none; white-space: nowrap; }
+#snd-tip.on { opacity: .95; }
+#toast { position: fixed; left: 50%; bottom: max(14px, env(safe-area-inset-bottom)); z-index: 7; width: min(30rem, calc(100vw - 24px)); translate: -50% 0; padding: 14px 16px 12px; border-radius: 12px; background: #fbf6ec; background-image: var(--hatch); color: #2a241f;
+  box-shadow: 0 18px 40px -16px rgba(20, 25, 40, .6), 0 2px 6px rgba(20, 25, 40, .2); font: italic 400 17px/1.45 var(--serif); transition: opacity .8s ease, translate .9s cubic-bezier(.2, .8, .2, 1); }
+#toast.hide { opacity: 0; translate: -50% 20px; pointer-events: none; }
+#toast .tb { display: flex; gap: 8px; justify-content: flex-end; margin-top: 8px; }
+#toast button { font: 500 14px/1 var(--sans); border: 0; background: none; color: #3f6f8a; padding: 10px 10px; min-height: 40px; border-radius: 8px; cursor: pointer; }
+#toast button.go { background: #3f6f8a; color: #f6f2ea; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; transition-delay: 0s !important; }
+  #map svg { animation: none; }
+}
+</style>
+</head>
+<body>
+<div id="map" aria-hidden="true"><svg viewBox="0 0 800 1200" preserveAspectRatio="xMidYMid slice"><g>
+<path d="M-20 160 C 120 120 240 200 400 170 S 650 120 820 160"/><path d="M-20 200 C 130 165 250 240 410 212 S 660 160 820 200" opacity=".7"/>
+<path d="M560 300 C 610 260 720 270 760 330 S 720 470 640 460 S 520 360 560 300Z"/><path d="M590 315 C 625 290 705 298 730 340 S 700 440 645 432 S 565 360 590 315Z" opacity=".7"/>
+<path d="M-20 620 C 140 590 260 680 420 650 S 660 590 820 640"/><path d="M-20 660 C 150 630 270 720 430 690 S 670 630 820 680" opacity=".6"/>
+<path d="M80 860 C 140 800 280 800 320 870 S 260 990 170 980 S 30 930 80 860Z"/>
+<path d="M-20 1060 C 160 1030 280 1110 440 1080 S 660 1030 820 1070" opacity=".7"/>
+<path d="M200 -20 C 240 160 160 320 240 480 S 360 660 300 840" stroke-dasharray="2 9" stroke-width="2"/>
+</g></svg></div>
+<div id="sky" aria-hidden="true"><i class="t-night"></i><i class="t-dusk"></i></div>
+<div id="candle" aria-hidden="true"></div>
+<div id="murk" aria-hidden="true"></div>
+<div id="vig" aria-hidden="true"></div>
+<div id="pool" aria-hidden="true"><i></i><i class="w"></i></div>
+<canvas id="air" aria-hidden="true"></canvas>
+
+<main>
+<header class="hero">
+  <a class="home" href="https://legendpsy.github.io/stati/"><span>← Все статьи</span></a>
+  <div class="pc">
+    <div class="pc-pic scene hero-scene" role="img" aria-label="Ночь, старый балкон у моря. Напротив за столиком сидит он и вертит в пальцах зажигалку; между чашками только что погасла свеча, над морем тяжёлые облака.">
+      <div class="sc-stack"><img class="sc-noch" src="art/noch.webp" alt="" width="1024" height="683" decoding="async"><canvas class="sc-live" aria-hidden="true"></canvas></div>
+      <span class="pc-stamp"><svg viewBox="0 0 40 50" aria-hidden="true"><rect width="40" height="50" fill="#2d3b5a"/><path d="M0 34 Q 10 30, 20 34 T 40 34 V50 H0Z" fill="#3d5f7a"/><path d="M0 38 Q 10 35, 20 38 T 40 38" stroke="#9fc0d6" stroke-width="1" fill="none"/><rect x="17" y="17" width="6" height="11" rx="1" fill="#fbf6ec"/><path d="M20 9 C 22.5 12, 23 14, 20 16.5 C 17 14, 17.5 12, 20 9 Z" fill="#f2b04c"/><circle cx="31" cy="9" r="3.2" fill="#f4e6c0"/></svg><b>МОРЕ</b></span>
+      <span class="pc-postmark">Балкон<br>2026</span>
+    </div>
+    <div class="pc-body">
+      <p class="eyebrow">Статья психолога</p>
+      <h1><span class="sr">Доверие</span><span aria-hidden="true"><span class="ch" style="--i:0">Д</span><span class="ch" style="--i:1">о</span><span class="ch" style="--i:2">в</span><span class="ch" style="--i:3">е</span><span class="ch" style="--i:4">р</span><span class="ch" style="--i:5">и</span><span class="ch" style="--i:6">е</span></span></h1>
+      <p class="lede">Почему страх перед близостью почти никогда не связан с тем, кто сидит напротив, — и что меняется в ту ночь, когда ты наконец разрешаешь другому не справиться</p>
+    </div>
+  </div>
+  <p class="meta">Около 4 минут чтения</p>
+  <aside class="hello"><i class="dot" aria-hidden="true"></i><span id="hello-text">Здесь ничего не нужно нажимать. Просто читайте: ночь у моря пройдёт вместе с вами.</span></aside>
+  <div class="cue" aria-hidden="true"></div>
+</header>
+
+<section class="part" id="r0" data-sec="0">
+<p id="p1" data-p class="x-candle">Влажный морской воздух гасит <span class="k k-candle">свечу</span> на столике, в чашках давно остыл чай. Мы сидим на балконе в одну из тех ночей, когда все шрамы уже выучены наизусть и целую фразу легко заменяет полувздох.</p>
+<p id="p2" data-p class="x-lighter">Он вертит в пальцах <span class="k k-lighter">зажигалку</span> и спокойно рассказывает о наших общих планах. Я киваю в такт его голосу, но внутри разливается знакомый до тошноты страх — страх разжать пальцы и отпустить вожжи. В эту минуту довериться кажется сделкой безумца: добровольно лечь на операционный стол, даже не заглянув в диплом хирурга.</p>
+<p id="p3" data-p class="x-nights">Пока он говорит, я проваливаюсь в память — в <span class="k k-nights">тысячу и одну прошлую ночь</span>, когда я уже проделываю этот фокус. Я вынимаю из груди всё самое незащищённое: свой хрупкий покой, усталость, разобранность, ту часть себя, которой нечем прикрыться. Выкладываю это перед другим человеком и говорю: <em>«Держи. Теперь это у тебя»</em>.</p>
+<p id="p4" data-p class="x-gild">А потом, когда чужие руки неизбежно дрожат, я рыдаю в темноте под «Знаешь ли ты?» МакSим. Строчка <span class="k k-gold"><em>«Сердце его теперь в твоих руках — не потеряй его и не сломай»</em></span> долго казалась мне золотым стандартом любви. Лишь спустя годы мне удаётся разглядеть, чем она была на самом деле: <span class="k k-plain">инструкцией</span>, по которой я заранее вжимаю голову в плечи и жду удара.</p>
+<p id="p5" data-p>Пожалуй, это наша общая, почти культурная болезнь. Мы вручаем другому своё сердце — и в ту же секунду замираем рядом с занесённым скальпелем, готовые при малейшем неловком движении полоснуть первыми: отсечь, обесценить, хлопнуть дверью раньше, чем нам сделают больно. Мы выкручиваем близким руки, требуя стопроцентной страховки там, где её в принципе не выпускают.</p>
+</section><div class="horizon" aria-hidden="true"><svg viewBox="0 0 400 30" preserveAspectRatio="none"><path class="hz-a" d="M0 16 Q 50 12, 100 16 T 200 16 T 300 16 T 400 16"/><path class="hz-b" d="M0 22 Q 50 19, 100 22 T 200 22 T 300 22 T 400 22"/></svg><i class="hz-moon"></i></div><section class="part" id="r1" data-sec="1">
+<figure class="card" data-life="mrak" style="--tilt:-1.1deg"><div class="card-pic"><img src="art/mrak.webp" alt="" width="1024" height="683" loading="lazy" decoding="async"><canvas class="card-live" aria-hidden="true"></canvas></div><figcaption>Небо и море слились в одну стену</figcaption></figure>
+<p id="p6" data-p class="x-dread">За береговой линией висит тяжёлый кучевой блэкаут — небо и море слились в глухую, непроглядную стену. Я смотрю в эту темноту, пока меня медленно, сантиметр за сантиметром, затягивает липкая тревога. <span class="k k-ask"><em>А вдруг он не поймёт? Вдруг усмехнётся? Вдруг завтра утром я проснусь с горьким сожалением о каждом слове, сказанном этой ночью?</em></span></p>
+<p id="p7" data-p class="x-silence">Я не отмахиваюсь от неё. И когда эта тревога проглатывает меня целиком, на самом её дне вдруг обнаруживается <span class="k k-ring">звенящая, чистая тишина</span>.</p>
+<p id="p8" data-p class="pull">В этой тишине становится невыносимо ясно: все эти годы я душу не того, кто сидит напротив. Я душу себя.</p>
+<p id="p9" data-p>Я боюсь доверять вовсе не потому, что люди бывают небрежными, рассеянными или жестокими. Страх растёт из куда более тихого и болезненного убеждения: в глубине души я считаю себя <span class="u">слишком хрупким человеком, чтобы пережить чужую ошибку<svg class="u-line" viewBox="0 0 200 12" preserveAspectRatio="none" aria-hidden="true"><path d="M2 8 C 30 3, 55 11, 85 6 S 140 3, 170 7 S 192 6, 198 5" pathLength="1"/></svg></span>. Я требую от другого безупречной гарантии только потому, что не верю в собственную способность подняться, если упаду.</p>
+</section><div class="horizon" aria-hidden="true"><svg viewBox="0 0 400 30" preserveAspectRatio="none"><path class="hz-a" d="M0 16 Q 50 12, 100 16 T 200 16 T 300 16 T 400 16"/><path class="hz-b" d="M0 22 Q 50 19, 100 22 T 200 22 T 300 22 T 400 22"/></svg><i class="hz-moon"></i></div><section class="part" id="r2" data-sec="2">
+<figure class="card" data-life="son" style="--tilt:0.9deg"><div class="card-pic"><img src="art/son.webp" alt="" width="1024" height="683" loading="lazy" decoding="async"><canvas class="card-live" aria-hidden="true"></canvas></div><figcaption>Позже, в ту же ночь</figcaption></figure>
+<p id="p10" data-p class="x-sleep">Позже, в ту же ночь, я лежу без сна и смотрю на него спящего. В полумраке с него будто сходит вся невозможная должность, на которую я тайком его назначаю. Передо мной <span class="k k-breath">дышит</span> обычный живой человек — уязвимый, эмоциональный, ограниченный, несовершенный. И в том, что я вижу, удивительно много тепла.</p>
+<p id="p11" data-p class="short">Тогда я заключаю с собой тихую сделку.</p>
+<p id="p12" data-p class="deal"><em>«Ты можешь не справиться,</em> — мысленно говорю я ему. — <em>Ты можешь не удержать то, что я тебе отдаю. Я больше не буду стоять над тобой с плетью».</em></p>
+<p id="p13" data-p class="pull soft">Если ты уронишь — я наклонюсь и подниму. Если мне станет больно — я это проживу. Я себя не брошу.</p>
+<div class="string" aria-hidden="true"><svg viewBox="0 0 400 40" preserveAspectRatio="none"><path class="st-a" d="M4 20 Q 102 20, 200 20"/><path class="st-b" d="M200 20 Q 298 20, 396 20"/><circle cx="4" cy="20" r="3"/><circle cx="396" cy="20" r="3"/></svg></div><p id="p14" data-p class="x-string">Внутри <span class="nobr">что-то</span> беззвучно щёлкает, и тугая струна, державшая меня в напряжении долгие годы, наконец лопается. Я закрываю глаза и впервые за очень долгое время <span class="nobr">по-настоящему</span> засыпаю. Без дежурства на вышке, без привычной готовности вскочить при первом шорохе — просто засыпаю.</p>
+<p id="p15" data-p class="pull">Доверие оказалось совсем не клятвой другого человека в том, что он никогда не причинит мне боли. Оно оказалось моим собственным, свободным выбором — и тихой уверенностью в том, что я выстою, каким бы ни оказался исход.</p>
+<figure class="scene band scene-vecher"><div class="pc-pic"><div class="sc-stack"><img class="sc-noch" src="art/noch.webp" alt="" width="1024" height="683" decoding="async" loading="lazy"><img class="sc-vecher" src="art/vecher.webp" alt="" width="1024" height="683" decoding="async" loading="lazy"><canvas class="sc-live" aria-hidden="true"></canvas></div><span class="pc-stamp"><svg viewBox="0 0 40 50" aria-hidden="true"><rect width="40" height="50" fill="#e7b9a4"/><path d="M0 34 Q 10 30, 20 34 T 40 34 V50 H0Z" fill="#3d5f7a"/><path d="M0 38 Q 10 35, 20 38 T 40 38" stroke="#9fc0d6" stroke-width="1" fill="none"/><rect x="17" y="17" width="6" height="11" rx="1" fill="#fbf6ec"/><path d="M20 9 C 22.5 12, 23 14, 20 16.5 C 17 14, 17.5 12, 20 9 Z" fill="#f2b04c"/><circle cx="31" cy="9" r="3.2" fill="#f4e6c0"/></svg><b>ВЕЧЕР</b></span><span class="pc-postmark">Тот же<br>балкон</span></div></figure>
+<p id="p16" data-p class="x-evening">На следующий вечер мы снова выходим на тот же балкон. Ветер всё так же тянет сыростью со стороны моря, и разговор снова сворачивает к нашему будущему. Только на этот раз я не прячусь за остывшей чашкой — я <span class="u">шагаю в эти планы рядом с ним<svg class="u-line" viewBox="0 0 200 12" preserveAspectRatio="none" aria-hidden="true"><path d="M2 8 C 30 3, 55 11, 85 6 S 140 3, 170 7 S 192 6, 198 5" pathLength="1"/></svg></span>.</p>
+<p id="p17" data-p class="last">Потому что впервые в жизни я вижу в себе не человека, который упал тысячу раз. Я вижу того, кто <span class="k k-rise">тысячу и один раз поднялся</span> — и всё ещё стоит на ногах.</p>
+</section>
+
+<footer class="end">
+  <p class="thanks">Спасибо, что посидели на этом балконе.</p>
+  <p>Ещё статьи: <a href="../partner/">«На что можно смотреть бесконечно»</a>, <a href="../granicy/">«Чьи это границы?»</a>, <a href="../gorizont/">«Горизонт отношений»</a>, <a href="../kak-dolzhno/">«Как вообще-то должно быть»</a> и <a href="https://legendpsy.github.io/love-essay/">«Любовь не измеряется страданием»</a></p>
+  <p><a class="to-all" href="https://legendpsy.github.io/stati/">← Все статьи</a></p>
+</footer>
+</main>
+
+<button id="snd" type="button" aria-pressed="false" aria-label="Звук моря ночью">
+  <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="22" cy="8" r="3.2" fill="currentColor" opacity=".8"/><path class="wv" d="M3 18 Q 7.5 14, 12 18 T 21 18 T 30 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path class="wv wv2" d="M3 24 Q 7.5 20, 12 24 T 21 24 T 30 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+</button>
+<div id="snd-tip" aria-hidden="true">звук моря ночью</div>
+<div id="toast" class="hide" role="status"></div>
+<script>
+/* «Доверие» — жизнь сайта.
+   Ночной балкон у моря. Влажный воздух тянется по странице, лунный свет падает на абзац, который вы читаете,
+   внизу экрана дышит море. Свеча гаснет в первом абзаце и снова загорается «на следующий вечер».
+   Когда текст о тревоге, над страницей поднимается тьма; на «тишине» всё замирает. Ночью страница дышит, как спящий.
+   Ничего не нужно нажимать. Сайт помнит, где вы остановились. Звук — только по кнопке. */
+(() => {
+'use strict';
+const D = document, R = D.documentElement, W = window;
+R.classList.add('js');
+const $ = (s, el = D) => el.querySelector(s), $$ = (s, el = D) => [...el.querySelectorAll(s)];
+const RM = W.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const TAU = Math.PI * 2;
+const clamp = (v, a = 0, b = 1) => v < a ? a : v > b ? b : v;
+const lerp = (a, b, t) => a + (b - a) * t;
+const sstep = (a, b, v) => { const t = clamp((v - a) / (b - a)); return t * t * (3 - 2 * t); };
+const nz = x => Math.sin(x) * .5 + Math.sin(x * 2.13 + 1.3) * .3 + Math.sin(x * 4.37 + .7) * .2;
+function rng(seed) {
+  return () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+}
+const rnd = rng(Date.now() % 100000);
+const store = {
+  get(k, d) { try { const v = localStorage.getItem('doverie:' + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem('doverie:' + k, JSON.stringify(v)); } catch (e) {} }
+};
+const isDark = () => R.dataset.theme === 'dark' || (R.dataset.theme !== 'light' && W.matchMedia('(prefers-color-scheme: dark)').matches);
+const rgba = (c, a) => `rgba(${c[0]},${c[1]},${c[2]},${a < 0 ? 0 : a})`;
+const mixc = (a, b, t) => [Math.round(lerp(a[0], b[0], t)), Math.round(lerp(a[1], b[1], t)), Math.round(lerp(a[2], b[2], t))];
+function glow(ctx, x, y, r, c, a) {
+  if (a <= .002) return;
+  const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+  g.addColorStop(0, rgba(c, a)); g.addColorStop(.45, rgba(c, a * .35)); g.addColorStop(1, rgba(c, 0));
+  ctx.fillStyle = g; ctx.fillRect(x - r, y - r, r * 2, r * 2);
+}
+function dot(ctx, x, y, r) { ctx.beginPath(); ctx.arc(x, y, r, 0, TAU); ctx.fill(); }
+
+/* ---------- окно и прокрутка ---------- */
+let vw = innerWidth, vh = innerHeight, docH = 1, sy = scrollY, prog = 0;
+let vel = 0, lastY = sy, lastT = performance.now(), lastScroll = 0, lastAct = performance.now(), airShift = 0;
+function measure() { vw = innerWidth; vh = innerHeight; docH = Math.max(1, R.scrollHeight - vh); }
+measure();
+addEventListener('resize', () => { measure(); sizeAir(); }, { passive: true });
+addEventListener('scroll', () => {
+  const now = performance.now(), y = scrollY, dt = Math.max(8, now - lastT);
+  const v = (y - lastY) / dt; vel = vel * .55 + v * .45;
+  airShift += y - lastY;
+  lastY = y; lastT = now; sy = y; lastScroll = now; lastAct = now;
+}, { passive: true });
+for (const ev of ['pointermove', 'pointerdown', 'keydown', 'touchstart']) addEventListener(ev, () => { lastAct = performance.now(); }, { passive: true });
+
+/* ---------- состояние ночи: всё, что меняется по ходу чтения ---------- */
+const P = id => D.querySelector(id);
+const pCandle = P('.x-candle'), pLighter = P('.x-lighter'), pNights = P('.x-nights'), pGild = P('.x-gild'),
+  pDread = P('.x-dread'), pSilence = P('.x-silence'), pSleep = P('.x-sleep'), pString = P('.x-string'),
+  pEvening = P('.x-evening'), pLast = P('.last');
+const cardSon = P('.card[data-life=son]'), cardMrak = P('.card[data-life=mrak]'), sceneV = P('.scene-vecher');
+const S = { murk: 0, still: 0, sleep: 0, dusk: 0, candle: 1, candleOut: false, relit: false, rung: false, snapped: false, exhale: 0, nightsAt: -1, breath: 0, tscale: 1 };
+const top = el => el ? el.getBoundingClientRect().top / vh : 9;
+const mid = el => { if (!el) return 9; const r = el.getBoundingClientRect(); return (r.top + r.bottom) / 2 / vh; };
+
+/* ---------- живые картины ---------- */
+const IW = 1024, IH = 683;
+const lives = [];
+function addLive(el, cv, draw, setup) {
+  const L = { el, cv, ctx: cv.getContext('2d'), draw, s: { r: rng(lives.length * 97 + 13), t: 0 }, w: 0, h: 0, k: 1, dpr: 1, vis: false };
+  if (setup) setup(L.s);
+  lives.push(L);
+  return L;
+}
+function sizeLive(L) {
+  const r = L.cv.getBoundingClientRect();
+  if (!r.width) return;
+  L.dpr = Math.min(devicePixelRatio || 1, 2);
+  L.w = r.width; L.h = r.height; L.k = r.width / IW;
+  L.cv.width = Math.round(r.width * L.dpr); L.cv.height = Math.round(r.height * L.dpr);
+}
+const ro = new ResizeObserver(es => { for (const e of es) { const L = lives.find(l => l.cv === e.target); if (L) sizeLive(L); } });
+const vio = new IntersectionObserver(es => { for (const e of es) { const L = lives.find(l => l.el === e.target); if (L) L.vis = e.isIntersecting; } }, { rootMargin: '80px 0px' });
+
+/* балкон: ночь (шапка) и следующий вечер (в конце). T: 0 — ночь, 1 — вечер */
+function balconySetup(s) {
+  const r = s.r;
+  s.stars = Array.from({ length: 34 }, () => ({ x: 230 + r() * 780, y: 4 + r() * 110, z: .7 + r() * 1.1, ph: r() * TAU, sp: .5 + r() * 1.7, a: .3 + r() * .6 }));
+  s.glN = Array.from({ length: 26 }, () => ({ x: 640 + r() * 200, y: 266 + r() * 60, w: 5 + r() * 14, ph: r() * TAU, sp: .6 + r() * 1.5 }));
+  s.glV = Array.from({ length: 30 }, () => ({ x: 600 + r() * 330, y: 262 + r() * 70, w: 6 + r() * 16, ph: r() * TAU, sp: .5 + r() * 1.3 }));
+  s.town = Array.from({ length: 14 }, () => ({ x: 850 + r() * 140, y: 240 + r() * 26, ph: r() * TAU, sp: .3 + r() * 1.2 }));
+  s.mist = Array.from({ length: 4 }, (_, i) => ({ x: r() * 1300, y: 258 + i * 12 + r() * 8, rx: 170 + r() * 150, sp: 4 + r() * 6 }));
+  s.smoke = Array.from({ length: 22 }, (_, i) => ({ off: i / 22, sd: r() * 30 }));
+  s.steam = Array.from({ length: 8 }, (_, i) => ({ off: i / 8, sd: r() * 40 }));
+  s.spark = 0; s.nextSpark = 3 + r() * 5;
+}
+function wisp(ctx, t, list, x0, y0, h, a0, wide, col) {
+  for (const w of list) {
+    const q = (t * .09 + w.off) % 1;
+    const y = y0 - q * h, x = x0 + nz(t * .5 + w.sd + q * 3) * wide * q + q * q * 18;
+    const a = a0 * Math.sin(q * Math.PI) * (1 - q * .4);
+    if (a < .01) continue;
+    glow(ctx, x, y, 5 + q * 16, col, a);
+  }
+}
+function drawBalcony(ctx, dt, time, s, T, k) {
+  const night = 1 - T, px = 1 / k;
+  // звёзды
+  ctx.fillStyle = '#f4f2ff';
+  for (const st of s.stars) {
+    const a = st.a * (night * .9 + T * .35) * (.45 + .55 * Math.sin(time * st.sp + st.ph));
+    if (a < .03 || (T > .5 && st.y > 110)) continue;
+    ctx.globalAlpha = a; dot(ctx, st.x, st.y, Math.max(st.z * .85, px * .9));
+  }
+  ctx.globalAlpha = 1;
+  // луна
+  glow(ctx, 741, 63, 46, [230, 236, 255], .16 + .04 * Math.sin(time * .7));
+  // блики на море: лунная дорожка ночью, розовая вечером
+  const draw = (list, col, a0) => {
+    ctx.fillStyle = rgba(col, 1);
+    for (const g of list) {
+      const a = Math.pow(Math.max(0, Math.sin(time * g.sp + g.ph)), 3) * a0;
+      if (a < .02) continue;
+      ctx.globalAlpha = a;
+      ctx.beginPath(); ctx.ellipse(g.x + Math.sin(time * .35 + g.ph) * 4, g.y, g.w * (.6 + .4 * a), Math.max(1.1, px * 1.1), 0, 0, TAU); ctx.fill();
+    }
+  };
+  if (night > .02) draw(s.glN, [222, 232, 255], .6 * night);
+  if (T > .02) draw(s.glV, [255, 214, 214], .55 * T);
+  ctx.globalAlpha = 1;
+  // огоньки городка на берегу
+  for (const l of s.town) glow(ctx, l.x, l.y, 7, [255, 210, 140], (.18 + .16 * Math.sin(time * l.sp + l.ph)) * (.6 + .4 * night));
+  // тёплый свет из двери
+  glow(ctx, 60, 250, 170, [255, 190, 110], .07 + .03 * nz(time * 1.3));
+  // влажная дымка над морем
+  for (const m of s.mist) {
+    m.x += m.sp * dt; if (m.x - m.rx > 1100) m.x = -m.rx;
+    const g = ctx.createRadialGradient(m.x, m.y, 0, m.x, m.y, m.rx);
+    const c = T > .5 ? [255, 226, 230] : [214, 226, 245];
+    g.addColorStop(0, rgba(c, .1)); g.addColorStop(1, rgba(c, 0));
+    ctx.fillStyle = g; ctx.save(); ctx.translate(0, m.y); ctx.scale(1, .16); ctx.translate(0, -m.y); ctx.fillRect(m.x - m.rx, m.y - m.rx, m.rx * 2, m.rx * 2); ctx.restore();
+  }
+  // свеча: ночью от фитиля тянется дымок, вечером горит
+  if (night > .05) wisp(ctx, time, s.smoke, 505, 468, 140, .24 * night, 14, [210, 214, 224]);
+  if (T > .05) {
+    const fl = .82 + .14 * nz(time * 7.3) + .06 * nz(time * 15.1);
+    glow(ctx, 503, 458, 80, [255, 190, 100], .38 * T * fl);
+    glow(ctx, 503, 460, 18, [255, 236, 180], .55 * T * fl);
+    wisp(ctx, time * .8, s.steam, 515, 588, 90, .3 * T, 12, [255, 244, 236]);
+    wisp(ctx, time * .8 + 3, s.steam, 628, 446, 64, .26 * T, 10, [255, 244, 236]);
+  }
+  // зажигалка: иногда металл ловит свет
+  s.nextSpark -= dt;
+  if (s.nextSpark < 0) { s.spark = 1; s.nextSpark = 4 + s.r() * 6; }
+  if (s.spark > 0) { s.spark = Math.max(0, s.spark - dt * 1.6); if (T < .5) glow(ctx, 383, 240, 24, [255, 240, 210], .7 * Math.sin(s.spark * Math.PI) * (1 - 2 * T)); }
+}
+
+/* тьма над морем: облака изнутри чуть светятся, вдали мигает огонёк судна */
+function mrakSetup(s) {
+  const r = s.r;
+  s.foam = Array.from({ length: 18 }, () => ({ x: 520 + r() * 420, ph: r() * TAU, sp: .3 + r() * .8, w: 10 + r() * 30 }));
+  s.mist = Array.from({ length: 5 }, (_, i) => ({ x: r() * 1300, y: 300 + i * 40 + r() * 20, rx: 220 + r() * 180, sp: 5 + r() * 6 }));
+}
+function drawMrak(ctx, dt, t, s) {
+  glow(ctx, 380, 100, 150, [190, 205, 235], .07 + .06 * Math.max(0, nz(t * .35)));
+  glow(ctx, 730, 160, 130, [190, 205, 235], .05 + .05 * Math.max(0, nz(t * .29 + 2)));
+  const blink = (Math.sin(t * 1.4) > .2 ? 1 : .35) * (.8 + .2 * Math.sin(t * 9));
+  glow(ctx, 707, 413, 14, [255, 214, 140], .6 * blink * (1 - S.murk * .6));
+  ctx.fillStyle = 'rgba(225,232,245,1)';
+  for (const f of s.foam) {
+    const a = Math.pow(Math.max(0, Math.sin(t * f.sp + f.ph)), 4) * .22;
+    if (a < .02) continue;
+    const y = 548 - (f.x - 520) * .07;
+    ctx.globalAlpha = a; ctx.beginPath(); ctx.ellipse(f.x, y, f.w, 1.4, -.07, 0, TAU); ctx.fill();
+  }
+  ctx.globalAlpha = 1;
+  for (const m of s.mist) {
+    m.x += m.sp * dt; if (m.x - m.rx > 1100) m.x = -m.rx;
+    const g = ctx.createRadialGradient(m.x, m.y, 0, m.x, m.y, m.rx);
+    g.addColorStop(0, 'rgba(160,175,205,.07)'); g.addColorStop(1, 'rgba(160,175,205,0)');
+    ctx.fillStyle = g; ctx.save(); ctx.translate(0, m.y); ctx.scale(1, .22); ctx.translate(0, -m.y); ctx.fillRect(m.x - m.rx, m.y - m.rx, m.rx * 2, m.rx * 2); ctx.restore();
+  }
+}
+
+/* сон: пылинки в лунном луче, стакан ловит свет, за дверью море */
+function sonSetup(s) {
+  const r = s.r;
+  s.motes = Array.from({ length: 26 }, () => ({ x: 560 + r() * 360, y: 120 + r() * 300, vx: (r() - .5) * 3, vy: -1 - r() * 3, ph: r() * TAU, z: .7 + r() * .9 }));
+  s.gl = Array.from({ length: 14 }, () => ({ x: 690 + r() * 150, y: 215 + r() * 110, w: 4 + r() * 10, ph: r() * TAU, sp: .5 + r() * 1.2 }));
+  s.stars = Array.from({ length: 12 }, () => ({ x: 670 + r() * 170, y: 12 + r() * 150, ph: r() * TAU, sp: .4 + r() * 1.3 }));
+}
+function drawSon(ctx, dt, t, s) {
+  const sl = .5 + .5 * Math.sin(t * TAU / 5.6);
+  glow(ctx, 783, 47, 40, [230, 236, 255], .16 + .04 * sl);
+  ctx.fillStyle = '#eef2ff';
+  for (const st of s.stars) { const a = .5 * (.4 + .6 * Math.sin(t * st.sp + st.ph)); if (a < .05) continue; ctx.globalAlpha = a; dot(ctx, st.x, st.y, 1.1); }
+  ctx.fillStyle = 'rgba(225,235,255,1)';
+  for (const g of s.gl) { const a = Math.pow(Math.max(0, Math.sin(t * g.sp + g.ph)), 3) * .5; if (a < .02) continue; ctx.globalAlpha = a; ctx.beginPath(); ctx.ellipse(g.x, g.y, g.w, 1, 0, 0, TAU); ctx.fill(); }
+  ctx.globalAlpha = 1;
+  glow(ctx, 170, 188, 26, [230, 240, 255], .2 + .16 * Math.pow(Math.max(0, Math.sin(t * .6)), 6));
+  // луч из двери чуть дышит
+  ctx.save(); ctx.globalAlpha = .05 + .03 * sl;
+  const g = ctx.createLinearGradient(700, 200, 640, 520); g.addColorStop(0, 'rgba(210,225,255,1)'); g.addColorStop(1, 'rgba(210,225,255,0)');
+  ctx.fillStyle = g; ctx.beginPath(); ctx.moveTo(655, 190); ctx.lineTo(850, 190); ctx.lineTo(900, 560); ctx.lineTo(480, 560); ctx.closePath(); ctx.fill(); ctx.restore();
+  for (const m of s.motes) {
+    m.x += (m.vx + nz(t * .3 + m.ph) * 2) * dt; m.y += m.vy * dt;
+    if (m.y < 100) { m.y = 440; m.x = 560 + s.r() * 360; }
+    const a = .4 * (.5 + .5 * Math.sin(t * 1.3 + m.ph));
+    ctx.fillStyle = 'rgba(230,238,255,1)'; ctx.globalAlpha = a; dot(ctx, m.x, m.y, 1.1 * m.z);
+  }
+  ctx.globalAlpha = 1;
+}
+
+const scenes = $$('.scene').map(el => {
+  const stack = $('.sc-stack', el);
+  const sc = { el, hero: el.classList.contains('hero-scene'), T: -1, iv: $('.sc-vecher', stack) };
+  sc.L = addLive(el, $('.sc-live', stack), (ctx, dt, time, s, k) => drawBalcony(ctx, dt, time, s, sc.hero ? 0 : Math.max(0, sc.T), k), balconySetup);
+  return sc;
+});
+for (const el of $$('.card')) {
+  const n = el.dataset.life;
+  if (n === 'mrak') addLive(el, $('.card-live', el), drawMrak, mrakSetup);
+  if (n === 'son') addLive(el, $('.card-live', el), drawSon, sonSetup);
+}
+for (const L of lives) { ro.observe(L.cv); vio.observe(L.el); sizeLive(L); }
+
+/* ---------- сцена страницы ---------- */
+const sky = $$('#sky i'), candleEl = $('#candle'), murkEl = $('#murk'), vig = $('#vig'), pool = $('#pool'), poolW = $('#pool .w');
+const ac = $('#air'), ax = ac.getContext('2d');
+let adpr = 1;
+function sizeAir() { adpr = Math.min(devicePixelRatio || 1, 2); ac.width = Math.round(vw * adpr); ac.height = Math.round(vh * adpr); stars = null; }
+function sprite(rgbVar, coreVar, n, soft) {
+  const c = D.createElement('canvas'); c.width = c.height = n;
+  const g = c.getContext('2d'), cs = getComputedStyle(R);
+  const col = cs.getPropertyValue(rgbVar).trim(), core = coreVar ? cs.getPropertyValue(coreVar).trim() : col;
+  const gr = g.createRadialGradient(n / 2, n / 2, 0, n / 2, n / 2, n / 2);
+  if (soft) { gr.addColorStop(0, `rgba(${col},.16)`); gr.addColorStop(.55, `rgba(${col},.07)`); gr.addColorStop(1, `rgba(${col},0)`); }
+  else { gr.addColorStop(0, `rgba(${core},1)`); gr.addColorStop(.2, `rgba(${core},.85)`); gr.addColorStop(.4, `rgba(${col},.35)`); gr.addColorStop(1, `rgba(${col},0)`); }
+  g.fillStyle = gr; g.fillRect(0, 0, n, n);
+  return c;
+}
+let moteImg, mistImg, warmImg, stars = null, seaCol = '80,110,140', starCol = '70,90,130';
+function makeSprites() {
+  moteImg = sprite('--mote', '--mote-core', 32, false); mistImg = sprite('--mist', null, 128, true);
+  const c = D.createElement('canvas'); c.width = c.height = 32; const g = c.getContext('2d');
+  const gr = g.createRadialGradient(16, 16, 0, 16, 16, 16); gr.addColorStop(0, 'rgba(255,236,190,1)'); gr.addColorStop(.25, 'rgba(255,200,120,.7)'); gr.addColorStop(1, 'rgba(255,170,80,0)');
+  g.fillStyle = gr; g.fillRect(0, 0, 32, 32); warmImg = c;
+  const cs = getComputedStyle(R); seaCol = cs.getPropertyValue('--sea').trim(); starCol = cs.getPropertyValue('--star').trim(); stars = null;
+}
+sizeAir(); makeSprites();
+W.matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', makeSprites);
+
+const wind = { v: 0, next: 9 + rnd() * 8, g: 0, gt: 0, amp: 0, dur: 4 };
+function updateWind(dt, t) {
+  wind.next -= dt;
+  if (wind.next < 0 && !wind.g) { wind.g = .001; wind.gt = 0; wind.amp = (rnd() < .5 ? -1 : 1) * (22 + rnd() * 26); wind.dur = 4 + rnd() * 2.5; wind.next = 16 + rnd() * 18; }
+  if (wind.g) { wind.gt += dt; const q = wind.gt / wind.dur; wind.g = q >= 1 ? 0 : Math.sin(q * Math.PI); }
+  wind.v = 8 + nz(t * .05) * 5 + wind.amp * wind.g; // с моря всё время тянет влажным ветром
+}
+const mists = [];
+function newMist(init) { return { x: init ? rnd() * vw : -300, y: rnd() * vh, r: (vw < 700 ? 170 : 260) * (.8 + rnd() * .7), sd: rnd() * 50, age: init ? rnd() * 30 : 0, life: 40 + rnd() * 25 }; }
+for (let i = 0; i < (vw < 700 ? 4 : 6); i++) mists.push(newMist(true));
+const motes = Array.from({ length: vw < 700 ? 16 : 28 }, () => ({ x: rnd() * vw, y: rnd() * vh, z: .5 + rnd() * .9, ph: rnd() * TAU, sd: rnd() * 80 }));
+const smokeP = [];   // дымок от погасшей свечи
+const rising = [];   // огоньки, что поднимаются в конце
+let riseAcc = 0;
+function makeStars() {
+  const col = Math.min(vw, 36 * 16 + 40), L0 = (vw - col) / 2, wide = L0 > 60;
+  stars = Array.from({ length: wide ? 60 : 26 }, (_, i) => {
+    const left = rnd() < .5;
+    const x = wide ? (left ? 10 + rnd() * (L0 - 30) : vw - 10 - rnd() * (L0 - 30)) : (left ? 3 + rnd() * 12 : vw - 3 - rnd() * 12);
+    return { x, y: rnd() * vh * 1.3, a: .3 + rnd() * .7, sp: .4 + rnd() * 1.4, ph: rnd() * TAU, z: rnd() < .15 ? 1.8 : 1.1 };
+  });
+}
+// «тысяча и одна ночь»: на миг по всему небу загораются звёзды
+const many = Array.from({ length: 220 }, () => ({ x: rnd(), y: rnd(), d: rnd() * 3.2, z: rnd() < .1 ? 1.7 : 1, ph: rnd() * TAU }));
+
+function drawAir(dt, t, shift) {
+  updateWind(dt, t);
+  const k = S.tscale, dark = isDark();
+  // влажный воздух с моря
+  for (let i = 0; i < mists.length; i++) {
+    const m = mists[i];
+    m.age += dt * k; m.x += (wind.v * 1.1 + nz(t * .04 + m.sd) * 6) * dt * k; m.y += nz(t * .03 + m.sd) * 4 * dt * k - shift * .05;
+    if (m.age > m.life || m.x - m.r > vw + 50) { mists[i] = newMist(false); continue; }
+    const a = Math.sin(clamp(m.age / m.life) * Math.PI) * (.55 + .7 * S.murk + .2 * S.dusk) * (dark ? .9 : 1.2);
+    if (a < .02) continue;
+    ax.globalAlpha = Math.min(1, a);
+    ax.drawImage(mistImg, m.x - m.r, m.y - m.r * .6, m.r * 2, m.r * 1.2);
+  }
+  // звёзды по краям; на «тысяче ночей» — по всему небу
+  if (!stars) makeStars();
+  const H = vh * 1.3, starA = (dark ? 1 : .55) * (1 - S.murk) * (1 - .6 * S.dusk);
+  ax.fillStyle = `rgb(${starCol})`;
+  if (starA > .03) for (const st of stars) {
+    const a = starA * st.a * (.35 + .65 * Math.sin(t * st.sp + st.ph));
+    if (a < .04) continue;
+    const y = ((st.y - sy * .03) % H + H) % H;
+    ax.globalAlpha = a; ax.fillRect(st.x, y, st.z, st.z);
+  }
+  if (S.nightsAt >= 0) {
+    const e = t - S.nightsAt;
+    if (e > 14) S.nightsAt = -2;
+    else for (const m of many) {
+      const q = e - m.d;
+      if (q < 0) continue;
+      const a = sstep(0, .8, q) * (1 - sstep(6, 10.5, q)) * (.35 + .4 * Math.sin(t * 2 + m.ph)) * (dark ? 1 : .6);
+      if (a < .03) continue;
+      ax.globalAlpha = a; ax.fillRect(m.x * vw, m.y * vh, m.z, m.z);
+    }
+  }
+  // капли влаги в лунном свете
+  for (const p of motes) {
+    p.x += (wind.v * .9 * p.z + nz(t * .4 + p.sd) * 6) * dt * k;
+    p.y += (nz(t * .3 + p.sd * 2) * 5) * dt * k - shift * .15 * p.z;
+    if (p.x > vw + 10) p.x = -10; if (p.x < -10) p.x = vw + 10;
+    if (p.y < -10) p.y = vh + 10; if (p.y > vh + 10) p.y = -10;
+    const a = (.25 + .45 * Math.pow(Math.max(0, Math.sin(t * .9 + p.ph)), 3)) * (1 - S.murk * .7) * (dark ? 1 : .8);
+    if (a < .03) continue;
+    const sz = 7 * p.z;
+    ax.globalAlpha = a; ax.drawImage(moteImg, p.x - sz / 2, p.y - sz / 2, sz, sz);
+  }
+  // дымок от свечи: поднимается из-под нижнего края, где стоит столик
+  for (let i = smokeP.length - 1; i >= 0; i--) {
+    const s = smokeP[i];
+    if (s.age < 0) { s.age += dt; continue; }
+    s.age += dt; s.y -= (28 + s.age * 6) * dt; s.x += (nz(t * .7 + s.sd) * 14 + wind.v * .4) * dt;
+    if (s.age > s.life) { smokeP.splice(i, 1); continue; }
+    const q = s.age / s.life, r = 26 + q * 90;
+    ax.globalAlpha = Math.sin(q * Math.PI) * .7;
+    ax.drawImage(mistImg, s.x - r, s.y - r, r * 2, r * 2);
+  }
+  // море внизу экрана: три тихие волны
+  const seaA = (dark ? .34 : .4) * (1 - .75 * S.murk);
+  if (seaA > .02) {
+    ax.lineWidth = 1.2; ax.lineCap = 'round';
+    for (let j = 0; j < 3; j++) {
+      const yb = vh - 10 - j * 13, amp = 2.5 + j, sp = (.35 - j * .07) * k;
+      ax.globalAlpha = seaA * (1 - j * .28);
+      ax.strokeStyle = S.dusk > .5 ? 'rgba(220,150,140,1)' : `rgb(${seaCol})`;
+      ax.beginPath();
+      for (let x = -10; x <= vw + 10; x += 12) {
+        const y = yb + Math.sin(x * .018 + t * sp * TAU / 3 + j * 1.7) * amp + Math.sin(x * .007 - t * .2 * k + j) * amp * .8;
+        if (x < 0) ax.moveTo(x, y); else ax.lineTo(x, y);
+      }
+      ax.stroke();
+    }
+  }
+  // в конце: тёплые огоньки поднимаются
+  if (S.rise > 0) {
+    riseAcc += dt * 1.6 * S.rise;
+    while (riseAcc > 1 && rising.length < 30) { riseAcc--; rising.push({ x: vw * (.15 + rnd() * .7), y: vh + 10, vy: -(14 + rnd() * 16), age: 0, life: 9 + rnd() * 6, sd: rnd() * 60, z: .7 + rnd() * .7 }); }
+  }
+  for (let i = rising.length - 1; i >= 0; i--) {
+    const e = rising[i];
+    e.age += dt; e.y += e.vy * dt - shift * .2; e.x += nz(t * .5 + e.sd) * 10 * dt;
+    if (e.age > e.life || e.y < -20) { rising.splice(i, 1); continue; }
+    const q = e.age / e.life, a = sstep(0, .1, q) * (1 - sstep(.6, 1, q)) * (.6 + .4 * Math.sin(t * 3 + e.sd));
+    const sz = 12 * e.z;
+    ax.globalAlpha = a; ax.drawImage(warmImg, e.x - sz / 2, e.y - sz / 2, sz, sz);
+  }
+  ax.globalAlpha = 1;
+}
+
+/* ---------- лунный свет на абзаце ---------- */
+const paras = $$('main [data-p]');
+function readingPara() {
+  let best = null, bd = 1e9;
+  for (const p of paras) {
+    const r = p.getBoundingClientRect();
+    if (r.bottom < vh * .12 || r.top > vh * .85) continue;
+    const d = Math.abs((r.top + r.bottom) / 2 - vh * .45);
+    if (d < bd) { bd = d; best = p; }
+  }
+  return best;
+}
+let poolY = vh * .45, poolV = 0, poolTarget = vh * .45, poolAt = 0, poolStill = 0;
+function updatePool(dt, now) {
+  if (now - poolAt > 220) {
+    poolAt = now;
+    const p = readingPara();
+    poolTarget = p ? clamp((p.getBoundingClientRect().top + p.getBoundingClientRect().bottom) / 2, vh * .2, vh * .75) : vh * .45;
+  }
+  poolStill += ((now - lastScroll > 1200 ? 1 : 0) - poolStill) * Math.min(1, dt * 1.2);
+  if (RM) poolY = poolTarget; else { poolV += ((poolTarget - poolY) * 4 - poolV * 3.6) * dt * S.tscale; poolY += poolV * dt; }
+  const br = S.sleep * S.breath;
+  pool.style.transform = `translate3d(0,${(poolY - vh * .45).toFixed(1)}px,0) scale(${(1 + .06 * br).toFixed(3)})`;
+  pool.style.opacity = ((.4 + .5 * poolStill) * (1 - .8 * S.murk) * (1 - .35 * S.exhale) * (.9 + .25 * br)).toFixed(3);
+  poolW.style.opacity = S.dusk.toFixed(3);
+}
+
+/* ---------- тени открыток колышет влажный ветер ---------- */
+const shadowEls = $$('.card, .scene.band, .hero .pc').map(el => ({ el, vis: false, i: rnd() * 9 }));
+const shIO = new IntersectionObserver(es => { for (const e of es) { const o = shadowEls.find(x => x.el === e.target); if (o) o.vis = e.isIntersecting; } });
+shadowEls.forEach(o => shIO.observe(o.el));
+let shFrame = 0;
+function updateShadows(t) {
+  if (RM || ++shFrame % 3) return;
+  const c = isDark() ? '0,0,0' : '20,25,40';
+  for (const o of shadowEls) {
+    if (!o.vis) continue;
+    const sx = nz(t * .4 + o.i) * 3 + wind.v * .05, sh = S.candle * (.6 + .4 * nz(t * 5 + o.i));
+    o.el.style.boxShadow = `0 1px 0 #fff8 inset, ${sx.toFixed(1)}px ${(16 + 2 * sh).toFixed(1)}px ${(34 + 6 * sh).toFixed(0)}px -16px rgba(${c},${(.5 + .1 * S.murk).toFixed(2)}), 0 2px 6px rgba(${c},.16)`;
+  }
+}
+
+/* ---------- живые слова ---------- */
+const lighterWord = $('.k-lighter');
+let nextFlint = 2;
+function flint() {
+  if (!lighterWord || RM) return;
+  for (let i = 0; i < 5; i++) {
+    const s = D.createElement('i');
+    s.style.left = (60 + rnd() * 30) + '%'; s.style.top = '20%';
+    lighterWord.append(s);
+    const dx = (rnd() - .3) * 26, dy = -(8 + rnd() * 20);
+    s.animate([{ opacity: 1, transform: 'translate(0,0) scale(1)' }, { opacity: 0, transform: `translate(${dx}px,${dy}px) scale(.3)` }], { duration: 500 + rnd() * 400, easing: 'cubic-bezier(.2,.8,.3,1)' }).onfinish = () => s.remove();
+  }
+}
+const gold = $('.k-gold');
+const stringEl = $('.string'), stA = stringEl && $('.st-a', stringEl), stB = stringEl && $('.st-b', stringEl);
+let snapT = -1;
+function updateString(dt, t) {
+  if (!stringEl) return;
+  const r = stringEl.getBoundingClientRect();
+  if (r.bottom < -60 || r.top > vh + 60) { if (r.top > vh + 200 && S.snapped) { S.snapped = false; snapT = -1; stringEl.classList.remove('snap'); } return; }
+  if (!S.snapped && r.top < vh * .42) { S.snapped = true; snapT = 0; S.exhale = 1; stringEl.classList.add('snap'); }
+  if (!S.snapped) {
+    // натянута и чуть гудит
+    const a = (1.6 + 1.2 * Math.abs(vel)) * Math.sin(t * 38) * (.6 + .4 * nz(t * 2));
+    stA.setAttribute('d', `M4 20 Q 102 ${(20 + a).toFixed(2)}, 200 20`);
+    stB.setAttribute('d', `M200 20 Q 298 ${(20 - a).toFixed(2)}, 396 20`);
+  } else if (snapT >= 0 && snapT < 3) {
+    snapT += RM ? 3 : dt;
+    const q = clamp(snapT / 1.6), e = 1 - Math.pow(1 - q, 3);
+    // половинки отскакивают к своим гвоздикам и повисают
+    const ax1 = lerp(200, 70, e), ay1 = 20 + 26 * e + Math.sin(snapT * 9) * 6 * (1 - q);
+    const bx1 = lerp(200, 330, e), by1 = 20 + 22 * e + Math.sin(snapT * 9 + 1) * 6 * (1 - q);
+    stA.setAttribute('d', `M4 20 Q ${lerp(102, 30, e).toFixed(1)} ${(20 + 30 * e).toFixed(1)}, ${ax1.toFixed(1)} ${ay1.toFixed(1)}`);
+    stB.setAttribute('d', `M${bx1.toFixed(1)} ${by1.toFixed(1)} Q ${lerp(298, 370, e).toFixed(1)} ${(20 + 28 * e).toFixed(1)}, 396 20`);
+  }
+}
+
+/* ---------- проявление ---------- */
+const seenIO = new IntersectionObserver(es => { for (const e of es) if (e.isIntersecting) { e.target.classList.add('seen'); seenIO.unobserve(e.target); } }, { rootMargin: '0px 0px -8% 0px', threshold: .12 });
+$$('main [data-p], .card, .scene.band, .horizon').forEach(el => seenIO.observe(el));
+const onIO = new IntersectionObserver(es => { for (const e of es) e.target.classList.toggle('on', e.isIntersecting); }, { rootMargin: '-12% 0px -18% 0px' });
+paras.forEach(el => onIO.observe(el));
+const horizons = $$('.horizon path');
+
+/* ---------- состояние ночи по ходу чтения ---------- */
+let p1Since = 0;
+function updateStory(dt, t, now) {
+  // свеча гаснет, когда первый абзац прочитан (или прокручен)
+  if (!S.candleOut && pCandle) {
+    const m = mid(pCandle);
+    if (m < .62 && m > -.2) { p1Since += dt; }
+    if ((p1Since > 2.2 && m < .62) || m < .3) {
+      S.candleOut = true; pCandle.classList.add('out');
+      for (let i = 0; i < 9; i++) smokeP.push({ x: vw * .5 + (rnd() - .5) * 30, y: vh + 20 + i * 18, age: -i * .25, life: 7 + rnd() * 2, sd: rnd() * 40 });
+    }
+  }
+  // снова зажигается на следующий вечер
+  if (!S.relit && S.dusk > .55) { S.relit = true; flare = 1; }
+  if (S.relit && S.dusk < .2) S.relit = false;
+  const lit = S.candleOut ? (S.relit ? 1 : 0) : 1;
+  S.candle += (lit - S.candle) * Math.min(1, dt * (lit ? 1.5 : 2.2));
+  // тьма над морем: поднимается, пока читаете о тревоге, и уходит на «тишине»
+  const rise = pDread ? sstep(.95, .3, top(pDread)) : 0;
+  const clear = pSilence ? sstep(.66, .42, mid(pSilence)) : 0;
+  const murkT = rise * (1 - clear) * (cardMrak ? 1 : 1);
+  S.murk += (murkT - S.murk) * Math.min(1, dt * (murkT > S.murk ? .9 : 1.6));
+  // тишина: всё замирает
+  const sm = pSilence ? mid(pSilence) : 9;
+  const stillT = sm < .62 && sm > .12 ? 1 : 0;
+  S.still += (stillT - S.still) * Math.min(1, dt * (stillT ? 1.2 : .6));
+  S.tscale = 1 - .93 * S.still;
+  if (!S.rung && sm < .55 && sm > .1) { S.rung = true; pSilence.classList.add('rung'); }
+  if (S.rung && sm > 1.1) { S.rung = false; pSilence.classList.remove('rung'); }
+  // ночь, когда он спит: страница дышит
+  const sleepIn = cardSon ? sstep(1, .45, top(cardSon)) : 0;
+  const vs = sceneV ? sceneV.getBoundingClientRect() : null;
+  const T = vs ? sstep(.95, .25, vs.top / vh) : 0;
+  S.dusk = T;
+  S.sleep = sleepIn * (1 - T);
+  const period = S.snapped ? 7.2 : 5.6;
+  S.bph = (S.bph || 0) + dt / period;
+  S.breath = .5 - .5 * Math.cos(S.bph * TAU);
+  S.exhale = Math.max(0, S.exhale - dt / 9);
+  // «тысяча и одна ночь»
+  if (pNights && pNights.classList.contains('on') && S.nightsAt === -1 && mid(pNights) < .6) S.nightsAt = t;
+  // позолота сходит с цитаты
+  if (gold && pGild) {
+    const plain = $('.k-plain', pGild).getBoundingClientRect();
+    const g = sstep(.62, .38, plain.top / vh);
+    gold.style.setProperty('--g', g.toFixed(3));
+    pGild.classList.toggle('plained', g > .6);
+  }
+  // в конце поднимаются огоньки
+  S.rise = pLast ? sstep(.9, .5, mid(pLast)) : 0;
+  // зажигалка в руке иногда чиркает
+  if (pLighter && pLighter.classList.contains('on')) { nextFlint -= dt; if (nextFlint < 0) { flint(); nextFlint = 4.5 + rnd() * 4; } }
+}
+let flare = 0;
+
+/* ---------- память: где вы остановились ---------- */
+const prev = store.get('pos', null), seenAt = store.get('seen', 0), now0 = Date.now();
+const days = seenAt ? (now0 - seenAt) / 864e5 : 0;
+const toast = $('#toast');
+function plDays(n) { n = Math.round(n); const a = n % 10, b = n % 100; return n + ' ' + (a === 1 && b !== 11 ? 'день' : a >= 2 && a <= 4 && (b < 12 || b > 14) ? 'дня' : 'дней'); }
+function showToast(text, btns, ms) {
+  toast.textContent = '';
+  const p = D.createElement('div'); p.textContent = text; toast.append(p);
+  if (btns && btns.length) {
+    const tb = D.createElement('div'); tb.className = 'tb';
+    for (const [label, cls, fn] of btns) { const b = D.createElement('button'); b.type = 'button'; b.textContent = label; if (cls) b.className = cls; b.onclick = () => { hideToast(); fn && fn(); }; tb.append(b); }
+    toast.append(tb);
+  }
+  toast.hidden = false; requestAnimationFrame(() => toast.classList.remove('hide'));
+  clearTimeout(showToast.tm); if (ms) showToast.tm = setTimeout(hideToast, ms);
+}
+function hideToast() { toast.classList.add('hide'); }
+function firstWords(el) { const w = el.textContent.trim().split(/\s+/).slice(0, 5).join(' ').replace(/[,.:;—–-]+$/, ''); return '«' + w + '…»'; }
+setTimeout(() => {
+  if (scrollY > vh * .5) return;
+  if (prev && prev.pid && !prev.done && prev.prog > .06) {
+    const el = D.getElementById(prev.pid); if (!el) return;
+    const text = (days >= 3 ? `Вас не было ${plDays(days)}, а на балконе всё так же тянет с моря. ` : 'Балкон всё тот же. ') + `В прошлый раз вы остановились на словах ${firstWords(el)}`;
+    showToast(text, [['Читать сначала', '', null], ['Вернуться туда', 'go', () => el.scrollIntoView({ behavior: RM ? 'auto' : 'smooth', block: 'center' })]], 16000);
+  } else if (prev && prev.done) showToast('С возвращением. Море на месте, свеча тоже.', null, 6000);
+}, 1700);
+let saveAt = 0;
+function savePos(now) {
+  if (now - saveAt < 1500) return; saveAt = now;
+  const p = readingPara(); if (!p) return;
+  store.set('pos', { pid: p.id, prog: +prog.toFixed(3), done: !!(prog > .965 || (prev && prev.done)) });
+  store.set('seen', Date.now());
+}
+addEventListener('pagehide', () => store.set('seen', Date.now()));
+if (new Date().getHours() < 5) $('#hello-text').textContent = 'Уже глубокая ночь, как и в этой истории. Ничего не нужно нажимать, просто читайте.';
+
+/* ---------- звук: только по кнопке; на «тишине» море стихает ---------- */
+const snd = $('#snd'), tip = $('#snd-tip');
+const SRC = 'sound/more-noch.mp3';
+let actx = null, gain = null, src = null, buf = null, au = null, sndOn = false, vol = 0;
+async function soundStart() {
+  try {
+    actx = actx || new (W.AudioContext || W.webkitAudioContext)();
+    if (actx.state === 'suspended') await actx.resume();
+    if (location.protocol === 'file:') throw new Error('file');
+    if (!buf) { const r = await fetch(SRC); buf = await actx.decodeAudioData(await r.arrayBuffer()); }
+    if (!sndOn) return;
+    src = actx.createBufferSource(); src.buffer = buf; src.loop = true;
+    gain = actx.createGain(); gain.gain.value = 0; src.connect(gain).connect(actx.destination); src.start();
+  } catch (e) {
+    au = au || Object.assign(new Audio(SRC), { loop: true, volume: 0 });
+    au.play().catch(() => {});
+  }
+}
+function soundStop() { if (src) { const s = src; setTimeout(() => { if (!sndOn) try { s.stop(); } catch (e) {} }, 1500); src = null; } if (au) setTimeout(() => { if (!sndOn) au.pause(); }, 1500); }
+function updateSound(dt) {
+  const target = sndOn ? .75 * (1 - .9 * S.still) * (1 - .25 * S.murk) : 0;
+  vol += (target - vol) * Math.min(1, dt * (sndOn ? .8 : 1.6));
+  if (gain) gain.gain.value = vol;
+  if (au) au.volume = clamp(vol);
+}
+snd.addEventListener('click', () => {
+  sndOn = !sndOn; snd.setAttribute('aria-pressed', String(sndOn)); tip.classList.remove('on');
+  if (sndOn) soundStart(); else soundStop();
+});
+D.addEventListener('visibilitychange', () => { if (!actx) return; if (D.hidden) actx.suspend(); else if (sndOn) actx.resume(); });
+let tipShown = store.get('tip', 0) >= 2;
+function maybeTip() {
+  if (tipShown || sy < vh * .8) return;
+  tipShown = true; store.set('tip', store.get('tip', 0) + 1);
+  tip.classList.add('on'); setTimeout(() => tip.classList.remove('on'), 4200);
+}
+
+/* ---------- главный цикл ---------- */
+let prevT = performance.now(), clock = 0;
+function frame(now) {
+  const dt = Math.min(.05, (now - prevT) / 1000); prevT = now;
+  clock += dt;
+  if (now - lastT > 120) vel *= Math.pow(.02, dt);
+  prog = clamp(sy / docH);
+  updateStory(dt, clock, now);
+  // небо: ночь → следующий вечер
+  sky[0].style.opacity = (1 - S.dusk * .85).toFixed(3);
+  sky[1].style.opacity = S.dusk.toFixed(3);
+  murkEl.style.opacity = S.murk.toFixed(3);
+  if (!RM) murkEl.style.transform = `scaleY(${(.55 + .45 * S.murk).toFixed(3)})`;
+  // отсвет свечи снизу
+  flare = Math.max(0, flare - dt * .4);
+  const fl = RM ? .85 : .74 + .16 * nz(clock * 3.1) + .1 * nz(clock * 9.7);
+  candleEl.style.opacity = clamp(S.candle * fl * (.55 + .2 * S.dusk) + flare * .5).toFixed(3);
+  vig.style.opacity = clamp(.26 + .35 * S.murk + .22 * S.sleep * (.6 + .4 * S.breath) + .12 * S.exhale - .1 * S.dusk).toFixed(3);
+  updatePool(dt, now);
+  updateShadows(clock);
+  updateString(dt, clock);
+  // горизонт между частями чуть колышется
+  if (!RM && horizons.length) { const o = Math.sin(clock * .6) * 2 * S.tscale; horizons.forEach((h, i) => h.style.transform = `translateY(${(i % 2 ? -o : o).toFixed(2)}px)`); }
+  for (const sc of scenes) if (!sc.hero && Math.abs(S.dusk - sc.T) > .002) { sc.T = S.dusk; sc.iv.style.opacity = S.dusk.toFixed(3); }
+  for (const L of lives) {
+    if (!L.vis || !L.w) continue;
+    const c = L.ctx;
+    c.setTransform(L.dpr * L.k, 0, 0, L.dpr * L.h / IH, 0, 0);
+    c.clearRect(0, 0, IW, IH);
+    const ldt = RM ? 0 : dt * S.tscale;
+    L.s.t += ldt;
+    L.draw(c, ldt, RM ? 3 : L.s.t, L.s, L.k);
+  }
+  ax.setTransform(adpr, 0, 0, adpr, 0, 0);
+  ax.clearRect(0, 0, vw, vh);
+  if (!RM) drawAir(dt, clock, airShift);
+  airShift = 0;
+  updateSound(dt);
+  savePos(now);
+  maybeTip();
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+})();
+
+</script>
+</body>
+</html>
