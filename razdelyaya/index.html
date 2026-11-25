@@ -1,0 +1,1162 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ece4d4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1b1416" media="(prefers-color-scheme: dark)">
+<title>Разделяя, создавай</title>
+<meta name="description" content="Почему привычка оправдывать поступки эмоциями лишает нас авторства — и как один короткий зазор между импульсом и действием меняет всё, от самоуважения до любви">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Разделяя, создавай">
+<meta property="og:description" content="Почему привычка оправдывать поступки эмоциями лишает нас авторства — и как один короткий зазор между импульсом и действием меняет всё, от самоуважения до любви">
+<meta property="og:image" content="https://legendpsy.github.io/relations-essay/razdelyaya/art/og.jpg">
+<meta property="og:url" content="https://legendpsy.github.io/relations-essay/razdelyaya/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400..600&family=Lora:ital,wght@0,400..700;1,400..600&display=swap">
+<style>
+/* «Разделяя, создавай» — живой сайт в облике открыток каталога (legendpsy.github.io/stati/).
+   Мир: старый деревянный театр. На сцене идёт «погода», а читатель сидит в зале, как Наблюдатель.
+   Сама сцена живёт: луч прожектора с пылинками ложится на абзац, который вы читаете, занавес по краям
+   колышется от сквозняка, на полях своя погода (искры, туман, ветер), программка сама отмечает акты. */
+
+:root {
+  --bg: #ece4d4; --fg: #2a241f; --fg2: #564b42; --muted: #786a5c; --line: #c4b6a0;
+  --accent: #8a2f2c; --gold: #a0742a; --hl: rgba(200, 150, 80, .26);
+  --hatch: repeating-linear-gradient(33deg, rgba(80, 50, 40, .025) 0 2px, transparent 2px 6px);
+  --vignette: rgba(80, 40, 30, .14);
+  --dim: radial-gradient(ellipse 80% 75% at 50% 45%, transparent 48%, rgba(70, 36, 30, .2) 100%);
+  --vel1: #8e2a2b; --vel2: #5a1618; --vel3: #b3433f;
+  --beam: 255, 226, 170; --mote: 150, 110, 60; --mote-core: 255, 240, 210; --fog: 236, 232, 226; --spark: 255, 180, 80; --wind: 120, 100, 80;
+  --serif: "Lora", "PT Serif", Georgia, serif;
+  --sans: "Golos Text", "Segoe UI", system-ui, -apple-system, sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1b1416; --fg: #eee4d8; --fg2: #cbbfb1; --muted: #a09284; --line: #4a3a38;
+    --accent: #e3907e; --gold: #e2b866; --hl: rgba(230, 170, 110, .22);
+    --hatch: repeating-linear-gradient(33deg, rgba(255, 230, 220, .018) 0 2px, transparent 2px 6px);
+    --vignette: rgba(0, 0, 0, .36);
+    --dim: radial-gradient(ellipse 80% 75% at 50% 45%, transparent 40%, rgba(0, 0, 0, .55) 100%);
+    --vel1: #6e1d20; --vel2: #3a0d10; --vel3: #93312f;
+    --beam: 255, 214, 150; --mote: 255, 220, 170; --mote-core: 255, 246, 225; --fog: 150, 140, 140; --spark: 255, 190, 90; --wind: 220, 200, 180;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #1b1416; --fg: #eee4d8; --fg2: #cbbfb1; --muted: #a09284; --line: #4a3a38;
+  --accent: #e3907e; --gold: #e2b866; --hl: rgba(230, 170, 110, .22);
+  --hatch: repeating-linear-gradient(33deg, rgba(255, 230, 220, .018) 0 2px, transparent 2px 6px);
+  --vignette: rgba(0, 0, 0, .36);
+  --dim: radial-gradient(ellipse 80% 75% at 50% 45%, transparent 40%, rgba(0, 0, 0, .55) 100%);
+  --vel1: #6e1d20; --vel2: #3a0d10; --vel3: #93312f;
+  --beam: 255, 214, 150; --mote: 255, 220, 170; --mote-core: 255, 246, 225; --fog: 150, 140, 140; --spark: 255, 190, 90; --wind: 220, 200, 180;
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; background: var(--bg); }
+body {
+  margin: 0; background: var(--bg); color: var(--fg);
+  font: 400 clamp(18px, 4.7vw, 20.5px)/1.7 var(--serif);
+  overflow-x: hidden; overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+}
+::selection { background: var(--hl); }
+:focus-visible { outline: 2.5px solid var(--accent); outline-offset: 4px; border-radius: 6px; }
+button { font: inherit; color: inherit; }
+a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.nobr { white-space: nowrap; }
+em { font-style: italic; }
+strong { font-weight: 650; }
+
+/* ---------- слои позади текста: карта, полумрак зала, луч прожектора с пылинками ---------- */
+#map { position: fixed; inset: -10%; z-index: 0; pointer-events: none; opacity: .3; background: radial-gradient(ellipse at 30% 20%, transparent 0 40%, var(--vignette) 100%); }
+#map svg { position: absolute; inset: 0; width: 100%; height: 100%; animation: drift 60s ease-in-out infinite alternate; }
+#map g { fill: none; stroke: var(--line); stroke-width: 1.2; }
+@keyframes drift { to { transform: translate(-2%, 1.5%) rotate(.6deg); } }
+#dim { position: fixed; inset: 0; z-index: 1; pointer-events: none; background: var(--dim); opacity: .8; }
+#air { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; }
+
+/* ---------- занавес по краям: колышется от сквозняка ---------- */
+.curtain { position: fixed; top: 0; bottom: 0; z-index: 4; pointer-events: none; width: clamp(9px, calc((100vw - 40rem) / 2 - 40px), 120px); will-change: transform; --fold: 0px; }
+.curtain.l { left: 0; transform-origin: 0 50%; } .curtain.r { right: 0; transform-origin: 100% 50%; }
+.curtain i { position: absolute; inset: 0; background:
+  radial-gradient(120% 60% at 50% 0%, rgba(255, 210, 150, .12), transparent 60%),
+  repeating-linear-gradient(90deg, var(--vel2) 0, var(--vel1) 12px, var(--vel3) 22px, var(--vel1) 32px, var(--vel2) 46px);
+  background-position-x: var(--fold); animation: folds 11s ease-in-out infinite alternate; }
+.curtain.l i { box-shadow: inset -10px 0 16px -6px rgba(0, 0, 0, .55), inset 30px 0 40px -20px rgba(0, 0, 0, .45); animation-delay: -4s; }
+.curtain.r i { box-shadow: inset 10px 0 16px -6px rgba(0, 0, 0, .55), inset -30px 0 40px -20px rgba(0, 0, 0, .45); }
+.curtain b { position: absolute; top: 0; bottom: 0; width: 3px; background: linear-gradient(var(--gold), #e8c77a 40%, var(--gold)); opacity: .75; }
+.curtain.l b { right: 0; } .curtain.r b { left: 0; }
+@keyframes folds { 0% { filter: brightness(.96); } 100% { filter: brightness(1.05); } }
+@media (max-width: 520px) { .curtain { width: 8px; } .curtain b { width: 2px; } }
+
+main { position: relative; z-index: 3; overflow-x: clip; }
+.hero, .part, .end, .kulisy {
+  width: 100%; max-width: calc(36rem + 40px); margin: 0 auto;
+  padding-left: max(22px, env(safe-area-inset-left)); padding-right: max(22px, env(safe-area-inset-right));
+}
+main p { margin: 0 0 1.15em; }
+
+/* ---------- первый экран: открытка + ламбрекен ---------- */
+.valance { position: absolute; left: 0; right: 0; top: 0; height: 46px; z-index: 4; pointer-events: none; transform-origin: 50% 0; animation: valance 7s ease-in-out infinite alternate; }
+.valance svg { width: 100%; height: 100%; display: block; }
+@keyframes valance { to { transform: scaleY(1.06) translateX(-3px); } }
+.hero { position: relative; min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; justify-content: center; padding-top: calc(60px + env(safe-area-inset-top)); padding-bottom: 12vh; }
+.home { position: absolute; left: max(18px, env(safe-area-inset-left)); top: calc(44px + env(safe-area-inset-top)); display: inline-flex; align-items: center; min-height: 44px; padding: 0 6px; color: var(--muted); font: 400 14px/1 var(--sans); text-decoration: none; z-index: 5; }
+.home span { border-bottom: 1px solid var(--line); padding-bottom: 2px; }
+.home:hover { color: var(--accent); }
+.pc { --fg: #2a241f; --muted: #6a5e52; position: relative; margin: 0 -6px 1.6rem; padding: 10px 10px 2px; border-radius: 10px; color: var(--fg); background-color: #fbf6ec; background-image: var(--hatch); rotate: -.6deg;
+  box-shadow: 0 1px 0 #fff8 inset, 0 18px 40px -18px rgba(40, 20, 20, .6), 0 2px 6px rgba(40, 20, 20, .18); }
+.pc-pic { position: relative; aspect-ratio: 1024 / 683; width: 100%; border-radius: 6px; overflow: hidden; background: #3a2420; }
+.pc-pic img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: cover; }
+.pc-live { position: absolute; inset: 0; width: 100%; height: 100%; display: block; pointer-events: none; }
+.pc-pic::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: var(--hatch); box-shadow: inset 0 0 0 1px rgba(40, 20, 20, .14); border-radius: inherit; }
+.pc-stamp { position: absolute; right: 10px; top: 10px; z-index: 2; width: 46px; height: 56px; padding: 4px; background: #fbf6ec; outline: 3px dotted #fbf6ec; outline-offset: 1px; box-shadow: 0 2px 6px #0004; rotate: 3deg; }
+.pc-stamp svg { display: block; width: 100%; height: 100%; }
+.pc-stamp b { position: absolute; left: 0; right: 0; bottom: 6px; text-align: center; font: 600 7.5px/1 var(--sans); letter-spacing: .08em; color: #fff; text-shadow: 0 1px 2px #000a; }
+.pc-postmark { position: absolute; right: 52px; top: 50px; z-index: 2; width: 62px; height: 62px; border: 1.5px solid rgba(255, 244, 230, .55); border-radius: 50%; display: flex; align-items: center; justify-content: center; text-align: center; font: 600 7.5px/1.3 var(--sans); letter-spacing: .08em; text-transform: uppercase; color: rgba(255, 244, 230, .75); rotate: -14deg; pointer-events: none; text-shadow: 0 1px 2px #0006; }
+.pc-postmark::before, .pc-postmark::after { content: ""; position: absolute; left: -30px; width: 30px; height: 2px; background: repeating-linear-gradient(90deg, rgba(255, 244, 230, .5) 0 6px, transparent 6px 9px); }
+.pc-postmark::before { top: 24px; } .pc-postmark::after { top: 34px; }
+.pc-body { padding: 16px 8px 14px; }
+.eyebrow { font: 500 12px/1.3 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin: 0 0 .55rem; }
+.hero h1 { font: 600 clamp(38px, 10.5vw, 62px)/1.06 var(--serif); letter-spacing: -.012em; margin: 0 0 .35em; }
+.hero h1 .ch { display: inline-block; }
+.hero h1 .wd { white-space: nowrap; }
+.js .hero h1 .ch { animation: chIn 1.1s cubic-bezier(.2, .8, .2, 1) both; animation-delay: calc(var(--i) * 60ms + .2s); }
+@keyframes chIn { from { opacity: 0; translate: 0 .35em; filter: blur(3px); } }
+.lede { font: italic 400 1.02em/1.5 var(--serif); color: #4a4038; margin: 0; }
+.meta { font: 500 14px/1.3 var(--sans); color: var(--muted); margin: 0 0 1.1em; }
+.hello { display: flex; gap: 12px; align-items: flex-start; margin: 0; font: italic 400 17px/1.45 var(--serif); color: var(--fg); max-width: 27em; }
+.hello .dot { flex: none; width: 9px; height: 9px; margin-top: .55em; border-radius: 50%; background: #e7a54a; box-shadow: 0 0 10px 2px rgba(240, 170, 70, .5); animation: flick 4.5s ease-in-out infinite; }
+@keyframes flick { 0%, 100% { transform: scale(.85); opacity: .7; } 30% { transform: scale(1.1); opacity: 1; } 34% { transform: scale(.95); opacity: .8; } 60% { transform: scale(1.05); opacity: .95; } }
+.js .hero .pc { animation: land 1.2s cubic-bezier(.2, .8, .2, 1) both; }
+@keyframes land { from { opacity: 0; translate: 0 22px; rotate: -2.4deg; } }
+.js .hero .meta, .js .hero .hello { animation: up 1s cubic-bezier(.2, .8, .2, 1) both; }
+.js .hero .meta { animation-delay: .9s; } .js .hero .hello { animation-delay: 1.2s; }
+@keyframes up { from { opacity: 0; translate: 0 14px; } }
+.cue { position: absolute; left: 50%; bottom: 5vh; width: 2px; height: 46px; margin-left: -1px; border-radius: 1px; background: linear-gradient(var(--muted), transparent); opacity: .55; animation: cue 3.4s ease-in-out infinite; }
+@keyframes cue { 0%, 100% { transform: translateY(0); opacity: .2; } 50% { transform: translateY(10px); opacity: .6; } }
+
+/* ---------- акты ---------- */
+#act0 { padding-top: 6vh; }
+.act-div { max-width: 36rem; margin: 14vh auto 6vh; padding: 0 22px; }
+.act-div svg { display: block; width: 100%; height: 24px; overflow: visible; }
+.act-div path { fill: none; stroke: var(--gold); stroke-width: 1.2; opacity: .7; vector-effect: non-scaling-stroke; }
+.act-div .ad-m { fill: var(--accent); stroke: none; opacity: .6; }
+.js .act-div svg { clip-path: inset(0 50% 0 50%); transition: clip-path 2s cubic-bezier(.3, .7, .2, 1); }
+.js .act-div.seen svg { clip-path: inset(0 0 0 0); }
+.act-h { margin: 0 0 1.6em; }
+.act-n { font: 500 12.5px/1.3 var(--sans) !important; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); margin: 0 0 .5em !important; }
+.act-h h2 { font: 600 clamp(26px, 7vw, 36px)/1.2 var(--serif); letter-spacing: -.01em; margin: 0; text-wrap: balance; }
+
+.js main [data-p] { transition: opacity 1.2s ease, translate 1.3s cubic-bezier(.2, .8, .2, 1), filter 1.4s ease; }
+.js main [data-p]:not(.seen) { opacity: 0; translate: 0 12px; filter: blur(2px); }
+
+.pull { font: 600 clamp(23px, 6.2vw, 30px)/1.34 var(--serif); letter-spacing: -.004em; margin: 1.4em 0 1.2em !important; text-wrap: balance; }
+.pull::before { content: ""; display: block; width: 34px; height: 3px; border-radius: 2px; background: var(--accent); margin-bottom: .6em; opacity: .7; }
+.pull.soft { font-weight: 500; font-style: italic; color: var(--fg2); font-size: clamp(21px, 5.6vw, 26px); }
+.pull.soft::before { display: none; }
+.short { font: italic 500 1.2em/1.45 var(--serif); padding-left: 1.1em; border-left: 2px solid var(--gold); }
+.deal { font-size: 1.06em; padding: .2em 0 .2em 1.1em; border-left: 2px solid var(--accent); }
+.deal strong, .formula strong { color: var(--accent); }
+.formula { font-size: 1.08em; }
+.x-zoya em { color: var(--accent); }
+
+/* живые слова */
+.k-match { position: relative; transition: color 1.2s ease, text-shadow 1.2s ease; }
+.x-flash.on .k-match { color: var(--accent); text-shadow: 0 0 14px rgba(255, 170, 70, .45); }
+.k-fog { transition: filter 2.4s ease, opacity 2.4s ease; }
+.x-fog.on .k-fog { filter: blur(.6px); opacity: .72; }
+
+.last { font: 600 clamp(24px, 6.4vw, 33px)/1.34 var(--serif); text-align: center; margin: 1.8em auto 1.2em !important; max-width: 17em; text-wrap: balance; position: relative; }
+.last::before { content: ""; position: absolute; left: 50%; top: 50%; width: 110%; height: 230%; translate: -50% -50%; z-index: -1; background: radial-gradient(closest-side, rgba(255, 200, 120, .26), transparent); animation: glowB 7s ease-in-out infinite; pointer-events: none; }
+@keyframes glowB { 0%, 100% { opacity: .55; scale: .94; } 50% { opacity: 1; scale: 1.04; } }
+
+/* ---------- карточки сцен ---------- */
+.card { position: relative; margin: 1.4rem -6px 2.6rem; padding: 12px 12px 14px; background: #fbf6ec; background-image: var(--hatch); border-radius: 10px; color: #2a241f; rotate: -.4deg;
+  box-shadow: 0 1px 0 #fff8 inset, 0 16px 34px -16px rgba(40, 20, 20, .6), 0 2px 6px rgba(40, 20, 20, .16); }
+.js .card { transition: opacity 1.4s ease, translate 1.4s cubic-bezier(.2, .8, .2, 1); }
+.js .card:not(.seen) { opacity: 0; translate: 0 26px; }
+@media (min-width: 760px) { .card { margin: 1.6rem -2.4rem 2.8rem; } }
+
+/* Вздох */
+.vz-ask, .sozd-ask { font: 500 15px/1.4 var(--sans); color: #4a4038; margin: 2px 4px 10px !important; }
+.vz-ask span, .sozd-ask span { color: #7a6c5e; font-weight: 400; }
+.vz-stage { position: relative; border-radius: 7px; overflow: hidden; background: #2a1d1f; aspect-ratio: 400 / 260; }
+.vz-svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.vz-glow { position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity 1.6s ease, background 1.6s ease; mix-blend-mode: screen; }
+.vz-stage[data-mood="fear"] .vz-glow { opacity: 1; background: radial-gradient(ellipse 60% 70% at 50% 45%, rgba(220, 70, 60, .38), rgba(60, 40, 120, .3) 70%, rgba(20, 20, 60, .5)); }
+.vz-stage[data-mood="care"] .vz-glow { opacity: 1; background: radial-gradient(ellipse 70% 80% at 50% 45%, rgba(255, 200, 120, .5), rgba(255, 170, 90, .18) 60%, transparent); }
+.vz-name { position: absolute; left: 0; right: 0; bottom: 8%; text-align: center; font: italic 500 clamp(18px, 5vw, 22px)/1 var(--serif); color: #fff3e0; opacity: 0; transition: opacity 1.2s ease .5s; text-shadow: 0 1px 8px rgba(0, 0, 0, .6); }
+.vz-stage[data-mood] .vz-name:not(:empty) { opacity: .95; }
+.vz-sigh { opacity: 0; stroke-dasharray: 260; stroke-dashoffset: 260; }
+.vz.sighing .vz-sigh { animation: sigh 3.4s ease-out 1 both; }
+.vz.sighing .vz-sigh2 { animation-delay: .25s; }
+@keyframes sigh { 0% { opacity: 0; stroke-dashoffset: 260; } 25% { opacity: .22; } 70% { opacity: .14; stroke-dashoffset: 0; } 100% { opacity: 0; stroke-dashoffset: -60; } }
+.vz-flame { opacity: 0; transform-origin: 200px 138px; transform-box: view-box; transition: opacity .3s ease; }
+.vz-flame .vz-f1 { fill: #ffb347; } .vz-flame .vz-f2 { fill: #fff3c4; }
+.vz-stage[data-mood] .vz-flame { opacity: 1; }
+.vz-stage[data-mood="fear"] .vz-f1 { fill: #e2553f; } .vz-stage[data-mood="fear"] .vz-f2 { fill: #c9d4ff; }
+.vz-stage[data-mood="fear"] .vz-flame { animation: jitter .16s steps(2) infinite; }
+.vz-stage[data-mood="care"] .vz-flame { animation: calm 3.2s ease-in-out infinite; }
+@keyframes jitter { 0% { transform: scale(1.1, 1.25) skewX(-9deg); } 50% { transform: scale(.85, 1.05) skewX(10deg); } 100% { transform: scale(1.05, .9) skewX(-4deg); } }
+@keyframes calm { 0%, 100% { transform: scale(1, 1); } 50% { transform: scale(1.04, 1.08); } }
+.vz-stage[data-mood] .vz-head { fill: #2a1a16; }
+.vz-pulse { stroke: #ff8a78; opacity: 0; stroke-dasharray: 500; stroke-dashoffset: 500; }
+.vz-stage[data-mood="fear"] .vz-pulse { opacity: .7; animation: pulse 1.1s linear infinite; }
+@keyframes pulse { to { stroke-dashoffset: 0; } }
+.vz-steam path { opacity: 0; }
+.vz-stage[data-mood="care"] .vz-steam path { animation: steam 3.6s ease-in-out infinite; }
+.vz-stage[data-mood="care"] .vz-steam path:nth-child(2n) { animation-delay: 1.3s; }
+@keyframes steam { 0% { opacity: 0; transform: translateY(6px); } 40% { opacity: .45; } 100% { opacity: 0; transform: translateY(-14px); } }
+.vz-stage[data-mood="fear"] .vz-cup { animation: rattle .2s steps(2) infinite; }
+.vz-stage[data-mood="fear"] .vz-cup-other { animation-delay: .1s; }
+@keyframes rattle { 50% { transform: translate(.8px, -.6px); } }
+.vz-lamp { transition: opacity 1.4s ease; }
+.vz-stage[data-mood="fear"] .vz-lamp { opacity: .35; }
+.vz-thoughts { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 0; }
+.vz-t { flex: 1 1 12em; min-height: 48px; padding: 10px 14px; border-radius: 22px 22px 22px 6px; border: 1.5px solid #cdbfa8; background: #fffaf0; color: #3a3029; font: italic 500 17px/1.3 var(--serif); cursor: pointer; transition: border-color .4s, background .4s, transform .3s; }
+.vz-t:hover { transform: translateY(-1px); }
+.vz-t[aria-pressed="true"][data-m="fear"] { border-color: #c2543f; background: #fbe9e3; }
+.vz-t[aria-pressed="true"][data-m="care"] { border-color: #c99a3e; background: #fbf0d8; }
+.vz-after { font: italic 400 16px/1.45 var(--serif); color: #5a4d42; margin: 10px 4px 0 !important; min-height: 1.45em; transition: opacity 1s ease; }
+
+/* Зрительный зал */
+.zal { position: relative; height: 300vh; width: 100vw; margin: 3rem 0 3rem calc(50% - 50vw); }
+.zal-pin { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; background: #160e0f;
+  -webkit-mask-image: linear-gradient(transparent, #000 7%, #000 93%, transparent); mask-image: linear-gradient(transparent, #000 7%, #000 93%, transparent); }
+.zal-still { position: absolute; left: 50%; top: 50%; width: min(100%, 150vh); translate: -50% -50%; display: block; opacity: 0; }
+.no-js .zal-still, .zal.static .zal-still { opacity: 1; }
+.zal-cv { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.zal-hint { position: absolute; left: 0; right: 0; bottom: 9vh; margin: 0 !important; text-align: center; font: 500 13px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: rgba(255, 236, 214, .7); transition: opacity 1s ease; pointer-events: none; }
+.zal.static { height: auto; }
+.zal.static .zal-pin { position: relative; height: auto; aspect-ratio: 1024 / 683; -webkit-mask-image: none; mask-image: none; }
+.zal.static .zal-still { position: static; translate: none; width: 100%; }
+.zal.static .zal-hint, .zal.static .zal-cv { display: none; }
+
+/* Разделяя, создавай */
+.sozd { rotate: .4deg; }
+.pair { position: relative; height: 64px; margin: 8px 0; border-radius: 12px; background: linear-gradient(90deg, rgba(160, 120, 90, .06), rgba(160, 120, 90, .12), rgba(160, 120, 90, .06)); cursor: grab; touch-action: pan-y; user-select: none; -webkit-user-select: none; overflow: hidden; }
+.pair:active { cursor: grabbing; }
+.pair > span { position: absolute; top: 50%; left: 50%; translate: -50% -50%; white-space: nowrap; will-change: transform; }
+.pr-emo { font: 600 20px/1 var(--serif); color: #9a3a2e; padding: 9px 14px; border-radius: 20px; background: #f7e3da; box-shadow: 0 2px 6px rgba(120, 40, 30, .18); }
+.pr-me { font: 600 20px/1 var(--serif); color: #2e3a4a; padding: 9px 16px; border-radius: 20px; background: #e6ecf3; box-shadow: 0 2px 6px rgba(30, 40, 60, .18); }
+.pr-born { font: italic 600 22px/1 var(--serif); color: #a07020; opacity: 0; scale: .4; transition: opacity 1s ease, scale 1.2s cubic-bezier(.2, 1.4, .3, 1); text-shadow: 0 0 14px rgba(255, 200, 110, .7); }
+.pair.made .pr-born { opacity: 1; scale: 1; }
+.pair.made { cursor: default; background: linear-gradient(90deg, rgba(240, 190, 110, .06), rgba(240, 190, 110, .2), rgba(240, 190, 110, .06)); }
+.sozd-end { text-align: center; font: italic 600 clamp(22px, 6vw, 28px)/1.2 var(--serif); color: #b9ad9e; margin: 14px 0 4px !important; transition: color 2s ease, text-shadow 2s ease; }
+.sozd.done .sozd-end { color: #a07020; text-shadow: 0 0 18px rgba(255, 200, 110, .55); }
+.sozd.done .sozd-end span:last-child { color: #8a2f2c; }
+
+/* ---------- за кулисами (дополненная реальность) ---------- */
+.kulisy { margin-top: 12vh; }
+.ku-card { position: relative; padding: 14px 14px 16px; border-radius: 12px; background: #2a1c1d; color: #f2e6d6; box-shadow: 0 20px 44px -18px rgba(20, 10, 10, .7), 0 2px 6px rgba(20, 10, 10, .3);
+  background-image: repeating-linear-gradient(90deg, rgba(255, 255, 255, .02) 0 1px, transparent 1px 38px), linear-gradient(#2e1f20, #221617); }
+.ku-eyebrow { font: 500 11.5px/1.2 var(--sans); letter-spacing: .2em; text-transform: uppercase; color: #d7b26a; margin: 2px 2px 4px !important; }
+.ku-card h2 { font: 600 clamp(24px, 6.4vw, 30px)/1.2 var(--serif); margin: 0 2px 6px; }
+.ku-lead { font: italic 400 16.5px/1.45 var(--serif); color: #d9cbb9; margin: 0 2px 12px !important; }
+.ku-stage { position: relative; border-radius: 8px; overflow: hidden; aspect-ratio: 16 / 10; background: #140c0d; }
+.ku-stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.ku-machines { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px; }
+.mc { display: flex; flex-direction: column; align-items: center; gap: 6px; min-height: 110px; padding: 10px 6px 9px; border-radius: 10px; border: 1px solid rgba(215, 178, 106, .3); background: rgba(255, 240, 220, .04); color: #f2e6d6; cursor: pointer; touch-action: none; user-select: none; -webkit-user-select: none; transition: background .3s, border-color .3s; }
+.mc:hover { background: rgba(255, 240, 220, .08); }
+.mc[aria-pressed="true"] { border-color: #d7b26a; background: rgba(215, 178, 106, .14); }
+.mc svg { width: 58px; height: 58px; overflow: visible; }
+.mc span { font: 500 13px/1.2 var(--sans); text-align: center; }
+.mc small { font: 400 11.5px/1.2 var(--sans); color: #b8a894; text-align: center; }
+.mc .drum { transform-origin: 29px 29px; transform-box: view-box; }
+.mc .sheet { transform-origin: 29px 6px; transform-box: view-box; }
+.mc.shake .sheet { animation: wob 1.1s cubic-bezier(.3, .6, .3, 1) 1; }
+@keyframes wob { 10% { transform: skewX(9deg) scaleY(.97); } 25% { transform: skewX(-7deg); } 45% { transform: skewX(4deg); } 65% { transform: skewX(-2deg); } }
+.mc .box { transform-origin: 29px 40px; transform-box: view-box; transition: transform .8s cubic-bezier(.3, .7, .3, 1); }
+.mc[aria-pressed="true"] .box { transform: rotate(-24deg); }
+.ku-foot { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 10px; font: 400 13px/1.3 var(--sans); color: #b8a894; }
+.ku-snd { border: 1px solid rgba(215, 178, 106, .35); background: none; color: #e9d7b0; border-radius: 16px; min-height: 36px; padding: 6px 12px; font: 500 13px/1 var(--sans); cursor: pointer; }
+
+/* ---------- программка ---------- */
+#prog { position: fixed; right: max(14px, env(safe-area-inset-right)); top: max(12px, env(safe-area-inset-top)); z-index: 8; font-family: var(--sans); transition: opacity .8s ease, translate .8s cubic-bezier(.2, .8, .2, 1); }
+#prog.off, #prog.hush:not(.open) { opacity: 0; translate: 0 -12px; pointer-events: none; }
+.pg-btn { display: flex; align-items: center; gap: 8px; min-height: 40px; padding: 6px 12px 6px 10px; border: 0; border-radius: 6px 14px 14px 6px; background: #fbf6ec; background-image: var(--hatch); color: #3a3029; cursor: pointer;
+  box-shadow: 0 6px 16px -6px rgba(40, 20, 20, .5), 0 1px 3px rgba(40, 20, 20, .2); border-left: 4px solid #8a2f2c; }
+.pg-btn b { font: 600 12px/1 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: #8a2f2c; }
+.pg-dots { display: flex; gap: 4px; }
+.pg-dots i { width: 6px; height: 6px; border-radius: 50%; border: 1px solid #a0742a; transition: background .6s ease; }
+.pg-dots i.done { background: #a0742a; }
+.pg-dots i.now { background: #8a2f2c; border-color: #8a2f2c; }
+.pg-btn.flip { animation: flip .9s cubic-bezier(.3, .7, .3, 1); }
+@keyframes flip { 30% { transform: rotateX(70deg); } }
+.pg-list { position: absolute; right: 0; top: calc(100% + 8px); width: min(19rem, calc(100vw - 28px)); margin: 0; padding: 12px 10px 8px; list-style: none; border-radius: 10px; background: #fbf6ec; background-image: var(--hatch); color: #3a3029;
+  box-shadow: 0 18px 40px -16px rgba(40, 20, 20, .6), 0 2px 6px rgba(40, 20, 20, .2); transform-origin: 100% 0; transition: opacity .4s ease, scale .4s ease; }
+#prog:not(.open) .pg-list { opacity: 0; scale: .96; pointer-events: none; visibility: hidden; }
+.pg-list::before { content: "Программка"; display: block; font: italic 600 18px/1 var(--serif); color: #8a2f2c; margin: 0 6px 8px; }
+.pg-list a { display: grid; grid-template-columns: 1fr 18px; grid-template-rows: auto auto; column-gap: 8px; padding: 7px 6px; border-radius: 6px; text-decoration: none; color: inherit; position: relative; }
+.pg-list a:hover { background: rgba(160, 116, 42, .08); }
+.pg-list b { font: 600 11px/1.2 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: #a0742a; }
+.pg-list span { grid-column: 1; font: 400 15px/1.3 var(--serif); }
+.pg-list li a::after { content: ""; grid-column: 2; grid-row: 1 / 3; align-self: center; width: 14px; height: 8px; border-left: 2px solid #8a2f2c; border-bottom: 2px solid #8a2f2c; rotate: -45deg; translate: 0 -3px; opacity: 0; scale: .4; transition: opacity .6s ease, scale .6s cubic-bezier(.2, 1.6, .3, 1); }
+.pg-list li.done a::after { opacity: .9; scale: 1; }
+.pg-list li.now span { font-weight: 600; }
+.pg-list .pg-back { border-top: 1px dashed #d6c7ad; margin-top: 4px; padding-top: 4px; }
+.pg-list .pg-back a::after { display: none; }
+
+/* ---------- конец ---------- */
+.end { padding-top: 3rem; padding-bottom: calc(5rem + env(safe-area-inset-bottom)); text-align: center; font: 400 16px/1.6 var(--sans); color: var(--muted); }
+.end .thanks { font: italic 400 20px/1.4 var(--serif); color: var(--fg); margin: 0 0 1em; }
+.end p { margin: 0 0 .7em; }
+.end .to-all { display: inline-flex; align-items: center; min-height: 44px; }
+
+#toast { position: fixed; left: 50%; bottom: max(14px, env(safe-area-inset-bottom)); z-index: 9; width: min(30rem, calc(100vw - 24px)); translate: -50% 0; padding: 14px 16px 12px; border-radius: 12px; background: #fbf6ec; background-image: var(--hatch); color: #2a241f;
+  box-shadow: 0 18px 40px -16px rgba(40, 20, 20, .6), 0 2px 6px rgba(40, 20, 20, .2); font: italic 400 17px/1.45 var(--serif); transition: opacity .8s ease, translate .9s cubic-bezier(.2, .8, .2, 1); }
+#toast.hide { opacity: 0; translate: -50% 20px; pointer-events: none; }
+#toast .tb { display: flex; gap: 8px; justify-content: flex-end; margin-top: 8px; }
+#toast button { font: 500 14px/1 var(--sans); border: 0; background: none; color: #8a2f2c; padding: 10px 10px; min-height: 40px; border-radius: 8px; cursor: pointer; }
+#toast button.go { background: #8a2f2c; color: #fbf3ea; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; transition-delay: 0s !important; }
+}
+</style>
+</head>
+<body>
+<div id="map" aria-hidden="true"><svg viewBox="0 0 800 1200" preserveAspectRatio="xMidYMid slice"><g>
+<path d="M-20 160 C 120 120 240 200 400 170 S 650 120 820 160"/><path d="M-20 200 C 130 165 250 240 410 212 S 660 160 820 200" opacity=".7"/>
+<path d="M560 300 C 610 260 720 270 760 330 S 720 470 640 460 S 520 360 560 300Z"/>
+<path d="M-20 620 C 140 590 260 680 420 650 S 660 590 820 640"/><path d="M-20 660 C 150 630 270 720 430 690 S 670 630 820 680" opacity=".6"/>
+<path d="M80 860 C 140 800 280 800 320 870 S 260 990 170 980 S 30 930 80 860Z"/>
+<path d="M-20 1060 C 160 1030 280 1110 440 1080 S 660 1030 820 1070" opacity=".7"/>
+<path d="M200 -20 C 240 160 160 320 240 480 S 360 660 300 840" stroke-dasharray="2 9" stroke-width="2"/>
+</g></svg></div>
+<div id="dim" aria-hidden="true"></div>
+<canvas id="air" aria-hidden="true"></canvas>
+<div class="curtain l" aria-hidden="true"><i></i><b></b></div>
+<div class="curtain r" aria-hidden="true"><i></i><b></b></div>
+
+<nav id="prog" class="off" aria-label="Программка">
+  <button class="pg-btn" type="button" aria-expanded="false"><b id="pg-now">Пролог</b><span class="pg-dots" aria-hidden="true"></span></button>
+  <ol class="pg-list"><li data-a="0"><a href="#act0"><b>Пролог</b><span>Перед началом</span></a></li><li data-a="1"><a href="#act1"><b>Акт первый</b><span>Три этажа, где мы напрасно ищем себя</span></a></li><li data-a="2"><a href="#act2"><b>Акт второй</b><span>Зал, страх и недосягаемый зритель</span></a></li><li data-a="3"><a href="#act3"><b>Акт третий</b><span>Шаги против ветра</span></a></li><li data-a="4"><a href="#act4"><b>Акт четвёртый</b><span>Конец эпохи костылей</span></a></li><li data-a="5"><a href="#act5"><b>Эпилог</b><span>Разделяя, создавай</span></a></li><li class="pg-back"><a href="#kulisy"><b>После спектакля</b><span>За кулисами</span></a></li></ol>
+</nav>
+
+<main>
+<header class="hero">
+  <div class="valance" aria-hidden="true"><svg viewBox="0 0 400 46" preserveAspectRatio="none">
+    <path d="M0 0 H400 V22 Q 380 40, 360 22 Q 340 40, 320 22 Q 300 40, 280 22 Q 260 40, 240 22 Q 220 40, 200 22 Q 180 40, 160 22 Q 140 40, 120 22 Q 100 40, 80 22 Q 60 40, 40 22 Q 20 40, 0 22 Z" fill="var(--vel1)"/>
+    <path d="M0 22 Q 20 40, 40 22 Q 60 40, 80 22 Q 100 40, 120 22 Q 140 40, 160 22 Q 180 40, 200 22 Q 220 40, 240 22 Q 260 40, 280 22 Q 300 40, 320 22 Q 340 40, 360 22 Q 380 40, 400 22" fill="none" stroke="var(--gold)" stroke-width="2" vector-effect="non-scaling-stroke" opacity=".8"/>
+    <path d="M0 6 H400" stroke="var(--vel2)" stroke-width="3" vector-effect="non-scaling-stroke"/></svg></div>
+  <a class="home" href="https://legendpsy.github.io/stati/"><span>← Все статьи</span></a>
+  <div class="pc">
+    <div class="pc-pic" role="img" aria-label="Пустой зал старого деревянного театра. В зале тихо: красные кресла, луч прожектора с пылинками. А на сцене идёт буря: подвешенные облака, дождь, туман, молния.">
+      <img src="art/teatr.webp" alt="" width="1024" height="683" decoding="async" fetchpriority="high">
+      <canvas class="pc-live" aria-hidden="true"></canvas>
+      <span class="pc-stamp"><svg viewBox="0 0 40 50" aria-hidden="true"><rect width="40" height="50" fill="#2c1e24"/><path d="M0 0 H40 V7 Q 30 12, 20 8 Q 10 12, 0 7 Z" fill="#8f2a2a"/><path d="M0 0 H9 Q 8 26, 13 46 H0Z" fill="#a0302e"/><path d="M40 0 H31 Q 32 26, 27 46 H40Z" fill="#a0302e"/><path d="M14 14 q 6 -5 12 0 q 4 -1 4 3 q 0 4 -5 4 h -11 q -5 0 -4 -4 q 1 -3 4 -3z" fill="#7c8196"/><path d="M21 22 l -3 7 h 3 l -2 6 l 6 -9 h -3 l 2 -4z" fill="#f2d27c"/><path d="M0 46 H40 V50 H0Z" fill="#c99a3e"/></svg><b>ТЕАТР</b></span>
+      <span class="pc-postmark">Зал<br>2026</span>
+    </div>
+    <div class="pc-body">
+      <p class="eyebrow">Статья психолога</p>
+      <h1><span class="sr">Разделяя, создавай</span><span aria-hidden="true"><span class="wd"><span class="ch" style="--i:0">Р</span><span class="ch" style="--i:1">а</span><span class="ch" style="--i:2">з</span><span class="ch" style="--i:3">д</span><span class="ch" style="--i:4">е</span><span class="ch" style="--i:5">л</span><span class="ch" style="--i:6">я</span><span class="ch" style="--i:7">я</span><span class="ch" style="--i:8">,</span></span> <span class="wd"><span class="ch" style="--i:10">с</span><span class="ch" style="--i:11">о</span><span class="ch" style="--i:12">з</span><span class="ch" style="--i:13">д</span><span class="ch" style="--i:14">а</span><span class="ch" style="--i:15">в</span><span class="ch" style="--i:16">а</span><span class="ch" style="--i:17">й</span></span></span></h1>
+      <p class="lede">Почему привычка оправдывать поступки эмоциями лишает нас авторства — и как один короткий зазор между импульсом и действием меняет всё, от самоуважения до любви</p>
+    </div>
+  </div>
+  <p class="meta">Около 8 минут чтения</p>
+  <aside class="hello"><i class="dot" aria-hidden="true"></i><span id="hello-text">Занимайте место в зале. Почти ничего не нужно нажимать: на сцене будет идти своя погода, а вы просто читайте.</span></aside>
+  <div class="cue" aria-hidden="true"></div>
+</header>
+
+<section class="part" id="act0" data-act="0">
+<p id="p1" data-p>Самая изящная ложь, которой мы прикрываем собственные решения, звучит до смешного просто: <em>«Я сорвался, потому что разозлился»</em>. Или: <em>«Я ничего не делаю, потому что мне лень»</em>.</p>
+<p id="p2" data-p>Мы прячемся за эмоциями, как за пуленепробиваемым стеклом, убеждая и других, и самих себя, что выбора просто не было. Внутри этой логики всё безупречно: нажали кнопку — сработал механизм. Нашему мозгу такая экономия чертовски выгодна. Автопилот «ударили — бей, испугался — прячься, устал — замри» блестяще бережёт калории и избавляет от мучительной работы думать в реальном времени.</p>
+<p id="p3" data-p>У этой экономии только одна цена: она незаметно отбирает у нас право прожить ту жизнь, которую мы на самом деле хотим.</p>
+</section><div class="act-div" aria-hidden="true"><svg viewBox="0 0 240 24"><path d="M8 12 H96 M144 12 H232" /><path class="ad-m" d="M120 3 C 128 9, 128 15, 120 21 C 112 15, 112 9, 120 3 Z"/></svg></div><section class="part" id="act1" data-act="1"><header class="act-h"><p class="act-n">Акт первый</p><h2 data-p>Три этажа, где мы напрасно ищем себя</h2></header>
+<p id="p4" data-p>Я очень долго не понимал, где вообще искать себя настоящего. Какую часть внутреннего шума считать фундаментом, а какую — просто погодой за окном?</p>
+<p id="p5" data-p>Долгое время мне казалось, что сердце моего «я» — это эмоции. Я был уверен, что именно в сильной вспышке человек наконец становится подлинным; поэтому годами считал, что алкогольное опьянение соединяет меня с самой сутью меня настоящего — снимает лишние фильтры, выпускает наружу правду.</p>
+<p id="p6" data-p class="x-flash">Потребовалось время, чтобы разглядеть: эмоция — это вовсе не глубинная правда. Это <span class="k k-match">короткая вспышка спички</span> в ответ на мгновенную трактовку мозга. <span class="nobr">Кто-то</span> рядом тяжело вздохнул — в голове за долю секунды пронеслось <em>«я ему надоел»</em>, и в груди вспыхнула тревога. Пронеслось бы <em>«он просто вымотался на работе»</em> — и вместо тревоги зажглось бы сочувствие. Эти спички чиркают сами по себе; напрямую мы ими не управляем. Довольно странно искать свою опору в том, что тебе даже не подчиняется.</p>
+<figure class="card vz" id="vzdoh" aria-label="Сцена «Вздох»: кто-то рядом тяжело вздыхает, и вы выбираете, какая мысль пронесётся">
+  <p class="vz-ask">Кто-то рядом тяжело вздохнул. <span>Какая мысль пронесётся?</span></p>
+  <div class="vz-stage" data-mood="">
+    <svg class="vz-svg" viewBox="0 0 400 260" aria-hidden="true">
+      <defs>
+        <radialGradient id="vzLamp" cx="50%" cy="0%" r="90%"><stop offset="0" stop-color="#f4d7a0" stop-opacity=".55"/><stop offset="1" stop-color="#f4d7a0" stop-opacity="0"/></radialGradient>
+        <linearGradient id="vzWall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3b2a2a"/><stop offset="1" stop-color="#2a1d1f"/></linearGradient>
+        <linearGradient id="vzTable" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8a5a3a"/><stop offset="1" stop-color="#5a3826"/></linearGradient>
+      </defs>
+      <rect width="400" height="260" fill="url(#vzWall)"/>
+      <path d="M0 178 H400 V260 H0Z" fill="#241718"/>
+      <g stroke="#3a2627" stroke-width="1" opacity=".8"><path d="M0 196 H400 M0 218 H400 M0 242 H400"/></g>
+      <ellipse cx="200" cy="30" rx="210" ry="150" fill="url(#vzLamp)" class="vz-lamp"/>
+      <path class="vz-chair" d="M352 96 q 30 -6 48 0 V 260 H 348 Z" fill="#1d1314" opacity=".9"/>
+      <ellipse cx="200" cy="176" rx="150" ry="26" fill="url(#vzTable)"/>
+      <path d="M62 176 q 138 30 276 0 v 8 q -138 30 -276 0 Z" fill="#4a2d1f"/>
+      <rect x="194" y="196" width="12" height="64" fill="#3d2519"/>
+      <g class="vz-cup vz-cup-me"><path d="M110 150 h 34 l -4 24 q -13 6 -26 0 Z" fill="#efe4cf"/><path d="M144 156 q 10 2 8 9 q -2 6 -10 5" fill="none" stroke="#efe4cf" stroke-width="3"/><ellipse cx="127" cy="151" rx="17" ry="4" fill="#7a4a2c"/></g>
+      <g class="vz-cup vz-cup-other"><path d="M262 150 h 34 l -4 24 q -13 6 -26 0 Z" fill="#e7d9c0"/><path d="M262 156 q -10 2 -8 9 q 2 6 10 5" fill="none" stroke="#e7d9c0" stroke-width="3"/><ellipse cx="279" cy="151" rx="17" ry="4" fill="#7a4a2c"/></g>
+      <g class="vz-steam" fill="none" stroke="#f3e9d6" stroke-width="2" stroke-linecap="round"><path d="M122 140 q -6 -10 0 -20 q 6 -10 0 -20"/><path d="M133 142 q -6 -10 0 -20 q 6 -10 0 -20"/><path d="M274 140 q -6 -10 0 -20 q 6 -10 0 -20"/><path d="M285 142 q -6 -10 0 -20 q 6 -10 0 -20"/></g>
+      <path class="vz-sigh" d="M404 118 C 360 112, 340 128, 300 122 S 240 108, 214 120" fill="none" stroke="#efe6da" stroke-width="10" stroke-linecap="round"/>
+      <path class="vz-sigh vz-sigh2" d="M404 132 C 368 128, 346 140, 312 136 S 262 126, 236 134" fill="none" stroke="#efe6da" stroke-width="6" stroke-linecap="round"/>
+      <g class="vz-match"><rect x="198" y="140" width="4" height="34" rx="1.5" fill="#e9d2a6"/><ellipse cx="200" cy="139" rx="4" ry="5" fill="#8a2a22" class="vz-head"/></g>
+      <g class="vz-flame"><path class="vz-f1" d="M200 104 C 212 118, 210 132, 200 138 C 190 132, 188 118, 200 104 Z"/><path class="vz-f2" d="M200 116 C 206 124, 205 132, 200 136 C 195 132, 194 124, 200 116 Z"/></g>
+      <path class="vz-pulse" d="M20 230 H 120 l 8 -18 l 10 34 l 10 -40 l 8 24 H 380" fill="none" stroke-width="2" stroke-linejoin="round"/>
+    </svg>
+    <span class="vz-glow" aria-hidden="true"></span>
+    <span class="vz-name" aria-live="polite"></span>
+  </div>
+  <div class="vz-thoughts" role="group" aria-label="Какая мысль пронесётся">
+    <button type="button" class="vz-t" data-m="fear">«я ему надоел»</button>
+    <button type="button" class="vz-t" data-m="care">«он просто вымотался на работе»</button>
+  </div>
+  <p class="vz-after" aria-live="polite"></p>
+</figure>
+<p id="p7" data-p class="x-fog">Ладно, можно поискать себя этажом глубже — в долгих, тягучих состояниях. Например, в том <span class="k k-fog">вязком, липком тумане</span>, который мы называем «ленью»: когда вина не даёт спокойно отдохнуть, а скука и тревога не дают начать. Стоит однажды перепутать это состояние с собой — и оно начинает диктовать, как жить. Или другой пример: на тебя накатывает мелкое, колючее злорадство, когда <span class="nobr">что-то</span>, казавшееся тебе неправильным, с треском проваливается, и внутри неожиданно отзывается торжество. Несколько таких эпизодов — и приговор готов: <em>«Я ленивый и злорадный человек»</em>. Красивая, аккуратная бирка, которую очень удобно повесить на шею и ничего с ней больше не делать.</p>
+<p id="p8" data-p>Тогда, может быть, моя суть — в чувствах? В тех глубоких тектонических пластах, которые не вспыхивают за секунду, а складываются годами — как тихое доверие к тому, кто раз за разом оставался рядом с тобой в темноте. Но и здесь картина рассыпается при первом столкновении с реальностью. Потому что человек способен безмерно, до физической боли любить близкого — и ровно в ту же секунду, от одной небрежно брошенной фразы, испытывать острое желание его придушить.</p>
+<p id="p9" data-p class="pull">Кто я в эту секунду — любящий или жестокий? И главный вопрос: <em>что именно я хочу, чтобы меня определяло?</em></p>
+</section><div class="act-div" aria-hidden="true"><svg viewBox="0 0 240 24"><path d="M8 12 H96 M144 12 H232" /><path class="ad-m" d="M120 3 C 128 9, 128 15, 120 21 C 112 15, 112 9, 120 3 Z"/></svg></div><section class="part" id="act2" data-act="2"><header class="act-h"><p class="act-n">Акт второй</p><h2 data-p>Зал, страх и недосягаемый зритель</h2></header>
+<p id="p10" data-p>Переломный момент случился не в тишине медитации, а посреди обычного учебного дня.</p>
+<p id="p11" data-p>Я сидел на занятии, смотрел на сокурсников — все вокруг, разумеется, казались мне невероятно матёрыми, собранными и давно всё понявшими — и чувствовал, как меня намертво сковывает страх разоблачения. Знакомое до озноба ощущение: сейчас открою рот, и вся аудитория увидит, что я здесь случайно. Горло сжалось, тело требовало вжаться в стул и не отсвечивать.</p>
+<p id="p12" data-p class="x-zoya">И в ту самую секунду внутри словно произошло тихое расслоение. В памяти всплыла простая фраза Зои: <em>«„Я не могу“ — это тоже просто мысль»</em>.</p>
+<p id="p13" data-p class="x-click"><span class="nobr">Что-то</span> щёлкнуло. Вместо того чтобы быть тем, кого трясёт от страха, я вдруг стал тем, кто <em>смотрит</em>, как его трясёт. Внутри проснулся Наблюдатель — спокойный, ясный свидетель всего этого внутреннего спектакля. На сцене <span class="nobr">по-прежнему</span> метались тревожные мысли, сжимался желудок, звучали привычные предостережения, но я больше не стоял в центре этого шума. Я оказался в зрительном зале — в точке, куда ни одна паническая мысль не могла дотянуться.</p>
+<div class="zal" id="zal" aria-label="Сцена «Зрительный зал»: вид пересаживается со сцены, где мечутся тревожные мысли, в тихий зрительный зал">
+  <div class="zal-pin">
+    <img class="zal-still" src="art/teatr.webp" alt="" width="1024" height="683" loading="lazy" decoding="async">
+    <canvas class="zal-cv" aria-hidden="true"></canvas>
+    <p class="zal-hint" aria-hidden="true">листайте медленно</p>
+  </div>
+</div>
+<p id="p14" data-p class="short">Именно этот «недосягаемый я» и оказался тем, кого я столько лет искал.</p>
+<p id="p15" data-p class="x-gap">В образовавшемся миллиметре тишины вдруг появилось пространство выбора. Я понял простую и головокружительную вещь: всем своим эмоциям, состояниям и страхам можно честно отдать <em>фон</em>, но не отдавать им <em>руль</em>. В тот день я впервые сделал шаг в сторону того, что было мне важно, не дожидаясь, пока внутри наступит идеальный штиль. Я поднял руку. Высказался. Ощутимо облажался — слова легли криво, мысль сбилась. И всё равно вышел из зала с острым, чистым чувством гордости за себя.</p>
+<p id="p16" data-p>В такие секунды открывается настоящая власть — не над миром, а над собственной траекторией. Ты вдруг на собственной шкуре узнаёшь: можно бояться до дрожи в коленях — и всё равно действовать смело. Можно гореть от злости — и при этом говорить бережно. Можно тонуть в «лени» — и спокойно встать, чтобы сделать первый шаг. Ты перестаёшь быть заложником собственной биохимии.</p>
+<p id="p17" data-p class="deal">Это и есть первая половина формулы — <strong>разделение</strong>. Отделить себя от погоды внутри своей головы. Но само по себе разделение ничего не стоит, если оно превращается в холодное созерцание. Его единственный смысл — вторая половина: <strong>создание</strong>.</p>
+</section><div class="act-div" aria-hidden="true"><svg viewBox="0 0 240 24"><path d="M8 12 H96 M144 12 H232" /><path class="ad-m" d="M120 3 C 128 9, 128 15, 120 21 C 112 15, 112 9, 120 3 Z"/></svg></div><section class="part" id="act3" data-act="3"><header class="act-h"><p class="act-n">Акт третий</p><h2 data-p>Шаги против ветра</h2></header>
+<p id="p18" data-p>Лучше всего эта механика видна там, где мы привыкли ждать чуда — в любви.</p>
+<p id="p19" data-p>Я много лет искал любовь как внезапный удар током: как безошибочное притяжение, которое само вспыхивает, само несёт тебя вперёд и само всё решает. Но взрослая жизнь быстро показывает обратную сторону. Любовь — это не только попутный ветер влечения. Это ещё и шаги, которые ты делаешь прямо против ветра.</p>
+<p id="p20" data-p class="x-wind">Бывают дни, недели и целые сезоны, когда электричества нет. Есть усталость, раздражение, обида, бытовая глухота. Если любовь для тебя — только эмоция, в такой день она исчезает без следа. Но если ты отделяешь мимолётную погоду от своего выбора и продолжаешь <em>действовать любя</em> — слушать, не бить в больное место, оставаться рядом, когда хочется хлопнуть дверью, — любовь никуда не девается. Она перестаёт быть капризным туманом и становится плотной, осязаемой реальностью.</p>
+<p id="p21" data-p>Конечно, открываться и оставаться бережным страшно. Всегда есть риск, что в ответ прилетит холод, непонимание или отказ. Но мы постоянно упускаем решающую деталь: достойная форма нашего поступка в первую очередь нужна даже не партнёру. Она нужна нам самим — чтобы сохранить самоуважение.</p>
+</section><div class="act-div" aria-hidden="true"><svg viewBox="0 0 240 24"><path d="M8 12 H96 M144 12 H232" /><path class="ad-m" d="M120 3 C 128 9, 128 15, 120 21 C 112 15, 112 9, 120 3 Z"/></svg></div><section class="part" id="act4" data-act="4"><header class="act-h"><p class="act-n">Акт четвёртый</p><h2 data-p>Конец эпохи костылей</h2></header>
+<p id="p22" data-p>Посмотрите, сколько энергии люди тратят на то, чтобы добыть ощущение собственной значимости в обход. Вокруг выросла целая индустрия психологических костылей: <span class="nobr">кто-то</span> покупает дорогую машину, чтобы почувствовать свой вес в мире; <span class="nobr">кто-то</span> заводит тайный роман, чтобы снова ощутить себя живым и желанным; <span class="nobr">кто-то</span> бесконечно собирает чужое одобрение, пытаясь залатать внутреннюю пустоту.</p>
+<p id="p23" data-p>Но как только ты начинаешь совершать осознанный поступок вопреки автоматизму, все эти посредники мгновенно теряют смысл.</p>
+<p id="p24" data-p>Когда внутри тебя кипит ярость, а ты всё равно выбираешь говорить с уважением — прямо в эту секунду, без единого свидетеля и без единого лайка, ты становишься человеком с достоинством. Когда тебе до тошноты страшно, но ты делаешь шаг навстречу другому — прямо в эту секунду ты становишься смелым и любящим. Тебе не нужно никому ничего доказывать, не нужно ждать, пока <span class="nobr">кто-то</span> выпишет тебе справку о том, что ты хороший. Твоя ценность перестаёт висеть на чужом мнении — она вшивается прямо тебе под кожу.</p>
+<p id="p25" data-p>Именно это, кстати, безошибочно считывают люди рядом с нами. Они сканируют не отдельные громкие жесты и не красивые обещания в хорошие дни. Они сканируют наш характер — то, из чего мы отлиты в этих незаметных ежесекундных выборах.</p>
+<p id="p26" data-p class="x-stone">Человек, который живёт на автопилоте — всегда огрызается на боль, всегда бьёт в ответ, всегда прячется за «я не сдержался», — со временем превращается в холодный, непробиваемый монолит. Может быть, он и защищён от ударов, но рядом с ним невозможно дышать.</p>
+</section><div class="act-div" aria-hidden="true"><svg viewBox="0 0 240 24"><path d="M8 12 H96 M144 12 H232" /><path class="ad-m" d="M120 3 C 128 9, 128 15, 120 21 C 112 15, 112 9, 120 3 Z"/></svg></div><section class="part epi" id="act5" data-act="5"><header class="act-h"><p class="act-n">Эпилог</p></header>
+<p id="p27" data-p class="formula">Древняя формула власти звучала как «разделяй и властвуй». Внутренняя свобода устроена тоньше: <strong>разделяя, создавай</strong>. Отделяй себя от вспышки, чтобы создать поступок. Отделяй себя от страха, чтобы создать смелость. Отделяй себя от обиды, чтобы создать близость.</p>
+<figure class="card sozd" id="sozdavaj" aria-label="Сцена «Разделяя, создавай»: разведите пары в стороны"><p class="sozd-ask">Разведите в стороны. <span>Потяните или просто коснитесь.</span></p><div class="pair" data-i="0" role="button" tabindex="0" aria-label="Отделить себя от слова «вспышка» и создать «поступок»"><span class="pr-emo">вспышка</span><span class="pr-born" aria-hidden="true">поступок</span><span class="pr-me">я</span></div><div class="pair" data-i="1" role="button" tabindex="0" aria-label="Отделить себя от слова «страх» и создать «смелость»"><span class="pr-emo">страх</span><span class="pr-born" aria-hidden="true">смелость</span><span class="pr-me">я</span></div><div class="pair" data-i="2" role="button" tabindex="0" aria-label="Отделить себя от слова «обида» и создать «близость»"><span class="pr-emo">обида</span><span class="pr-born" aria-hidden="true">близость</span><span class="pr-me">я</span></div><p class="sozd-end" aria-live="polite"><span>разделяя,</span> <span>создавай</span></p></figure>
+<p id="p28" data-p class="pull soft">Каждый раз, когда Наблюдатель внутри тебя в самую тёмную минуту тихо произносит: <em>«Я вижу свою боль. Мне хочется всё разнести и уйти. Но я выбираю остаться и поговорить»</em>, — в мире происходит почти незаметный, но необратимый сдвиг.</p>
+<p id="p29" data-p class="last">Один такой выбор вопреки эмоции спасает ночь. Тысяча таких выборов создают человека, которым ты всегда хотел стать, — и меняют всю твою жизнь.</p>
+</section>
+
+<section class="kulisy" id="kulisy" aria-label="За кулисами">
+  <div class="ku-card">
+    <p class="ku-eyebrow">Служебный вход</p>
+    <h2>За кулисами</h2>
+    <p class="ku-lead">Зал опустел, а машинная ещё открыта. Здесь делают погоду для сцены. Попробуйте сами.</p>
+    <div class="ku-stage"><canvas id="ku-cv" aria-hidden="true"></canvas></div>
+    <div class="ku-machines">
+      <button type="button" class="mc" id="mc-wind" aria-label="Барабан ветра: крутите пальцем или зажмите">
+        <svg viewBox="0 0 58 58" aria-hidden="true"><path d="M8 54 L18 34 M50 54 L40 34" stroke="#a77b52" stroke-width="3" stroke-linecap="round"/>
+          <g class="drum"><circle cx="29" cy="29" r="20" fill="#6b4a33" stroke="#d7b26a" stroke-width="1.5"/><g stroke="#3e2a1d" stroke-width="2.4"><path d="M29 9 V49 M9 29 H49 M15 15 L43 43 M43 15 L15 43"/></g><circle cx="29" cy="29" r="4" fill="#d7b26a"/></g>
+          <path d="M5 26 q 8 -4 14 0 M3 33 q 6 -3 11 0" stroke="#cfe0ef" stroke-width="1.6" fill="none" stroke-linecap="round" opacity=".7"/></svg>
+        <span>Барабан ветра</span><small>крутите или зажмите</small>
+      </button>
+      <button type="button" class="mc" id="mc-thunder" aria-label="Громовой лист: коснитесь, чтобы ударить гром">
+        <svg viewBox="0 0 58 58" aria-hidden="true"><path d="M6 4 H52" stroke="#a77b52" stroke-width="3" stroke-linecap="round"/><path d="M18 4 V8 M40 4 V8" stroke="#d7b26a" stroke-width="1.5"/>
+          <g class="sheet"><path d="M14 8 H44 Q 46 30, 44 52 H14 Q 12 30, 14 8 Z" fill="#8b929e" stroke="#c9ced8" stroke-width="1.2"/><path d="M18 14 Q 22 30, 18 46 M26 12 Q 30 30, 26 48 M34 12 Q 38 30, 34 48" stroke="#a9b0bc" stroke-width="1" fill="none"/></g></svg>
+        <span>Громовой лист</span><small>коснитесь</small>
+      </button>
+      <button type="button" class="mc" id="mc-rain" aria-pressed="false" aria-label="Короб дождя: наклонить или вернуть">
+        <svg viewBox="0 0 58 58" aria-hidden="true"><path d="M29 40 L22 54 H36 Z" fill="#a77b52"/>
+          <g class="box"><rect x="6" y="30" width="46" height="12" rx="3" fill="#6b4a33" stroke="#d7b26a" stroke-width="1.3"/><g fill="#e8dcc6"><circle cx="13" cy="36" r="1.6"/><circle cx="20" cy="35" r="1.6"/><circle cx="27" cy="37" r="1.6"/><circle cx="34" cy="35" r="1.6"/><circle cx="41" cy="37" r="1.6"/><circle cx="47" cy="35" r="1.6"/></g></g>
+          <g stroke="#9fc0e0" stroke-width="1.4" stroke-linecap="round" opacity=".8"><path d="M14 8 l -2 6 M24 4 l -2 6 M34 8 l -2 6 M44 4 l -2 6 M19 18 l -2 6 M39 18 l -2 6"/></g></svg>
+        <span>Короб дождя</span><small>наклонить</small>
+      </button>
+    </div>
+    <div class="ku-foot"><span id="ku-note">Буря только на сцене. Кресло в зале остаётся тихим.</span><button type="button" class="ku-snd" id="ku-snd" aria-pressed="true">звук: вкл</button></div>
+  </div>
+</section>
+
+<footer class="end">
+  <p class="thanks">Спасибо, что посидели в этом зале.</p>
+  <p>Ещё статьи: <a href="../doverie/">«Доверие»</a>, <a href="../partner/">«На что можно смотреть бесконечно»</a>, <a href="../granicy/">«Чьи это границы?»</a>, <a href="../gorizont/">«Горизонт отношений»</a>, <a href="../kak-dolzhno/">«Как вообще-то должно быть»</a> и <a href="https://legendpsy.github.io/love-essay/">«Любовь не измеряется страданием»</a></p>
+  <p><a class="to-all" href="https://legendpsy.github.io/stati/">← Все статьи</a></p>
+</footer>
+</main>
+
+<div id="toast" class="hide" role="status"></div>
+<script>
+/* «Разделяя, создавай» — жизнь сайта. Мир: старый деревянный театр.
+   На обложке на сцене идёт буря, а в зале тихо. По странице за читаемым абзацем следует луч прожектора с пылинками,
+   занавес по краям колышется от сквозняка (сильнее, когда листаете быстро и когда текст о ветре).
+   На полях своя погода: искры у «вспышки спички», туман у «лени», ветер в акте «Шаги против ветра».
+   Программка сама отмечает пройденные акты. Смысловые сцены: «Вздох», «Зрительный зал», «Разделяя, создавай».
+   За кулисами — машинная погоды (барабан ветра, громовой лист, короб дождя). Звук только там и только от ваших рук. */
+(() => {
+'use strict';
+const D = document, R = D.documentElement, W = window;
+R.classList.add('js');
+const $ = (s, el = D) => el.querySelector(s), $$ = (s, el = D) => [...el.querySelectorAll(s)];
+const RM = W.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const TAU = Math.PI * 2;
+const clamp = (v, a = 0, b = 1) => v < a ? a : v > b ? b : v;
+const lerp = (a, b, t) => a + (b - a) * t;
+const sstep = (a, b, v) => { const t = clamp((v - a) / (b - a)); return t * t * (3 - 2 * t); };
+const nz = x => Math.sin(x) * .5 + Math.sin(x * 2.13 + 1.3) * .3 + Math.sin(x * 4.37 + .7) * .2;
+function rng(seed) {
+  return () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+}
+const rnd = rng(Date.now() % 100000);
+const store = {
+  get(k, d) { try { const v = localStorage.getItem('razdel:' + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem('razdel:' + k, JSON.stringify(v)); } catch (e) {} }
+};
+const isDark = () => R.dataset.theme === 'dark' || (R.dataset.theme !== 'light' && W.matchMedia('(prefers-color-scheme: dark)').matches);
+const rgba = (c, a) => `rgba(${c[0]},${c[1]},${c[2]},${a < 0 ? 0 : a})`;
+function glow(ctx, x, y, r, c, a) {
+  if (a <= .002 || r <= 0) return;
+  const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+  g.addColorStop(0, rgba(c, a)); g.addColorStop(.45, rgba(c, a * .35)); g.addColorStop(1, rgba(c, 0));
+  ctx.fillStyle = g; ctx.fillRect(x - r, y - r, r * 2, r * 2);
+}
+function dot(ctx, x, y, r) { ctx.beginPath(); ctx.arc(x, y, r, 0, TAU); ctx.fill(); }
+const cssRGB = name => getComputedStyle(R).getPropertyValue(name).split(',').map(v => +v.trim());
+let COL = {};
+function readColors() { COL = { beam: cssRGB('--beam'), mote: cssRGB('--mote'), core: cssRGB('--mote-core'), fog: cssRGB('--fog'), spark: cssRGB('--spark'), wind: cssRGB('--wind'), dark: isDark() }; }
+readColors();
+W.matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', readColors);
+
+/* ---------- окно и прокрутка ---------- */
+let vw = innerWidth, vh = innerHeight, docH = 1, sy = scrollY, prog = 0, vel = 0, lastY = sy, lastT = performance.now();
+function measure() { vw = innerWidth; vh = innerHeight; docH = Math.max(1, R.scrollHeight - vh); }
+measure();
+addEventListener('scroll', () => {
+  const now = performance.now(), y = scrollY, dt = Math.max(8, now - lastT);
+  vel = vel * .55 + ((y - lastY) / dt) * .45; lastY = y; lastT = now; sy = y;
+}, { passive: true });
+
+/* ---------- проявление абзацев ---------- */
+const io = new IntersectionObserver(es => { for (const e of es) if (e.isIntersecting) { e.target.classList.add('seen'); io.unobserve(e.target); } }, { rootMargin: '0px 0px -8% 0px' });
+$$('main [data-p], .card, .act-div').forEach(el => io.observe(el));
+const ioOn = new IntersectionObserver(es => { for (const e of es) e.target.classList.toggle('on', e.isIntersecting); }, { rootMargin: '-25% 0px -25% 0px' });
+$$('.x-flash, .x-fog').forEach(el => ioOn.observe(el));
+
+const paras = $$('main .part [data-p]');
+function readingPara() {
+  let best = null, bd = 1e9; const line = vh * .42;
+  for (const p of paras) {
+    const r = p.getBoundingClientRect();
+    if (r.bottom < 0 || r.top > vh) continue;
+    const d = r.top > line ? r.top - line : r.bottom < line ? line - r.bottom : 0;
+    if (d < bd) { bd = d; best = p; }
+  }
+  return best;
+}
+const vis = el => { if (!el) return 0; const r = el.getBoundingClientRect(); const c = (r.top + r.bottom) / 2; return clamp(1 - Math.abs(c - vh * .5) / (vh * .5 + r.height * .5)); };
+
+/* =================================================================
+   Обложка: буря на сцене, тишина в зале. Координаты картины 1024×683
+   ================================================================= */
+const IW = 1024, IH = 683;
+const STAGE = { x0: 402, x1: 934, y0: 118, y1: 438 };
+const BEAM = [[148, 0], [262, 0], [428, 430], [292, 446]];
+function stageSetup(r) {
+  return {
+    rain: Array.from({ length: 150 }, () => ({ x: STAGE.x0 + r() * (STAGE.x1 - STAGE.x0 + 60), y: STAGE.y0 + r() * (STAGE.y1 - STAGE.y0), l: 9 + r() * 12, v: 380 + r() * 260, a: .18 + r() * .3 })),
+    mist: Array.from({ length: 7 }, (_, i) => ({ x: STAGE.x0 + r() * 540, y: 380 + r() * 54, rx: 70 + r() * 90, sp: 6 + r() * 10, ph: r() * TAU })),
+    motes: Array.from({ length: 46 }, () => ({ u: r(), v: r(), z: .6 + r() * 1.3, ph: r() * TAU, sp: .02 + r() * .05 })),
+    sparks: Array.from({ length: 9 }, () => ({ x: 760 + r() * 110, y: 270 + r() * 60, vx: -6 + r() * 12, vy: -8 - r() * 14, life: r() })),
+    foot: [444, 510, 591, 720, 816, 901].map(x => ({ x, ph: r() * TAU })),
+    flash: 0, nextFlash: 2 + r() * 4, r
+  };
+}
+function beamPoint(u, v) { // u: вдоль луча 0..1, v: поперёк 0..1
+  const ax = lerp(BEAM[0][0], BEAM[1][0], v), ay = lerp(BEAM[0][1], BEAM[1][1], v);
+  const bx = lerp(BEAM[3][0], BEAM[2][0], v), by = lerp(BEAM[3][1], BEAM[2][1], v);
+  return [lerp(ax, bx, u), lerp(ay, by, u)];
+}
+function drawStage(ctx, dt, t, s, k, opt = {}) {
+  const px = 1 / k, windX = opt.wind || 0;
+  // молния за облаками
+  s.nextFlash -= dt;
+  if (s.nextFlash < 0) { s.flash = 1; s.nextFlash = 5 + s.r() * 7; }
+  if (s.flash > 0) {
+    const f = s.flash * (s.flash > .7 ? (Math.sin(t * 60) > 0 ? 1 : .4) : 1);
+    glow(ctx, 735, 210, 240, [200, 200, 255], .38 * f);
+    glow(ctx, 600, 190, 160, [210, 210, 255], .16 * f);
+    s.flash = Math.max(0, s.flash - dt * 1.6);
+  }
+  // дождь только внутри сцены
+  ctx.save(); ctx.beginPath(); ctx.rect(STAGE.x0, STAGE.y0, STAGE.x1 - STAGE.x0, STAGE.y1 - STAGE.y0); ctx.clip();
+  ctx.strokeStyle = 'rgba(210,220,245,1)'; ctx.lineCap = 'round'; ctx.lineWidth = Math.max(1, px * 1.1);
+  const slant = .16 + windX * .5;
+  for (const d of s.rain) {
+    d.y += d.v * dt; d.x -= d.v * dt * slant;
+    if (d.y > STAGE.y1) { d.y = STAGE.y0 - s.r() * 30; d.x = STAGE.x0 + s.r() * (STAGE.x1 - STAGE.x0 + 120); }
+    ctx.globalAlpha = d.a * (.7 + s.flash * .6);
+    ctx.beginPath(); ctx.moveTo(d.x, d.y); ctx.lineTo(d.x + d.l * slant, d.y - d.l); ctx.stroke();
+  }
+  ctx.globalAlpha = 1;
+  // туман переливается через рампу
+  for (const m of s.mist) {
+    m.x += (m.sp + windX * 40) * dt; if (m.x - m.rx > STAGE.x1 + 40) m.x = STAGE.x0 - m.rx; if (m.x + m.rx < STAGE.x0 - 60) m.x = STAGE.x1 + m.rx;
+    const y = m.y + Math.sin(t * .4 + m.ph) * 4;
+    const g = ctx.createRadialGradient(m.x, y, 0, m.x, y, m.rx);
+    g.addColorStop(0, 'rgba(230,228,236,.16)'); g.addColorStop(1, 'rgba(230,228,236,0)');
+    ctx.fillStyle = g; ctx.save(); ctx.translate(0, y); ctx.scale(1, .32); ctx.translate(0, -y); ctx.fillRect(m.x - m.rx, y - m.rx, m.rx * 2, m.rx * 2); ctx.restore();
+  }
+  // искры, как от чиркнувших спичек
+  ctx.fillStyle = '#ffcf7a';
+  for (const p of s.sparks) {
+    p.life += dt * .45; if (p.life > 1) { p.life = 0; p.x = 740 + s.r() * 150; p.y = 280 + s.r() * 70; p.vx = -6 + s.r() * 12 + windX * 30; p.vy = -10 - s.r() * 14; }
+    const a = Math.sin(p.life * Math.PI) * .9;
+    ctx.globalAlpha = a * (.6 + .4 * Math.sin(t * 20 + p.x));
+    dot(ctx, p.x + p.vx * p.life * 3, p.y + p.vy * p.life * 3, Math.max(1.2, px * 1.2));
+  }
+  ctx.globalAlpha = 1;
+  ctx.restore();
+  // рампа и бра мерцают
+  for (const f of s.foot) glow(ctx, f.x, 437, 26, [255, 200, 120], .26 + .1 * nz(t * 2.2 + f.ph));
+  glow(ctx, 92, 282, 60, [255, 200, 130], .22 + .07 * nz(t * 1.7));
+  glow(ctx, 266, 326, 48, [255, 200, 130], .2 + .07 * nz(t * 1.9 + 2));
+  if (opt.noBeam) return;
+  // пылинки в луче с балкона
+  for (const m of s.motes) {
+    m.u += m.sp * dt * .25; if (m.u > 1) m.u -= 1;
+    m.v += Math.sin(t * .3 + m.ph) * dt * .02; m.v = clamp(m.v, .05, .95);
+    const [x, y] = beamPoint(m.u, m.v);
+    const a = (.35 + .35 * Math.sin(t * 1.3 + m.ph)) * Math.sin(m.u * Math.PI);
+    glow(ctx, x, y, 3.2 * m.z, [255, 236, 190], a * .6);
+    ctx.fillStyle = `rgba(255,246,220,${(a * .9).toFixed(3)})`; dot(ctx, x, y, Math.max(.8 * m.z, px * .8));
+  }
+}
+
+const lives = [];
+function addLive(el, cv, draw, setup) {
+  const L = { el, cv, ctx: cv.getContext('2d'), draw, s: setup(rng(lives.length * 97 + 13)), w: 0, h: 0, k: 1, dpr: 1, vis: false, t: 0 };
+  lives.push(L); return L;
+}
+function sizeLive(L) {
+  const r = L.cv.getBoundingClientRect(); if (!r.width) return;
+  L.dpr = Math.min(devicePixelRatio || 1, 2); L.w = r.width; L.h = r.height; L.k = r.width / IW;
+  L.cv.width = Math.round(r.width * L.dpr); L.cv.height = Math.round(r.height * L.dpr);
+}
+const ro = new ResizeObserver(es => { for (const e of es) { const L = lives.find(l => l.cv === e.target); if (L) sizeLive(L); } });
+const vio = new IntersectionObserver(es => { for (const e of es) { const L = lives.find(l => l.el === e.target); if (L) L.vis = e.isIntersecting; } }, { rootMargin: '80px 0px' });
+{
+  const pic = $('.hero .pc-pic'), cv = $('.pc-live', pic);
+  const L = addLive(pic, cv, drawStage, stageSetup);
+  ro.observe(cv); vio.observe(pic);
+}
+
+/* =================================================================
+   Сама сцена: луч прожектора на читаемом абзаце, пылинки, погода на полях
+   ================================================================= */
+const air = $('#air'), ax = air.getContext('2d');
+let adpr = 1;
+function sizeAir() { adpr = Math.min(devicePixelRatio || 1, 2); air.width = Math.round(vw * adpr); air.height = Math.round(vh * adpr); }
+sizeAir();
+addEventListener('resize', () => { measure(); sizeAir(); }, { passive: true });
+const beam = { x: vw / 2, y: vh * .45, w: 300, h: 160, on: 0 };
+const motes = Array.from({ length: 70 }, () => ({ u: rnd(), v: rnd(), z: .5 + rnd() * 1.2, ph: rnd() * TAU, sp: .015 + rnd() * .04 }));
+const embers = [], fogs = [], gusts = [], scraps = [];
+let spawnE = 0, spawnG = 0;
+const pFlash = $('.x-flash'), pFog = $('.x-fog'), act3 = $('#act3'), vzCard = $('#vzdoh');
+const contentBox = () => { const m = $('#act0'); const r = m.getBoundingClientRect(); return { l: r.left + 22, r: r.right - 22 }; };
+function spanVis(el) { if (!el) return 0; const r = el.getBoundingClientRect(); return sstep(vh * 1.05, vh * .55, r.top) * sstep(-vh * .05, vh * .45, r.bottom); }
+const W8 = { spark: 0, fog: 0, wind: 0, hero: 1 };
+
+function drawAir(dt, t) {
+  const heroB = $('.hero').getBoundingClientRect().bottom;
+  W8.hero = sstep(vh * .35, vh * .9, heroB);
+  const tgt = { spark: Math.max(spanVis(pFlash), vis(vzCard) * .35), fog: spanVis(pFog), wind: spanVis(act3) };
+  for (const k in tgt) W8[k] += (tgt[k] - W8[k]) * Math.min(1, dt * 1.2);
+  const cb = contentBox();
+  // ----- луч прожектора из ложи справа сверху -----
+  const p = readingPara();
+  if (p) {
+    const r = p.getBoundingClientRect();
+    const tx = (r.left + r.right) / 2, ty = clamp((r.top + r.bottom) / 2, vh * .18, vh * .82), tw = Math.min(vw * .95, r.width * 1.18), th = clamp(r.height * 1.1 + 40, 120, vh * .7);
+    const k = Math.min(1, dt * 2.2);
+    beam.x += (tx - beam.x) * k; beam.y += (ty - beam.y) * k; beam.w += (tw - beam.w) * k; beam.h += (th - beam.h) * k;
+  }
+  beam.on += ((p && W8.hero < .5 ? 1 : 0) - beam.on) * Math.min(1, dt * 1.5);
+  const bo = beam.on * (COL.dark ? 1 : .9);
+  if (bo > .01) {
+    const sx = vw * .92, sy0 = -vh * .12, flick = .94 + .06 * nz(t * 3.3);
+    const lx = beam.x - beam.w / 2, rx = beam.x + beam.w / 2;
+    const a0 = (COL.dark ? .075 : .13) * bo * flick;
+    for (let i = 0; i < 3; i++) {
+      const sp = 1 + i * .09, aa = a0 * (i === 0 ? 1 : .45);
+      const g = ax.createLinearGradient(sx, sy0, beam.x, beam.y);
+      g.addColorStop(0, rgba(COL.beam, aa * .2)); g.addColorStop(.7, rgba(COL.beam, aa * .8)); g.addColorStop(1, rgba(COL.beam, aa));
+      ax.fillStyle = g; ax.beginPath();
+      ax.moveTo(sx - 10 * sp, sy0); ax.lineTo(sx + 10 * sp, sy0);
+      ax.lineTo(beam.x + (rx - beam.x) * sp, beam.y + beam.h * .12); ax.lineTo(beam.x + (lx - beam.x) * sp, beam.y + beam.h * .3); ax.closePath(); ax.fill();
+    }
+    // пятно света на абзаце
+    ax.save(); ax.translate(beam.x, beam.y); ax.scale(1, beam.h / beam.w);
+    const pg = ax.createRadialGradient(0, 0, 0, 0, 0, beam.w * .62);
+    pg.addColorStop(0, rgba(COL.beam, a0 * 1.5)); pg.addColorStop(.6, rgba(COL.beam, a0 * .8)); pg.addColorStop(1, rgba(COL.beam, 0));
+    ax.fillStyle = pg; ax.fillRect(-beam.w, -beam.w, beam.w * 2, beam.w * 2); ax.restore();
+    // пылинки в луче
+    for (const m of motes) {
+      m.u += m.sp * dt * .3; if (m.u > 1) { m.u -= 1; m.v = rnd(); }
+      m.v += Math.sin(t * .4 + m.ph) * dt * .02 + W8.wind * dt * .05; if (m.v > 1) m.v -= 1;
+      const u = .25 + m.u * .8;
+      const ex = lerp(lx, rx, m.v), ey = beam.y + lerp(beam.h * .3, beam.h * .12, m.v);
+      const x = lerp(sx - 10 + 20 * m.v, ex, u) + Math.sin(t * .7 + m.ph) * 6, y = lerp(sy0, ey, u) + Math.cos(t * .5 + m.ph) * 5;
+      const a = bo * (.3 + .4 * Math.sin(t * 1.1 + m.ph * 3)) * Math.sin(Math.min(1, m.u * 1.2) * Math.PI);
+      if (a < .02) continue;
+      if (COL.dark) glow(ax, x, y, 4 * m.z, COL.core, a * .35);
+      ax.fillStyle = rgba(COL.dark ? COL.core : COL.mote, a * (COL.dark ? .9 : .55)); dot(ax, x, y, .8 * m.z);
+    }
+  }
+  if (RM) return;
+  // ----- искры на полях у «вспышки спички» -----
+  spawnE -= dt * W8.spark * 7;
+  while (spawnE < 0) {
+    spawnE += 1;
+    const left = rnd() < .5, mx = left ? rnd() * Math.max(14, cb.l - 4) : vw - rnd() * Math.max(14, vw - cb.r - 4);
+    embers.push({ x: mx, y: vh * (.45 + rnd() * .5), vx: (rnd() - .5) * 14, vy: -30 - rnd() * 50, life: 0, d: 1.4 + rnd() * 1.6, z: .8 + rnd() * 1.2 });
+  }
+  for (let i = embers.length - 1; i >= 0; i--) {
+    const e = embers[i]; e.life += dt / e.d; if (e.life >= 1) { embers.splice(i, 1); continue; }
+    e.x += (e.vx + Math.sin(t * 3 + e.d * 9) * 8) * dt; e.y += e.vy * dt;
+    const a = Math.sin(e.life * Math.PI) * (.55 + .45 * Math.sin(t * 22 + e.d * 40));
+    glow(ax, e.x, e.y, 6 * e.z, COL.spark, a * .5);
+    ax.fillStyle = rgba([255, 236, 190], a); dot(ax, e.x, e.y, .9 * e.z);
+  }
+  // ----- туман «лени» наползает с полей -----
+  if (W8.fog > .01) {
+    if (fogs.length < 9) fogs.push({ side: fogs.length % 2 ? 1 : -1, y: rnd(), r: .25 + rnd() * .3, ph: rnd() * TAU, sp: .05 + rnd() * .06 });
+    for (const f of fogs) {
+      const reach = W8.fog * (.45 + .2 * Math.sin(t * f.sp + f.ph));
+      const x = f.side < 0 ? lerp(-vw * .2, vw * .35, reach) : lerp(vw * 1.2, vw * .65, reach);
+      const y = vh * (.15 + f.y * .75) + Math.sin(t * .2 + f.ph) * 20, rr = vw * f.r + 60;
+      const g = ax.createRadialGradient(x, y, 0, x, y, rr);
+      const a = (COL.dark ? .22 : .5) * W8.fog;
+      g.addColorStop(0, rgba(COL.fog, a)); g.addColorStop(.6, rgba(COL.fog, a * .4)); g.addColorStop(1, rgba(COL.fog, 0));
+      ax.fillStyle = g; ax.save(); ax.translate(x, y); ax.scale(1.4, .7); ax.translate(-x, -y); ax.fillRect(x - rr, y - rr, rr * 2, rr * 2); ax.restore();
+    }
+  }
+  // ----- ветер навстречу в акте «Шаги против ветра» -----
+  spawnG -= dt * W8.wind * 4;
+  while (spawnG < 0) {
+    spawnG += 1;
+    if (rnd() < .78) gusts.push({ x: vw + 40, y: rnd() * vh, l: 40 + rnd() * 120, v: 260 + rnd() * 320, a: .15 + rnd() * .25, w: rnd() * TAU });
+    else scraps.push({ x: vw + 20, y: rnd() * vh * .9, v: 120 + rnd() * 160, r: rnd() * TAU, vr: (rnd() - .5) * 8, s: 4 + rnd() * 5, ph: rnd() * TAU, leaf: rnd() < .6 });
+  }
+  ax.lineCap = 'round';
+  for (let i = gusts.length - 1; i >= 0; i--) {
+    const g = gusts[i]; g.x -= g.v * dt; if (g.x + g.l < -20) { gusts.splice(i, 1); continue; }
+    const yy = g.y + Math.sin(g.x * .012 + g.w) * 8;
+    ax.strokeStyle = rgba(COL.wind, g.a * W8.wind * (COL.dark ? .7 : .55)); ax.lineWidth = 1.2;
+    ax.beginPath(); ax.moveTo(g.x, yy); ax.quadraticCurveTo(g.x + g.l * .5, yy - 6, g.x + g.l, yy + 2); ax.stroke();
+  }
+  for (let i = scraps.length - 1; i >= 0; i--) {
+    const s = scraps[i]; s.x -= s.v * dt; s.y += Math.sin(t * 2 + s.ph) * 30 * dt + 10 * dt; s.r += s.vr * dt;
+    if (s.x < -30) { scraps.splice(i, 1); continue; }
+    ax.save(); ax.translate(s.x, s.y); ax.rotate(s.r); ax.scale(1, Math.abs(Math.sin(t * 3 + s.ph)) * .8 + .2);
+    ax.fillStyle = s.leaf ? (COL.dark ? 'rgba(200,140,80,.55)' : 'rgba(170,110,50,.5)') : (COL.dark ? 'rgba(235,225,205,.45)' : 'rgba(250,244,230,.85)');
+    ax.beginPath();
+    if (s.leaf) { ax.ellipse(0, 0, s.s, s.s * .45, 0, 0, TAU); } else { ax.rect(-s.s, -s.s * .7, s.s * 2, s.s * 1.4); }
+    ax.fill(); ax.restore();
+  }
+}
+
+/* ---------- занавес: сквозняк от прокрутки и ветер в третьем акте ---------- */
+const curtains = $$('.curtain');
+let sway = 0, swayV = 0;
+function updateCurtains(dt, t) {
+  const force = clamp(Math.abs(vel) * 1.2, 0, 2) + W8.wind * (.8 + .7 * Math.sin(t * 1.7)) + .15 * (1 + nz(t * .4));
+  swayV += (force - sway) * dt * 6; swayV *= Math.pow(.15, dt); sway += swayV * dt * 4;
+  const sc = 1 + clamp(sway, 0, 2.5) * (vw < 520 ? .18 : .05);
+  curtains.forEach((c, i) => { c.style.transform = `scaleX(${sc.toFixed(3)})`; c.style.setProperty('--fold', ((i ? -1 : 1) * (t * 2 + sway * 9 + W8.wind * Math.sin(t * 2.3) * 6)).toFixed(1) + 'px'); });
+}
+let lastMove = 0;
+addEventListener('scroll', () => { lastMove = performance.now(); }, { passive: true });
+
+/* ---------- программка: акты отмечаются сами ---------- */
+const progEl = $('#prog'), pgBtn = $('.pg-btn'), pgNow = $('#pg-now'), pgDots = $('.pg-dots');
+const acts = $$('main .part'), pgItems = $$('.pg-list li[data-a]');
+const ACT_SHORT = ['Пролог', 'Акт I', 'Акт II', 'Акт III', 'Акт IV', 'Эпилог'];
+acts.forEach(() => pgDots.append(D.createElement('i')));
+let curAct = -1;
+function updateProgramme() {
+  progEl.classList.toggle('off', W8.hero > .5);
+  progEl.classList.toggle('hush', performance.now() - lastMove < 900 && Math.abs(vel) > .15);
+  let a = 0;
+  acts.forEach((s, i) => { if (s.getBoundingClientRect().top < vh * .55) a = i; });
+  const endR = $('#kulisy').getBoundingClientRect().top < vh * .6;
+  if (a !== curAct) {
+    curAct = a; pgNow.textContent = ACT_SHORT[a];
+    if (!RM) { pgBtn.classList.remove('flip'); void pgBtn.offsetWidth; pgBtn.classList.add('flip'); }
+  }
+  const dots = pgDots.children;
+  for (let i = 0; i < acts.length; i++) {
+    const done = i < a || (endR && i === a);
+    dots[i].className = done ? 'done' : i === a ? 'now' : '';
+    pgItems[i].classList.toggle('done', done); pgItems[i].classList.toggle('now', i === a && !done);
+  }
+}
+pgBtn.addEventListener('click', () => { const o = !progEl.classList.contains('open'); progEl.classList.toggle('open', o); pgBtn.setAttribute('aria-expanded', String(o)); });
+$$('.pg-list a').forEach(a => a.addEventListener('click', () => { progEl.classList.remove('open'); pgBtn.setAttribute('aria-expanded', 'false'); }));
+D.addEventListener('click', e => { if (!progEl.contains(e.target)) { progEl.classList.remove('open'); pgBtn.setAttribute('aria-expanded', 'false'); } });
+
+/* =================================================================
+   Смысловая сцена «Вздох»: тот же вздох, другая мысль — другая спичка
+   ================================================================= */
+{
+  const card = $('#vzdoh'), stage = $('.vz-stage', card), name = $('.vz-name', card), after = $('.vz-after', card);
+  const btns = $$('.vz-t', card), tried = new Set();
+  let tm = 0, busy = false;
+  const replaySigh = () => { card.classList.remove('sighing'); void card.offsetWidth; card.classList.add('sighing'); };
+  new IntersectionObserver((es, o) => { if (es[0].isIntersecting) { o.disconnect(); setTimeout(replaySigh, 700); } }, { threshold: .6 }).observe(card);
+  btns.forEach(b => b.addEventListener('click', () => {
+    if (busy) return;
+    busy = true; clearTimeout(tm);
+    const m = b.dataset.m;
+    btns.forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+    stage.dataset.mood = ''; name.textContent = ''; after.style.opacity = 0;
+    replaySigh();
+    tm = setTimeout(() => {
+      stage.dataset.mood = m; name.textContent = m === 'fear' ? 'тревога' : 'сочувствие';
+      tried.add(m); busy = false;
+      setTimeout(() => {
+        after.textContent = tried.size < 2 ? 'Вздох тот же. Попробуйте другую мысль.' : 'Вздох был один и тот же. Спичку зажгла мысль.';
+        after.style.opacity = 1;
+      }, 1400);
+    }, RM ? 50 : 1300);
+  }));
+}
+
+/* =================================================================
+   Смысловая сцена «Зрительный зал»: камера отъезжает со сцены в тихий зал
+   ================================================================= */
+const zal = $('#zal');
+const Z = { cv: $('.zal-cv', zal), img: new Image(), ok: false, w: 0, h: 0, dpr: 1, s: null, p: 0, hint: $('.zal-hint', zal) };
+Z.ctx = Z.cv.getContext('2d');
+Z.img.decoding = 'async'; Z.img.onload = () => { Z.ok = true; }; Z.img.src = 'art/teatr.webp';
+Z.s = stageSetup(rng(4242));
+const THOUGHTS = ['я здесь случайно', 'сейчас все увидят', 'не отсвечивай', 'я не могу', 'вжаться в стул', 'они давно всё поняли', 'молчи', 'горло сжалось', 'разоблачат'];
+Z.th = THOUGHTS.map((txt, i) => ({ txt, x: STAGE.x0 + 60 + rnd() * 420, y: STAGE.y0 + 40 + rnd() * 240, vx: (rnd() - .5) * 60, vy: (rnd() - .5) * 40, ph: rnd() * TAU, size: 13 + rnd() * 4, esc: 0, a: 1, ring: 0 }));
+Z.nextEsc = 2;
+function sizeZal() { const r = Z.cv.getBoundingClientRect(); if (!r.width) return; Z.dpr = Math.min(devicePixelRatio || 1, 2); Z.w = r.width; Z.h = r.height; Z.cv.width = Math.round(Z.w * Z.dpr); Z.cv.height = Math.round(Z.h * Z.dpr); }
+new ResizeObserver(sizeZal).observe(Z.cv);
+if (RM) zal.classList.add('static');
+function drawZal(dt, t) {
+  const r = zal.getBoundingClientRect();
+  if (RM || r.bottom < 0 || r.top > vh || !Z.ok || !Z.w) return;
+  const span = r.height - vh, p = clamp(-r.top / Math.max(1, span));
+  Z.p = p;
+  Z.hint.style.opacity = (1 - sstep(.02, .1, p)) * sstep(-vh * .6, 0, -Math.max(0, r.top)) * .9;
+  const e = sstep(.1, .78, p);
+  const c = Z.ctx, w = Z.w, h = Z.h;
+  const s1 = Math.max(h * .84 / IH, w / IW) * 1.01, s0 = Math.max(s1 * 2.7, h / (STAGE.y1 - STAGE.y0) * 1.25);
+  const s = Math.exp(lerp(Math.log(s0), Math.log(s1), e));
+  const cy1 = Math.max(IH / 2, IH - h / 2 / s1 + 4);
+  const cx = lerp(668, w > h ? 560 : 600, e), cy = lerp(290, cy1, e);
+  const shake = (1 - e) * 5;
+  const ox = w / 2 - cx * s + nz(t * 7) * shake, oy = h / 2 - cy * s + nz(t * 6 + 3) * shake;
+  c.setTransform(Z.dpr, 0, 0, Z.dpr, 0, 0);
+  c.fillStyle = '#160e0f'; c.fillRect(0, 0, w, h);
+  c.setTransform(Z.dpr * s, 0, 0, Z.dpr * s, Z.dpr * ox, Z.dpr * oy);
+  c.drawImage(Z.img, 0, 0, IW, IH);
+  drawStage(c, dt, t, Z.s, s);
+  // кресло Наблюдателя тихо освещается
+  if (e > .55) { const q = sstep(.55, 1, e); glow(c, 382, 520, 90, [255, 214, 150], .32 * q); glow(c, 382, 470, 140, [255, 230, 180], .08 * q); }
+  // мысли мечутся по сцене; до зала не долетают
+  Z.nextEsc -= dt;
+  if (Z.nextEsc < 0 && e > .35) {
+    Z.nextEsc = 2.2 + rnd() * 2;
+    const th = Z.th[Math.floor(rnd() * Z.th.length)];
+    if (!th.esc) { th.esc = 1; th.vx = (382 - th.x) * .5; th.vy = 160 + rnd() * 60; }
+  }
+  c.textAlign = 'center'; c.textBaseline = 'middle';
+  for (const th of Z.th) {
+    if (th.esc === 1) {
+      th.x += th.vx * dt; th.y += th.vy * dt;
+      if (th.y > STAGE.y1 + 2) { th.esc = 2; th.ring = 1; th.rx = th.x; }
+    } else if (th.esc === 2) {
+      th.a -= dt * .9; th.y += dt * 6; th.ring = Math.max(0, th.ring - dt * .8);
+      if (th.a <= 0) { th.esc = 0; th.a = 0; th.x = STAGE.x0 + 60 + rnd() * 420; th.y = STAGE.y0 + 40 + rnd() * 120; th.vx = (rnd() - .5) * 60; th.vy = (rnd() - .5) * 40; }
+    } else {
+      th.a = Math.min(1, th.a + dt * .7);
+      const agit = 1.4 - e * .6;
+      th.vx += nz(t * .9 + th.ph) * 90 * dt * agit; th.vy += nz(t * .8 + th.ph * 2) * 70 * dt * agit;
+      th.vx *= Math.pow(.6, dt); th.vy *= Math.pow(.6, dt);
+      th.x += th.vx * dt * agit; th.y += th.vy * dt * agit;
+      if (th.x < STAGE.x0 + 50) th.vx = Math.abs(th.vx) + 10; if (th.x > STAGE.x1 - 50) th.vx = -Math.abs(th.vx) - 10;
+      if (th.y < STAGE.y0 + 20) th.vy = Math.abs(th.vy) + 10; if (th.y > STAGE.y1 - 30) th.vy = -Math.abs(th.vy) - 10;
+    }
+    if (th.ring > 0) { // невидимая граница у рампы
+      c.strokeStyle = `rgba(255,236,210,${(th.ring * .5).toFixed(3)})`; c.lineWidth = 1.2 / s * 1.5;
+      c.beginPath(); c.ellipse(th.rx, STAGE.y1 + 2, (1 - th.ring) * 50 + 6, ((1 - th.ring) * 50 + 6) * .22, 0, 0, TAU); c.stroke();
+    }
+    const fs = th.size * (1 + (1 - e) * .25);
+    c.font = `italic 600 ${fs.toFixed(1)}px Lora, Georgia, serif`;
+    const a = th.a * (.75 + .25 * Math.sin(t * 2 + th.ph));
+    c.shadowColor = 'rgba(200,40,40,.8)'; c.shadowBlur = 10;
+    c.fillStyle = `rgba(255,232,220,${a.toFixed(3)})`;
+    const wob = Math.sin(t * 4 + th.ph) * (1 - e * .6) * .06;
+    c.save(); c.translate(th.x, th.y); c.rotate(wob); c.fillText(th.txt, 0, 0); c.restore();
+    c.shadowBlur = 0;
+  }
+  // тревожная краснота, пока «я» на сцене
+  c.setTransform(Z.dpr, 0, 0, Z.dpr, 0, 0);
+  const anx = 1 - e;
+  if (anx > .01) {
+    const g = c.createRadialGradient(w / 2, h / 2, Math.min(w, h) * .2, w / 2, h / 2, Math.max(w, h) * .75);
+    g.addColorStop(0, `rgba(90,10,20,${(anx * .12).toFixed(3)})`); g.addColorStop(1, `rgba(40,0,10,${(anx * .65).toFixed(3)})`);
+    c.fillStyle = g; c.fillRect(0, 0, w, h);
+  }
+}
+
+/* =================================================================
+   Смысловая сцена «Разделяя, создавай»: развести пары — между ними рождается новое
+   ================================================================= */
+{
+  const card = $('#sozdavaj');
+  const pairs = $$('.pair', card).map(el => ({ el, emo: $('.pr-emo', el), me: $('.pr-me', el), born: $('.pr-born', el), t: 0, goal: 0, made: false, drag: null }));
+  const geom = P => { const rw = P.el.clientWidth, ew = P.emo.offsetWidth, mw = P.me.offsetWidth; return { rw, ae: rw / 2 - ew / 2 - 10, am: rw / 2 - mw / 2 - 10, bx: (ew - mw) / 2 }; };
+  const finish = P => { if (P.made) return; P.made = true; P.goal = 1; P.el.classList.add('made'); P.el.setAttribute('aria-label', P.el.getAttribute('aria-label') + ': готово');
+    if (pairs.every(q => q.made)) setTimeout(() => card.classList.add('done'), 900); };
+  for (const P of pairs) {
+    P.el.addEventListener('pointerdown', e => { if (P.made) return; P.drag = { x0: e.clientX, t0: P.t, moved: false }; P.el.setPointerCapture?.(e.pointerId); });
+    P.el.addEventListener('pointermove', e => {
+      if (!P.drag) return;
+      const dx = Math.abs(e.clientX - P.drag.x0); if (dx > 6) P.drag.moved = true;
+      P.goal = clamp(P.drag.t0 + dx / (P.el.clientWidth * .42)); if (P.goal > .72) { P.drag = null; finish(P); }
+    });
+    const up = () => { if (!P.drag) return; const tap = !P.drag.moved; P.drag = null; if (tap || P.goal > .5) finish(P); else P.goal = 0; };
+    P.el.addEventListener('pointerup', up); P.el.addEventListener('pointercancel', () => { if (P.drag) { P.drag = null; if (!P.made) P.goal = 0; } });
+    P.el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); finish(P); } });
+  }
+  W.__sozd = (dt, t) => {
+    for (const P of pairs) {
+      P.t += (P.goal - P.t) * Math.min(1, dt * (P.drag ? 14 : 4));
+      const g = geom(P), q = P.t;
+      const jit = !P.made && q < .3 && !RM ? (1 - q / .3) : 0;
+      const jx = jit * Math.sin(t * 31 + P.el.dataset.i * 7) * 2.2, jy = jit * Math.cos(t * 27) * 1.4;
+      P.emo.style.transform = `translate(${(-q * g.ae - 7 + jx).toFixed(1)}px, ${jy.toFixed(1)}px)`;
+      P.me.style.transform = `translate(${(q * g.am + 7).toFixed(1)}px, 0)`;
+      P.born.style.transform = `translate(${g.bx.toFixed(1)}px, 0)`;
+    }
+  };
+}
+
+/* =================================================================
+   За кулисами: машинная погоды. Буря на маленькой сцене, кресло в зале тихое.
+   ================================================================= */
+const K = { cv: $('#ku-cv'), wind: 0, omega: 0, ang: 0, rain: false, rainA: 0, flash: 0, vis: false, w: 0, h: 0, dpr: 1, t: 0 };
+K.ctx = K.cv.getContext('2d');
+new ResizeObserver(() => { const r = K.cv.getBoundingClientRect(); K.dpr = Math.min(devicePixelRatio || 1, 2); K.w = r.width; K.h = r.height; K.cv.width = Math.round(K.w * K.dpr); K.cv.height = Math.round(K.h * K.dpr); }).observe(K.cv);
+new IntersectionObserver(es => { K.vis = es[0].isIntersecting; }, { rootMargin: '60px 0px' }).observe(K.cv);
+const KR = rng(777);
+K.drops = Array.from({ length: 110 }, () => ({ x: KR() * 700, y: KR() * 300, v: 320 + KR() * 200, l: 8 + KR() * 8 }));
+K.clouds = [{ x: 210, y: 92, s: 1 }, { x: 330, y: 70, s: 1.2 }, { x: 450, y: 98, s: .9 }].map(c => ({ ...c, ph: KR() * TAU, sw: 0 }));
+K.papers = Array.from({ length: 5 }, () => ({ x: 120 + KR() * 400, y: 230 + KR() * 30, r: KR() * TAU, ph: KR() * TAU }));
+function cloud(c, x, y, s, col) {
+  c.fillStyle = col; c.beginPath();
+  c.ellipse(x, y, 42 * s, 20 * s, 0, 0, TAU); c.ellipse(x - 30 * s, y + 6 * s, 26 * s, 15 * s, 0, 0, TAU); c.ellipse(x + 30 * s, y + 5 * s, 28 * s, 16 * s, 0, 0, TAU); c.ellipse(x + 6 * s, y - 14 * s, 26 * s, 18 * s, 0, 0, TAU); c.fill();
+}
+function drawKulisy(dt, t) {
+  if (!K.vis || !K.w) return;
+  const c = K.ctx, S = K.w / 640;
+  c.setTransform(K.dpr * S, 0, 0, K.dpr * S, 0, 0);
+  const H = K.h / S; // логическая высота (~400)
+  K.wind += (clamp(Math.abs(K.omega) / 9) - K.wind) * Math.min(1, dt * 2);
+  K.omega *= Math.pow(.35, dt);
+  K.rainA += ((K.rain ? 1 : 0) - K.rainA) * Math.min(1, dt * 1.5);
+  K.flash = Math.max(0, K.flash - dt * 1.4);
+  const wind = K.wind, f = K.flash;
+  // стена и сцена
+  c.fillStyle = '#140c0d'; c.fillRect(0, 0, 640, H);
+  const sky = c.createLinearGradient(0, 30, 0, 270);
+  sky.addColorStop(0, f > .3 ? '#7d82b0' : '#2c3350'); sky.addColorStop(1, f > .3 ? '#59608c' : '#3e3f58');
+  c.fillStyle = sky; c.fillRect(92, 30, 456, 240);
+  // нарисованные холмы задника
+  c.fillStyle = '#2f3a3c'; c.beginPath(); c.moveTo(92, 230); c.quadraticCurveTo(200, 170, 320, 215); c.quadraticCurveTo(440, 175, 548, 222); c.lineTo(548, 270); c.lineTo(92, 270); c.fill();
+  // облака на проволоке
+  for (const cl of K.clouds) {
+    cl.sw += ((wind * 26 * Math.sin(t * 2.2 + cl.ph)) - cl.sw) * Math.min(1, dt * 3);
+    const x = cl.x + cl.sw, y = cl.y + Math.sin(t * .8 + cl.ph) * 2;
+    c.strokeStyle = 'rgba(200,190,170,.35)'; c.lineWidth = 1; c.beginPath(); c.moveTo(cl.x, 30); c.lineTo(x, y - 20 * cl.s); c.stroke();
+    cloud(c, x, y, cl.s, f > .2 ? '#c9cbe6' : '#6d7290');
+  }
+  // молния
+  if (f > .55) { c.strokeStyle = `rgba(250,250,255,${f})`; c.lineWidth = 3; c.beginPath(); c.moveTo(340, 96); c.lineTo(326, 140); c.lineTo(344, 140); c.lineTo(322, 196); c.stroke(); }
+  glow(c, 330, 120, 230, [210, 210, 255], .45 * f);
+  // дождь только на сцене
+  if (K.rainA > .01) {
+    c.save(); c.beginPath(); c.rect(92, 30, 456, 245); c.clip();
+    c.strokeStyle = 'rgba(210,222,245,1)'; c.lineWidth = 1.3; c.lineCap = 'round';
+    const sl = .12 + wind * .7;
+    for (const d of K.drops) {
+      d.y += d.v * dt; d.x -= d.v * dt * sl;
+      if (d.y > 280) { d.y = 20 - KR() * 40; d.x = 92 + KR() * 640; }
+      c.globalAlpha = K.rainA * .5; c.beginPath(); c.moveTo(d.x, d.y); c.lineTo(d.x + d.l * sl, d.y - d.l); c.stroke();
+    }
+    c.globalAlpha = 1; c.restore();
+  }
+  // листки бумаги кружит ветер
+  for (const p of K.papers) {
+    if (wind > .15) { p.x -= wind * 140 * dt; p.y += Math.sin(t * 3 + p.ph) * 40 * dt - wind * 10 * dt; p.r += wind * 6 * dt; }
+    else { p.y += (258 - p.y) * dt * 2; }
+    if (p.x < 80) { p.x = 560; p.y = 240 + KR() * 20; }
+    c.save(); c.translate(p.x, p.y); c.rotate(p.r); c.scale(1, .5 + .5 * Math.abs(Math.sin(t * 4 + p.ph)) * (wind > .15 ? 1 : 0) + (wind > .15 ? 0 : .3));
+    c.fillStyle = '#efe6d2'; c.fillRect(-7, -5, 14, 10); c.restore();
+  }
+  // пол сцены и рампа
+  c.fillStyle = '#4a2f22'; c.fillRect(70, 268, 500, 18);
+  c.fillStyle = '#2e1c14'; c.fillRect(70, 286, 500, 8);
+  for (let i = 0; i < 7; i++) glow(c, 110 + i * 70, 272, 18, [255, 205, 130], .4 + .1 * nz(t * 2 + i));
+  // занавес, который рвёт ветер
+  const billow = wind * 22 * (.6 + .4 * Math.sin(t * 3.1));
+  const curt = (x0, dir) => {
+    const g = c.createLinearGradient(x0, 0, x0 + dir * 90, 0); g.addColorStop(0, '#5a1618'); g.addColorStop(.5, '#9a2f2e'); g.addColorStop(1, '#6e1d20');
+    c.fillStyle = g; c.beginPath(); c.moveTo(x0, 20);
+    c.lineTo(x0 + dir * 70, 20);
+    c.quadraticCurveTo(x0 + dir * (40 + billow * .4), 150, x0 + dir * (78 + billow), 286);
+    c.lineTo(x0, 286); c.closePath(); c.fill();
+    c.strokeStyle = 'rgba(0,0,0,.25)'; c.lineWidth = 2;
+    for (let k = 1; k < 4; k++) { c.beginPath(); c.moveTo(x0 + dir * k * 16, 22); c.quadraticCurveTo(x0 + dir * (k * 12 + billow * .2), 150, x0 + dir * (k * 18 + billow * .6), 284); c.stroke(); }
+  };
+  curt(70, 1); curt(570, -1);
+  // ламбрекен и золотая рамка
+  c.fillStyle = '#7a2224'; c.beginPath(); c.moveTo(60, 14); c.lineTo(580, 14); c.lineTo(580, 34);
+  for (let x = 580; x > 60; x -= 40) c.quadraticCurveTo(x - 20, 50, x - 40, 34);
+  c.closePath(); c.fill();
+  c.strokeStyle = '#c99a3e'; c.lineWidth = 3; c.strokeRect(60, 12, 520, 278);
+  // зал: ряд кресел в тени и одно кресло с лампой — тихое, что бы ни творилось на сцене
+  c.fillStyle = '#0d0708'; c.fillRect(0, 296, 640, H - 296);
+  for (let i = 0; i < 8; i++) {
+    const x = 30 + i * 80, lit = i === 3;
+    c.fillStyle = lit ? '#7a2a28' : '#3a1517';
+    c.beginPath(); c.moveTo(x, H); c.lineTo(x, 330); c.quadraticCurveTo(x + 32, 312, x + 64, 330); c.lineTo(x + 64, H); c.fill();
+  }
+  glow(c, 302, 322, 120, [255, 210, 140], .26);
+  // маленькая лампа у кресла: пламя ровное
+  c.fillStyle = '#c99a3e'; c.fillRect(338, 318, 4, 26);
+  c.fillStyle = '#ffd88a'; c.beginPath(); c.ellipse(340, 312, 3.2, 6.4, 0, 0, TAU); c.fill();
+  glow(c, 340, 312, 26, [255, 210, 130], .55);
+}
+const mcW = $('#mc-wind'), mcT = $('#mc-thunder'), mcR = $('#mc-rain'), drumG = $('.drum', mcW), kuSnd = $('#ku-snd');
+let holdW = false, lastAng = null, lastAt = 0;
+mcW.addEventListener('pointerdown', e => { holdW = true; lastAng = null; mcW.setPointerCapture?.(e.pointerId); audio(); });
+mcW.addEventListener('pointermove', e => {
+  if (!holdW) return;
+  const r = mcW.getBoundingClientRect(), a = Math.atan2(e.clientY - (r.top + r.height * .38), e.clientX - (r.left + r.width / 2)), now = performance.now();
+  if (lastAng != null) { let d = a - lastAng; if (d > Math.PI) d -= TAU; if (d < -Math.PI) d += TAU; const dts = Math.max(.008, (now - lastAt) / 1000); K.omega = K.omega * .6 + (d / dts) * .4; }
+  lastAng = a; lastAt = now;
+});
+const relW = () => { holdW = false; lastAng = null; };
+mcW.addEventListener('pointerup', relW); mcW.addEventListener('pointercancel', relW);
+mcW.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); audio(); K.omega = 12; } });
+mcT.addEventListener('click', () => { audio(); K.flash = 1; mcT.classList.remove('shake'); void mcT.offsetWidth; mcT.classList.add('shake'); thunder(); });
+mcR.addEventListener('click', () => { audio(); K.rain = !K.rain; mcR.setAttribute('aria-pressed', String(K.rain)); $('small', mcR).textContent = K.rain ? 'вернуть' : 'наклонить'; });
+
+/* звук машинной: шум, собранный прямо в браузере (ветер, дождь, гром), без записей и музыки */
+let A = null, sndOn = true;
+function noiseBuf(ctx, sec) { const b = ctx.createBuffer(1, ctx.sampleRate * sec, ctx.sampleRate), d = b.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1; return b; }
+function audio() {
+  if (A) { if (A.ctx.state === 'suspended') A.ctx.resume(); return; }
+  try {
+    const ctx = new (W.AudioContext || W.webkitAudioContext)(); const buf = noiseBuf(ctx, 3);
+    const master = ctx.createGain(); master.gain.value = sndOn ? 1 : 0; master.connect(ctx.destination);
+    const src = (f) => { const s = ctx.createBufferSource(); s.buffer = buf; s.loop = true; s.connect(f); s.start(); return s; };
+    const wbp = ctx.createBiquadFilter(); wbp.type = 'bandpass'; wbp.Q.value = .9; wbp.frequency.value = 500;
+    const wg = ctx.createGain(); wg.gain.value = 0; src(wbp); wbp.connect(wg).connect(master);
+    const rhp = ctx.createBiquadFilter(); rhp.type = 'highpass'; rhp.frequency.value = 1400;
+    const rlp = ctx.createBiquadFilter(); rlp.type = 'lowpass'; rlp.frequency.value = 7000;
+    const rg = ctx.createGain(); rg.gain.value = 0; src(rhp); rhp.connect(rlp).connect(rg).connect(master);
+    A = { ctx, master, wbp, wg, rg, buf };
+  } catch (e) { A = null; }
+}
+function thunder() {
+  if (!A) return;
+  const { ctx, master, buf } = A, now = ctx.currentTime;
+  const s = ctx.createBufferSource(); s.buffer = buf;
+  const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.setValueAtTime(900, now); lp.frequency.exponentialRampToValueAtTime(140, now + 2.6);
+  const g = ctx.createGain(); g.gain.setValueAtTime(0, now); g.gain.linearRampToValueAtTime(.9, now + .04); g.gain.exponentialRampToValueAtTime(.35, now + .5);
+  g.gain.linearRampToValueAtTime(.55, now + .9); g.gain.exponentialRampToValueAtTime(.001, now + 3.4);
+  s.connect(lp).connect(g).connect(master); s.start(now); s.stop(now + 3.6);
+}
+function updateAudio() {
+  if (!A) return;
+  const now = A.ctx.currentTime;
+  A.wg.gain.setTargetAtTime(K.wind * .5, now, .15);
+  A.wbp.frequency.setTargetAtTime(380 + K.wind * 900 + Math.sin(K.t * 1.3) * 60, now, .2);
+  A.rg.gain.setTargetAtTime(K.rainA * .16, now, .3);
+  A.master.gain.setTargetAtTime(sndOn && K.vis ? 1 : 0, now, .2);
+}
+kuSnd.addEventListener('click', () => { sndOn = !sndOn; kuSnd.setAttribute('aria-pressed', String(sndOn)); kuSnd.textContent = sndOn ? 'звук: вкл' : 'звук: выкл'; });
+D.addEventListener('visibilitychange', () => { if (!A) return; if (D.hidden) A.ctx.suspend(); else A.ctx.resume(); });
+
+/* ---------- память: где вы остановились ---------- */
+const prev = store.get('pos', null), seenAt = store.get('seen', 0);
+const days = seenAt ? (Date.now() - seenAt) / 864e5 : 0;
+const toast = $('#toast');
+function plDays(n) { n = Math.round(n); const a = n % 10, b = n % 100; return n + ' ' + (a === 1 && b !== 11 ? 'день' : a >= 2 && a <= 4 && (b < 12 || b > 14) ? 'дня' : 'дней'); }
+function showToast(text, btns, ms) {
+  toast.textContent = '';
+  const p = D.createElement('div'); p.textContent = text; toast.append(p);
+  if (btns && btns.length) {
+    const tb = D.createElement('div'); tb.className = 'tb';
+    for (const [label, cls, fn] of btns) { const b = D.createElement('button'); b.type = 'button'; b.textContent = label; if (cls) b.className = cls; b.onclick = () => { hideToast(); fn && fn(); }; tb.append(b); }
+    toast.append(tb);
+  }
+  toast.hidden = false; requestAnimationFrame(() => toast.classList.remove('hide'));
+  clearTimeout(showToast.tm); if (ms) showToast.tm = setTimeout(hideToast, ms);
+}
+function hideToast() { toast.classList.add('hide'); }
+function firstWords(el) { const w = el.textContent.trim().split(/\s+/).slice(0, 5).join(' ').replace(/[,.:;—–-]+$/, ''); return '«' + w + '…»'; }
+setTimeout(() => {
+  if (scrollY > vh * .5) return;
+  if (prev && prev.pid && !prev.done && prev.prog > .06) {
+    const el = D.getElementById(prev.pid); if (!el) return;
+    const text = (days >= 3 ? `Вас не было ${plDays(days)}, а зал всё тот же. ` : 'Зал всё тот же, ваше место свободно. ') + `В прошлый раз вы остановились на словах ${firstWords(el)}`;
+    showToast(text, [['Читать сначала', '', null], ['Вернуться туда', 'go', () => el.scrollIntoView({ behavior: RM ? 'auto' : 'smooth', block: 'center' })]], 16000);
+  } else if (prev && prev.done) showToast('С возвращением. Занавес на месте, машинная за кулисами открыта.', null, 6000);
+}, 1700);
+let saveAt = 0;
+function savePos(now) {
+  if (now - saveAt < 1500) return; saveAt = now;
+  const p = readingPara(); if (!p || !p.id) return;
+  store.set('pos', { pid: p.id, prog: +prog.toFixed(3), done: !!(prog > .93 || (prev && prev.done)) });
+  store.set('seen', Date.now());
+}
+addEventListener('pagehide', () => store.set('seen', Date.now()));
+{ const h = new Date().getHours(); if (h >= 22 || h < 5) $('#hello-text').textContent = 'Вечерний спектакль. Занимайте место в зале: почти ничего не нужно нажимать, просто читайте.'; }
+
+/* ---------- главный цикл ---------- */
+let prevT = performance.now(), clock = 0;
+function frame(now) {
+  const dt = Math.min(.05, (now - prevT) / 1000); prevT = now; clock += dt;
+  if (now - lastT > 120) vel *= Math.pow(.02, dt);
+  docH = Math.max(1, R.scrollHeight - vh);
+  prog = clamp(sy / docH);
+  for (const L of lives) {
+    if (!L.vis || !L.w) continue;
+    const c = L.ctx; c.setTransform(L.dpr * L.k, 0, 0, L.dpr * L.h / IH, 0, 0); c.clearRect(0, 0, IW, IH);
+    L.t += RM ? 0 : dt; L.draw(c, RM ? 0 : dt, RM ? 3 : L.t, L.s, L.k);
+  }
+  ax.setTransform(adpr, 0, 0, adpr, 0, 0); ax.clearRect(0, 0, vw, vh);
+  drawAir(RM ? 0 : dt, clock);
+  if (!RM) updateCurtains(dt, clock);
+  updateProgramme();
+  drawZal(dt, clock);
+  W.__sozd(dt, clock);
+  K.t += dt; drawKulisy(dt, K.t); updateAudio();
+  if (!holdW) { /* барабан крутится по инерции */ } else K.omega += (K.omega >= 0 ? 1 : -1) * dt * 6;
+  K.ang += K.omega * dt; drumG.style.transform = `rotate(${(K.ang * 57.3 % 360).toFixed(1)}deg)`;
+  savePos(now);
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+})();
+
+</script>
+</body>
+</html>
