@@ -150,6 +150,7 @@ main p { margin: 0 0 1.15em; }
 .pc-pic img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: cover; }
 .pc-pic canvas, .pc-pic .hero-ar { position: absolute; inset: 0; width: 100%; height: 100%; display: block; pointer-events: none; }
 .pc-pic::after, .sv-wrap::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: var(--hatch); box-shadow: inset 0 0 0 1px rgba(60, 40, 30, .14); border-radius: inherit; }
+.sv-wrap::after { background: var(--hatch), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' seed='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .28 0 0 0 0 .2 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23g)'/%3E%3C/svg%3E"); }
 .hero-ar .tg .lb rect { fill: rgba(251, 246, 236, .82); }
 .pc-stamp { position: absolute; right: 10px; top: 10px; z-index: 2; width: 46px; height: 56px; padding: 4px; background: #fbf6ec; outline: 3px dotted #fbf6ec; outline-offset: 1px; box-shadow: 0 2px 6px #0004; rotate: 3deg; }
 .pc-stamp svg { display: block; width: 100%; height: 100%; }
@@ -244,6 +245,8 @@ main p { margin: 0 0 1.15em; }
 .card figcaption { font: italic 400 15px/1.2 var(--serif); color: #6a5a4c; padding: 8px 4px 9px; }
 .card figcaption .credit { display: block; font: normal 11px/1.3 system-ui, sans-serif; opacity: .6; margin-top: 3px; }
 .band .credit.bc { position: absolute; left: 20px; bottom: 16px; font: normal 10.5px/1.2 system-ui, sans-serif; color: #fff; opacity: .8; text-shadow: 0 1px 2px rgba(0, 0, 0, .6); }
+.zf-fl { position: absolute; inset: 0; background: #fff8e8; opacity: 0; pointer-events: none; will-change: opacity; }
+[data-scene=zakat] .sv { will-change: transform; }
 .zk-btn { position: absolute; right: 22px; bottom: 20px; z-index: 3; display: inline-flex; align-items: center; gap: 7px; min-height: 40px; padding: 0 16px; border: 1px solid rgb(var(--ar)); border-radius: 20px; background: rgba(251, 246, 236, .92); color: #24403f; font: 600 14px/1 var(--sans); letter-spacing: .02em; cursor: pointer; box-shadow: 0 2px 10px rgba(0, 0, 0, .18); transition: background .4s ease, color .4s ease, border-color .4s ease, transform .2s ease; -webkit-tap-highlight-color: transparent; }
 .zk-btn .i { font-size: 11px; letter-spacing: -.05em; }
 .zk-btn:hover { transform: translateY(-1px); }
@@ -396,7 +399,7 @@ main p { margin: 0 0 1.15em; }
 <g class="tf-plasters"></g>
 <path class="tf-foot" d="M128 330 C118 312 126 290 160 282 C190 276 236 270 262 268 C300 262 330 250 360 236 C390 222 430 214 452 226 C470 238 468 286 456 306 C450 318 436 324 420 324 C370 328 300 344 240 346 C200 348 150 346 128 330 Z" pathLength="1"/>
 <g class="tf-toes" fill="none"><circle cx="138" cy="312" r="7"/><circle cx="148" cy="296" r="6"/><circle cx="160" cy="286" r="5"/></g>
-<rect class="grain" width="600" height="400" filter="url(#tf-grain)"/>
+
 <g class="ar">
 <g class="tg warn" data-at="0.22"><path class="ld" d="M166 318 L86 200 L20 200" pathLength="1"/><circle class="pin" cx="166" cy="318" r="5.7"/><circle class="ping" cx="166" cy="318" r="5.7"/><g class="lb" data-left="0"><rect x="-58" y="182.0" width="78" height="36" rx="6.6"/><text x="-45.6" y="206.8" font-size="19">давит</text></g></g>
 <g class="tg warn" data-at="0.3"><path class="ld" d="M440 282 L522 180 L590 180" pathLength="1"/><circle class="pin" cx="440" cy="282" r="5.7"/><circle class="ping" cx="440" cy="282" r="5.7"/><g class="lb" data-left="1"><rect x="590" y="162.0" width="110" height="36" rx="6.6"/><text x="602.4" y="186.8" font-size="19">натирает</text></g></g>
@@ -431,7 +434,7 @@ main p { margin: 0 0 1.15em; }
 <path class="kr-rag" d="M240 210 C290 230 340 200 390 230" stroke="#fffaf0" stroke-width="26" stroke-linecap="round" fill="none" opacity="0" pathLength="1"/>
 <g class="kr-streak" opacity="0" stroke="#7d9a4a" stroke-width="3" stroke-linecap="round"><path d="M298 236 L340 226"/><path d="M304 260 L336 252"/></g>
 <g class="kr-drops" fill="#c8483c"></g>
-<rect class="grain" width="600" height="400" filter="url(#kg-grain)"/>
+
 <g class="ar">
 <g class="chip c-green" data-at=".55" transform="translate(22 48) scale(1.3)"><rect width="172" height="52" rx="6" class="panel"/><rect x="8" y="8" width="36" height="36" rx="4" fill="#77ad62"/><text x="52" y="23" class="t1">«зелёный»</text><text x="52" y="40" class="t2">знакомый маршрут</text><path class="strike" d="M50 30 H142" pathLength="1"/></g>
 <g class="chip c-red" data-at=".66" transform="translate(22 128) scale(1.3)"><rect width="172" height="52" rx="6" class="panel"/><rect x="8" y="8" width="36" height="36" rx="4" fill="#d9584c"/><text x="52" y="23" class="t1">«красный»</text><text x="52" y="40" class="t2">ещё не исследован</text></g>
@@ -452,7 +455,7 @@ main p { margin: 0 0 1.15em; }
 <g class="kf-shards"><g class="sh" data-cx="281.2" data-cy="75.2" data-fx="-44" data-rot="38" data-d="0.28" data-ty="195"><g clip-path="url(#kf-c0)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="281.3" data-cy="106.5" data-fx="-11" data-rot="52" data-d="0.22" data-ty="179"><g clip-path="url(#kf-c1)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="283.0" data-cy="139.4" data-fx="5" data-rot="54" data-d="0.25" data-ty="180"><g clip-path="url(#kf-c2)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="283.3" data-cy="171.1" data-fx="-22" data-rot="-12" data-d="0.13" data-ty="150"><g clip-path="url(#kf-c3)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="284.2" data-cy="203.2" data-fx="46" data-rot="-49" data-d="0.05" data-ty="65"><g clip-path="url(#kf-c4)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="319.6" data-cy="45.4" data-fx="-27" data-rot="-2" data-d="0.39" data-ty="226"><g clip-path="url(#kf-c5)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="318.3" data-cy="75.0" data-fx="-50" data-rot="-11" data-d="0.31" data-ty="220"><g clip-path="url(#kf-c6)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="319.6" data-cy="104.6" data-fx="45" data-rot="27" data-d="0.27" data-ty="195"><g clip-path="url(#kf-c7)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="317.6" data-cy="138.1" data-fx="18" data-rot="-62" data-d="0.26" data-ty="174"><g clip-path="url(#kf-c8)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="315.4" data-cy="172.4" data-fx="37" data-rot="42" data-d="0.13" data-ty="109"><g clip-path="url(#kf-c9)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="316.4" data-cy="204.3" data-fx="-40" data-rot="19" data-d="0.04" data-ty="51"><g clip-path="url(#kf-c10)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="357.8" data-cy="44.9" data-fx="-29" data-rot="-47" data-d="0.36" data-ty="209"><g clip-path="url(#kf-c11)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="357.8" data-cy="73.0" data-fx="-50" data-rot="-49" data-d="0.28" data-ty="206"><g clip-path="url(#kf-c12)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="356.4" data-cy="103.6" data-fx="-47" data-rot="52" data-d="0.29" data-ty="158"><g clip-path="url(#kf-c13)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="353.3" data-cy="137.0" data-fx="-25" data-rot="-21" data-d="0.20" data-ty="123"><g clip-path="url(#kf-c14)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="351.9" data-cy="172.3" data-fx="35" data-rot="69" data-d="0.14" data-ty="116"><g clip-path="url(#kf-c15)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="351.1" data-cy="205.8" data-fx="-41" data-rot="-56" data-d="0.07" data-ty="65"><g clip-path="url(#kf-c16)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="386.2" data-cy="108.0" data-fx="33" data-rot="-47" data-d="0.21" data-ty="218"><g clip-path="url(#kf-c17)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="389.0" data-cy="140.0" data-fx="3" data-rot="-49" data-d="0.21" data-ty="112"><g clip-path="url(#kf-c18)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="392.2" data-cy="170.2" data-fx="3" data-rot="67" data-d="0.20" data-ty="136"><g clip-path="url(#kf-c19)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="389.7" data-cy="203.0" data-fx="-24" data-rot="-19" data-d="0.05" data-ty="109"><g clip-path="url(#kf-c20)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="427.6" data-cy="141.0" data-fx="3" data-rot="39" data-d="0.19" data-ty="127"><g clip-path="url(#kf-c21)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="429.3" data-cy="169.8" data-fx="31" data-rot="68" data-d="0.19" data-ty="145"><g clip-path="url(#kf-c22)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="426.6" data-cy="203.0" data-fx="32" data-rot="34" data-d="0.06" data-ty="88"><g clip-path="url(#kf-c23)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="455.2" data-cy="111.6" data-fx="-14" data-rot="-66" data-d="0.20" data-ty="161"><g clip-path="url(#kf-c24)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="459.7" data-cy="143.2" data-fx="-24" data-rot="27" data-d="0.26" data-ty="143"><g clip-path="url(#kf-c25)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="462.8" data-cy="173.2" data-fx="44" data-rot="68" data-d="0.20" data-ty="106"><g clip-path="url(#kf-c26)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="460.3" data-cy="203.7" data-fx="-28" data-rot="-38" data-d="0.05" data-ty="63"><g clip-path="url(#kf-c27)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="490.6" data-cy="108.6" data-fx="12" data-rot="56" data-d="0.31" data-ty="180"><g clip-path="url(#kf-c28)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="491.4" data-cy="142.1" data-fx="15" data-rot="42" data-d="0.15" data-ty="161"><g clip-path="url(#kf-c29)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="494.8" data-cy="170.8" data-fx="41" data-rot="40" data-d="0.18" data-ty="117"><g clip-path="url(#kf-c30)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g><g class="sh" data-cx="493.6" data-cy="201.8" data-fx="-32" data-rot="40" data-d="0.07" data-ty="112"><g clip-path="url(#kf-c31)"><image href="art/foto/castle.webp" width="600" height="390"/><image class="w" href="art/foto/castle-warm.webp" width="600" height="390"/></g></g></g>
 <path class="kf-crack" d="M327 70 L320 98 L331 120 L316 150 L326 176 M392 150 L401 170 L394 190 M450 128 L441 152 L452 176 L444 200" fill="none" stroke="#3b2a1e" stroke-width="1.6" stroke-linejoin="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
 <g class="kf-dust" fill="#e7d2b4"></g>
-<rect class="grain" width="600" height="390" filter="url(#kf-grain)"/>
+
 <g class="ar">
 <g class="tg center big" data-at="0.82"><path class="ld" d="M300 330 L300 362 L300 362" pathLength="1"/><circle class="pin" cx="300" cy="330" r="5.7"/><circle class="ping" cx="300" cy="330" r="5.7"/><g class="lb" data-left="1"><rect x="300" y="344.0" width="131" height="36" rx="6.6"/><text x="312.4" y="368.8" font-size="19">«неудача»?</text></g></g>
 </g>
@@ -462,21 +465,20 @@ main p { margin: 0 0 1.15em; }
 <defs>
 <radialGradient id="zk-sun"><stop offset="0" stop-color="#fffbe6" stop-opacity=".5"/><stop offset=".3" stop-color="#ffe7a6" stop-opacity=".35"/><stop offset=".6" stop-color="#ffb46a" stop-opacity=".25"/><stop offset="1" stop-color="#ff9a5a" stop-opacity="0"/></radialGradient>
 <linearGradient id="zf-dusk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2b2347" stop-opacity=".9"/><stop offset=".6" stop-color="#3b2a4a" stop-opacity=".35"/><stop offset="1" stop-color="#1c1830" stop-opacity=".6"/></linearGradient>
-<filter id="zk-grey" x="-4%" y="-4%" width="108%" height="108%"><feColorMatrix class="zk-sat" type="saturate" values="1" result="c"/><feTurbulence type="fractalNoise" baseFrequency=".03 .0035" numOctaves="2" seed="3" result="n"/><feDisplacementMap class="zk-melt" in="c" in2="n" scale="0" xChannelSelector="R" yChannelSelector="G"/></filter>
-<radialGradient id="zf-burnG"><stop offset="0" stop-color="#fffaf0"/><stop offset=".55" stop-color="#fff0cf"/><stop offset=".68" stop-color="#ffcf7a"/><stop offset=".76" stop-color="#d0601e"/><stop offset=".82" stop-color="#4a1a07"/><stop offset=".9" stop-color="#2a1006" stop-opacity=".75"/><stop offset="1" stop-color="#2a1006" stop-opacity="0"/></radialGradient>
-<filter id="zf-ragged" x="-20%" y="-20%" width="140%" height="140%"><feTurbulence type="fractalNoise" baseFrequency=".014" numOctaves="4" seed="9" result="t"/><feDisplacementMap in="SourceGraphic" in2="t" scale="80" xChannelSelector="R" yChannelSelector="G"/></filter>
 <filter id="zf-grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="4"/><feColorMatrix values="0 0 0 0 .35  0 0 0 0 .28  0 0 0 0 .2  0 0 0 .07 0"/><feComposite in2="SourceGraphic" operator="in"/></filter>
 </defs>
-<g class="zk-world" filter="url(#zk-grey)">
+<g class="zk-world">
 <image href="art/foto/zakat.webp" width="1000" height="500"/>
-<circle class="zk-sunglow" cx="730" cy="250" r="200" fill="url(#zk-sun)" style="mix-blend-mode:screen"/>
+<image class="zf-grey" href="art/foto/zakat-grey.webp" width="1000" height="500" opacity="0"/>
+<image class="zf-melt" href="art/foto/zakat-melt.webp" width="1000" height="500" opacity="0"/>
+<circle class="zk-sunglow" cx="730" cy="250" r="200" fill="url(#zk-sun)"/>
 <circle class="zk-sun" cx="730" cy="250" r="0" fill="none"/>
 <g class="zf-glit" fill="#fff4d0"></g>
 <g class="zk-birds" fill="none" stroke="#4a3a40" stroke-width="2" stroke-linecap="round"></g>
 <rect class="zf-dusk" width="1000" height="500" fill="url(#zf-dusk)" opacity="0"/>
 </g>
-<g class="zf-film" pointer-events="none"><rect class="zf-flick" width="1000" height="500" fill="#fff8e8" opacity="0"/><g class="zf-scr" stroke="#f4ead6" stroke-width="1.2" opacity="0"><path d="M0 0 V500"/><path d="M0 0 V500"/><path d="M0 0 V500"/></g><g class="zf-burn" filter="url(#zf-ragged)"><circle class="zb1" cx="745" cy="262" r="0" fill="url(#zf-burnG)"/><circle class="zb2" cx="250" cy="120" r="0" fill="url(#zf-burnG)"/><circle class="zb3" cx="470" cy="440" r="0" fill="url(#zf-burnG)"/></g></g>
-<rect class="grain" width="1000" height="500" filter="url(#zf-grain)"/>
+<g class="zf-film" pointer-events="none"><g class="zf-scr" stroke="#f4ead6" stroke-width="1.2" opacity="0"><path d="M0 0 V500"/><path d="M0 0 V500"/><path d="M0 0 V500"/></g><g class="zf-burn"><image class="zb1" href="art/foto/burn.webp" x="-192" y="-192" width="384" height="384" transform="translate(745 262) scale(0)"/><image class="zb2" href="art/foto/burn.webp" x="-192" y="-192" width="384" height="384" transform="translate(250 120) scale(0)"/><image class="zb3" href="art/foto/burn.webp" x="-192" y="-192" width="384" height="384" transform="translate(470 440) scale(0)"/></g></g>
+
 <g class="ar">
 <g class="tg " data-at="0.22"><path class="ld" d="M730 250 L636 120 L560 120" pathLength="1"/><circle class="pin" cx="730" cy="250" r="5.7"/><circle class="ping" cx="730" cy="250" r="5.7"/><g class="lb" data-left="0"><rect x="312" y="102.0" width="248" height="36" rx="6.6"/><text x="324.4" y="126.8" font-size="19">время · воздух · свет</text></g></g>
 <g class="tg t-pres" data-at="0.7"><path class="ld" d="M400 306 L345 220 L300 220" pathLength="1"/><circle class="pin" cx="400" cy="306" r="5.7"/><circle class="ping" cx="400" cy="306" r="5.7"/><g class="lb" data-left="0"><rect x="158" y="202.0" width="142" height="36" rx="6.6"/><text x="170.3" y="226.8" font-size="19">присутствие</text></g></g>
@@ -484,7 +486,7 @@ main p { margin: 0 0 1.15em; }
 <g class="zk-frame"><g class="fc"><path class="f1" d="M0 26 V0 H26"/><path class="f2" d="M0 26 V0 H26"/><path class="f3" d="M0 26 V0 H26"/><path class="f4" d="M0 26 V0 H26"/></g>
 <g class="fl"><rect x="-74" y="-16" width="148" height="28" rx="5"/><text x="0" y="4" text-anchor="middle">❚❚ присвоить</text></g></g>
 </g>
-</svg></div><span class="pc-postmark">Закат<br>не&nbsp;в&nbsp;собственности</span><small class="credit bc">Иван Айвазовский, «Закат» — общественное достояние</small><button class="zk-btn" type="button" aria-pressed="false"><span class="i" aria-hidden="true">❚❚</span> <span class="t">присвоить</span></button></figure>
+</svg><div class="zf-fl" aria-hidden="true"></div></div><span class="pc-postmark">Закат<br>не&nbsp;в&nbsp;собственности</span><small class="credit bc">Иван Айвазовский, «Закат» — общественное достояние</small><button class="zk-btn" type="button" aria-pressed="false"><span class="i" aria-hidden="true">❚❚</span> <span class="t">присвоить</span></button></figure>
 <p id="p17" data-p class="x-sunset">Закат — не вещь, которую можно купить в собственность. Это живой процесс, вспыхивающий в конкретном времени, воздухе и свете. Никому не придёт в голову прибить закат гвоздями к небу или потребовать, чтобы он длился вечно. Более того, стоит попытаться поставить его на паузу и присвоить — и вы мгновенно перестанете его видеть. Чтобы <span class="nobr">по-настоящему</span> пережить его красоту, требуются только две вещи: <span class="u">полное присутствие<svg class="u-line" viewBox="0 0 200 12" preserveAspectRatio="none" aria-hidden="true"><path d="M2 8 C 30 3, 55 11, 85 6 S 140 3, 170 7 S 192 6, 198 5" pathLength="1"/></svg></span> и <span class="u">тихое согласие с тем, что однажды небо потемнеет<svg class="u-line" viewBox="0 0 200 12" preserveAspectRatio="none" aria-hidden="true"><path d="M2 8 C 30 3, 55 11, 85 6 S 140 3, 170 7 S 192 6, 198 5" pathLength="1"/></svg></span>.</p>
 </section><div class="fork" aria-hidden="true"><svg viewBox="0 0 400 60" preserveAspectRatio="none"><path class="fk-a" d="M200 58 C 200 40, 170 30, 110 22 S 20 10, 0 6" pathLength="1"/><path class="fk-b" d="M200 58 C 200 40, 230 30, 290 22 S 380 10, 400 6" pathLength="1"/></svg></div><section class="part fin" id="r4" data-sec="4">
 <p id="p18" data-p class="x-wedding">Возможно, нам пора изменить сам язык, на котором мы говорим о конце любви. Научиться желать друг другу вовремя случившихся, ясных и чистых расставаний с тем же трепетом, с каким мы желаем <span class="k k-toast">счастья в день свадьбы</span>.</p>
@@ -797,19 +799,22 @@ const st = D.createElement('style'); st.textContent = '@keyframes sway{from{tran
   const bl = [];
   for (let i = 0; i < 7; i++) bl.push({ el: mk('circle', { cx: (300 + r() * 280).toFixed(0), cy: (60 + r() * 280).toFixed(0), r: (10 + r() * 30).toFixed(0), fill: '#e58a7c', opacity: 0 }, blots), at: .12 + r() * .4 });
   let wiped = false, wt = 0; const dl = [];
+  // Меняем атрибут, только если значение правда изменилось: каждая смена заставляет телефон перерисовать картину.
+  const memo = new WeakMap();
+  const put = (el, a, v) => { let m = memo.get(el); if (!m) memo.set(el, m = {}); if (m[a] !== v) { m[a] = v; el.setAttribute(a, v); } };
   S.tick = (t, dt) => {
-    const s = sstep(.12, .5, S.p) + Math.sin(t * .9) * .008;
-    s1.setAttribute('offset', clamp(s * 1.02 - .06).toFixed(3)); s2.setAttribute('offset', clamp(s * 1.02).toFixed(3)); s3.setAttribute('offset', clamp(s * 1.02 + .1).toFixed(3));
-    for (const b of bl) b.el.setAttribute('opacity', (sstep(b.at, b.at + .12, S.p) * .5).toFixed(2));
+    const s = Math.round((sstep(.12, .5, S.p) + Math.sin(t * .9) * .008) * 250) / 250;
+    put(s1, 'offset', clamp(s * 1.02 - .06).toFixed(3)); put(s2, 'offset', clamp(s * 1.02).toFixed(3)); put(s3, 'offset', clamp(s * 1.02 + .1).toFixed(3));
+    for (const b of bl) put(b.el, 'opacity', (sstep(b.at, b.at + .12, S.p) * .5).toFixed(2));
     const leave = sstep(.48, .64, S.p);
-    other.setAttribute('transform', `translate(${(470 + leave * 90).toFixed(1)} 0)`); other.setAttribute('opacity', (1 - leave * .95).toFixed(2));
+    put(other, 'transform', `translate(${(470 + leave * 90).toFixed(1)} 0)`); put(other, 'opacity', (1 - leave * .95).toFixed(2));
     if (!wiped && S.p > .6) { wiped = true; wt = 0; }
     if (wiped) {
       wt += dt;
       const a = clamp(wt / 1.4);
-      rag.setAttribute('opacity', (Math.sin(a * Math.PI) * .85).toFixed(2));
-      rag.setAttribute('stroke-dasharray', `${a.toFixed(3)} 1`);
-      streak.setAttribute('opacity', (sstep(.4, 1.2, wt) * (1 - sstep(1.6, 5, wt) * .75)).toFixed(2));
+      put(rag, 'opacity', (Math.sin(a * Math.PI) * .85).toFixed(2));
+      put(rag, 'stroke-dasharray', `${a.toFixed(3)} 1`);
+      put(streak, 'opacity', (sstep(.4, 1.2, wt) * (1 - sstep(1.6, 5, wt) * .75)).toFixed(2));
     }
     if (!RM && s > .3 && dl.length < 4 && rnd() < dt * .6) dl.push({ x: 290 + rnd() * 60, y: 250 + rnd() * 80, v: 0, life: 0, el: mk('ellipse', { rx: 2.2, ry: 3, opacity: 0 }, drops) });
     for (let i = dl.length - 1; i >= 0; i--) {
@@ -830,10 +835,10 @@ const st = D.createElement('style'); st.textContent = '@keyframes sway{from{tran
   S.tick = (t, dt) => {
     const day = 1 - sstep(.28, .6, S.p), warm = sstep(.34, .62, S.p), c = sstep(.52, .8, S.p);
     const key = day * 1000 + warm * 100 + c;
-    crack.setAttribute('stroke-dashoffset', (1 - sstep(.32, .5, S.p)).toFixed(3));
-    crack.setAttribute('opacity', clamp(1 - c * 1.6).toFixed(2));
-    if (Math.abs(key - lastK) > .0005) {
+    if (Math.abs(key - lastK) > .0005) {  // перерисовываем, только когда читатель сдвинул сцену
       lastK = key;
+      crack.setAttribute('stroke-dashoffset', (1 - sstep(.32, .5, S.p)).toFixed(3));
+      crack.setAttribute('opacity', clamp(1 - c * 1.6).toFixed(2));
       past.setAttribute('opacity', day.toFixed(3));
       for (const s of sh) {
         s.w.setAttribute('opacity', warm.toFixed(2));
@@ -859,15 +864,19 @@ const st = D.createElement('style'); st.textContent = '@keyframes sway{from{tran
 (function () {
   const S = sc('zakat'); if (!S) return;
   const SX = 730;
-  const sun = $('.zk-sun', S.svg), sg = $('.zk-sunglow', S.svg), birds = $('.zk-birds', S.svg), sat = $('.zk-sat', S.svg), melt = $('.zk-melt', S.svg), fr = $('.zk-frame', S.svg),
+  const sun = $('.zk-sun', S.svg), sg = $('.zk-sunglow', S.svg), birds = $('.zk-birds', S.svg), gI = $('.zf-grey', S.svg), mI = $('.zf-melt', S.svg), fr = $('.zk-frame', S.svg),
     corners = $$('.fc path', fr), lab = $('.fl', fr), labT = $('.fl text', fr), dusk = $('.zf-dusk', S.svg), glit = $('.zf-glit', S.svg), world = $('.zk-world', S.svg),
-    flick = $('.zf-flick', S.svg), scr = $('.zf-scr', S.svg), scrs = $$('.zf-scr path', S.svg), burns = $$('.zf-burn circle', S.svg),
+    flick = $('.zf-fl', S.el), scr = $('.zf-scr', S.svg), scrs = $$('.zf-scr path', S.svg), burns = $$('.zf-burn image', S.svg),
     btn = $('.zk-btn', S.el), btnI = btn && $('.i', btn), btnT = btn && $('.t', btn);
   const bl = [];
   for (let i = 0; i < 3; i++) bl.push({ el: mk('path', {}, birds), x: 80 + i * 120 + rnd() * 50, y: 170 + rnd() * 60, ph: rnd() * TAU, v: 12 + rnd() * 8 });
   const gl = [];
   for (let i = 0; i < 26; i++) { const k = rnd(); gl.push({ el: mk('ellipse', { rx: (2 + rnd() * 5).toFixed(1), ry: .9, cx: (SX - 120 + rnd() * 240 * (.4 + k)).toFixed(0), cy: (330 + k * 160).toFixed(0), opacity: 0 }, glit), ph: rnd() * TAU, sp: 1.5 + rnd() * 3 }); }
-  const BR = [260, 190, 150];  // до какого размера выгорают пятна
+  const BR = [1.35, 1, .8], BP = [[745, 262, 0], [250, 120, 70], [470, 440, 150]];  // до какого размера выгорают пятна, где и как повёрнуты
+  // Для телефона: картины, а не живые фильтры. Серая и «потёкшая» версии нарисованы заранее (zakat-grey/-melt.webp),
+  // пятно прожога — одна картинка, которую только увеличиваем. Атрибут меняем, только если значение правда изменилось.
+  const memo = new WeakMap();
+  const put = (el, a, v) => { let m = memo.get(el); if (!m) memo.set(el, m = {}); if (m[a] !== v) { m[a] = v; el.setAttribute(a, v); } };
   let owned = false, grey = 0, dmg = 0, fk = 0, lt = 0, relT = 99;
   if (btn) btn.addEventListener('click', () => {
     owned = !owned; relT = owned ? 99 : 0;
@@ -883,42 +892,43 @@ const st = D.createElement('style'); st.textContent = '@keyframes sway{from{tran
     relT += dt;
     lt += dt * (1 - grey);
     const cy = 246 + sstep(.1, .9, S.p) * 52;
-    sun.setAttribute('cy', cy.toFixed(1)); sg.setAttribute('cy', cy.toFixed(1));
-    sg.setAttribute('r', (200 + Math.sin(lt * .6) * 10).toFixed(0));
-    dusk.setAttribute('opacity', (sstep(.45, 1, S.p) * .55).toFixed(3));
-    for (const g of gl) g.el.setAttribute('opacity', (Math.max(0, Math.sin(lt * g.sp + g.ph)) ** 6 * .9 * (1 - sstep(.7, 1, S.p) * .7) * (1 - grey)).toFixed(2));
+    put(sun, 'cy', cy.toFixed(1)); put(sg, 'cy', cy.toFixed(1));
+    put(sg, 'r', (200 + Math.sin(lt * .6) * 10).toFixed(0)); put(sg, 'opacity', (1 - grey).toFixed(2));
+    put(dusk, 'opacity', (sstep(.45, 1, S.p) * .55 * (1 - grey * .7)).toFixed(2));
+    for (const g of gl) put(g.el, 'opacity', (Math.max(0, Math.sin(lt * g.sp + g.ph)) ** 6 * .9 * (1 - sstep(.7, 1, S.p) * .7) * (1 - grey)).toFixed(2));
     for (const b of bl) {
+      if (grey >= 1) continue;
       b.x += b.v * dt * (1 - grey); if (b.x > 1040) b.x = -40;
       const f = Math.sin(lt * 6 + b.ph) * 4, y = b.y + Math.sin(lt * .5 + b.ph) * 6;
       b.el.setAttribute('d', `M${(b.x - 8).toFixed(1)} ${(y - f).toFixed(1)} Q${(b.x - 4).toFixed(1)} ${(y - 3).toFixed(1)} ${b.x.toFixed(1)} ${y.toFixed(1)} Q${(b.x + 4).toFixed(1)} ${(y - 3).toFixed(1)} ${(b.x + 8).toFixed(1)} ${(y - f).toFixed(1)}`);
     }
     // цвет уходит, краски текут, плёнка выгорает
-    sat.setAttribute('values', (1 - .97 * ease(grey)).toFixed(3));
-    melt.setAttribute('scale', (sstep(.04, .6, dmg) * 40).toFixed(1));
-    burns.forEach((c, i) => c.setAttribute('r', (sstep(.18 + i * .2, 1, dmg) * BR[i]).toFixed(1)));
+    put(gI, 'opacity', ease(grey).toFixed(2));
+    put(mI, 'opacity', (sstep(.04, .6, dmg) * .85).toFixed(2));
+    burns.forEach((im, i) => { const k = Math.round(sstep(.18 + i * .2, 1, dmg) * BR[i] * 120) / 120; put(im, 'transform', `translate(${BP[i][0]} ${BP[i][1]}) rotate(${BP[i][2]}) scale(${k.toFixed(3)})`); });
     const film = sstep(.05, .3, dmg);
     if (film > .01 && !RM) {
       fk -= dt;
       if (fk <= 0) {
         fk = .06 + rnd() * .1;
-        flick.setAttribute('opacity', (rnd() * .07 * film).toFixed(3));
+        flick.style.opacity = (rnd() * .07 * film).toFixed(3);
         scrs.forEach(p => { const x = rnd() * 1000; p.setAttribute('d', `M${x.toFixed(0)} ${(rnd() * 200).toFixed(0)} V${(260 + rnd() * 240).toFixed(0)}`); });
-        scr.setAttribute('opacity', (rnd() * .5 * film).toFixed(2));
-        world.setAttribute('transform', `translate(${((rnd() - .5) * 3 * film).toFixed(1)} ${((rnd() - .5) * 3 * film).toFixed(1)})`);
+        put(scr, 'opacity', (rnd() * .5 * film).toFixed(2));
+        S.svg.style.transform = `translate(${((rnd() - .5) * 2 * film).toFixed(1)}px, ${((rnd() - .5) * 2 * film).toFixed(1)}px)`;
       }
-    } else { flick.setAttribute('opacity', 0); scr.setAttribute('opacity', 0); world.removeAttribute('transform'); }
+    } else if (fk !== 0) { fk = 0; flick.style.opacity = 0; put(scr, 'opacity', '0'); S.svg.style.transform = ''; }
     // рамка «присвоено» сжимается вокруг солнца и держит его; отпустили — расходится и тает
     const inK = ease(grey), outK = owned ? 0 : ease(clamp(relT / 1.2));
     const vis = owned ? Math.min(1, grey * 3) : (relT < 1.6 ? 1 - outK : 0);
-    fr.style.opacity = vis.toFixed(2);
+    { const v = vis.toFixed(2); if (v !== fr._v) { fr._v = v; fr.style.opacity = v; } }
     if (vis > 0) {
       const box = { x: SX - 95, y: cy - 95, w: 190, h: 190 }, full = { x: 20, y: 20, w: 960, h: 460 };
       const k = owned ? inK : 1;
       const bx = lerp(full.x, box.x, k), byy = lerp(full.y, box.y, k), bw = lerp(full.w, box.w, k), bh = lerp(full.h, box.h, k);
       const spread = outK * 70;
       const pts = [[bx - spread, byy - spread, 0], [bx + bw + spread, byy - spread, 90], [bx + bw + spread, byy + bh + spread, 180], [bx - spread, byy + bh + spread, 270]];
-      corners.forEach((c, i) => c.setAttribute('transform', `translate(${pts[i][0].toFixed(1)} ${pts[i][1].toFixed(1)}) rotate(${pts[i][2]})`));
-      lab.setAttribute('transform', `translate(${(bx + bw / 2).toFixed(1)} ${(byy - 26 - spread).toFixed(1)})`);
+      corners.forEach((c, i) => put(c, 'transform', `translate(${pts[i][0].toFixed(1)} ${pts[i][1].toFixed(1)}) rotate(${pts[i][2]})`));
+      put(lab, 'transform', `translate(${(bx + bw / 2).toFixed(1)} ${(byy - 26 - spread).toFixed(1)})`);
       fr.classList.toggle('lock', owned);
       const want = owned ? '❚❚ присвоено' : 'отпущено';
       if (labT.textContent !== want) labT.textContent = want;
