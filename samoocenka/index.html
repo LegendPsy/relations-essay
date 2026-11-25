@@ -1,0 +1,1406 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#efe6d3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#16191d" media="(prefers-color-scheme: dark)">
+<title>Перестаньте «поднимать» самооценку</title>
+<meta name="description" content="Почему попытка доказать собственную ценность превращает жизнь в вечный аукцион — и как навести порядок в одном слове, чтобы вернуть себе право ошибаться">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Перестаньте «поднимать» самооценку">
+<meta property="og:description" content="Почему попытка доказать собственную ценность превращает жизнь в вечный аукцион — и как навести порядок в одном слове, чтобы вернуть себе право ошибаться">
+<meta property="og:image" content="https://legendpsy.github.io/relations-essay/samoocenka/art/og.jpg">
+<meta property="og:url" content="https://legendpsy.github.io/relations-essay/samoocenka/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400..600&family=Lora:ital,wght@0,400..700;1,400..600&display=swap">
+<style>
+/* «Перестаньте „поднимать“ самооценку» — живой сайт в облике открыток каталога (legendpsy.github.io/stati/).
+   Характер: летний городок у моря, увиденный сквозь «очки оценки». Мир нарисован от руки, а поверх него
+   работает дополненная реальность: тонкие рамки, бирки, линейки и ценники сами цепляются к вещам.
+   По ходу статьи очки учатся различать: вещам — шкалы, человеку — «данные недоступны для оценки». */
+
+:root {
+  --bg: #efe6d3; --fg: #2a241f; --fg2: #564b42; --muted: #7a6c5d; --line: #c9b99f;
+  --accent: #2c7f80; --warm: #b8682a; --warn: #c0483a; --hl: rgba(80, 180, 170, .22);
+  --ar: 44, 127, 128; --ar-warm: 196, 120, 40; --ar-warn: 192, 72, 58;
+  --hatch: repeating-linear-gradient(33deg, rgba(90, 70, 40, .028) 0 2px, transparent 2px 6px);
+  --vignette: rgba(120, 90, 50, .14);
+  --sun: radial-gradient(70% 55% at 88% -8%, rgba(255, 226, 160, .55), rgba(255, 220, 150, .12) 55%, transparent 75%);
+  --dusk: radial-gradient(130% 60% at 50% -10%, rgba(240, 150, 120, .3), transparent 70%), radial-gradient(120% 55% at 50% 112%, rgba(250, 180, 120, .32), transparent 72%);
+  --cold: linear-gradient(180deg, rgba(60, 110, 140, .14), rgba(60, 110, 140, .05));
+  --pool: rgba(255, 236, 190, .5); --vig: rgba(110, 80, 40, .2);
+  --mote: 255, 236, 190; --mote-core: 255, 250, 230; --shade: 70, 60, 40;
+  --serif: "Lora", "PT Serif", Georgia, serif;
+  --sans: "Golos Text", "Segoe UI", system-ui, -apple-system, sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #16191d; --fg: #ece6dc; --fg2: #c6beb2; --muted: #9a9389; --line: #3b3f46;
+    --accent: #86d8cc; --warm: #f0ac6a; --warn: #ff8a7a; --hl: rgba(120, 220, 200, .2);
+    --ar: 134, 216, 204; --ar-warm: 240, 172, 106; --ar-warn: 255, 138, 122;
+    --hatch: repeating-linear-gradient(33deg, rgba(240, 230, 210, .02) 0 2px, transparent 2px 6px);
+    --vignette: rgba(0, 0, 0, .34);
+    --sun: radial-gradient(70% 55% at 88% -8%, rgba(160, 190, 255, .14), rgba(120, 150, 220, .05) 55%, transparent 75%);
+    --dusk: radial-gradient(130% 60% at 50% -10%, rgba(190, 110, 120, .2), transparent 70%), radial-gradient(120% 55% at 50% 112%, rgba(230, 140, 80, .2), transparent 72%);
+    --cold: linear-gradient(180deg, rgba(40, 90, 120, .2), rgba(40, 90, 120, .06));
+    --pool: rgba(255, 220, 170, .07); --vig: rgba(0, 0, 0, .55);
+    --mote: 200, 230, 255; --mote-core: 240, 250, 255; --shade: 0, 0, 0;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #16191d; --fg: #ece6dc; --fg2: #c6beb2; --muted: #9a9389; --line: #3b3f46;
+  --accent: #86d8cc; --warm: #f0ac6a; --warn: #ff8a7a; --hl: rgba(120, 220, 200, .2);
+  --ar: 134, 216, 204; --ar-warm: 240, 172, 106; --ar-warn: 255, 138, 122;
+  --hatch: repeating-linear-gradient(33deg, rgba(240, 230, 210, .02) 0 2px, transparent 2px 6px);
+  --vignette: rgba(0, 0, 0, .34);
+  --sun: radial-gradient(70% 55% at 88% -8%, rgba(160, 190, 255, .14), rgba(120, 150, 220, .05) 55%, transparent 75%);
+  --dusk: radial-gradient(130% 60% at 50% -10%, rgba(190, 110, 120, .2), transparent 70%), radial-gradient(120% 55% at 50% 112%, rgba(230, 140, 80, .2), transparent 72%);
+  --cold: linear-gradient(180deg, rgba(40, 90, 120, .2), rgba(40, 90, 120, .06));
+  --pool: rgba(255, 220, 170, .07); --vig: rgba(0, 0, 0, .55);
+  --mote: 200, 230, 255; --mote-core: 240, 250, 255; --shade: 0, 0, 0;
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; background: var(--bg); }
+body {
+  margin: 0; background: var(--bg); color: var(--fg);
+  font: 400 clamp(18px, 4.7vw, 20.5px)/1.7 var(--serif);
+  overflow-x: hidden; overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+}
+::selection { background: var(--hl); }
+:focus-visible { outline: 2.5px solid var(--accent); outline-offset: 4px; border-radius: 6px; }
+button { font: inherit; color: inherit; }
+a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.nobr { white-space: nowrap; }
+
+/* ---------- слои позади текста: карта, солнце, закат, холод оценки, тени облаков ---------- */
+#map { position: fixed; inset: -10%; z-index: 0; pointer-events: none; opacity: .34; background: radial-gradient(ellipse at 30% 20%, transparent 0 40%, var(--vignette) 100%); animation: mapBreath 17s ease-in-out infinite alternate; }
+#map svg { position: absolute; inset: 0; width: 100%; height: 100%; animation: drift 52s ease-in-out infinite alternate; }
+#map g { fill: none; stroke: var(--line); stroke-width: 1.2; }
+@keyframes drift { to { transform: translate(-2%, 1.5%) rotate(.6deg); } }
+@keyframes mapBreath { from { opacity: .26; } to { opacity: .4; } }
+#sky { position: fixed; inset: 0; z-index: 1; pointer-events: none; }
+#sky i { position: absolute; inset: 0; opacity: 0; will-change: opacity; }
+#sky .t-sun { background: var(--sun); opacity: 1; }
+#sky .t-dusk { background: var(--dusk); }
+#sky .t-cold { background: var(--cold); }
+#pool { position: fixed; left: 0; right: 0; top: 0; height: 90vh; overflow: hidden; z-index: 1; pointer-events: none; opacity: .5; will-change: transform, opacity; }
+#pool i { position: absolute; inset: 0; background: radial-gradient(ellipse 62% 42% at 50% 50%, var(--pool), transparent 72%); }
+#vig { position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: .3; background: radial-gradient(ellipse 78% 70% at 50% 46%, transparent 50%, var(--vig) 100%); }
+#air { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; }
+
+/* ---------- «очки оценки»: рамка экрана, линейка, статус ---------- */
+#hud { position: fixed; inset: 0; z-index: 5; pointer-events: none; --h: .8; color: rgb(var(--ar)); transition: color 2s ease; }
+#hud.warm { color: rgb(var(--ar-warm)); }
+#hud .cn { position: absolute; width: 18px; height: 18px; border: 0 solid currentColor; opacity: calc(var(--h) * .55); transition: opacity 1.5s ease, translate 2.4s cubic-bezier(.3, .7, .2, 1); }
+#hud .c1 { left: 8px; top: calc(8px + env(safe-area-inset-top)); border-width: 1.5px 0 0 1.5px; }
+#hud .c2 { right: 8px; top: calc(8px + env(safe-area-inset-top)); border-width: 1.5px 1.5px 0 0; }
+#hud .c3 { left: 8px; bottom: calc(8px + env(safe-area-inset-bottom)); border-width: 0 0 1.5px 1.5px; }
+#hud .c4 { right: 8px; bottom: calc(8px + env(safe-area-inset-bottom)); border-width: 0 1.5px 1.5px 0; }
+#hud.loose .c1 { translate: -12px -12px; } #hud.loose .c2 { translate: 12px -12px; } #hud.loose .c3 { translate: -12px 12px; } #hud.loose .c4 { translate: 12px 12px; }
+#ruler { position: absolute; right: 2px; top: 15vh; bottom: 15vh; width: 12px; opacity: calc(var(--h) * .5); transition: opacity 1.5s ease; overflow: hidden;
+  -webkit-mask: linear-gradient(transparent, #000 12%, #000 88%, transparent); mask: linear-gradient(transparent, #000 12%, #000 88%, transparent); }
+#ruler i { position: absolute; left: 0; right: 0; top: 0; height: 200%; background: repeating-linear-gradient(180deg, currentColor 0 1px, transparent 1px 8px), repeating-linear-gradient(180deg, currentColor 0 1px, transparent 1px 40px); background-size: 5px 100%, 11px 100%; background-repeat: repeat-y; background-position: right top, right top; opacity: .8; will-change: transform; }
+#ruler b { position: absolute; right: 0; top: 50%; width: 12px; height: 2px; margin-top: -1px; background: currentColor; }
+#scan { position: absolute; left: 0; right: 0; top: 0; height: 1px; background: linear-gradient(90deg, transparent, currentColor 20%, currentColor 80%, transparent); opacity: 0; box-shadow: 0 0 10px 1px currentColor; }
+#chip { position: absolute; right: max(30px, calc(env(safe-area-inset-right) + 24px)); top: calc(12px + env(safe-area-inset-top)); pointer-events: auto; display: inline-flex; align-items: center; gap: 7px; min-height: 30px; padding: 0 10px 0 9px; border: 1px solid currentColor; border-radius: 15px; background: color-mix(in srgb, var(--bg) 82%, transparent); font: 500 12px/1 var(--sans); letter-spacing: .02em; color: inherit; cursor: pointer; opacity: calc(.35 + var(--h) * .55); transition: opacity 1.5s ease; -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); }
+#chip .dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; animation: rec 2s ease-in-out infinite; }
+@keyframes rec { 50% { opacity: .25; } }
+#chip .tx { color: var(--fg2); white-space: nowrap; }
+#chip.nope { animation: nope .5s ease; }
+@keyframes nope { 20% { translate: -5px 0; } 40% { translate: 5px 0; } 60% { translate: -3px 0; } 80% { translate: 2px 0; } }
+/* рамка оценки вокруг читаемого абзаца */
+#frame { position: fixed; left: 0; top: 0; z-index: 4; pointer-events: none; color: rgb(var(--ar)); opacity: 0; will-change: transform, width, height, opacity; transition: color 1.6s ease; }
+#frame.warn { color: rgb(var(--ar-warn)); } #frame.warm { color: rgb(var(--ar-warm)); }
+#frame i { position: absolute; width: 12px; height: 12px; border: 0 solid currentColor; }
+#frame .f1 { left: 0; top: 0; border-width: 1.5px 0 0 1.5px; } #frame .f2 { right: 0; top: 0; border-width: 1.5px 1.5px 0 0; }
+#frame .f3 { left: 0; bottom: 0; border-width: 0 0 1.5px 1.5px; } #frame .f4 { right: 0; bottom: 0; border-width: 0 1.5px 1.5px 0; }
+#frame b { position: absolute; left: 0; bottom: 100%; margin-bottom: 4px; font: 500 10.5px/1 var(--sans); letter-spacing: .06em; white-space: nowrap; padding: 3px 6px; border-radius: 3px; background: color-mix(in srgb, var(--bg) 85%, transparent); border: 1px solid currentColor; opacity: 0; transition: opacity .6s ease; }
+#frame b.on { opacity: .95; }
+
+main { position: relative; z-index: 3; overflow-x: clip; }
+.hero, .part, .end {
+  width: 100%; max-width: calc(36rem + 40px); margin: 0 auto;
+  padding-left: max(22px, env(safe-area-inset-left)); padding-right: max(22px, env(safe-area-inset-right));
+}
+main p { margin: 0 0 1.15em; }
+
+/* ---------- первый экран: открытка ---------- */
+.hero { position: relative; min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; justify-content: center; padding-top: calc(54px + env(safe-area-inset-top)); padding-bottom: 12vh; }
+.home { position: absolute; left: max(14px, env(safe-area-inset-left)); top: max(4px, env(safe-area-inset-top)); display: inline-flex; align-items: center; min-height: 44px; padding: 0 6px; color: var(--muted); font: 400 14px/1 var(--sans); text-decoration: none; }
+.home span { border-bottom: 1px solid var(--line); padding-bottom: 2px; }
+.home:hover { color: var(--accent); }
+.pc { --fg: #2a241f; --muted: #6a5e52; position: relative; margin: 0 -6px 1.6rem; padding: 10px 10px 2px; border-radius: 10px; color: var(--fg); background-color: #fbf6ec; background-image: var(--hatch); rotate: -.6deg;
+  box-shadow: 0 1px 0 #fff8 inset, 0 18px 40px -18px rgba(60, 45, 25, .55), 0 2px 6px rgba(60, 45, 25, .16); }
+.pc-pic { position: relative; aspect-ratio: 1024 / 683; width: 100%; border-radius: 6px; overflow: hidden; background: #8fb4cc; }
+.stack { position: absolute; inset: 0; }
+.stack img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: cover; }
+.stack img + img { opacity: 0; will-change: opacity; }
+.ar-cv { position: absolute; inset: 0; width: 100%; height: 100%; display: block; pointer-events: none; }
+.ar-tags { position: absolute; inset: 0; pointer-events: none; }
+.pc-pic::after, .card-pic::after, .lens-pic::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: var(--hatch); box-shadow: inset 0 0 0 1px rgba(40, 30, 20, .14); border-radius: inherit; }
+.pc-body { padding: 16px 8px 14px; }
+.eyebrow { font: 500 12px/1.3 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin: 0 0 .55rem; }
+.hero h1 { font: 600 clamp(34px, 9.4vw, 58px)/1.08 var(--serif); letter-spacing: -.012em; margin: 0 0 .4em; text-wrap: balance; }
+.hero h1 .ch { display: inline-block; } .hero h1 .w { white-space: nowrap; }
+.js .hero h1 .ch { animation: chIn 1.1s cubic-bezier(.2, .8, .2, 1) both; animation-delay: calc(var(--i) * 40ms + .2s); }
+@keyframes chIn { from { opacity: 0; translate: 0 .35em; filter: blur(3px); } }
+.lede { font: italic 400 1em/1.5 var(--serif); color: #4a4038; margin: 0; }
+.meta { font: 500 14px/1.3 var(--sans); color: var(--muted); margin: 0 0 1.1em; }
+.hello { display: flex; gap: 12px; align-items: flex-start; margin: 0; font: italic 400 17px/1.45 var(--serif); color: var(--fg); max-width: 28em; }
+.hello .dot { flex: none; width: 10px; height: 10px; margin-top: .5em; border: 1.5px solid rgb(var(--ar)); border-radius: 2px; animation: rec 2.4s ease-in-out infinite; }
+.js .hero .pc { animation: land 1.2s cubic-bezier(.2, .8, .2, 1) both; }
+@keyframes land { from { opacity: 0; translate: 0 22px; rotate: -2.4deg; } }
+.js .hero .meta, .js .hero .hello { animation: up 1s cubic-bezier(.2, .8, .2, 1) both; }
+.js .hero .meta { animation-delay: .9s; } .js .hero .hello { animation-delay: 1.2s; }
+@keyframes up { from { opacity: 0; translate: 0 14px; } }
+.cue { position: absolute; left: 50%; bottom: 5vh; width: 2px; height: 46px; margin-left: -1px; border-radius: 1px; background: linear-gradient(var(--muted), transparent); opacity: .55; animation: cue 3.4s ease-in-out infinite; }
+@keyframes cue { 0%, 100% { transform: translateY(0); opacity: .2; } 50% { transform: translateY(10px); opacity: .6; } }
+
+/* ---------- бирки дополненной реальности на картинах ---------- */
+.ar { position: absolute; left: 0; top: 0; font: 600 11px/1.25 var(--sans); color: #effffc; background: rgba(12, 42, 46, .66); border: 1px solid rgba(143, 240, 220, .75); border-radius: 4px; padding: 3px 7px 4px; width: max-content; max-width: 46%; opacity: 0; scale: .92; transform-origin: 0 0;
+  transition: opacity .5s ease, scale .5s cubic-bezier(.2, .9, .3, 1.3), clip-path .7s steps(14, end), border-color 1s ease, background-color 1s ease, color 1s ease; clip-path: inset(0 100% 0 0); -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px); font-variant-numeric: tabular-nums; }
+.ar b { display: block; font: 500 8.5px/1.3 var(--sans); letter-spacing: .13em; text-transform: uppercase; color: rgba(165, 248, 230, .9); }
+.ar.show { opacity: 1; scale: 1; clip-path: inset(0 -20px 0 0); }
+.ar.dim { opacity: .45; }
+.ar.warn { border-color: rgba(255, 140, 125, .9); background: rgba(80, 22, 20, .66); }
+.ar.warn b { color: #ffb4a8; }
+.ar.warm { border-color: rgba(255, 214, 150, .95); background: rgba(84, 52, 16, .58); color: #fff6e4; box-shadow: 0 0 18px rgba(255, 200, 120, .35); }
+.ar.warm b { color: #ffd89c; }
+.ar.big { font-size: 13px; padding: 5px 9px 6px; }
+.ar .mb, .ar .over { white-space: nowrap; }
+.ar .mb, .duo .mb { display: inline-block; vertical-align: middle; width: 44px; height: 4px; margin: 0 3px; border-radius: 2px; background: rgba(255, 255, 255, .22); overflow: hidden; }
+.ar .mb > i, .duo .mb > i { display: block; height: 100%; width: calc(var(--v, 0) * 100%); background: currentColor; border-radius: 2px; transition: width 1.2s cubic-bezier(.3, .7, .2, 1); }
+.ar .over { display: inline-block; vertical-align: middle; width: 44px; height: 4px; margin: 0 3px; border-radius: 2px; background: linear-gradient(90deg, #ffd89c, #fff2cf); box-shadow: 0 0 8px #ffd89c; position: relative; }
+.ar .over::after { content: ""; position: absolute; left: 100%; top: -3px; border: 5px solid transparent; border-left-color: #fff2cf; border-right: 0; }
+.ar s { text-decoration-thickness: 1.5px; text-decoration-color: #ff9d8e; opacity: .7; }
+.ar .err { color: #ffb4a8; }
+.ar.glitch { animation: glitch .45s steps(3) 2; }
+@keyframes glitch { 33% { translate: 2px -1px; filter: hue-rotate(40deg); } 66% { translate: -2px 1px; } }
+
+/* ---------- объект и предмет ---------- */
+.duo { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 1.6rem -6px 2rem; }
+.duo-p { position: relative; padding: 6px; background: #fbf6ec; background-image: var(--hatch); border-radius: 7px; box-shadow: 0 12px 26px -14px rgba(60, 45, 25, .55), 0 2px 5px rgba(60, 45, 25, .14); }
+.duo-melon { rotate: -1deg; } .duo-me { rotate: .8deg; }
+.duo-pic { aspect-ratio: 4 / 3; border-radius: 4px; background-image: url(art/rynok.webp); background-repeat: no-repeat; }
+.duo .br { position: absolute; left: 22%; right: 22%; top: 16%; bottom: 30%; pointer-events: none; color: rgb(143, 240, 220); opacity: 0; scale: 1.3; transition: opacity .5s ease, scale .6s cubic-bezier(.2, .9, .3, 1.2), color 1s ease;
+  background: linear-gradient(currentColor, currentColor) 0 0 / 12px 1.5px, linear-gradient(currentColor, currentColor) 0 0 / 1.5px 12px, linear-gradient(currentColor, currentColor) 100% 0 / 12px 1.5px, linear-gradient(currentColor, currentColor) 100% 0 / 1.5px 12px,
+    linear-gradient(currentColor, currentColor) 0 100% / 12px 1.5px, linear-gradient(currentColor, currentColor) 0 100% / 1.5px 12px, linear-gradient(currentColor, currentColor) 100% 100% / 12px 1.5px, linear-gradient(currentColor, currentColor) 100% 100% / 1.5px 12px; background-repeat: no-repeat; }
+.duo-melon .br { left: 22%; right: 26%; top: 24%; bottom: 20%; }
+.duo-me .br { left: 34%; right: 34%; top: 6%; bottom: 6%; }
+.duo .dl { position: absolute; left: 10px; font: 600 10.5px/1.25 var(--sans); color: #effffc; background: rgba(12, 42, 46, .7); border: 1px solid rgba(143, 240, 220, .75); border-radius: 4px; padding: 2px 6px 3px; white-space: nowrap; opacity: 0; translate: 0 4px; transition: opacity .5s ease, translate .6s ease, border-color 1s, background-color 1s; max-width: calc(100% - 20px); }
+.duo .dl b { display: block; font: 500 8px/1.3 var(--sans); letter-spacing: .13em; text-transform: uppercase; color: rgba(165, 248, 230, .9); }
+.duo .dl-o { top: 10px; } .duo .dl-s { bottom: 10px; }
+.duo .mb { width: 26px; }
+.duo .jit { width: 50%; animation: jit 1.3s steps(5) infinite; }
+@keyframes jit { 0% { width: 70%; } 20% { width: 20%; } 40% { width: 90%; } 60% { width: 35%; } 80% { width: 60%; } }
+.duo.s1 .duo-melon .br, .duo.s2 .br { opacity: .95; scale: 1; }
+.duo.s1 .duo-melon .dl, .duo.s2 .dl { opacity: 1; translate: 0 0; }
+.duo.s2 .duo-me .dl-s { transition-delay: .5s; }
+.duo.s3 .duo-me .br { color: #ff8f80; animation: shake .5s steps(4) 2; }
+.duo.s3 .duo-me .dl-s { border-color: rgba(255, 140, 125, .9); background: rgba(80, 22, 20, .7); }
+.duo.s3 .duo-me .dl-s b { color: #ffb4a8; }
+@keyframes shake { 25% { translate: 3px 0; } 50% { translate: -3px 1px; } 75% { translate: 2px -1px; } }
+@media (max-width: 420px) { .duo .dl { font-size: 9.5px; left: 6px; } .duo .dl-o { top: 6px; } .duo .dl-s { bottom: 6px; } }
+
+/* ---------- линза над балетным классом ---------- */
+.lens { position: relative; margin: 1.2rem -6px 2.2rem; padding: 8px; background: #fbf6ec; background-image: var(--hatch); border-radius: 9px; rotate: -.5deg;
+  box-shadow: 0 1px 0 #fff8 inset, 0 16px 34px -16px rgba(60, 45, 25, .55), 0 2px 6px rgba(60, 45, 25, .15); }
+.lens-B { rotate: .6deg; }
+.js .lens { transition: opacity 1.4s ease, translate 1.4s cubic-bezier(.2, .8, .2, 1); }
+.js .lens:not(.seen) { opacity: 0; translate: 0 26px; }
+.lens-pic { position: relative; aspect-ratio: 1024 / 683; border-radius: 5px; overflow: hidden; background: #d7c4a6; }
+.lens-rec { position: absolute; left: 8px; top: 8px; z-index: 2; display: inline-flex; align-items: center; gap: 6px; padding: 3px 7px; border-radius: 3px; font: 600 9px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: #effffc; background: rgba(12, 42, 46, .55); }
+.lens-rec i { width: 6px; height: 6px; border-radius: 50%; background: #8ff0dc; animation: rec 1.6s ease-in-out infinite; }
+.lens.warn .lens-rec i { background: #ff8f80; } .lens.warm .lens-rec i { background: #ffd89c; }
+.lp { position: relative; }
+@media (min-width: 760px) { .lens { margin: 1.4rem -3.2rem 2.8rem; } }
+
+/* ---------- части статьи, рулетка между ними, заголовки ---------- */
+#r0 { padding-top: 6vh; }
+.tape { position: relative; max-width: 36rem; height: 30px; margin: 15vh auto 11vh; padding: 0 22px; color: rgb(var(--ar)); }
+.tape svg { width: 100%; height: 26px; overflow: visible; display: block; }
+.tape path { fill: none; stroke: currentColor; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+.tp-l { stroke-width: 1.4; opacity: .55; } .tp-t { stroke-width: 1; opacity: .4; }
+.tp-dot { position: absolute; left: 22px; top: -3px; width: 2px; height: 22px; background: rgb(var(--ar-warm)); opacity: .8; box-shadow: 0 0 8px rgb(var(--ar-warm)); }
+.js .tape svg { clip-path: inset(0 100% 0 0); transition: clip-path 2.2s cubic-bezier(.3, .7, .2, 1); }
+.js .tape.seen svg { clip-path: inset(0 0 0 0); }
+.js .tape .tp-dot { transition: left 2.2s cubic-bezier(.3, .7, .2, 1); }
+.js .tape.seen .tp-dot { left: calc(100% - 24px); }
+h2 { font: 600 clamp(26px, 7vw, 36px)/1.2 var(--serif); letter-spacing: -.008em; margin: 0 0 .9em; text-wrap: balance; }
+.h-tag { display: block; width: max-content; font: 500 10.5px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: rgb(var(--ar)); border: 1px solid currentColor; border-radius: 3px; padding: 4px 7px; margin-bottom: 1em; opacity: .8; }
+
+.js main [data-p] { transition: opacity 1.1s ease, translate 1.2s cubic-bezier(.2, .8, .2, 1), filter 1.3s ease; }
+.js main [data-p]:not(.seen) { opacity: 0; translate: 0 12px; filter: blur(2px); }
+
+.pull { font: 600 clamp(22px, 5.9vw, 28px)/1.36 var(--serif); letter-spacing: -.004em; margin: 1.4em 0 1.2em !important; text-wrap: balance; }
+.pull.soft { font-weight: 500; font-style: italic; color: var(--fg2); }
+.li { position: relative; padding-left: 1.6em; }
+.li-m { position: absolute; left: .1em; top: 0; font: 600 .9em/1.9 var(--sans); color: rgb(var(--ar)); }
+.li-m { transition: color 1s ease; }
+
+/* живые слова */
+.k { position: relative; }
+.k-self, .k-four, .k-dead { transition: color 1.6s ease; }
+.on .k-self { color: var(--accent); }
+/* давление в шинах: маленький манометр сдувается и подкачивается */
+.k-tyre .gauge { position: absolute; left: 100%; bottom: 72%; margin-left: -6px; font: 600 10px/1 var(--sans); color: rgb(var(--ar)); white-space: nowrap; border: 1px solid currentColor; border-radius: 3px; padding: 2px 4px; background: color-mix(in srgb, var(--bg) 85%, transparent); opacity: 0; transition: opacity .6s ease; font-variant-numeric: tabular-nums; pointer-events: none; }
+.x-tyres.on .k-tyre .gauge { opacity: .95; }
+.k-tyre .gauge.low { color: rgb(var(--ar-warn)); }
+/* выключить нельзя */
+.k-off { text-decoration: line-through 0 transparent; transition: text-decoration-color 1s; }
+.x-off.on .k-off { text-decoration: underline 1.5px; text-decoration-color: rgb(var(--ar)); text-underline-offset: 4px; }
+/* глагол и существительное */
+.li-verb .li-m, .li-eff .li-m, .li-skill .li-m { color: rgb(var(--ar)); }
+.li-noun .li-m, .li-val .li-m { color: rgb(var(--ar-warm)); }
+.chipx { display: inline-block; vertical-align: .15em; margin-left: .45em; font: 600 10px/1 var(--sans); letter-spacing: .06em; color: rgb(var(--ar)); border: 1px solid currentColor; border-radius: 3px; padding: 3px 5px; opacity: 0; translate: -6px 0; transition: opacity .7s ease .4s, translate .7s ease .4s; white-space: nowrap; }
+.on .chipx { opacity: .9; translate: 0 0; }
+.chipx.w { color: rgb(var(--ar-warm)); }
+.chipx .tick { display: inline-block; width: 26px; height: 7px; margin-left: 4px; vertical-align: -.05em; background: repeating-linear-gradient(90deg, currentColor 0 1px, transparent 1px 5px); opacity: .8; }
+.chipx .tick.run { animation: tick 1.6s linear infinite; }
+@keyframes tick { to { background-position: 10px 0; } }
+.chipx.nd { color: var(--muted); border-style: dashed; }
+/* объект и предмет в тексте */
+.k-obj, .k-subj { padding: 0 2px; border-radius: 3px; transition: box-shadow .8s ease; }
+.x-melon.on .k-obj { box-shadow: inset 0 0 0 1px rgb(var(--ar)); }
+.x-melon.on .k-subj { box-shadow: inset 0 -2px 0 rgb(var(--ar-warm)); }
+.k-crack { display: inline-block; }
+.x-breaks.hit .k-crack { animation: crack .6s steps(4) 1; color: var(--warn); transition: color 2s ease 1s; }
+@keyframes crack { 25% { translate: 2px 0; skew: -6deg; } 50% { translate: -2px 1px; } 75% { translate: 1px -1px; skew: 4deg; } }
+.k-ask { font-style: italic; }
+.k-ask .caret { display: inline-block; width: 2px; height: 1em; margin-left: 2px; vertical-align: -.12em; background: rgb(var(--ar)); animation: rec 1s steps(1) infinite; }
+/* вердикт */
+.k-verdict { transition: color 1s ease, background-color 1s ease; border-radius: 3px; }
+.on .k-verdict, .lp.on .k-verdict { color: var(--warn); }
+/* жираф и обувь: ценник «брак» зачёркивается */
+.k-shoe, .k-giraffe { transition: color 1s ease; }
+/* двойная свобода, мимо нот */
+.k-notes { position: relative; }
+.k-notes .nt { position: absolute; font: 400 14px/1 var(--serif); color: rgb(var(--ar-warm)); opacity: 0; pointer-events: none; }
+.k-free { transition: color 1.6s ease, text-shadow 1.6s ease; }
+.x-free.on .k-free { color: var(--warm); }
+/* имена: функция? */
+.k-fn { position: relative; }
+.k-fn .fq { position: absolute; left: 50%; bottom: 92%; translate: -50% 0; font: 600 9px/1 var(--sans); letter-spacing: .04em; color: rgb(var(--ar)); white-space: nowrap; opacity: 0; transition: opacity .6s ease, translate .6s ease; pointer-events: none; }
+.k-fn .fq.on { opacity: .95; translate: -50% -3px; }
+.k-fn .fq.off { opacity: 0; translate: -50% -10px; transition-duration: 1.4s; }
+.k-blue { transition: color 1.6s ease; }
+.x-cat.on .k-blue { color: #3d7fc4; }
+:root[data-theme="dark"] .x-cat.on .k-blue { color: #8ab8f0; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .x-cat.on .k-blue { color: #8ab8f0; } }
+.k-t1, .k-t2, .k-t3, .k-t4 { font-weight: 600; }
+.k-kpd { font-variant-numeric: tabular-nums; }
+.k-inf { transition: color 1.6s ease, text-shadow 1.6s ease; }
+.x-use.on .k-inf { color: var(--warm); text-shadow: 0 0 14px rgba(255, 190, 110, .35); }
+/* штампы */
+.k-stamp { display: inline-block; padding: 0 5px; border: 1.5px solid currentColor; border-radius: 4px; color: var(--warn); rotate: -2deg; font-style: normal; line-height: 1.25; opacity: .9; }
+.k-stamp + .k-stamp { rotate: 1.6deg; }
+.js .x-book:not(.on) .k-stamp { color: inherit; border-color: transparent; rotate: 0deg; }
+.k-stamp { transition: color .3s, border-color .3s, rotate .3s cubic-bezier(.2, .9, .3, 1.6); }
+.k-wind { position: relative; }
+.k-move { display: inline-block; }
+.x-book.on .k-move { animation: move 3.2s ease-in-out infinite; }
+@keyframes move { 0%, 100% { translate: 0 0; } 50% { translate: 4px -1px; } }
+/* вечный аукцион */
+.k-ten, .k-two { padding: 0 3px; border-radius: 3px; transition: background-color .8s ease, color .8s ease; }
+.x-auction.ten .k-ten { background: rgba(var(--ar), .16); color: var(--accent); }
+.x-auction.two .k-two { background: rgba(var(--ar-warn), .14); color: var(--warn); }
+#price { position: fixed; z-index: 6; right: max(16px, env(safe-area-inset-right)); top: calc(58px + env(safe-area-inset-top)); pointer-events: none; transform-origin: 50% -16px; opacity: 0; transition: opacity .8s ease; }
+#price .pt { position: relative; display: block; min-width: 66px; padding: 7px 10px 7px 16px; border-radius: 3px 8px 8px 3px; background: #fbf6ec; background-image: var(--hatch); color: #2a241f; font: 600 16px/1.1 var(--sans); text-align: center; box-shadow: 0 8px 18px -8px rgba(40, 30, 20, .55);
+  clip-path: polygon(10px 0, 100% 0, 100% 100%, 10px 100%, 0 50%); font-variant-numeric: tabular-nums; }
+#price .pt::before { content: ""; position: absolute; left: 8px; top: 50%; width: 5px; height: 5px; margin-top: -2.5px; border-radius: 50%; background: var(--bg); box-shadow: inset 0 0 0 1px #0003; }
+#price small { display: block; font: 500 8.5px/1.2 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: #7a6c5d; }
+#price.low .pt { color: #b03a2e; }
+#price svg { position: absolute; left: -10px; top: -26px; width: 30px; height: 30px; overflow: visible; }
+#price svg path { fill: none; stroke: var(--muted); stroke-width: 1; }
+/* выход и ремесло */
+.u { position: relative; }
+.u-line { position: absolute; left: -1%; bottom: -.3em; width: 102%; height: .5em; overflow: visible; pointer-events: none; }
+.u-line path { fill: none; stroke: rgb(var(--ar-warm)); stroke-width: 2.2; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; vector-effect: non-scaling-stroke; transition: stroke-dashoffset 1.8s cubic-bezier(.5, 0, .2, 1) .5s; }
+.on .u-line path { stroke-dashoffset: 0; }
+.k-todo { position: relative; }
+.k-todo .cb { display: inline-block; width: .8em; height: .8em; margin-right: .3em; vertical-align: -.05em; border: 1.5px solid rgb(var(--ar)); border-radius: 2px; position: relative; }
+.k-todo .cb::after { content: ""; position: absolute; left: .18em; top: -.08em; width: .3em; height: .58em; border: solid rgb(var(--ar)); border-width: 0 2px 2px 0; rotate: 40deg; scale: 0; transition: scale .4s cubic-bezier(.2, .9, .3, 1.6); }
+.k-todo.done .cb::after { scale: 1; }
+/* данные недоступны */
+.k-nd { padding: 1px 6px; border: 1.5px dashed currentColor; border-radius: 4px; color: var(--muted); transition: color 2s ease, border-color 2s ease, background-color 2s ease; font-family: var(--sans); font-size: .86em; font-weight: 500; letter-spacing: .01em; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+.x-nodata.on .k-nd { color: var(--warm); background: rgba(var(--ar-warm), .1); }
+.k-enough { transition: color 2.4s ease .6s, text-shadow 2.4s ease .6s; }
+.x-nodata.on .k-enough { color: var(--warm); text-shadow: 0 0 16px rgba(255, 190, 110, .3); }
+.x-last { position: relative; }
+.k-words { transition: color 2s ease; }
+.x-last.on .k-words { color: var(--accent); }
+
+/* ---------- картины ---------- */
+.card { position: relative; margin: 1rem -6px 2.4rem; padding: 8px 8px 0; background: #fbf6ec; background-image: var(--hatch); border-radius: 8px; rotate: var(--tilt, 0deg);
+  box-shadow: 0 1px 0 #fff8 inset, 0 16px 34px -16px rgba(60, 45, 25, .55), 0 2px 6px rgba(60, 45, 25, .15); }
+.card-pic { position: relative; aspect-ratio: 1024 / 683; border-radius: 5px; overflow: hidden; background: #d7c4a6; }
+.card figcaption, .lens figcaption { font: italic 400 15px/1.2 var(--serif); color: #6a5e52; padding: 8px 4px 9px; }
+.js .card, .js .scene.band, .js .duo { transition: opacity 1.4s ease, translate 1.4s cubic-bezier(.2, .8, .2, 1); }
+.js .card:not(.seen), .js .scene.band:not(.seen), .js .duo:not(.seen) { opacity: 0; translate: 0 26px; }
+.scene.band { position: relative; left: 50%; width: min(54rem, calc(100vw - 24px)); margin: 4rem 0 2.6rem; padding: 10px; background: #fbf6ec; background-image: var(--hatch); border-radius: 10px; rotate: .5deg; transform: translateX(-50%);
+  box-shadow: 0 1px 0 #fff8 inset, 0 20px 44px -18px rgba(60, 45, 25, .55), 0 2px 6px rgba(60, 45, 25, .16); }
+@media (min-width: 760px) { .card { margin: 1.4rem -3.2rem 2.8rem; } .duo { margin: 1.8rem -3rem 2.4rem; gap: 16px; } .ar { font-size: 12.5px; } .ar b { font-size: 9.5px; } .duo .dl { font-size: 12px; } }
+@media (min-width: 900px) { .hero { max-width: calc(44rem + 40px); } }
+
+/* ---------- конец ---------- */
+.end { padding-top: 2rem; padding-bottom: calc(5rem + env(safe-area-inset-bottom)); text-align: center; font: 400 16px/1.6 var(--sans); color: var(--muted); }
+.end .thanks { font: italic 400 20px/1.4 var(--serif); color: var(--fg); margin: 0 0 1em; }
+.end p { margin: 0 0 .7em; }
+.end .to-all { display: inline-flex; align-items: center; min-height: 44px; }
+
+/* ---------- звук и записка-напоминание ---------- */
+#snd { position: fixed; right: max(14px, env(safe-area-inset-right)); bottom: max(14px, env(safe-area-inset-bottom)); z-index: 6; width: 48px; height: 48px; border: 0; border-radius: 50%; padding: 0; cursor: pointer;
+  background: #fbf6ec; color: #6a7a78; box-shadow: 0 6px 16px -6px rgba(40, 30, 20, .5), 0 1px 3px rgba(40, 30, 20, .2); opacity: .9; transition: opacity .4s ease, transform .4s ease; display: grid; place-items: center; }
+#snd:hover { opacity: 1; transform: translateY(-1px); }
+#snd svg { width: 26px; height: 26px; }
+#snd .wv { opacity: .35; }
+#snd[aria-pressed="true"] { color: #2c7f80; }
+#snd[aria-pressed="true"] .wv { opacity: 1; animation: wv 3.2s ease-in-out infinite; }
+#snd[aria-pressed="true"] .wv2 { animation-delay: .6s; }
+@keyframes wv { 50% { transform: translateX(-2px); opacity: .5; } }
+#snd-tip { position: fixed; right: calc(max(14px, env(safe-area-inset-right)) + 56px); bottom: calc(max(14px, env(safe-area-inset-bottom)) + 12px); z-index: 6; font: 500 13px/1 var(--sans); color: var(--muted); background: var(--bg); padding: 6px 9px; border-radius: 12px; opacity: 0; transition: opacity 1s ease; pointer-events: none; white-space: nowrap; }
+#snd-tip.on { opacity: .95; }
+#toast { position: fixed; left: 50%; bottom: max(14px, env(safe-area-inset-bottom)); z-index: 7; width: min(30rem, calc(100vw - 24px)); translate: -50% 0; padding: 14px 16px 12px; border-radius: 12px; background: #fbf6ec; background-image: var(--hatch); color: #2a241f;
+  box-shadow: 0 18px 40px -16px rgba(40, 30, 20, .6), 0 2px 6px rgba(40, 30, 20, .2); font: italic 400 17px/1.45 var(--serif); transition: opacity .8s ease, translate .9s cubic-bezier(.2, .8, .2, 1); }
+#toast.hide { opacity: 0; translate: -50% 20px; pointer-events: none; }
+#toast .tb { display: flex; gap: 8px; justify-content: flex-end; margin-top: 8px; }
+#toast button { font: 500 14px/1 var(--sans); border: 0; background: none; color: #2c7f80; padding: 10px 10px; min-height: 40px; border-radius: 8px; cursor: pointer; }
+#toast button.go { background: #2c7f80; color: #f6f2ea; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; transition-delay: 0s !important; }
+  #map svg { animation: none; }
+}
+</style>
+</head>
+<body>
+<div id="map" aria-hidden="true"><svg viewBox="0 0 800 1200" preserveAspectRatio="xMidYMid slice"><g>
+<path d="M-20 160 C 120 120 240 200 400 170 S 650 120 820 160"/><path d="M-20 200 C 130 165 250 240 410 212 S 660 160 820 200" opacity=".7"/>
+<path d="M560 300 C 610 260 720 270 760 330 S 720 470 640 460 S 520 360 560 300Z"/><path d="M590 315 C 625 290 705 298 730 340 S 700 440 645 432 S 565 360 590 315Z" opacity=".7"/>
+<path d="M-20 620 C 140 590 260 680 420 650 S 660 590 820 640"/><path d="M-20 660 C 150 630 270 720 430 690 S 670 630 820 680" opacity=".6"/>
+<path d="M80 860 C 140 800 280 800 320 870 S 260 990 170 980 S 30 930 80 860Z"/>
+<path d="M-20 1060 C 160 1030 280 1110 440 1080 S 660 1030 820 1070" opacity=".7"/>
+<path d="M200 -20 C 240 160 160 320 240 480 S 360 660 300 840" stroke-dasharray="2 9" stroke-width="2"/>
+</g></svg></div>
+<div id="sky" aria-hidden="true"><i class="t-sun"></i><i class="t-cold"></i><i class="t-dusk"></i></div>
+<div id="vig" aria-hidden="true"></div>
+<div id="pool" aria-hidden="true"><i></i></div>
+<canvas id="air" aria-hidden="true"></canvas>
+<div id="frame" aria-hidden="true"><i class="f1"></i><i class="f2"></i><i class="f3"></i><i class="f4"></i><b></b></div>
+
+<main>
+<header class="hero">
+  <a class="home" href="https://legendpsy.github.io/stati/"><span>← Все статьи</span></a>
+  <div class="pc">
+    <div class="pc-pic scene hero-scene" role="img" aria-label="Летняя улочка у моря: прилавок с арбузами, лавка с молотком и блендером, посреди улицы человек в соломенной шляпе смотрит на облака. Поверх картины светятся бирки оценки.">
+      <div class="stack"><img class="im-rynok" src="art/rynok.webp" alt="" width="1024" height="683" decoding="async"><canvas class="ar-cv" aria-hidden="true"></canvas><div class="ar-tags" aria-hidden="true"></div></div>
+    </div>
+    <div class="pc-body">
+      <p class="eyebrow">Статья психолога</p>
+      <h1><span class="sr">Перестаньте «поднимать» самооценку</span><span aria-hidden="true"><span class="w"><span class="ch" style="--i:0">П</span><span class="ch" style="--i:1">е</span><span class="ch" style="--i:2">р</span><span class="ch" style="--i:3">е</span><span class="ch" style="--i:4">с</span><span class="ch" style="--i:5">т</span><span class="ch" style="--i:6">а</span><span class="ch" style="--i:7">н</span><span class="ch" style="--i:8">ь</span><span class="ch" style="--i:9">т</span><span class="ch" style="--i:10">е</span></span> <span class="w"><span class="ch" style="--i:12">«</span><span class="ch" style="--i:13">п</span><span class="ch" style="--i:14">о</span><span class="ch" style="--i:15">д</span><span class="ch" style="--i:16">н</span><span class="ch" style="--i:17">и</span><span class="ch" style="--i:18">м</span><span class="ch" style="--i:19">а</span><span class="ch" style="--i:20">т</span><span class="ch" style="--i:21">ь</span><span class="ch" style="--i:22">»</span></span> <span class="w"><span class="ch" style="--i:24">с</span><span class="ch" style="--i:25">а</span><span class="ch" style="--i:26">м</span><span class="ch" style="--i:27">о</span><span class="ch" style="--i:28">о</span><span class="ch" style="--i:29">ц</span><span class="ch" style="--i:30">е</span><span class="ch" style="--i:31">н</span><span class="ch" style="--i:32">к</span><span class="ch" style="--i:33">у</span></span></span></h1>
+      <p class="lede">Почему попытка доказать собственную ценность превращает жизнь в вечный аукцион — и как навести порядок в одном слове, чтобы вернуть себе право ошибаться</p>
+    </div>
+  </div>
+  <p class="meta">Около 7 минут чтения</p>
+  <aside class="hello"><i class="dot" aria-hidden="true"></i><span id="hello-text">Вы смотрите на эту улицу сквозь «очки оценки»: они сами вешают бирки на всё, что видят. Ничего не нужно нажимать, просто читайте.</span></aside>
+  <div class="cue" aria-hidden="true"></div>
+</header>
+
+<section class="part" id="r0" data-sec="0">
+<p id="p1" data-p class="x-first">Почти каждый второй клиент приходит в кабинет психотерапевта с одной и той же формулировкой: «У меня проблемы с <span class="k k-self">самооценкой</span>». В этот момент между нами повисает обманчивая иллюзия понимания. Кажется, мы оба знаем, о чём речь. На деле под словом «самооценка» люди прячут всё что угодно — от неспособности чувствовать себя супергероем до парализующего страха выступить на совещании.</p>
+<p id="p2" data-p class="x-tyres">С этим словом обращаются как с <span class="k k-tyre">давлением в шинах</span>: упало — надо срочно подкачать. Записаться на курс уверенности, выписать двадцать своих достоинств, повторить перед зеркалом, что ты молодец.</p>
+<p id="p3" data-p class="pull soft">Но что, если проблема вообще не в том, высокая у нас самооценка или низкая? Что, если вся путаница начинается в тот момент, когда мы не различаем, что именно мы оцениваем и зачем?</p>
+</section><div class="tape" aria-hidden="true"><svg viewBox="0 0 400 26" preserveAspectRatio="none"><path class="tp-l" d="M0 4 H400"/><path class="tp-t" d="M0 4 V16"/><path class="tp-t" d="M10 4 V10"/><path class="tp-t" d="M20 4 V10"/><path class="tp-t" d="M30 4 V10"/><path class="tp-t" d="M40 4 V10"/><path class="tp-t" d="M50 4 V16"/><path class="tp-t" d="M60 4 V10"/><path class="tp-t" d="M70 4 V10"/><path class="tp-t" d="M80 4 V10"/><path class="tp-t" d="M90 4 V10"/><path class="tp-t" d="M100 4 V16"/><path class="tp-t" d="M110 4 V10"/><path class="tp-t" d="M120 4 V10"/><path class="tp-t" d="M130 4 V10"/><path class="tp-t" d="M140 4 V10"/><path class="tp-t" d="M150 4 V16"/><path class="tp-t" d="M160 4 V10"/><path class="tp-t" d="M170 4 V10"/><path class="tp-t" d="M180 4 V10"/><path class="tp-t" d="M190 4 V10"/><path class="tp-t" d="M200 4 V16"/><path class="tp-t" d="M210 4 V10"/><path class="tp-t" d="M220 4 V10"/><path class="tp-t" d="M230 4 V10"/><path class="tp-t" d="M240 4 V10"/><path class="tp-t" d="M250 4 V16"/><path class="tp-t" d="M260 4 V10"/><path class="tp-t" d="M270 4 V10"/><path class="tp-t" d="M280 4 V10"/><path class="tp-t" d="M290 4 V10"/><path class="tp-t" d="M300 4 V16"/><path class="tp-t" d="M310 4 V10"/><path class="tp-t" d="M320 4 V10"/><path class="tp-t" d="M330 4 V10"/><path class="tp-t" d="M340 4 V10"/><path class="tp-t" d="M350 4 V16"/><path class="tp-t" d="M360 4 V10"/><path class="tp-t" d="M370 4 V10"/><path class="tp-t" d="M380 4 V10"/><path class="tp-t" d="M390 4 V10"/><path class="tp-t" d="M400 4 V16"/></svg><i class="tp-dot"></i></div><section class="part" id="r1" data-sec="1">
+<h2 id="h1" data-p><span class="h-tag" aria-hidden="true">раздел 1 из 3</span>Оценка — это глагол</h2>
+<p id="p4" data-p class="x-off">Прежде всего стоит признать простую вещь: <span class="k k-off">выключить оценку в голове невозможно</span>. Наш мозг — эволюционная машина для сравнения, взвешивания и прогноза. Требовать от него «просто перестать себя оценивать» — всё равно что запретить лёгким дышать.</p>
+<p id="p5" data-p>Чтобы выбраться из ловушки, достаточно аккуратно развести два понятия, которые срослись в одно:</p>
+<p id="p6" data-p class="li li-verb" data-li="verb"><span class="li-m" aria-hidden="true">•</span><span class="sr">* </span>Оценка — это глагол. Само действие, процесс измерения.</p>
+<p id="p7" data-p class="li li-noun" data-li="noun"><span class="li-m" aria-hidden="true">•</span><span class="sr">* </span>Ценность — это существительное. Предмет, ради которого мы вообще берём в руки линейку.</p>
+<figure class="duo" aria-label="Объект и предмет: арбуз и его сладость, человек и его ценность"><div class="duo-p duo-melon"><div class="duo-pic" style="background-size:465.45% auto;background-position:3.73% 69.50%"></div><i class="br" aria-hidden="true"></i><span class="dl dl-o"><b>объект</b>арбуз</span><span class="dl dl-s"><b>предмет</b>сладость <i class="mb"><i style="--v:.8"></i></i> 8/10</span></div><div class="duo-p duo-me"><div class="duo-pic" style="background-size:341.33% auto;background-position:48.34% 63.32%"></div><i class="br" aria-hidden="true"></i><span class="dl dl-o"><b>объект</b>я сам</span><span class="dl dl-s"><b>предмет</b>моя ценность <i class="mb"><i class="jit"></i></i> <span class="q">?/10</span></span></div></figure>
+<p id="p8" data-p class="x-melon">В науке давно различают объект и предмет исследования. Если учёный изучает сладость арбуза, то сам <span class="k k-obj">арбуз</span> — это объект, а его <span class="k k-subj">сладость</span> — предмет. В том, что мы называем самооценкой, человек берёт в качестве объекта самого себя, а предметом измерения назначает собственную ценность.</p>
+<p id="p9" data-p class="x-breaks">Именно здесь всё и <span class="k k-crack">ломается</span>. Чтобы не утонуть в этом клубке, полезно всякий раз задавать себе короткий рабочий вопрос: <span class="k k-ask">«Что именно я сейчас оцениваю — и с какой целью?»</span></p>
+<p id="p10" data-p>Целей я предлагаю две:</p>
+<p id="p11" data-p class="li li-eff" data-li="eff"><span class="li-m" aria-hidden="true">1.</span><span class="sr">1. </span>Эффективность — насколько хорошо, точно или профессионально <span class="nobr">что-то</span> сделано.</p>
+<p id="p12" data-p class="li li-val" data-li="val"><span class="li-m" aria-hidden="true">2.</span><span class="sr">2. </span>Ценность — насколько это важно, дорого и значимо лично для меня.</p>
+<p id="p13" data-p>И категорий, к которым мы прикладываем линейку, тоже две:</p>
+<p id="p14" data-p class="li li-skill" data-li="skill"><span class="li-m" aria-hidden="true">1.</span><span class="sr">1. </span>Конкретные действия и навыки, которые действительно поддаются измерению.</p>
+<p id="p15" data-p class="li li-whole" data-li="whole"><span class="li-m" aria-hidden="true">2.</span><span class="sr">2. </span>Личность целиком — я сам как человек.</p>
+</section><div class="tape" aria-hidden="true"><svg viewBox="0 0 400 26" preserveAspectRatio="none"><path class="tp-l" d="M0 4 H400"/><path class="tp-t" d="M0 4 V16"/><path class="tp-t" d="M10 4 V10"/><path class="tp-t" d="M20 4 V10"/><path class="tp-t" d="M30 4 V10"/><path class="tp-t" d="M40 4 V10"/><path class="tp-t" d="M50 4 V16"/><path class="tp-t" d="M60 4 V10"/><path class="tp-t" d="M70 4 V10"/><path class="tp-t" d="M80 4 V10"/><path class="tp-t" d="M90 4 V10"/><path class="tp-t" d="M100 4 V16"/><path class="tp-t" d="M110 4 V10"/><path class="tp-t" d="M120 4 V10"/><path class="tp-t" d="M130 4 V10"/><path class="tp-t" d="M140 4 V10"/><path class="tp-t" d="M150 4 V16"/><path class="tp-t" d="M160 4 V10"/><path class="tp-t" d="M170 4 V10"/><path class="tp-t" d="M180 4 V10"/><path class="tp-t" d="M190 4 V10"/><path class="tp-t" d="M200 4 V16"/><path class="tp-t" d="M210 4 V10"/><path class="tp-t" d="M220 4 V10"/><path class="tp-t" d="M230 4 V10"/><path class="tp-t" d="M240 4 V10"/><path class="tp-t" d="M250 4 V16"/><path class="tp-t" d="M260 4 V10"/><path class="tp-t" d="M270 4 V10"/><path class="tp-t" d="M280 4 V10"/><path class="tp-t" d="M290 4 V10"/><path class="tp-t" d="M300 4 V16"/><path class="tp-t" d="M310 4 V10"/><path class="tp-t" d="M320 4 V10"/><path class="tp-t" d="M330 4 V10"/><path class="tp-t" d="M340 4 V10"/><path class="tp-t" d="M350 4 V16"/><path class="tp-t" d="M360 4 V10"/><path class="tp-t" d="M370 4 V10"/><path class="tp-t" d="M380 4 V10"/><path class="tp-t" d="M390 4 V10"/><path class="tp-t" d="M400 4 V16"/></svg><i class="tp-dot"></i></div><section class="part" id="r2" data-sec="2">
+<h2 id="h2" data-p><span class="h-tag" aria-hidden="true">раздел 2 из 3</span>Кривой балет и жираф в аквариуме</h2>
+<p id="p16" data-p>Посмотрим, как эта путаница работает на практике. Представьте, что я — человек, совершенно не умеющий танцевать, — внезапно решаю пойти на балет.</p>
+<figure class="lens lens-A" aria-label="Балетный класс глазами «очков оценки»"><div class="lens-pic" role="img" aria-label="Старый солнечный балетный класс: у станка взрослый новичок в футболке и трениках неуклюже приседает и смущённо улыбается; вдали преподавательница показывает то же движение."><div class="stack"><img class="im-balet" src="art/balet.webp" alt="" width="1024" height="683" decoding="async" loading="lazy"><canvas class="ar-cv" aria-hidden="true"></canvas><div class="ar-tags" aria-hidden="true"></div></div><span class="lens-rec" aria-hidden="true"><i></i><span class="lens-mode">сканирую</span></span></div></figure>
+<p id="p17" data-p class="lp" data-lens="verdict">Если я живу в привычной парадигме «смешанной самооценки», всё закончится уже на первом занятии у станка. Я посмотрю в зеркало, сравню своё неуклюжее плие с движениями преподавателя, мгновенно вынесу приговор всей своей личности — <span class="k k-verdict">«я бездарное ничтожество»</span> — и больше никогда не переступлю порог этого зала.</p>
+<p id="p18" data-p class="lp" data-lens="giraffe">По сути, я только что измерил ценность целого человека по точности одного движения. Это примерно так же осмысленно, как объявить <span class="k k-shoe">детскую обувь</span> бракованной, потому что она не налезает на взрослую ногу, или списать <span class="k k-giraffe">жирафа</span> в бесполезные существа за то, что он не помещается в аквариум.</p>
+<figure class="card" data-life="zhiraf" style="--tilt:-1.1deg"><div class="card-pic" role="img" aria-label="Светлый зоомагазин под стеклянной крышей: жираф склонил длинную шею над круглым аквариумом с золотой рыбкой; на полу красные детские туфельки рядом с большими взрослыми ботинками."><div class="stack"><img class="im-zhiraf" src="art/zhiraf.webp" alt="" width="1024" height="683" decoding="async" loading="lazy"><canvas class="ar-cv" aria-hidden="true"></canvas><div class="ar-tags" aria-hidden="true"></div></div></div><figcaption>Жираф и аквариум</figcaption></figure>
+<p id="p19" data-p class="lp" data-lens="split">Но стоит разделить понятия — и та же сцена в балетном классе начинает выглядеть иначе:</p>
+<figure class="lens lens-B" aria-label="Балетный класс глазами «очков оценки»"><div class="lens-pic" role="img" aria-label="Старый солнечный балетный класс: у станка взрослый новичок в футболке и трениках неуклюже приседает и смущённо улыбается; вдали преподавательница показывает то же движение."><div class="stack"><img class="im-balet" src="art/balet.webp" alt="" width="1024" height="683" decoding="async" loading="lazy"><canvas class="ar-cv" aria-hidden="true"></canvas><div class="ar-tags" aria-hidden="true"></div></div><span class="lens-rec" aria-hidden="true"><i></i><span class="lens-mode">сканирую</span></span></div></figure>
+<p id="p20" data-p class="li lp" data-lens="b1"><span class="li-m" aria-hidden="true">•</span><span class="sr">* </span>Эффективность моего навыка: единица из десяти. Объективно я деревянный, путаю позиции и заваливаю корпус. Для сцены Большого театра мой результат равен нулю. И это совершенно нормально — я не премьер труппы.</p>
+<p id="p21" data-p class="li lp" data-lens="b2"><span class="li-m" aria-hidden="true">•</span><span class="sr">* </span>Ценность этого навыка: относительна. Для театра она <span class="nobr">по-прежнему</span> нулевая. Но для меня самого эти нелепые движения стоят целого состояния: это шаг, который я сделал вопреки скованности и страху.</p>
+<p id="p22" data-p class="li lp" data-lens="b3"><span class="li-m" aria-hidden="true">•</span><span class="sr">* </span>Ценность моей личности: вне шкалы. Моё человеческое достоинство ни на миллиметр не усыхает от того, что я криво стою у станка. Сам факт, что я разрешил себе пойти в новый, пугающий опыт, уже огромен.</p>
+<p id="p23" data-p class="li lp" data-lens="b4"><span class="li-m" aria-hidden="true">•</span><span class="sr">* </span>Смелость поступка: запредельна. В собственных глазах я выгляжу чертовски достойно просто потому, что дошёл до зала, выдержал неловкость и попробовал.</p>
+<p id="p24" data-p class="x-shifts">Когда мы перестаём валить всё в одну корзину, происходят <span class="k k-four">четыре заметных сдвига</span>.</p>
+<p id="p25" data-p class="x-steady"><span class="nobr">Во-первых</span>, ваша ценность становится <span class="k k-steady">устойчивой</span>. Базовое право на уважение и тепло наконец выводится <span class="nobr">из-под</span> рыночных законов: проваленный проект или кривое плие больше не сбрасывают вас в пропасть стыда. <span class="nobr">Во-вторых</span>, оценка навыков становится трезвой и гибкой: вам больше не приходится раздувать искусственную уверенность и врать себе, что вы блестяще справляетесь со всем подряд — оценка эффективности возвращается к своей прямой работе, помогая учиться и адаптироваться.</p>
+<p id="p26" data-p class="x-free">А главное, появляется <span class="k k-free">двойная свобода</span>. Свобода от парализующего перфекционизма, вечного гула внутреннего критика и изматывающей необходимости каждое утро заново доказывать своё право на место под солнцем. И свобода для — быть новичком, ошибаться, <span class="k k-notes">петь мимо нот</span>, запускать несовершенные проекты и танцевать свой кривой балет просто потому, что этот опыт важен лично вам.</p>
+</section><div class="tape" aria-hidden="true"><svg viewBox="0 0 400 26" preserveAspectRatio="none"><path class="tp-l" d="M0 4 H400"/><path class="tp-t" d="M0 4 V16"/><path class="tp-t" d="M10 4 V10"/><path class="tp-t" d="M20 4 V10"/><path class="tp-t" d="M30 4 V10"/><path class="tp-t" d="M40 4 V10"/><path class="tp-t" d="M50 4 V16"/><path class="tp-t" d="M60 4 V10"/><path class="tp-t" d="M70 4 V10"/><path class="tp-t" d="M80 4 V10"/><path class="tp-t" d="M90 4 V10"/><path class="tp-t" d="M100 4 V16"/><path class="tp-t" d="M110 4 V10"/><path class="tp-t" d="M120 4 V10"/><path class="tp-t" d="M130 4 V10"/><path class="tp-t" d="M140 4 V10"/><path class="tp-t" d="M150 4 V16"/><path class="tp-t" d="M160 4 V10"/><path class="tp-t" d="M170 4 V10"/><path class="tp-t" d="M180 4 V10"/><path class="tp-t" d="M190 4 V10"/><path class="tp-t" d="M200 4 V16"/><path class="tp-t" d="M210 4 V10"/><path class="tp-t" d="M220 4 V10"/><path class="tp-t" d="M230 4 V10"/><path class="tp-t" d="M240 4 V10"/><path class="tp-t" d="M250 4 V16"/><path class="tp-t" d="M260 4 V10"/><path class="tp-t" d="M270 4 V10"/><path class="tp-t" d="M280 4 V10"/><path class="tp-t" d="M290 4 V10"/><path class="tp-t" d="M300 4 V16"/><path class="tp-t" d="M310 4 V10"/><path class="tp-t" d="M320 4 V10"/><path class="tp-t" d="M330 4 V10"/><path class="tp-t" d="M340 4 V10"/><path class="tp-t" d="M350 4 V16"/><path class="tp-t" d="M360 4 V10"/><path class="tp-t" d="M370 4 V10"/><path class="tp-t" d="M380 4 V10"/><path class="tp-t" d="M390 4 V10"/><path class="tp-t" d="M400 4 V16"/></svg><i class="tp-dot"></i></div><section class="part" id="r3" data-sec="3">
+<h2 id="h3" data-p><span class="h-tag" aria-hidden="true">раздел 3 из 3</span>Как взвесить синий цвет</h2>
+<p id="p27" data-p class="pull soft">Впрочем, если сделать ещё один шаг назад, откроется ещё более радикальная вещь. Любая попытка выставить балл своей личности — хоть по шкале эффективности, хоть по шкале ценности — абсурдна уже в самой своей идее.</p>
+<p id="p28" data-p class="x-skills">Измерять конкретные навыки (как я вожу машину, пишу тексты, веду переговоры) полезно и необходимо — без этого нет роста. Но как только мы разворачиваем линейку на собственное «Я», мы неизбежно сталкиваемся с <span class="k k-dead">четырьмя тупиками</span>.</p>
+<figure class="card" data-life="kuhnya" style="--tilt:0.9deg"><div class="card-pic" role="img" aria-label="Солнечная деревенская кухня: на деревянном столе блендер с клубникой, молоток с гвоздями и старые кухонные весы с пустой чашей; в открытом окне синее летнее небо и холмы."><div class="stack"><img class="im-kuhnya" src="art/kuhnya.webp" alt="" width="1024" height="683" decoding="async" loading="lazy"><canvas class="ar-cv" aria-hidden="true"></canvas><div class="ar-tags" aria-hidden="true"></div></div></div><figcaption>Блендер, молоток и кухонные весы</figcaption></figure>
+<p id="p29" data-p class="x-cat"><span class="k k-t1">Ошибка категорий.</span> Эффективность существует только там, где есть строго заданная функция. Мы легко можем оценить блендер (как быстро и тихо он измельчает, насколько мелко рубит) или молоток (как лежит в руке, как бьёт по шляпке гвоздя, сколько прослужит). Причём для каждого свойства понадобится отдельный критерий. А в чём состоит «функция» <span class="k k-fn">Саши</span>, <span class="k k-fn">Оли</span> или <span class="k k-fn">Алексея</span>? Эффективно дышать? Продуктивно смотреть на облака? Измерять эффективность человеческой личности — всё равно что пытаться взвесить на кухонных весах <span class="k k-blue">синий цвет</span>.</p>
+<figure class="card" data-life="mladenec" style="--tilt:-0.7deg"><div class="card-pic" role="img" aria-label="Залитая солнцем комната: в деревянной колыбели спит новорождённый, рука взрослого лежит на краю колыбели, над ней качаются бумажные журавлики."><div class="stack"><img class="im-mladenec" src="art/mladenec.webp" alt="" width="1024" height="683" decoding="async" loading="lazy"><canvas class="ar-cv" aria-hidden="true"></canvas><div class="ar-tags" aria-hidden="true"></div></div></div><figcaption>Худший сотрудник года</figcaption></figure>
+<p id="p30" data-p class="x-use"><span class="k k-t2">Ловушка полезности.</span> Культура достижений приучила нас ставить знак равенства между ценностью и <span class="k k-kpd">КПД</span>, но в человеческом измерении эта формула рассыпается на первом же примере. Возьмите новорождённого. С точки зрения производительности он — абсолютный ноль: не создаёт продукт, не платит налогов, только спит, кричит и пачкает подгузники. По меркам эффективности — худший сотрудник года. Но какова его ценность? Для родителей — <span class="k k-inf">бесконечна</span>. Ценность вообще живёт только в живом субъективном взгляде, а не в <span class="k k-sheet">бухгалтерской таблице</span>. Если привязать достоинство человека к его полезности, придётся списать со счетов младенцев, тяжелобольных и глубоких стариков — а это уже прямой путь прочь от гуманизма.</p>
+<figure class="card" data-life="kniga" style="--tilt:-1.1deg"><div class="card-pic" role="img" aria-label="Письменный стол у распахнутого окна: недописанная рукопись, перо, пустой стакан; ветер уносит листы в небо, внизу по долине течёт река."><div class="stack"><img class="im-kniga" src="art/kniga.webp" alt="" width="1024" height="683" decoding="async" loading="lazy"><canvas class="ar-cv" aria-hidden="true"></canvas><div class="ar-tags" aria-hidden="true"></div></div></div><figcaption>Три главы из многих</figcaption></figure>
+<p id="p31" data-p class="x-book"><span class="k k-t3">Рецензия на недописанную книгу.</span> Любая оценка — это застывший штамп: <span class="k k-stamp">«сдано на четвёрку»</span>, <span class="k k-stamp">«стоит сто рублей»</span>. Но личность — не предмет на витрине, а живой, незавершённый процесс. Станете ли вы писать разгромную рецензию на роман, в котором автор успел сочинить три главы, или оценивать фильм по первым пяти минутам? Вы в тишине ночи, вы в разгар рабочего аврала, вы в горе и в смехе — это разные грани потока, который меняется каждую секунду. Оценить личность целиком — значит попытаться <span class="k k-wind">сфотографировать ветер</span> или унести реку в стакане. В саму секунду фиксации ускользает главное: <span class="k k-move">движение</span>.</p>
+<p id="p32" data-p class="x-auction"><span class="k k-t4">Вечный аукцион.</span> Стоит лишь согласиться с тем, что у вашей личности есть рейтинг — пусть даже сегодня это гордые <span class="k k-ten">«десять из десяти»</span>, — и вы подписываете контракт на пожизненные эмоциональные качели. Сегодня вы закрыли сделку, получили похвалу и чувствуете себя на вершине. Завтра забыли ключи, сорвались на близкого, провалили важную встречу — и в собственных глазах за минуту превращаетесь в уценённый, бракованный товар с биркой <span class="k k-two">«два из десяти»</span>. Как только право на уважение становится условным, жизнь превращается в бесконечный смотр, где каждое утро на горизонте гарантированно возникает <span class="nobr">кто-то</span> моложе, умнее, красивее, успешнее и ярче — а значит, якобы достойнее любви, чем вы.</p>
+</section><div class="tape" aria-hidden="true"><svg viewBox="0 0 400 26" preserveAspectRatio="none"><path class="tp-l" d="M0 4 H400"/><path class="tp-t" d="M0 4 V16"/><path class="tp-t" d="M10 4 V10"/><path class="tp-t" d="M20 4 V10"/><path class="tp-t" d="M30 4 V10"/><path class="tp-t" d="M40 4 V10"/><path class="tp-t" d="M50 4 V16"/><path class="tp-t" d="M60 4 V10"/><path class="tp-t" d="M70 4 V10"/><path class="tp-t" d="M80 4 V10"/><path class="tp-t" d="M90 4 V10"/><path class="tp-t" d="M100 4 V16"/><path class="tp-t" d="M110 4 V10"/><path class="tp-t" d="M120 4 V10"/><path class="tp-t" d="M130 4 V10"/><path class="tp-t" d="M140 4 V10"/><path class="tp-t" d="M150 4 V16"/><path class="tp-t" d="M160 4 V10"/><path class="tp-t" d="M170 4 V10"/><path class="tp-t" d="M180 4 V10"/><path class="tp-t" d="M190 4 V10"/><path class="tp-t" d="M200 4 V16"/><path class="tp-t" d="M210 4 V10"/><path class="tp-t" d="M220 4 V10"/><path class="tp-t" d="M230 4 V10"/><path class="tp-t" d="M240 4 V10"/><path class="tp-t" d="M250 4 V16"/><path class="tp-t" d="M260 4 V10"/><path class="tp-t" d="M270 4 V10"/><path class="tp-t" d="M280 4 V10"/><path class="tp-t" d="M290 4 V10"/><path class="tp-t" d="M300 4 V16"/><path class="tp-t" d="M310 4 V10"/><path class="tp-t" d="M320 4 V10"/><path class="tp-t" d="M330 4 V10"/><path class="tp-t" d="M340 4 V10"/><path class="tp-t" d="M350 4 V16"/><path class="tp-t" d="M360 4 V10"/><path class="tp-t" d="M370 4 V10"/><path class="tp-t" d="M380 4 V10"/><path class="tp-t" d="M390 4 V10"/><path class="tp-t" d="M400 4 V16"/></svg><i class="tp-dot"></i></div><section class="part" id="r4" data-sec="4">
+<p id="p33" data-p class="x-exit">Выход из этой системы прост на словах и требует честной практики в жизни: нужно раз и навсегда <span class="u">вывести свою личность из зоны оценки<svg class="u-line" viewBox="0 0 200 12" preserveAspectRatio="none" aria-hidden="true"><path d="M2 8 C 30 3, 55 11, 85 6 S 140 3, 170 7 S 192 6, 198 5" pathLength="1"/></svg></span>.</p>
+<p id="p34" data-p class="x-craft">Оставьте баллы, критерии и шкалы для ремесла, поступков и навыков — там они незаменимы. Можно спокойно сказать себе: <span class="k k-todo">«Этот текст вышел слабым, его стоит переписать»</span> или <span class="k k-todo">«В этом разговоре я поступил резко, надо извиниться»</span>.</p>
+<figure class="scene band" role="img" aria-label="Снова та же улица у моря, теперь на закате: арбузы, молоток и блендер на прилавках, человек в соломенной шляпе смотрит на море."><div class="pc-pic"><div class="stack"><img class="im-rynok" src="art/rynok.webp" alt="" width="1024" height="683" decoding="async" loading="lazy"><img class="im-rynok-vecher" src="art/rynok-vecher.webp" alt="" width="1024" height="683" decoding="async" loading="lazy"><canvas class="ar-cv" aria-hidden="true"></canvas><div class="ar-tags" aria-hidden="true"></div></div></div></figure>
+<p id="p35" data-p class="x-nodata">А напротив собственной личности поставьте негласную пометку: <span class="k k-nd">«Данные недоступны для оценки»</span>. У вашего «Я» нет и не может быть ценника, потому что вы — не товар на полке супермаркета. Вы просто есть: живой человек, который прямо сейчас проживает свой опыт впервые. И этого <span class="k k-enough">более чем достаточно</span>.</p>
+<p id="p36" data-p class="x-last">Не нужно тратить годы на то, чтобы «поднимать» самооценку — это изматывающая игра, в которой вы обречены то мнить себя супергероем, то проваливаться на дно <span class="nobr">из-за</span> первого же промаха. Мне кажется гораздо плодотворнее просто навести порядок <span class="k k-words">в словах</span>.</p>
+</section>
+
+<footer class="end">
+  <p class="thanks">Спасибо, что прошлись по этой улице.</p>
+  <p>Ещё статьи: <a href="../doverie/">«Доверие»</a>, <a href="../partner/">«На что можно смотреть бесконечно»</a>, <a href="../granicy/">«Чьи это границы?»</a>, <a href="../gorizont/">«Горизонт отношений»</a>, <a href="../kak-dolzhno/">«Как вообще-то должно быть»</a> и <a href="https://legendpsy.github.io/love-essay/">«Любовь не измеряется страданием»</a></p>
+  <p><a class="to-all" href="https://legendpsy.github.io/stati/">← Все статьи</a></p>
+</footer>
+</main>
+
+<div id="hud" aria-hidden="true"><i class="cn c1"></i><i class="cn c2"></i><i class="cn c3"></i><i class="cn c4"></i><div id="ruler"><i></i><b></b></div><i id="scan"></i>
+  <button id="chip" type="button" tabindex="-1"><i class="dot"></i><span class="tx">оценка: включена</span></button></div>
+<div id="price" aria-hidden="true"><svg viewBox="0 0 30 30"><path d="M14 0 C 16 10, 8 18, 14 30"/></svg><span class="pt"><small>рейтинг</small><span class="pv">10 / 10</span></span></div>
+<button id="snd" type="button" aria-pressed="false" aria-label="Звук летнего городка у моря">
+  <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M7 11 l4 -3 l4 3 M17 9 l4 -3 l4 3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" opacity=".85"/><path class="wv" d="M3 20 Q 7.5 16, 12 20 T 21 20 T 30 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path class="wv wv2" d="M3 26 Q 7.5 22, 12 26 T 21 26 T 30 26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+</button>
+<div id="snd-tip" aria-hidden="true">звук летнего городка</div>
+<div id="toast" class="hide" role="status"></div>
+<script>
+/* «Перестаньте „поднимать“ самооценку» — жизнь сайта.
+   Летний городок у моря, увиденный сквозь «очки оценки». Мир нарисован от руки, а поверх него
+   работает дополненная реальность: рамки, бирки, линейки и ценники сами цепляются к вещам.
+   Сначала очки мерят всё подряд, и человека тоже. По ходу статьи учатся различать:
+   вещам и навыкам — шкалы, человеку — «данные недоступны для оценки». Ничего не нужно нажимать. */
+(() => {
+'use strict';
+const D = document, R = D.documentElement, W = window;
+R.classList.add('js');
+const $ = (s, el = D) => el.querySelector(s), $$ = (s, el = D) => [...el.querySelectorAll(s)];
+const RM = W.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const TAU = Math.PI * 2;
+const clamp = (v, a = 0, b = 1) => v < a ? a : v > b ? b : v;
+const lerp = (a, b, t) => a + (b - a) * t;
+const sstep = (a, b, v) => { const t = clamp((v - a) / (b - a)); return t * t * (3 - 2 * t); };
+const nz = x => Math.sin(x) * .5 + Math.sin(x * 2.13 + 1.3) * .3 + Math.sin(x * 4.37 + .7) * .2;
+function rng(seed) {
+  return () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+}
+const rnd = rng(Date.now() % 100000);
+const pick = a => a[Math.floor(rnd() * a.length)];
+const store = {
+  get(k, d) { try { const v = localStorage.getItem('samoocenka:' + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem('samoocenka:' + k, JSON.stringify(v)); } catch (e) {} }
+};
+const isDark = () => R.dataset.theme === 'dark' || (R.dataset.theme !== 'light' && W.matchMedia('(prefers-color-scheme: dark)').matches);
+const rgba = (c, a) => `rgba(${c[0]},${c[1]},${c[2]},${a < 0 ? 0 : a})`;
+function glow(ctx, x, y, r, c, a) {
+  if (a <= .002) return;
+  const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+  g.addColorStop(0, rgba(c, a)); g.addColorStop(.45, rgba(c, a * .35)); g.addColorStop(1, rgba(c, 0));
+  ctx.fillStyle = g; ctx.fillRect(x - r, y - r, r * 2, r * 2);
+}
+const C_AR = [143, 240, 220], C_WARN = [255, 140, 125], C_WARM = [255, 214, 150];
+
+/* ---------- окно и прокрутка ---------- */
+let vw = innerWidth, vh = innerHeight, docH = 1, sy = scrollY, prog = 0;
+let vel = 0, lastY = sy, lastT = performance.now(), lastScroll = 0, airShift = 0;
+function measure() { vw = innerWidth; vh = innerHeight; docH = Math.max(1, R.scrollHeight - vh); }
+measure();
+addEventListener('resize', () => { measure(); sizeAir(); }, { passive: true });
+addEventListener('scroll', () => {
+  const now = performance.now(), y = scrollY, dt = Math.max(8, now - lastT);
+  vel = vel * .55 + (y - lastY) / dt * .45;
+  airShift += y - lastY;
+  lastY = y; lastT = now; sy = y; lastScroll = now;
+}, { passive: true });
+const P = s => D.querySelector(s);
+const top = el => el ? el.getBoundingClientRect().top / vh : 9;
+const mid = el => { if (!el) return 9; const r = el.getBoundingClientRect(); return (r.top + r.bottom) / 2 / vh; };
+
+/* ---------- состояние «очков» по ходу чтения ---------- */
+const S = { hud: .8, cold: 0, dusk: 0, warm: 0, auction: 0, aprog: 0, bidsFall: 0, nodata: false, exit: false };
+
+/* =====================================================================
+   Картина с дополненной реальностью: рамки и линии рисует canvas, бирки — HTML поверх.
+   Координаты — в пикселях исходной картины 1024×683.
+   ===================================================================== */
+const IW = 1024, IH = 683;
+const pics = [];
+function makePic(el, opts = {}) {
+  const pic = { el, cv: $('.ar-cv', el), tl: $('.ar-tags', el), tags: new Map(), w: 0, h: 0, dpr: 1, vis: false, t: 0, s: { r: rng(pics.length * 131 + 7) }, draw: opts.draw, imgs: $$('.stack img', el) };
+  pic.ctx = pic.cv.getContext('2d');
+  pics.push(pic);
+  return pic;
+}
+function sizePic(p) {
+  const r = p.cv.getBoundingClientRect();
+  if (!r.width) return;
+  p.dpr = Math.min(devicePixelRatio || 1, 2); p.w = r.width; p.h = r.height;
+  p.cv.width = Math.round(r.width * p.dpr); p.cv.height = Math.round(r.height * p.dpr);
+}
+/* бирка: id, рамка box [x0,y0,x1,y1], место бирки at [x%, y%], align 'l' | 'r' */
+function tag(p, id, o) {
+  const el = D.createElement('div');
+  el.className = 'ar' + (o.cls ? ' ' + o.cls : '');
+  el.style.left = o.at[0] + '%'; el.style.top = o.at[1] + '%';
+  if (o.align === 'r') { el.style.transformOrigin = '100% 0'; el.style.translate = '-100% 0'; }
+  el.innerHTML = `<b>${o.title}</b><span class="v">${o.val || ''}</span>`;
+  p.tl.append(el);
+  const t = { id, el, box: o.box || null, on: false, a: 0, col: C_AR, line: o.line !== false, brk: o.brk !== false, title: o.title };
+  p.tags.set(id, t);
+  return t;
+}
+function setTag(p, id, o) {
+  const t = p.tags.get(id); if (!t) return;
+  if ('on' in o) { if (o.on !== t.on) { t.on = o.on; t.el.classList.toggle('show', o.on); } }
+  if ('val' in o && o.val !== t.val) { t.val = o.val; $('.v', t.el).innerHTML = o.val; }
+  if ('title' in o && o.title !== t.title) { t.title = o.title; $('b', t.el).textContent = o.title; }
+  if ('cls' in o) {
+    for (const c of ['warn', 'warm', 'dim', 'big']) t.el.classList.toggle(c, o.cls.split(' ').includes(c));
+    t.col = o.cls.includes('warm') ? C_WARM : o.cls.includes('warn') ? C_WARN : C_AR;
+  }
+  if (o.glitch) { t.el.classList.remove('glitch'); void t.el.offsetWidth; t.el.classList.add('glitch'); }
+  if ('brk' in o) t.brk = o.brk;
+}
+function brackets(ctx, x0, y0, x1, y1, L, col, a) {
+  ctx.strokeStyle = rgba(col, a); ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.moveTo(x0, y0 + L); ctx.lineTo(x0, y0); ctx.lineTo(x0 + L, y0);
+  ctx.moveTo(x1 - L, y0); ctx.lineTo(x1, y0); ctx.lineTo(x1, y0 + L);
+  ctx.moveTo(x1, y1 - L); ctx.lineTo(x1, y1); ctx.lineTo(x1 - L, y1);
+  ctx.moveTo(x0 + L, y1); ctx.lineTo(x0, y1); ctx.lineTo(x0, y1 - L);
+  ctx.stroke();
+}
+function drawTags(p, dt) {
+  const ctx = p.ctx, kx = p.w / IW, ky = p.h / IH, cr = p.cv.getBoundingClientRect();
+  for (const t of p.tags.values()) {
+    t.a += ((t.on ? 1 : 0) - t.a) * Math.min(1, dt * (t.on ? 5 : 3));
+    if (t.a < .01 || !t.box) continue;
+    const e = 1 - t.a, pad = e * 14;
+    const x0 = t.box[0] * kx - pad, y0 = t.box[1] * ky - pad, x1 = t.box[2] * kx + pad, y1 = t.box[3] * ky + pad;
+    const a = t.a * (t.el.classList.contains('dim') ? .45 : 1);
+    ctx.save(); ctx.shadowColor = 'rgba(0,20,25,.5)'; ctx.shadowBlur = 3;
+    if (t.brk) brackets(ctx, x0, y0, x1, y1, Math.min(12, (x1 - x0) * .3, (y1 - y0) * .3), t.col, .95 * a);
+    if (t.line && t.a > .5) {
+      const r = t.el.getBoundingClientRect();
+      const lx0 = r.left - cr.left, ly0 = r.top - cr.top, lx1 = lx0 + r.width, ly1 = ly0 + r.height;
+      const bx = clamp((lx0 + lx1) / 2, x0, x1), by = clamp((ly0 + ly1) / 2, y0, y1);
+      const sx = clamp(bx, lx0, lx1), syy = clamp(by, ly0, ly1);
+      const ex = clamp(sx, x0, x1), ey = clamp(syy, y0, y1);
+      if (Math.hypot(ex - sx, ey - syy) > 6) {
+        ctx.strokeStyle = rgba(t.col, .7 * a * sstep(.5, 1, t.a)); ctx.lineWidth = 1; ctx.setLineDash([3, 3]);
+        ctx.beginPath(); ctx.moveTo(sx, syy); ctx.lineTo(ex, ey); ctx.stroke(); ctx.setLineDash([]);
+        ctx.fillStyle = rgba(t.col, .9 * a); ctx.beginPath(); ctx.arc(ex, ey, 2, 0, TAU); ctx.fill();
+      }
+    }
+    ctx.restore();
+  }
+}
+const ro = new ResizeObserver(es => { for (const e of es) { const p = pics.find(q => q.cv === e.target); if (p) sizePic(p); } });
+const vio = new IntersectionObserver(es => { for (const e of es) { const p = pics.find(q => q.el === e.target); if (p) { p.vis = e.isIntersecting; if (p.vis && !p.seenAt) p.seenAt = clock; } } }, { rootMargin: '60px 0px' });
+
+/* ---------- улица у моря: шапка и сцена в конце ---------- */
+const PERSON_VALS = [['7,4 / 10', .74], ['3,1 / 10', .31], ['9,2 / 10', .92], ['5,5 / 10', .55], ['2,0 / 10', .2], ['8,1 / 10', .81], ['?', .5]];
+const SECOND = [
+  { id: 'cat1', box: [78, 576, 184, 642], at: [3, 77], title: 'кот', val: 'КПД 0 %' },
+  { id: 'cat2', box: [764, 563, 880, 620], at: [60, 78], title: 'кот', val: 'спит · 4/10' },
+  { id: 'swal', box: [700, 26, 750, 72], at: [97, 3], align: 'r', title: 'ласточка', val: '42 км/ч' },
+  { id: 'wash', box: [292, 178, 404, 272], at: [16, 23], title: 'бельё', val: 'сохнет 61 %' },
+  { id: 'cloud', box: [380, 40, 690, 300], at: [3, 4], title: 'облако', val: 'функция: ?' },
+];
+function streetSetup(p, end) {
+  tag(p, 'melon', { box: [95, 404, 206, 496], at: [2, 40], title: 'арбуз', val: 'сладость <i class="mb"><i style="--v:.8"></i></i> 8/10' });
+  tag(p, 'hammer', { box: [795, 397, 903, 445], at: [57, 74], title: 'молоток', val: 'удобство 9/10' });
+  tag(p, 'blender', { box: [919, 303, 996, 443], at: [97, 33], align: 'r', title: 'блендер', val: '1200 Вт · 7/10' });
+  tag(p, 'person', { box: [466, 310, 531, 511], at: end ? [33, 6] : [54, 14], title: 'человек · оценка…', val: '<i class="mb"><i style="--v:.5"></i></i> ?', cls: end ? '' : '' });
+  for (const s of SECOND) tag(p, s.id, s);
+  const s = p.s, r = s.r;
+  s.glints = Array.from({ length: 34 }, () => ({ x: 345 + r() * 330, y: 352 + r() * 85, w: 4 + r() * 12, ph: r() * TAU, sp: .5 + r() * 1.6 }));
+  s.birds = []; s.nextBird = 4 + r() * 6;
+  s.nextSec = 5 + r() * 4; s.sec = null; s.secT = 0;
+  s.nextVal = 0; s.vi = 0; s.boot = end ? 99 : 0; s.scanY = -1;
+  s.end = end; s.T = 0;
+}
+function drawStreet(p, dt, t) {
+  const s = p.s, ctx = p.ctx, kx = p.w / IW, ky = p.h / IH;
+  ctx.save(); ctx.scale(kx, ky);
+  const T = s.end ? S.dusk : 0, day = 1 - T;
+  // море бликует: днём белым, на закате золотой дорожкой
+  for (const g of s.glints) {
+    const a = Math.pow(Math.max(0, Math.sin(t * g.sp + g.ph)), 3) * .75;
+    if (a < .03) continue;
+    const gx = T > .3 ? 560 + (g.x - 510) * .35 : g.x;
+    ctx.fillStyle = T > .3 ? rgba([255, 226, 160], a) : rgba([255, 255, 255], a * .9);
+    ctx.beginPath(); ctx.ellipse(gx + Math.sin(t * .4 + g.ph) * 3, g.y, g.w * (.5 + .5 * a), 1.2 / ky, 0, 0, TAU); ctx.fill();
+  }
+  // фонари загораются к вечеру
+  if (T > .05) {
+    const L = [[298, 337], [358, 418], [388, 462], [633, 432], [20, 238], [55, 252], [92, 262], [130, 268], [165, 270], [200, 268]];
+    for (const [x, y] of L) glow(ctx, x, y, 26, [255, 200, 120], T * (.45 + .12 * nz(t * 3 + x)));
+    glow(ctx, 590, 324, 70, [255, 210, 150], T * .3);
+  }
+  // ласточки иногда пролетают
+  s.nextBird -= dt;
+  if (s.nextBird < 0) { s.nextBird = 7 + s.r() * 9; s.birds.push({ x: -30, y: 60 + s.r() * 140, v: 130 + s.r() * 90, ph: s.r() * TAU, dy: (s.r() - .5) * 40 }); }
+  ctx.strokeStyle = 'rgba(40,46,60,.85)'; ctx.lineWidth = 2.2; ctx.lineCap = 'round';
+  for (let i = s.birds.length - 1; i >= 0; i--) {
+    const b = s.birds[i]; b.x += b.v * dt; b.y += Math.sin(t * 1.5 + b.ph) * 12 * dt + b.dy * dt;
+    if (b.x > IW + 40) { s.birds.splice(i, 1); continue; }
+    const f = Math.sin(t * 13 + b.ph) * 5;
+    ctx.beginPath(); ctx.moveTo(b.x - 10, b.y - 3 - f); ctx.quadraticCurveTo(b.x - 4, b.y - 1, b.x, b.y + 2); ctx.quadraticCurveTo(b.x + 4, b.y - 1, b.x + 10, b.y - 3 - f); ctx.stroke();
+  }
+  // загрузка очков: линия сканирования проходит сверху вниз
+  if (s.scanY >= 0) {
+    s.scanY += dt * 520;
+    const y = s.scanY;
+    const g = ctx.createLinearGradient(0, y - 40, 0, y);
+    g.addColorStop(0, 'rgba(143,240,220,0)'); g.addColorStop(1, 'rgba(143,240,220,.22)');
+    ctx.fillStyle = g; ctx.fillRect(0, y - 40, IW, 40);
+    ctx.fillStyle = 'rgba(190,255,240,.8)'; ctx.fillRect(0, y, IW, 1.5 / ky);
+    if (y > IH + 40) s.scanY = -1;
+  }
+  // человек на закате, когда «данные недоступны»: вместо рамки — тёплый свет
+  if (s.end && S.nodata) glow(ctx, 498, 400, 120, [255, 214, 150], .22 + .06 * Math.sin(t * 1.4));
+  ctx.restore();
+  // сценарий бирок
+  if (!s.end) {
+    if (s.boot < 99) {
+      const b0 = s.boot; s.boot += dt;
+      const at = x => b0 < x && s.boot >= x;
+      if (at(.5)) s.scanY = 0;
+      if (at(1.3)) setTag(p, 'melon', { on: true });
+      if (at(1.9)) setTag(p, 'hammer', { on: true });
+      if (at(2.5)) setTag(p, 'blender', { on: true });
+      if (at(3.3)) { setTag(p, 'person', { on: true }); s.boot = 99; }
+    }
+  } else {
+    const on = p.vis;
+    for (const id of ['melon', 'hammer', 'blender']) setTag(p, id, { on, cls: S.nodata ? 'dim' : '' });
+    setTag(p, 'person', { on });
+  }
+  // человек: очки не могут определиться и меняют цифру
+  const person = p.tags.get('person');
+  if (s.end && S.nodata) {
+    setTag(p, 'person', { title: 'человек', val: 'данные недоступны для оценки', cls: 'warm big', brk: false });
+  } else if (person.on) {
+    s.nextVal -= dt;
+    if (s.nextVal < 0) {
+      s.nextVal = .7 + s.r() * .6;
+      let v; do { v = pick(PERSON_VALS); } while (v === s.last); s.last = v;
+      setTag(p, 'person', { title: 'человек · оценка…', val: `<i class="mb"><i style="--v:${v[1]}"></i></i> ${v[0]}`, cls: v[1] < .35 ? 'warn' : '', brk: true });
+    }
+  }
+  // мелкие бирки сами появляются на котах, ласточке, белье
+  if (!(s.end && S.nodata) && (s.end || s.boot >= 99)) {
+    s.nextSec -= dt;
+    if (s.sec) { s.secT -= dt; if (s.secT < 0) { setTag(p, s.sec, { on: false }); s.sec = null; } }
+    if (s.nextSec < 0 && !s.sec) { s.sec = pick(SECOND).id; s.secT = 3.4; setTag(p, s.sec, { on: true }); s.nextSec = 5 + s.r() * 5; }
+  } else if (s.sec) { setTag(p, s.sec, { on: false }); s.sec = null; }
+}
+const heroEl = P('.hero-scene'), sceneEl = P('.scene.band');
+const hero = makePic(heroEl, { draw: drawStreet }); streetSetup(hero, false);
+const scene = sceneEl ? makePic(sceneEl, { draw: drawStreet }) : null; if (scene) streetSetup(scene, true);
+
+/* ---------- балетный класс: две картины, бирки меняются сами ----------
+   Первая (над «приговором»): очки сравнивают новичка с эталоном и выносят приговор всей личности.
+   Жираф: «бесполезен» и «брак» зачёркиваются — не та шкала.
+   Вторая (над четырьмя пунктами): приговор трескается и распадается на четыре разные бирки. */
+const lensA_el = P('.lens-A'), lensB_el = P('.lens-B'), cardZ = P('.card[data-life=zhiraf]');
+const pVerdictL = P('[data-lens=verdict]');
+let lensA = null, lensB = null, zhiraf = null, lensState = '';
+function balletMotes(p) { p.s.motes = Array.from({ length: 30 }, () => ({ x: 450 + p.s.r() * 500, y: 40 + p.s.r() * 500, ph: p.s.r() * TAU, z: .6 + p.s.r() })); p.s.sparks = []; }
+if (lensA_el) {
+  const L = lensA = makePic(lensA_el, { draw: drawLens });
+  tag(L, 'scan', { box: [195, 125, 562, 606], at: [58, 7], title: 'новичок', val: 'сравниваю… 0 %' });
+  tag(L, 'teacher', { box: [803, 208, 954, 407], at: [97, 63], align: 'r', title: 'эталон', val: 'плие 10/10' });
+  tag(L, 'verdict', { box: [195, 125, 562, 606], at: [57, 30], title: 'вся личность', val: '1 / 10 · ничтожество', cls: 'warn big' });
+  balletMotes(L); L.s.pct = 0; L.s.mode = 'scan';
+}
+if (lensB_el) {
+  const L = lensB = makePic(lensB_el, { draw: drawLens });
+  tag(L, 'teacher', { box: [803, 208, 954, 407], at: [97, 63], align: 'r', title: 'эталон', val: 'плие 10/10', cls: 'dim' });
+  tag(L, 'verdict', { box: [195, 125, 562, 606], at: [57, 30], title: 'вся личность', val: '1 / 10 · ничтожество', cls: 'warn big' });
+  tag(L, 'b1', { box: [266, 543, 430, 608], at: [45, 78], title: 'эффективность навыка', val: '…', cls: 'dim' });
+  tag(L, 'b2', { box: [425, 228, 562, 305], at: [57, 18], title: 'ценность навыка', val: '…', cls: 'dim' });
+  tag(L, 'b3', { box: [195, 125, 562, 606], at: [2, 15], title: 'ценность личности', val: '…', cls: 'dim', line: false });
+  tag(L, 'b4', { box: [296, 122, 382, 218], at: [98, 42], align: 'r', title: 'смелость поступка', val: '…', cls: 'dim' });
+  balletMotes(L); L.s.mode = 'split'; L.s.step = -1;
+}
+if (cardZ) {
+  const Z = zhiraf = makePic($('.card-pic', cardZ), { draw: drawZhiraf });
+  tag(Z, 'giraffe', { box: [150, 22, 712, 545], at: [57, 6], title: 'жираф', val: 'в аквариум не помещается', cls: 'warn' });
+  tag(Z, 'fish', { box: [664, 290, 818, 408], at: [97, 66], align: 'r', title: 'аквариум', val: '20 л' });
+  tag(Z, 'shoes', { box: [668, 540, 752, 600], at: [3, 78], title: 'детская обувь', val: 'на взрослую ногу не налезает', cls: 'warn' });
+  Z.s.motes = Array.from({ length: 26 }, () => ({ x: 300 + Z.s.r() * 600, y: 40 + Z.s.r() * 480, ph: Z.s.r() * TAU }));
+}
+const B_FILL = {
+  b1: ['1 / 10 · театру 0', ''],
+  b2: ['театру 0 · мне — целое состояние <i class="over"></i>', ''],
+  b3: ['вне шкалы <i class="over"></i>', 'warm big'],
+  b4: ['запредельна <i class="over"></i>', 'warm'],
+};
+function lensUpdate(dt) {
+  lensState = '';
+  if (lensA && lensA.vis && lensA.seenAt) {
+    const L = lensA, s = L.s;
+    const mode = pVerdictL && top(pVerdictL) < .62 ? 'verdict' : 'scan';
+    if (mode !== s.mode || !s.started) {
+      s.mode = mode; s.started = 1;
+      setTag(L, 'scan', { on: mode === 'scan' });
+      setTag(L, 'teacher', { on: true });
+      setTag(L, 'verdict', { on: mode === 'verdict' });
+      if (mode === 'verdict') setTag(L, 'verdict', { glitch: true });
+      $('.lens-mode', L.el).textContent = mode === 'verdict' ? 'приговор' : 'сканирую';
+      L.el.classList.toggle('warn', mode === 'verdict');
+    }
+    if (mode === 'scan') { s.pct = Math.min(100, s.pct + dt * 28); setTag(L, 'scan', { val: s.pct < 100 ? `сравниваю… ${Math.round(s.pct)} %` : 'сравнение готово' }); }
+    lensState = mode;
+  }
+  if (zhiraf && zhiraf.vis && zhiraf.seenAt) {
+    const Z = zhiraf, e = clock - Z.seenAt;
+    if (e > .5) setTag(Z, 'giraffe', { on: true });
+    if (e > 1.1) setTag(Z, 'fish', { on: true });
+    if (e > 1.7) setTag(Z, 'shoes', { on: true });
+    if (e > 3.6 && !Z.s.struck) {
+      Z.s.struck = 1;
+      setTag(Z, 'giraffe', { val: '<s>бесполезен</s> · <span class="err">не та шкала</span>', glitch: true });
+      setTag(Z, 'shoes', { val: '<s>брак</s> · <span class="err">не та нога</span>', glitch: true });
+    }
+    lensState = 'giraffe';
+  }
+  if (lensB && lensB.vis && lensB.seenAt) {
+    const L = lensB, s = L.s, e = clock - L.seenAt;
+    // приговор трескается и распадается на четыре бирки, потом бирки по очереди заполняются
+    const step = e < .5 ? 0 : e < 1.7 ? 1 : e < 2.6 ? 2 : Math.min(6, 3 + Math.floor((e - 2.6) / 1.5));
+    if (step !== s.step) {
+      const prev = s.step; s.step = step;
+      setTag(L, 'teacher', { on: step >= 1 });
+      setTag(L, 'verdict', { on: step === 1 || step === 2 });
+      if (step === 2) setTag(L, 'verdict', { glitch: true, val: '<s>1 / 10 · ничтожество</s>' });
+      ['b1', 'b2', 'b3', 'b4'].forEach((id, i) => {
+        const filled = step >= 3 + i;
+        setTag(L, id, { on: step >= 2, val: filled ? B_FILL[id][0] : '…', cls: filled ? B_FILL[id][1] : 'dim', brk: id !== 'b3' || !filled });
+      });
+      if (step === 6 && prev < 6) for (let i = 0; i < 26; i++) s.sparks.push({ x: 340, y: 170, vx: (s.r() - .3) * 260, vy: -60 - s.r() * 180, age: 0, life: 1.2 + s.r() });
+      $('.lens-mode', L.el).textContent = step < 3 ? 'разделяю' : 'различаю';
+      L.el.classList.toggle('warm', step >= 5);
+      s.mode = step >= 5 ? 'b3' : 'split';
+    }
+    lensState = 'b' + step;
+  }
+}
+function drawZhiraf(p, dt, t) {
+  const s = p.s, ctx = p.ctx, kx = p.w / IW;
+  ctx.save(); ctx.scale(kx, p.h / IH);
+  for (const m of s.motes) {
+    m.x += (4 + nz(t * .3 + m.ph) * 6) * dt; m.y += (nz(t * .2 + m.ph) * 5 - 2) * dt;
+    if (m.x > IW) m.x = 280; if (m.y < 20) m.y = 520;
+    ctx.fillStyle = `rgba(255,248,225,${.4 * (.4 + .6 * Math.max(0, Math.sin(t + m.ph)))})`; ctx.beginPath(); ctx.arc(m.x, m.y, 1.5 / kx, 0, TAU); ctx.fill();
+  }
+  // рыбка в аквариуме поблёскивает
+  glow(ctx, 742, 360, 26, [255, 190, 110], .18 + .12 * Math.sin(t * 2.3));
+  ctx.restore();
+}
+function drawLens(p, dt, t) {
+  const s = p.s, ctx = p.ctx, kx = p.w / IW, ky = p.h / IH;
+  ctx.save(); ctx.scale(kx, ky);
+  for (const m of s.motes) {
+    m.x += (6 + nz(t * .3 + m.ph) * 8) * dt; m.y += (nz(t * .25 + m.ph * 2) * 6 - 3) * dt;
+    if (m.x > IW) m.x = 420; if (m.y < 20) m.y = 560;
+    const a = .35 * (.4 + .6 * Math.pow(Math.max(0, Math.sin(t * .9 + m.ph)), 2));
+    ctx.fillStyle = `rgba(255,246,220,${a})`; ctx.beginPath(); ctx.arc(m.x, m.y, 1.6 * m.z / kx, 0, TAU); ctx.fill();
+  }
+  if (s.mode === 'scan' || s.mode === 'verdict') {
+    const v = s.mode === 'verdict', a = v ? .8 : .5 + .3 * Math.sin(t * 3);
+    ctx.strokeStyle = v ? `rgba(255,140,125,${a})` : `rgba(143,240,220,${a})`;
+    ctx.lineWidth = 1.5 / kx; ctx.setLineDash([6 / kx, 6 / kx]); ctx.lineDashOffset = -t * 30 / kx;
+    ctx.beginPath(); ctx.moveTo(470, 330); ctx.quadraticCurveTo(680, 250, 860, 300); ctx.stroke(); ctx.setLineDash([]);
+    if (!v) { const y = 125 + ((t * 160) % 480); ctx.fillStyle = 'rgba(160,255,235,.5)'; ctx.fillRect(195, y, 367, 1.5 / ky); }
+    else { ctx.fillStyle = 'rgba(40,70,110,.16)'; ctx.fillRect(0, 0, IW, IH); }
+  }
+  const warmN = s.mode === 'b3' ? 1 : 0;
+  s.wg = (s.wg || 0) + (warmN - (s.wg || 0)) * Math.min(1, dt * 1.5);
+  if (s.wg > .01) glow(ctx, 380, 360, 300, [255, 214, 150], .22 * s.wg * (.85 + .15 * Math.sin(t * 1.3)));
+  for (let i = s.sparks.length - 1; i >= 0; i--) {
+    const e = s.sparks[i]; e.age += dt; e.vy += 140 * dt; e.x += e.vx * dt; e.y += e.vy * dt;
+    if (e.age > e.life) { s.sparks.splice(i, 1); continue; }
+    glow(ctx, e.x, e.y, 10, [255, 220, 150], .8 * (1 - e.age / e.life));
+  }
+  ctx.restore();
+}
+
+/* ---------- объект и предмет ---------- */
+const duo = P('.duo'), pMelon = P('.x-melon'), pBreaks = P('.x-breaks');
+let duoT = 0;
+function duoUpdate(dt) {
+  if (!duo) return;
+  const m = pMelon ? mid(pMelon) : 9;
+  const want = m < .85 && m > -.6;
+  if (want) duoT += dt; else if (m > 1.2) duoT = 0;
+  duo.classList.toggle('s1', duoT > .2);
+  duo.classList.toggle('s2', duoT > 1.6);
+  const b = pBreaks ? top(pBreaks) : 9;
+  duo.classList.toggle('s3', duoT > 1.6 && b < .7);
+  if (pBreaks) pBreaks.classList.toggle('hit', b < .62 && b > -.5);
+  const q = $('.duo-me .q', duo);
+  if (q && duoT > 1.6) { duo._n = (duo._n || 0) - dt; if (duo._n < 0) { duo._n = .5; q.textContent = pick(['?/10', '3/10', '9/10', '1/10', 'ERR', '6/10']); } }
+}
+
+/* ---------- кухня: блендер, молоток, весы и синий цвет ---------- */
+const cardK = P('.card[data-life=kuhnya]'), pCat = P('.x-cat');
+let kitchen = null;
+if (cardK) {
+  kitchen = makePic($('.card-pic', cardK), { draw: drawKitchen });
+  const k = kitchen;
+  tag(k, 'blender', { box: [86, 260, 244, 563], at: [3, 3], title: 'блендер', val: 'скорость 8 · шум 4 · помол 9' });
+  tag(k, 'hammer', { box: [336, 489, 572, 600], at: [33, 57], title: 'молоток', val: 'хват 9 · удар 8 · служит 20 лет' });
+  tag(k, 'scale', { box: [756, 343, 970, 594], at: [97, 4], align: 'r', title: 'весы', val: '0 г' });
+  k.s.beam = 0; k.s.motes = Array.from({ length: 26 }, () => ({ x: 420 + k.s.r() * 360, y: 120 + k.s.r() * 300, ph: k.s.r() * TAU }));
+  k.s.dap = Array.from({ length: 12 }, () => ({ x: 120 + k.s.r() * 760, y: 470 + k.s.r() * 150, r: 20 + k.s.r() * 40, ph: k.s.r() * TAU }));
+  k.s.blue = [];
+}
+function kitchenUpdate(dt) {
+  if (!kitchen) return;
+  const k = kitchen, s = k.s;
+  if (k.vis && k.seenAt) {
+    const e = clock - k.seenAt;
+    if (e > .6) setTag(k, 'blender', { on: true });
+    if (e > 1.3) setTag(k, 'hammer', { on: true });
+    if (e > 2) setTag(k, 'scale', { on: true });
+  }
+  const catOn = pCat && pCat.classList.contains('on') && k.vis;
+  if (catOn && !s.catAt) s.catAt = clock;
+  if (s.catAt) {
+    const e = clock - s.catAt;
+    s.beam = clamp(e / 1.5);
+    if (e > 1.6 && !s.v1) { s.v1 = 1; setTag(k, 'scale', { val: 'синий цвет: … г' }); }
+    if (e > 3.4 && !s.v2) { s.v2 = 1; setTag(k, 'scale', { val: 'синий цвет: — г · <span class="err">ошибка категорий</span>', cls: 'warn', glitch: true }); }
+  }
+}
+function drawKitchen(p, dt, t) {
+  const s = p.s, ctx = p.ctx, kx = p.w / IW, ky = p.h / IH;
+  ctx.save(); ctx.scale(kx, ky);
+  // солнечные пятна на столе дышат от листвы
+  for (const d of s.dap) glow(ctx, d.x + Math.sin(t * .5 + d.ph) * 8, d.y, d.r, [255, 236, 190], .1 + .08 * Math.sin(t * .8 + d.ph));
+  for (const m of s.motes) {
+    m.x += (5 + nz(t * .3 + m.ph) * 6) * dt; m.y += nz(t * .2 + m.ph) * 5 * dt;
+    if (m.x > 820) m.x = 400;
+    ctx.fillStyle = `rgba(255,248,225,${.4 * (.4 + .6 * Math.max(0, Math.sin(t + m.ph)))})`; ctx.beginPath(); ctx.arc(m.x, m.y, 1.5 / kx, 0, TAU); ctx.fill();
+  }
+  // синий цвет из окна льётся в чашу весов — и проходит насквозь
+  if (s.beam > 0) {
+    const x0 = 590, y0 = 120, x1 = 862, y1 = 368;
+    ctx.strokeStyle = `rgba(143,240,220,${.6 * s.beam})`; ctx.lineWidth = 1.5 / kx; ctx.setLineDash([5 / kx, 5 / kx]); ctx.lineDashOffset = -t * 40 / kx;
+    ctx.beginPath(); ctx.moveTo(x0, y0); ctx.quadraticCurveTo(760, 160, lerp(x0, x1, s.beam), lerp(y0, y1, s.beam)); ctx.stroke(); ctx.setLineDash([]);
+    if (s.beam >= 1 && s.blue.length < 40 && rnd() < dt * 18) s.blue.push({ q: 0, sd: rnd() * 10, v: .25 + rnd() * .2 });
+    for (let i = s.blue.length - 1; i >= 0; i--) {
+      const b = s.blue[i]; b.q += b.v * dt;
+      if (b.q > 1.4) { s.blue.splice(i, 1); continue; }
+      const q = Math.min(1, b.q);
+      const bx = (1 - q) * (1 - q) * x0 + 2 * (1 - q) * q * 760 + q * q * x1 + Math.sin(b.sd + t) * 6;
+      const by = (1 - q) * (1 - q) * y0 + 2 * (1 - q) * q * 160 + q * q * y1 + (b.q > 1 ? (b.q - 1) * 220 : 0);
+      const a = b.q > 1 ? (1.4 - b.q) * 2 : .8;
+      glow(ctx, bx, by, 9, [90, 150, 235], a * .7);
+    }
+  }
+  ctx.restore();
+}
+
+/* ---------- колыбель: КПД ноль, ценность бесконечна ---------- */
+const cardM = P('.card[data-life=mladenec]');
+let cradle = null;
+if (cardM) {
+  cradle = makePic($('.card-pic', cardM), { draw: drawCradle });
+  const c = cradle;
+  tag(c, 'kpd', { box: [440, 316, 570, 395], at: [3, 4], title: 'производительность', val: 'КПД 0 % · продукт 0 · налоги 0' });
+  tag(c, 'love', { box: [796, 333, 940, 390], at: [97, 62], align: 'r', title: 'для родителей', val: 'ценность ∞', cls: 'warm big' });
+  c.s.grid = 0; c.s.motes = Array.from({ length: 24 }, () => ({ x: 120 + c.s.r() * 700, y: 60 + c.s.r() * 420, ph: c.s.r() * TAU }));
+}
+function cradleUpdate(dt) {
+  if (!cradle || !cradle.seenAt) return;
+  const c = cradle, e = clock - c.seenAt;
+  if (e > .7) setTag(c, 'kpd', { on: true });
+  c.s.gridT = e > 2.2 && e < 5.2 ? 1 : 0;
+  if (e > 4.6) { setTag(c, 'love', { on: true }); setTag(c, 'kpd', { cls: 'dim' }); }
+}
+function drawCradle(p, dt, t) {
+  const s = p.s, ctx = p.ctx, kx = p.w / IW, ky = p.h / IH;
+  s.grid += ((s.gridT || 0) - s.grid) * Math.min(1, dt * 2);
+  ctx.save(); ctx.scale(kx, ky);
+  // ребёнок дышит: мягкий свет поднимается и опускается
+  glow(ctx, 505, 355, 90, [255, 236, 200], .12 + .08 * Math.sin(t * TAU / 3.2));
+  for (const m of s.motes) {
+    m.y -= 4 * dt; m.x += nz(t * .2 + m.ph) * 5 * dt; if (m.y < 40) m.y = 480;
+    ctx.fillStyle = `rgba(255,248,225,${.35 * (.4 + .6 * Math.max(0, Math.sin(t * .8 + m.ph)))})`; ctx.beginPath(); ctx.arc(m.x, m.y, 1.5 / kx, 0, TAU); ctx.fill();
+  }
+  // бухгалтерская таблица ложится на комнату и рассыпается
+  if (s.grid > .01) {
+    ctx.strokeStyle = `rgba(143,240,220,${.35 * s.grid})`; ctx.lineWidth = 1 / kx;
+    ctx.beginPath();
+    for (let x = 0; x <= IW; x += 128) { ctx.moveTo(x, 0); ctx.lineTo(x, IH); }
+    for (let y = 0; y <= IH; y += 57) { ctx.moveTo(0, y); ctx.lineTo(IW, y); }
+    ctx.stroke();
+    ctx.fillStyle = `rgba(180,250,235,${.55 * s.grid})`; ctx.font = `${11 / kx}px Golos Text, sans-serif`;
+    for (let i = 0; i < 18; i++) { const cx = (i * 3 % 8) * 128 + 8, cy = (i * 5 % 12) * 57 + 20; ctx.fillText(['0', '0,00', '—', '0 %', '0'][i % 5], cx, cy); }
+  }
+  ctx.restore();
+}
+
+/* ---------- недописанная книга: снимок ветра не получается ---------- */
+const cardB = P('.card[data-life=kniga]');
+let book = null;
+if (cardB) {
+  book = makePic($('.card-pic', cardB), { draw: drawBook });
+  const b = book;
+  tag(b, 'review', { box: [283, 487, 523, 590], at: [3, 60], title: 'рецензия', val: '★★☆☆☆ · по трём главам' });
+  tag(b, 'glass', { box: [744, 458, 820, 557], at: [97, 60], align: 'r', title: 'стакан', val: 'река внутри: 0 %' });
+  tag(b, 'wind', { box: [330, 150, 1000, 420], at: [3, 4], title: 'снимок ветра', val: 'наведение…', line: false });
+  b.s.pages = Array.from({ length: 7 }, () => ({ x: b.s.r() * IW, y: 200 + b.s.r() * 300, v: 60 + b.s.r() * 80, rot: b.s.r() * TAU, vr: (b.s.r() - .5) * 3, ph: b.s.r() * TAU, s: .6 + b.s.r() * .6 }));
+  b.s.flash = 0;
+}
+function bookUpdate(dt) {
+  if (!book || !book.seenAt) return;
+  const b = book, e = clock - b.seenAt, s = b.s;
+  if (e > .6) setTag(b, 'review', { on: true });
+  if (e > 1.6) setTag(b, 'wind', { on: true });
+  if (e > 3.2 && !s.shot) { s.shot = 1; s.flash = 1; setTag(b, 'wind', { val: 'снимок смазан · объект движется', cls: 'warn', glitch: true }); setTag(b, 'review', { val: '<s>★★☆☆☆</s> · книга не дописана', cls: 'dim' }); }
+  if (e > 4.6) setTag(b, 'glass', { on: true });
+}
+function drawBook(p, dt, t) {
+  const s = p.s, ctx = p.ctx, kx = p.w / IW, ky = p.h / IH;
+  ctx.save(); ctx.scale(kx, ky);
+  // листы летят по ветру
+  for (const g of s.pages) {
+    g.x += g.v * dt; g.y += (Math.sin(t * 1.3 + g.ph) * 30 - 18) * dt; g.rot += g.vr * dt;
+    if (g.x > IW + 40 || g.y < -40) { g.x = -40; g.y = 260 + s.r() * 260; }
+    ctx.save(); ctx.translate(g.x, g.y); ctx.rotate(g.rot); ctx.scale(g.s, g.s * (.4 + .6 * Math.abs(Math.sin(t * 2 + g.ph))));
+    ctx.fillStyle = 'rgba(252,250,242,.9)'; ctx.fillRect(-14, -10, 28, 20); ctx.restore();
+  }
+  // река блестит
+  for (let i = 0; i < 14; i++) { const x = 640 + i * 22 + Math.sin(t + i) * 6, y = 300 + i * 7; const a = Math.pow(Math.max(0, Math.sin(t * 1.4 + i * 1.7)), 3) * .7; if (a > .03) { ctx.fillStyle = `rgba(255,255,255,${a})`; ctx.fillRect(x, y, 10, 1.4 / ky); } }
+  // вспышка снимка
+  if (s.flash > 0) { s.flash = Math.max(0, s.flash - dt * 1.8); ctx.fillStyle = `rgba(255,255,255,${s.flash * .8})`; ctx.fillRect(0, 0, IW, IH); }
+  ctx.restore();
+}
+
+for (const p of pics) { ro.observe(p.cv); vio.observe(p.el); sizePic(p); }
+
+/* =====================================================================
+   Сама страница: солнечный воздух, тени облаков, ласточки, «очки» по краям экрана
+   ===================================================================== */
+const sky = { sun: $('#sky .t-sun'), cold: $('#sky .t-cold'), dusk: $('#sky .t-dusk') };
+const vig = $('#vig'), pool = $('#pool'), hud = $('#hud'), chip = $('#chip'), chipTx = $('.tx', chip), scanEl = $('#scan'), rulerI = $('#ruler i');
+const frame = $('#frame'), frameB = $('b', frame), priceEl = $('#price'), priceV = $('.pv', priceEl);
+const ac = $('#air'), ax = ac.getContext('2d');
+let adpr = 1;
+function sizeAir() { adpr = Math.min(devicePixelRatio || 1, 2); ac.width = Math.round(vw * adpr); ac.height = Math.round(vh * adpr); }
+function sprite(rgb, core, n, soft) {
+  const c = D.createElement('canvas'); c.width = c.height = n;
+  const g = c.getContext('2d'), gr = g.createRadialGradient(n / 2, n / 2, 0, n / 2, n / 2, n / 2);
+  if (soft) { gr.addColorStop(0, `rgba(${rgb},.5)`); gr.addColorStop(.6, `rgba(${rgb},.18)`); gr.addColorStop(1, `rgba(${rgb},0)`); }
+  else { gr.addColorStop(0, `rgba(${core},1)`); gr.addColorStop(.2, `rgba(${core},.85)`); gr.addColorStop(.45, `rgba(${rgb},.3)`); gr.addColorStop(1, `rgba(${rgb},0)`); }
+  g.fillStyle = gr; g.fillRect(0, 0, n, n); return c;
+}
+let moteImg, shadeImg, arCol = '44,127,128', warnCol = '192,72,58';
+function makeSprites() {
+  const cs = getComputedStyle(R), v = n => cs.getPropertyValue(n).trim();
+  moteImg = sprite(v('--mote'), v('--mote-core'), 32, false);
+  shadeImg = sprite(v('--shade'), null, 128, true);
+  arCol = v('--ar'); warnCol = v('--ar-warn');
+}
+sizeAir(); makeSprites();
+W.matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', makeSprites);
+
+const motes = Array.from({ length: vw < 700 ? 18 : 30 }, () => ({ x: rnd() * vw, y: rnd() * vh, z: .5 + rnd() * .9, ph: rnd() * TAU, sd: rnd() * 80 }));
+const shades = Array.from({ length: 3 }, (_, i) => ({ x: rnd() * vw, y: rnd() * vh, r: (vw < 700 ? 260 : 420) * (.8 + rnd() * .5), sd: rnd() * 40, v: 6 + rnd() * 6 }));
+const birds = []; let nextBird = 9 + rnd() * 8;
+const bids = []; let bidAcc = 0;
+const notes = [];
+let scanT = 7, scanY = -1;
+const BIDS = ['10/10', '9/10', '8,5', '7/10', '9,5', '2/10', '6/10', '10/10', '4/10', '★★★', '−3', '+1'];
+
+function drawAir(dt, t, shift) {
+  const dark = isDark();
+  // тени облаков медленно идут по бумаге
+  for (const c of shades) {
+    c.x += c.v * dt; c.y -= shift * .04;
+    if (c.x - c.r > vw) { c.x = -c.r; c.y = rnd() * vh; }
+    if (c.y < -c.r) c.y += vh + 2 * c.r; if (c.y > vh + c.r) c.y -= vh + 2 * c.r;
+    ax.globalAlpha = (dark ? .25 : .12) * (1 - S.dusk * .6);
+    ax.drawImage(shadeImg, c.x - c.r, c.y - c.r * .6, c.r * 2, c.r * 1.2);
+  }
+  // пыльца и пылинки в солнце
+  for (const p of motes) {
+    p.x += (7 * p.z + nz(t * .4 + p.sd) * 6) * dt; p.y += (nz(t * .3 + p.sd * 2) * 5 - 2) * dt - shift * .12 * p.z;
+    if (p.x > vw + 10) p.x = -10; if (p.y < -10) p.y = vh + 10; if (p.y > vh + 10) p.y = -10;
+    const a = (.3 + .5 * Math.pow(Math.max(0, Math.sin(t * .9 + p.ph)), 3)) * (dark ? .8 : 1);
+    if (a < .03) continue;
+    const sz = 7 * p.z; ax.globalAlpha = a; ax.drawImage(moteImg, p.x - sz / 2, p.y - sz / 2, sz, sz);
+  }
+  ax.globalAlpha = 1;
+  // ласточка иногда пересекает страницу
+  nextBird -= dt;
+  if (nextBird < 0 && !RM) { nextBird = 22 + rnd() * 20; birds.push({ x: -30, y: vh * (.1 + rnd() * .4), v: 260 + rnd() * 140, ph: rnd() * TAU, dy: (rnd() - .5) * 80, tagT: 0 }); }
+  for (let i = birds.length - 1; i >= 0; i--) {
+    const b = birds[i]; b.x += b.v * dt; b.y += Math.sin(t * 2 + b.ph) * 30 * dt + b.dy * dt - shift * .3;
+    if (b.x > vw + 40) { birds.splice(i, 1); continue; }
+    const f = Math.sin(t * 14 + b.ph) * 4;
+    ax.strokeStyle = dark ? 'rgba(220,226,240,.6)' : 'rgba(50,56,70,.55)'; ax.lineWidth = 1.8; ax.lineCap = 'round';
+    ax.beginPath(); ax.moveTo(b.x - 9, b.y - 3 - f); ax.quadraticCurveTo(b.x - 3, b.y - 1, b.x, b.y + 2); ax.quadraticCurveTo(b.x + 3, b.y - 1, b.x + 9, b.y - 3 - f); ax.stroke();
+    // очки и на неё вешают бирку — пока она не улетит
+    if (S.hud > .4 && b.x > vw * .2 && b.x < vw * .8) {
+      ax.strokeStyle = `rgba(${arCol},.6)`; ax.lineWidth = 1; ax.strokeRect(b.x - 14, b.y - 12, 28, 20);
+      ax.fillStyle = `rgba(${arCol},.8)`; ax.font = '500 9px Golos Text, sans-serif'; ax.fillText('ласточка · ?', b.x + 16, b.y - 12);
+    }
+  }
+  // вечный аукцион: снизу всплывают ставки
+  if (S.auction > .05 && !RM) {
+    bidAcc += dt * (1 + 5 * S.aprog) * S.auction;
+    while (bidAcc > 1 && bids.length < 40) { bidAcc--; bids.push({ x: 20 + rnd() * (vw - 80), y: vh + 10, vy: -(30 + rnd() * 50), age: 0, life: 6 + rnd() * 4, s: pick(BIDS), sd: rnd() * 30, vx: 0 }); }
+  }
+  ax.font = '600 11px Golos Text, sans-serif';
+  for (let i = bids.length - 1; i >= 0; i--) {
+    const e = bids[i]; e.age += dt;
+    if (S.bidsFall > 0) { e.vy += 260 * dt; e.vx += (e.x < vw / 2 ? -40 : 40) * dt; }
+    e.y += e.vy * dt - shift * .4; e.x += (nz(t * .5 + e.sd) * 8 + e.vx) * dt;
+    if (e.age > e.life || e.y < -30 || e.y > vh + 40) { bids.splice(i, 1); continue; }
+    const q = e.age / e.life, a = sstep(0, .08, q) * (1 - sstep(.7, 1, q)) * .8;
+    const low = /^[2-4]\/|−/.test(e.s), col = low ? warnCol : arCol;
+    const w = ax.measureText(e.s).width + 12;
+    ax.globalAlpha = a; ax.strokeStyle = `rgb(${col})`; ax.lineWidth = 1; ax.strokeRect(e.x, e.y, w, 17);
+    ax.fillStyle = `rgb(${col})`; ax.fillText(e.s, e.x + 6, e.y + 12.5);
+  }
+  ax.globalAlpha = 1;
+  // ноты мимо нот
+  for (let i = notes.length - 1; i >= 0; i--) {
+    const n = notes[i]; n.age += dt; n.x += n.vx * dt; n.y += n.vy * dt - shift; n.vy -= 4 * dt;
+    if (n.age > n.life) { notes.splice(i, 1); continue; }
+    const q = n.age / n.life;
+    ax.globalAlpha = Math.sin(q * Math.PI) * .8; ax.fillStyle = getComputedStyle(R).getPropertyValue('--warm');
+    ax.save(); ax.translate(n.x, n.y); ax.rotate(Math.sin(n.age * 3 + n.sd) * .5); ax.font = '18px Lora, serif'; ax.fillText(n.c, 0, 0); ax.restore();
+  }
+  ax.globalAlpha = 1;
+}
+
+/* ---------- рамка оценки вокруг читаемого абзаца ---------- */
+const paras = $$('main [data-p]');
+const FRAME_LABEL = { 'x-off': 'оценка · выключить: нельзя', 'x-craft': 'текст · можно переписать', 'x-skills': 'навыки · шкала 0–10', 'x-first': 'слово · «самооценка»?' };
+function readingPara() {
+  let best = null, bd = 1e9;
+  const line = .45;
+  for (const p of paras) {
+    const r = p.getBoundingClientRect();
+    if (r.bottom < vh * .12 || r.top > vh * .88) continue;
+    const d = Math.abs((r.top + r.bottom) / 2 - vh * line);
+    if (d < bd) { bd = d; best = p; }
+  }
+  return best;
+}
+const F = { x: 0, y: 0, w: 0, h: 0, a: 0, p: null, at: 0, init: false };
+let poolY = vh * .45, poolV = 0;
+function updateFrame(dt, now) {
+  if (now - F.at > 200) {
+    F.at = now;
+    const p = readingPara();
+    if (p !== F.p) {
+      F.p = p;
+      let lab = '';
+      if (p) for (const k in FRAME_LABEL) if (p.classList.contains(k)) lab = FRAME_LABEL[k];
+      frameB.textContent = lab; frameB.classList.toggle('on', !!lab);
+    }
+  }
+  const still = now - lastScroll > 900;
+  let tx = F.x, ty = F.y, tw = F.w, th = F.h, ta = 0;
+  if (F.p) {
+    const r = F.p.getBoundingClientRect();
+    tx = r.left - 10; ty = r.top - 8; tw = r.width + 20; th = r.height + 14;
+    ta = (still ? .75 : .35) * S.hud;
+    if (!F.init) { F.x = tx; F.y = ty; F.w = tw; F.h = th; F.init = true; }
+  }
+  const k = RM ? 1 : Math.min(1, dt * 7);
+  F.x += (tx - F.x) * k; F.y += (ty - F.y) * k; F.w += (tw - F.w) * k; F.h += (th - F.h) * k; F.a += (ta - F.a) * Math.min(1, dt * 3);
+  frame.style.transform = `translate3d(${F.x.toFixed(1)}px,${F.y.toFixed(1)}px,0)`;
+  frame.style.width = F.w.toFixed(1) + 'px'; frame.style.height = F.h.toFixed(1) + 'px';
+  frame.style.opacity = F.a.toFixed(3);
+  frame.classList.toggle('warn', S.cold > .5);
+  frame.classList.toggle('warm', S.nodata);
+  // солнечный свет следует за читаемым абзацем
+  const target = F.p ? clamp(F.y + F.h / 2, vh * .2, vh * .75) : vh * .45;
+  if (RM) poolY = target; else { poolV += ((target - poolY) * 4 - poolV * 3.6) * dt; poolY += poolV * dt; }
+  pool.style.transform = `translate3d(0,${(poolY - vh * .45).toFixed(1)}px,0)`;
+  pool.style.opacity = ((still ? .75 : .45) * (1 - .5 * S.cold)).toFixed(3);
+}
+
+/* ---------- живые слова ---------- */
+const pTyres = P('.x-tyres'), tyre = $('.k-tyre');
+let gauge = null, gT = 0;
+if (tyre) { gauge = D.createElement('span'); gauge.className = 'gauge'; gauge.setAttribute('aria-hidden', 'true'); gauge.textContent = '2,2 бар'; tyre.append(gauge); }
+function tyreUpdate(dt) {
+  if (!gauge || !pTyres.classList.contains('on')) return;
+  gT = (gT + dt) % 7;
+  let v; if (gT < 3.6) v = 2.2 - gT / 3.6 * .9; else if (gT < 4.6) v = 1.3; else v = 1.3 + (gT - 4.6) / 2.4 * 1.1;
+  const txt = gT >= 3.6 && gT < 4.6 ? 'подкачать!' : v.toFixed(1).replace('.', ',') + ' бар';
+  if (gauge.textContent !== txt) gauge.textContent = txt;
+  gauge.classList.toggle('low', v < 1.6);
+}
+// пометки у пунктов списков
+const CHIPS = { verb: ['действие <i class="tick run"></i>', ''], noun: ['предмет', 'w'], eff: ['шкала 0–10 <i class="tick"></i>', ''], val: ['важно мне', 'w'], skill: ['шкала 0–10 <i class="tick"></i>', ''], whole: ['шкала: ?', 'nd'] };
+for (const [k, [h, c]] of Object.entries(CHIPS)) { const p = P('.li-' + k); if (!p) continue; const s = D.createElement('span'); s.className = 'chipx' + (c ? ' ' + c : ''); s.setAttribute('aria-hidden', 'true'); s.innerHTML = h; p.append(s); }
+const ask = $('.k-ask'); if (ask) { const c = D.createElement('i'); c.className = 'caret'; c.setAttribute('aria-hidden', 'true'); ask.append(c); }
+// имена: какая у них «функция»?
+const fns = $$('.k-fn').map((el, i) => { const q = D.createElement('span'); q.className = 'fq'; q.setAttribute('aria-hidden', 'true'); q.textContent = 'функция: ?'; el.append(q); return { q, i }; });
+let fnAt = 0;
+function fnUpdate() {
+  if (!fns.length || !pCat) return;
+  if (pCat.classList.contains('on')) { if (!fnAt) fnAt = clock; } else if (mid(pCat) > 1.1) { fnAt = 0; fns.forEach(f => f.q.className = 'fq'); return; }
+  if (!fnAt) return;
+  const e = clock - fnAt;
+  fns.forEach(f => { const a = 1.2 + f.i * .5; f.q.className = 'fq' + (e > a && e < a + 3.4 ? ' on' : e >= a + 3.4 ? ' off' : ''); });
+}
+// мимо нот
+const notesWord = $('.k-notes'); let noteT = 0;
+function notesUpdate(dt) {
+  if (!notesWord || RM || !notesWord.closest('.on')) return;
+  noteT -= dt;
+  if (noteT < 0) {
+    noteT = 1.6 + rnd() * 1.4;
+    const r = notesWord.getBoundingClientRect();
+    if (r.top > 0 && r.bottom < vh) notes.push({ x: r.left + rnd() * r.width, y: r.top, vx: (rnd() - .5) * 20, vy: -18 - rnd() * 14, age: 0, life: 3.4, sd: rnd() * 9, c: pick(['♪', '♫', '♩']) });
+  }
+}
+// дела ремесла сами отмечаются
+const todos = $$('.k-todo'); todos.forEach(t => { const b = D.createElement('i'); b.className = 'cb'; b.setAttribute('aria-hidden', 'true'); t.prepend(b); });
+const pCraft = P('.x-craft'); let craftAt = 0;
+function craftUpdate() {
+  if (!pCraft) return;
+  if (pCraft.classList.contains('on')) { if (!craftAt) craftAt = clock; } else if (top(pCraft) > 1.1) { craftAt = 0; todos.forEach(t => t.classList.remove('done')); }
+  if (craftAt) todos.forEach((t, i) => t.classList.toggle('done', clock - craftAt > 1.4 + i * 1.3));
+}
+
+/* ---------- аукцион: бирка с рейтингом раскачивается и падает в цене ---------- */
+const pAuction = P('.x-auction'), pExit = P('.x-exit'), pNodata = P('.x-nodata'), pVerdict = P('[data-lens=verdict]'), pGiraffe = P('[data-lens=giraffe]');
+const pOff = P('.x-off'), pFree = P('.x-free'), pLast = P('.x-last');
+let swing = 0, swingV = 0, priceLast = '';
+function auctionUpdate(dt, t) {
+  let on = 0, pr = 0;
+  if (pAuction) {
+    const r = pAuction.getBoundingClientRect();
+    pr = clamp((vh * .55 - r.top) / r.height);
+    on = r.top < vh * .7 && r.bottom > vh * .25 ? 1 : 0;
+  }
+  S.auction += (on - S.auction) * Math.min(1, dt * 2);
+  S.aprog = pr;
+  if (!pAuction) return;
+  pAuction.classList.toggle('ten', on && pr < .45);
+  pAuction.classList.toggle('two', on && pr >= .45);
+  let txt;
+  if (pr < .22) txt = '10 / 10';
+  else if (pr < .42) txt = ['9,5 / 10', '10 / 10', '8 / 10'][Math.floor(t * 1.2) % 3];
+  else if (pr < .7) txt = '2 / 10';
+  else txt = [pick(['6 / 10', '3 / 10', '7,5 / 10', '1 / 10', '9 / 10', '4 / 10'])][0];
+  if (pr >= .7 && Math.floor(t * 2.2) === Math.floor((t - dt) * 2.2)) txt = priceLast || txt;
+  if (txt !== priceLast) { priceLast = txt; priceV.textContent = txt; swingV += (rnd() - .5) * 2.4; priceEl.classList.toggle('low', /^[1-4] |^2 /.test(txt)); }
+  swingV += (-swing * 9 - swingV * 1.4) * dt + Math.sin(t * 1.1) * .25 * dt;
+  swing += swingV * dt;
+  priceEl.style.opacity = (S.auction * .95).toFixed(3);
+  priceEl.style.transform = `rotate(${(swing * 18).toFixed(2)}deg)`;
+}
+
+/* ---------- статус очков в углу ---------- */
+let chipNope = 0, chipLabel = '';
+function setChip(s) { if (s !== chipLabel) { chipLabel = s; chipTx.textContent = s; } }
+chip.addEventListener('click', () => {
+  chip.classList.remove('nope'); void chip.offsetWidth; chip.classList.add('nope');
+  chipNope = 2.2; setChip(S.nodata ? 'и не нужно: человек вне оценки' : 'не выключается');
+});
+let offAt = 0;
+
+/* ---------- проявление ---------- */
+const seenIO = new IntersectionObserver(es => { for (const e of es) if (e.isIntersecting) { e.target.classList.add('seen'); seenIO.unobserve(e.target); } }, { rootMargin: '0px 0px -8% 0px', threshold: .12 });
+$$('main [data-p], .card, .scene.band, .tape, .duo, .lens').forEach(el => seenIO.observe(el));
+const onIO = new IntersectionObserver(es => { for (const e of es) e.target.classList.toggle('on', e.isIntersecting); }, { rootMargin: '-12% 0px -18% 0px' });
+paras.forEach(el => onIO.observe(el));
+
+/* ---------- ход статьи ---------- */
+function updateStory(dt, t, now) {
+  // холодный свет оценки: приговор, жираф и аукцион
+  const vOn = lensState === 'verdict' ? 1 : 0;
+  const coldT = Math.max(vOn * .8, S.auction);
+  S.cold += (coldT - S.cold) * Math.min(1, dt * 1.5);
+  // выход: ставки осыпаются, очки успокаиваются
+  if (pExit) { const m = mid(pExit); S.exit = m < .7; S.bidsFall = S.exit ? 1 : 0; }
+  // данные недоступны
+  S.nodata = pNodata ? mid(pNodata) < .72 : false;
+  const vs = sceneEl ? sceneEl.getBoundingClientRect() : null;
+  S.dusk = vs ? sstep(.95, .2, vs.top / vh) : 0;
+  const hudT = S.nodata ? .25 : S.exit ? .5 : .75 + .25 * S.auction;
+  S.hud += (hudT - S.hud) * Math.min(1, dt * 1.2);
+  hud.style.setProperty('--h', S.hud.toFixed(3));
+  hud.classList.toggle('warm', S.nodata);
+  hud.classList.toggle('loose', (pFree && pFree.classList.contains('on')) || S.nodata);
+  // статус в углу
+  if (chipNope > 0) chipNope -= dt;
+  else {
+    let s = 'оценка: всё подряд';
+    if (pOff && top(pOff) < .6) s = 'оценка: включена';
+    if (pOff && pOff.classList.contains('on') && offAt === 0) offAt = t;
+    if (offAt && t - offAt > 1.2 && t - offAt < 2.6) s = 'выключаю…';
+    if (offAt && t - offAt >= 2.6 && t - offAt < 5) { s = 'не выключается'; if (!chip._n) { chip._n = 1; chip.classList.add('nope'); } }
+    if (lensState && /^b[3-6]$/.test(lensState)) s = 'различаю: навык ≠ личность';
+    if (S.auction > .5) s = 'торги: идут';
+    if (S.exit) s = 'оценка: только навыки';
+    if (S.nodata) s = 'личность: вне оценки';
+    setChip(s);
+  }
+  // в конце сразу видна вся тишина
+  if (pLast && pLast.classList.contains('on')) S.hud = Math.min(S.hud, .3);
+}
+
+/* ---------- память: где вы остановились ---------- */
+const prev = store.get('pos', null), seenAt = store.get('seen', 0), now0 = Date.now();
+const days = seenAt ? (now0 - seenAt) / 864e5 : 0;
+const toast = $('#toast');
+function plDays(n) { n = Math.round(n); const a = n % 10, b = n % 100; return n + ' ' + (a === 1 && b !== 11 ? 'день' : a >= 2 && a <= 4 && (b < 12 || b > 14) ? 'дня' : 'дней'); }
+function showToast(text, btns, ms) {
+  toast.textContent = '';
+  const p = D.createElement('div'); p.textContent = text; toast.append(p);
+  if (btns && btns.length) {
+    const tb = D.createElement('div'); tb.className = 'tb';
+    for (const [label, cls, fn] of btns) { const b = D.createElement('button'); b.type = 'button'; b.textContent = label; if (cls) b.className = cls; b.onclick = () => { hideToast(); fn && fn(); }; tb.append(b); }
+    toast.append(tb);
+  }
+  toast.hidden = false; requestAnimationFrame(() => toast.classList.remove('hide'));
+  clearTimeout(showToast.tm); if (ms) showToast.tm = setTimeout(hideToast, ms);
+}
+function hideToast() { toast.classList.add('hide'); }
+function firstWords(el) { const w = el.textContent.replace(/[•]/g, '').trim().split(/\s+/).slice(0, 5).join(' ').replace(/[,.:;—–-]+$/, ''); return '«' + w + '…»'; }
+setTimeout(() => {
+  if (scrollY > vh * .5) return;
+  if (prev && prev.pid && !prev.done && prev.prog > .06) {
+    const el = D.getElementById(prev.pid); if (!el) return;
+    const text = (days >= 3 ? `Вас не было ${plDays(days)}, а на улице у моря всё то же лето. ` : 'Улица всё та же. ') + `В прошлый раз вы остановились на словах ${firstWords(el)}`;
+    showToast(text, [['Читать сначала', '', null], ['Вернуться туда', 'go', () => el.scrollIntoView({ behavior: RM ? 'auto' : 'smooth', block: 'center' })]], 16000);
+  } else if (prev && prev.done) showToast('С возвращением. Бирки на вещах на месте, а вы по-прежнему вне оценки.', null, 6500);
+}, 1700);
+let saveAt = 0;
+function savePos(now) {
+  if (now - saveAt < 1500) return; saveAt = now;
+  const p = readingPara(); if (!p) return;
+  store.set('pos', { pid: p.id, prog: +prog.toFixed(3), done: !!(prog > .965 || (prev && prev.done)) });
+  store.set('seen', Date.now());
+}
+addEventListener('pagehide', () => store.set('seen', Date.now()));
+
+/* ---------- звук: только по кнопке ---------- */
+const snd = $('#snd'), tip = $('#snd-tip');
+const SRC = 'sound/leto-korfu.mp3';
+let actx = null, gain = null, src = null, buf = null, au = null, sndOn = false, vol = 0;
+async function soundStart() {
+  try {
+    actx = actx || new (W.AudioContext || W.webkitAudioContext)();
+    if (actx.state === 'suspended') await actx.resume();
+    if (location.protocol === 'file:') throw new Error('file');
+    if (!buf) { const r = await fetch(SRC); buf = await actx.decodeAudioData(await r.arrayBuffer()); }
+    if (!sndOn) return;
+    src = actx.createBufferSource(); src.buffer = buf; src.loop = true;
+    gain = actx.createGain(); gain.gain.value = 0; src.connect(gain).connect(actx.destination); src.start();
+  } catch (e) {
+    au = au || Object.assign(new Audio(SRC), { loop: true, volume: 0 });
+    au.play().catch(() => {});
+  }
+}
+function soundStop() { if (src) { const s = src; setTimeout(() => { if (!sndOn) try { s.stop(); } catch (e) {} }, 1500); src = null; } if (au) setTimeout(() => { if (!sndOn) au.pause(); }, 1500); }
+function updateSound(dt) {
+  const target = sndOn ? .7 * (1 - .35 * S.auction) : 0;
+  vol += (target - vol) * Math.min(1, dt * (sndOn ? .8 : 1.6));
+  if (gain) gain.gain.value = vol;
+  if (au) au.volume = clamp(vol);
+}
+snd.addEventListener('click', () => {
+  sndOn = !sndOn; snd.setAttribute('aria-pressed', String(sndOn)); tip.classList.remove('on');
+  if (sndOn) soundStart(); else soundStop();
+});
+D.addEventListener('visibilitychange', () => { if (!actx) return; if (D.hidden) actx.suspend(); else if (sndOn) actx.resume(); });
+let tipShown = store.get('tip', 0) >= 2;
+function maybeTip() {
+  if (tipShown || sy < vh * .8) return;
+  tipShown = true; store.set('tip', store.get('tip', 0) + 1);
+  tip.classList.add('on'); setTimeout(() => tip.classList.remove('on'), 4200);
+}
+
+/* ---------- главный цикл ---------- */
+let prevT = performance.now(), clock = 0;
+function frameLoop(now) {
+  const dt = Math.min(.05, (now - prevT) / 1000); prevT = now;
+  clock += dt;
+  if (now - lastT > 120) vel *= Math.pow(.02, dt);
+  prog = clamp(sy / docH);
+  lensUpdate(dt);
+  updateStory(dt, clock, now);
+  auctionUpdate(dt, clock);
+  sky.sun.style.opacity = (1 - S.dusk * .8 - S.cold * .4).toFixed(3);
+  sky.cold.style.opacity = S.cold.toFixed(3);
+  sky.dusk.style.opacity = S.dusk.toFixed(3);
+  vig.style.opacity = clamp(.24 + .3 * S.cold + .1 * S.dusk).toFixed(3);
+  updateFrame(dt, now);
+  duoUpdate(dt); kitchenUpdate(dt); cradleUpdate(dt); bookUpdate(dt);
+  tyreUpdate(dt); fnUpdate(); notesUpdate(dt); craftUpdate();
+  // рулетка на краю экрана едет вместе с прокруткой
+  rulerI.style.transform = `translate3d(0,${(-(sy * .5) % 40).toFixed(1)}px,0)`;
+  // время от времени экран просматривает линия сканирования
+  if (!RM && S.hud > .45) {
+    scanT -= dt;
+    if (scanT < 0 && scanY < 0) { scanY = 0; scanT = 16 + rnd() * 10; }
+  }
+  if (scanY >= 0) {
+    scanY += dt * vh * .9;
+    scanEl.style.transform = `translate3d(0,${scanY.toFixed(1)}px,0)`;
+    scanEl.style.opacity = (.5 * Math.sin(clamp(scanY / vh) * Math.PI) * S.hud).toFixed(3);
+    if (scanY > vh) { scanY = -1; scanEl.style.opacity = '0'; }
+  }
+  for (const p of pics) {
+    if (!p.vis || !p.w) continue;
+    const c = p.ctx;
+    c.setTransform(p.dpr, 0, 0, p.dpr, 0, 0);
+    c.clearRect(0, 0, p.w, p.h);
+    const ldt = RM ? 0 : dt;
+    p.t += ldt;
+    if (p.draw) p.draw(p, ldt, RM ? 3 : p.t);
+    drawTags(p, RM ? 1 : dt);
+  }
+  if (scene) scene.imgs[1].style.opacity = S.dusk.toFixed(3);
+  ax.setTransform(adpr, 0, 0, adpr, 0, 0);
+  ax.clearRect(0, 0, vw, vh);
+  if (!RM) drawAir(dt, clock, airShift);
+  airShift = 0;
+  updateSound(dt);
+  savePos(now);
+  maybeTip();
+  requestAnimationFrame(frameLoop);
+}
+requestAnimationFrame(frameLoop);
+})();
+
+</script>
+</body>
+</html>
